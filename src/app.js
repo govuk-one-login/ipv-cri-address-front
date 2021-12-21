@@ -8,6 +8,8 @@ const loggerConfig = {
   app: false,
 };
 
+const redisConfig = require("./lib/redis")();
+
 const sessionConfig = {
   cookieName: "service_session",
   secret: process.env.SESSION_SECRET,
@@ -18,6 +20,7 @@ const { router } = setup({
   port: process.env.PORT || 5000,
   logs: loggerConfig,
   session: sessionConfig,
+  redis: redisConfig,
   urls: {
     public: "/public",
   },
