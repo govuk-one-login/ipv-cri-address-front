@@ -1,5 +1,4 @@
-require("dotenv").config();
-
+const { PORT, SESSION_SECRET } = require("./lib/config");
 const { setup } = require("hmpo-app");
 
 const loggerConfig = {
@@ -12,12 +11,12 @@ const redisConfig = require("./lib/redis")();
 
 const sessionConfig = {
   cookieName: "service_session",
-  secret: process.env.SESSION_SECRET,
+  secret: SESSION_SECRET,
 };
 
-const { router } = setup({
+const { app, router } = setup({
   config: { APP_ROOT: __dirname },
-  port: process.env.PORT || 5000,
+  port: PORT,
   logs: loggerConfig,
   session: sessionConfig,
   redis: redisConfig,
@@ -28,6 +27,15 @@ const { router } = setup({
   dev: true,
 });
 
-router.get("/", (req, res) => {
+app.get("nunjucks").addGlobal("getContext", function () {
+  return {
+    keys: Object.keys(this.ctx),
+    ctx: this.ctx.ctx,
+  };
+});
+
+router.use("/oauth2", require("./app/oauth2"));
+
+router.use("^/$", (req, res) => {
   res.render("index");
 });
