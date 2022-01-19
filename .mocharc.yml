@@ -1,0 +1,7 @@
+fail-zero: false
+spec:
+  - '**/*.test.js'
+ignore:
+  - 'node_modules/**'
+file:
+  - './test/utils/mocha-helpers'

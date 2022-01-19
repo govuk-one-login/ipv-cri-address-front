@@ -1,0 +1,8 @@
+---
+applications:
+  - name: di-ipv-cri-address-front
+    services:
+      - session-cache
+    memory: 256M
+    buildpack: nodejs_buildpack
+    command: yarn start

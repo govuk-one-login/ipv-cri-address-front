@@ -1,0 +1,26 @@
+all: true
+check-coverage: true
+include:
+  - "src/**/*.js"
+exclude:
+  - "**/*.test.js"
+  - "src/**/fields.js"
+  - "src/**/steps.js"
+report-dir: coverage
+statements: 05
+branches: 05
+functions: 05
+lines: 05
+watermarks:
+  statements:
+    - 60
+    - 90
+  branches:
+    - 80
+    - 90
+  functions:
+    - 60
+    - 90
+  lines:
+    - 60
+    - 90
