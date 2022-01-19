@@ -58,7 +58,7 @@
     "express": "4.17.1",
     "govuk-frontend": "3.14.0",
     "hmpo-app": "1.0.2",
-    "hmpo-components": "4.6.0",
+    "hmpo-components": "4.6.1",
     "hmpo-config": "2.2.0",
     "hmpo-form-wizard": "11.11.0",
     "hmpo-i18n": "5.0.1",
