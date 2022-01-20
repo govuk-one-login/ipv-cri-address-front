@@ -1,4 +1,4 @@
-const address = require("./controllers/controller");
+const address = require("./controllers/address");
 
 module.exports = {
   "/": {
@@ -18,5 +18,4 @@ module.exports = {
     controller: address,
     next: "/",
   },
-  // TODO additional address?
 };
