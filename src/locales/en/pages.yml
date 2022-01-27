@@ -2,3 +2,9 @@ index:
   title: di-ipv-cri-address-front
   content:
     - Sample page for credential issuer
+
+identityAddress:
+  title: Address
+
+identityDone:
+  title: Done

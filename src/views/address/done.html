@@ -1,0 +1,10 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% extends "form-template.njk" %}
+{% set hmpoPageKey = "identityDone" %}
+
+{% block content %}
+
+{{ govukSummaryList({rows: formattedAddress})}}
+
+{% endblock %}

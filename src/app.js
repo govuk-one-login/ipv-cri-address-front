@@ -35,6 +35,7 @@ app.get("nunjucks").addGlobal("getContext", function () {
 });
 
 router.use("/oauth2", require("./app/oauth2"));
+router.use("/", require("./app/address"));
 
 router.use("^/$", (req, res) => {
   res.render("index");
