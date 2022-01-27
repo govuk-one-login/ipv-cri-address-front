@@ -1,4 +1,5 @@
 const address = require("./controllers/address");
+const done = require("./controllers/done");
 
 module.exports = {
   "/": {
@@ -9,6 +10,10 @@ module.exports = {
   },
   "/address": {
     controller: address,
-    next: "/",
+    next: "done",
+  },
+  "/done": {
+    controller: done,
+    skip: false,
   },
 };
