@@ -59,12 +59,12 @@ describe("address controller", () => {
     };
     await address.saveValues(req, res, next);
 
-    expect(next.calledOnce).to.be.true;
-    expect(req.session.test.addressLine1).to.eq(req.body["address-line-1"]);
-    expect(req.session.test.addressLine2).to.eq(req.body["address-line-2"]);
-    expect(req.session.test.addressTown).to.eq(req.body["address-town"]);
-    expect(req.session.test.addressCounty).to.eq(req.body["address-county"]);
-    expect(req.session.test.addressPostcode).to.eq(
+    expect(next).to.have.been.calledOnce;
+    expect(req.session.test.addressLine1).to.equal(req.body["address-line-1"]);
+    expect(req.session.test.addressLine2).to.equal(req.body["address-line-2"]);
+    expect(req.session.test.addressTown).to.equal(req.body["address-town"]);
+    expect(req.session.test.addressCounty).to.equal(req.body["address-county"]);
+    expect(req.session.test.addressPostcode).to.equal(
       req.body["address-postcode"]
     );
   });
