@@ -2,6 +2,7 @@
 buttons:
   next: Continue
   cancel: Cancel
+  address-lookup: Find address
 govuk:
   serviceName: Prove your identity
   backLink: Back

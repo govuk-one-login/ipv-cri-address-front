@@ -3,8 +3,14 @@ index:
   content:
     - Sample page for credential issuer
 
-identityAddress:
+address:
   title: Address
 
-identityDone:
+done:
   title: Done
+
+postcode:
+  title: Whats your current address?
+
+results:
+  cantFindAdddress: <a href="manual">I can't find my address in the list</a>

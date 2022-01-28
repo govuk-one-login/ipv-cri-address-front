@@ -1,0 +1,18 @@
+{% extends "form-template.njk" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% set hmpoPageKey = "identityDone" %}
+
+{% block innerContent %}
+
+{{ govukInput({
+  label: {
+    text: "What is the name of the event?",
+    classes: "govuk-label--l",
+    isPageHeading: true
+  },
+  id: "event-name",
+  name: "event-name"
+}) }}
+
+{% endblock %}

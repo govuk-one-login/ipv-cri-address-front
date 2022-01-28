@@ -1,0 +1,27 @@
+{% extends "form-template.njk" %}
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% from "hmpo-html/macro.njk" import hmpoHtml %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "hmpo-inset-text/macro.njk" import hmpoInsetText %}
+{% from "hmpo-text/macro.njk" import hmpoText %}
+
+
+
+{% set hmpoPageKey = "postcodeLookup" %}
+
+{% block content %}
+
+    {% call hmpoText(ctx, {
+      id: "address-lookup"
+    }) %}
+    {% endcall %}
+
+    {{ hmpoSubmit(ctx, {
+        key: "address-lookup",
+        href: "/"
+    }) }}
+
+{% endblock %}
