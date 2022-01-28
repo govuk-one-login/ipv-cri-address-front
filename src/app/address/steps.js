@@ -1,7 +1,6 @@
 const address = require("./controllers/address");
 const done = require("./controllers/done");
-const search = require("./controllers/addressSearch");
-const results = require("./controllers/addressResults");
+const postcode = require("./controllers/postcodeLookup");
 
 module.exports = {
   "/": {
@@ -16,8 +15,8 @@ module.exports = {
     next: "results",
   },
   "/results": {
-    controller: results,
-    fields: ["address-results"],
+    controller: postcode, // todo change
+    fields: [""],
     next: "done",
   },
   "/address": {
@@ -27,6 +26,7 @@ module.exports = {
   // temporary display results
   "/done": {
     controller: done,
+    skip: false,
     noPost: true,
   },
 };
