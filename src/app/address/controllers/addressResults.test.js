@@ -56,6 +56,8 @@ describe("Address result controller", () => {
     req.sessionModel.set("searchResults", testData.formattedAddressed);
 
     await addressResult.saveValues(req, res, next);
+
+    expect(next).to.have.been.calledOnce;
     expect(req.session.test.addressLine1).to.equal(
       `${expectedResponse.buildingNumber}`
     );

@@ -60,6 +60,7 @@ describe("Address Search controller", () => {
 
     await addressSearch.saveValues(req, res, next);
 
+    expect(next).to.have.been.calledOnce;
     expect(axiosStub).to.have.been.calledWith(
       `${ORDNANCE_API_URL}postcode=${testPostcode}&key=${ORDNANCE_SURVEY_SECRET}`
     );
