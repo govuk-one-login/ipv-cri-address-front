@@ -1,6 +1,7 @@
 
 buttons:
   next: Continue
+  select-address: Select Address
   cancel: Cancel
   address-lookup: Find address
 govuk:
