@@ -13,7 +13,11 @@ module.exports = {
   PORT: process.env.PORT || 5010,
   SESSION_SECRET: process.env.SESSION_SECRET,
   REDIS: {
-    SESSION_URL: process.env.REDIS_SESSION_URL,
+    SESSION_URL: process.env.REDIS_SESSION_URL || "localhost",
     PORT: process.env.REDIS_PORT || 6379,
+  },
+  ORDNANCE: {
+    ORDNANCE_SURVEY_SECRET: process.env.ORDNANCE_SURVEY_SECRET,
+    ORDNANCE_API_URL: "https://api.os.uk/search/places/v1/postcode?",
   },
 };
