@@ -6,13 +6,20 @@ const {
 } = require("../../../lib/config");
 
 class AddressSearchController extends BaseController {
-  async saveValues(req, res, next) {
-    const searchValue = req.body["address-search"];
-    const searchResults = await this.search(searchValue);
-    req.sessionModel.set("searchResults", searchResults);
-
-    super.saveValues(req, res, next);
+  saveValues(req, res, callback) {
+    super.saveValues(req, res, async () => {
+      try {
+        const searchValue = req.body["address-search"];
+        const searchResults = await this.search(searchValue);
+        req.sessionModel.set("searchResults", searchResults);
+        callback();
+      } catch (err) {
+        callback(err);
+      }
+    });
   }
+
+  // }
 
   // TODO move call to backend
   async search(postcode) {
