@@ -11,4 +11,8 @@ module.exports = {
   "address-county": {
     type: "text",
   },
+  "address-lookup": {
+    type: "text",
+    autocomplete: "Postcode",
+  },
 };
