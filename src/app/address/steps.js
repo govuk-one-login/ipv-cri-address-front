@@ -17,7 +17,7 @@ module.exports = {
   },
   "/results": {
     controller: results,
-    fields: ["address-selector"],
+    fields: ["address-results"],
     next: "done",
   },
   "/address": {

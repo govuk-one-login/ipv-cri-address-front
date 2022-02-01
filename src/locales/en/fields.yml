@@ -1,6 +1,6 @@
-address-lookup:
+address-search:
   label: Postcode
   classes: govuk-input--width-8
 
-address-selector:
+address-results:
   label: Select an address

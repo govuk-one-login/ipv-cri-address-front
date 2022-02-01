@@ -17,4 +17,4 @@ address-results:
   title: What's your current home address?
   content:
     - Postcode
-    - <b>{{values.address-lookup}}</b> <a href="/postcode">Change</a>
+    - <b>{{values.address-search}}</b> <a href="/postcode">Change</a>
