@@ -9,8 +9,12 @@ address:
 done:
   title: Done
 
-postcode:
-  title: Whats your current address?
+address-search:
+  title: What's your current home address?
+  content: We'll use this to verify your identity
 
-results:
-  cantFindAdddress: <a href="manual">I can't find my address in the list</a>
+address-results:
+  title: What's your current home address?
+  content:
+    - Postcode
+    - <b>{{values.address-lookup}}</b> <a href="/postcode">Change</a>
