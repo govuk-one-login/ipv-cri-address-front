@@ -8,9 +8,9 @@ module.exports = {
     resetJourney: true,
     entryPoint: true,
     skip: true,
-    next: "postcode",
+    next: "search",
   },
-  "/postcode": {
+  "/search": {
     controller: search,
     fields: ["address-lookup"],
     next: "results",
