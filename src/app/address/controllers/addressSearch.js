@@ -7,19 +7,22 @@ const {
 
 class AddressSearchController extends BaseController {
   saveValues(req, res, callback) {
-    super.saveValues(req, res, async () => {
-      try {
-        const searchValue = req.body["address-search"];
-        const searchResults = await this.search(searchValue);
-        req.sessionModel.set("searchResults", searchResults);
-        callback();
-      } catch (err) {
-        callback(err);
-      }
+
+    return new Promise((resolve) => {
+      super.saveValues(req, res, async () => {
+        try {
+          const searchValue = req.body["address-search"];
+          const searchResults = await this.search(searchValue);
+          req.sessionModel.set("searchResults", searchResults);
+          callback();
+          resolve();
+        } catch (err) {
+          callback(err);
+          resolve();
+        }
+      });
     });
   }
-
-  // }
 
   // TODO move call to backend
   async search(postcode) {

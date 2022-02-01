@@ -67,6 +67,5 @@ describe("Address result controller", () => {
     expect(req.session.test.addressPostcode).to.equal(
       `${expectedResponse.postcode}`
     );
-    expect(next).to.have.been.calledOnce;
   });
 });

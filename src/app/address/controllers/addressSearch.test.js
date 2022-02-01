@@ -63,7 +63,6 @@ describe("Address Search controller", () => {
     expect(axiosStub).to.have.been.calledWith(
       `${ORDNANCE_API_URL}postcode=${testPostcode}&key=${ORDNANCE_SURVEY_SECRET}`
     );
-    expect(next).to.have.been.calledOnce;
     expect(req.session.test.searchResults[0].buildingNumber).to.equal("1");
     expect(req.session.test.searchResults[0].streetName).to.equal("SOME ROAD");
     expect(req.session.test.searchResults[0].town).to.equal("SOMEWHERE");
