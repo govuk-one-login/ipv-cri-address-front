@@ -56,7 +56,7 @@ describe("Address Search controller", () => {
   it("Should call api with a postcode and save results to session", async () => {
     const testPostcode = "myPostcode";
     const axiosStub = sinon.stub(axios, "get").resolves(testData.apiResponse);
-    req.body["address-lookup"] = testPostcode;
+    req.body["address-search"] = testPostcode;
 
     await addressSearch.saveValues(req, res, next);
 

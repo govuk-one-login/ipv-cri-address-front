@@ -7,7 +7,7 @@ const {
 
 class AddressSearchController extends BaseController {
   async saveValues(req, res, next) {
-    const searchValue = req.body["address-lookup"];
+    const searchValue = req.body["address-search"];
     const searchResults = await this.search(searchValue);
     req.sessionModel.set("searchResults", searchResults);
 

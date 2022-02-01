@@ -11,7 +11,7 @@
   {% call hmpoForm(ctx) %}
     {{ hmpoSelect(ctx, {
       id: "address-selection",
-      label: translate("fields.address-selector.label"),
+      label: translate("fields.address-results.label"),
       items: values.searchResults
     }) }}
     {{ hmpoSubmit(ctx, {text: translate("buttons.select-address")}) }}

@@ -12,12 +12,12 @@ module.exports = {
   },
   "/search": {
     controller: search,
-    fields: ["address-lookup"],
+    fields: ["address-search"],
     next: "results",
   },
   "/results": {
     controller: results,
-    fields: ["address-selector"],
+    fields: ["address-results"],
     next: "done",
   },
   "/address": {
