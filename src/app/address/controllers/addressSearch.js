@@ -6,22 +6,17 @@ const {
 } = require("../../../lib/config");
 
 class AddressSearchController extends BaseController {
-  saveValues(req, res, callback) {
-
-    return new Promise((resolve) => {
-      super.saveValues(req, res, async () => {
-        try {
-          const searchValue = req.body["address-search"];
-          const searchResults = await this.search(searchValue);
-          req.sessionModel.set("searchResults", searchResults);
-          callback();
-          resolve();
-        } catch (err) {
-          callback(err);
-          resolve();
-        }
+  async saveValues(req, res, callback) {
+    try {
+      const searchValue = req.body["address-search"];
+      const searchResults = await this.search(searchValue);
+      super.saveValues(req, res, () => {
+        req.sessionModel.set("searchResults", searchResults);
+        callback();
       });
-    });
+    } catch (err) {
+      callback(err);
+    }
   }
 
   // TODO move call to backend
