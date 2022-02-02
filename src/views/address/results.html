@@ -1,0 +1,20 @@
+{% extends "form-template.njk" %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-select/macro.njk" import hmpoSelect %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% set hmpoPageKey = "address-results" %}
+{% set hmpoPageContent = "address-results" %}
+
+{% block content %}
+  <h1>{{translate("pages.address-results.title")}}</h1>
+  {% set hmpoTitleKey = "pages.address-results.title" %}
+  {% call hmpoForm(ctx) %}
+    {{ hmpoSelect(ctx, {
+      id: "address-selection",
+      label: translate("fields.address-results.label"),
+      items: values.searchResults
+    }) }}
+    {{ hmpoSubmit(ctx, {text: translate("buttons.select-address")}) }}
+  {% endcall %}
+
+{% endblock %}

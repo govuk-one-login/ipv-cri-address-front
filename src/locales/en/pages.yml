@@ -3,8 +3,18 @@ index:
   content:
     - Sample page for credential issuer
 
-identityAddress:
+address:
   title: Address
 
-identityDone:
+done:
   title: Done
+
+address-search:
+  title: What's your current home address?
+  content: We'll use this to verify your identity
+
+address-results:
+  title: What's your current home address?
+  content:
+    - Postcode
+    - <b>{{values.address-search}}</b> <a href="/postcode">Change</a>
