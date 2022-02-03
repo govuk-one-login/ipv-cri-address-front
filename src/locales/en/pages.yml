@@ -18,3 +18,12 @@ address-results:
   content:
     - Postcode
     - <b>{{values.address-search}}</b> <a href="/postcode">Change</a>
+
+
+address-confirm:
+  title: Check your address details
+  warning:
+      - Make sure your details are correct before you continue. You won't be able to change it later.
+  current: Current address
+  previous: Previous address
+

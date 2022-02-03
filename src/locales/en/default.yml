@@ -11,4 +11,8 @@ govuk:
   error: Error
   warning: Warning
   skipLink: Skip to main content
+links:
+  changeAddress: <a href="address">Change</a>
+  changePostcode:
+    - <p>Postcode <br> <b>{{searchValue}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="search">Change</a></p>
 
