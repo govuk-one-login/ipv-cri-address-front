@@ -1,6 +1,13 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 
 class AddressResultsController extends BaseController {
+  locals(req, res, callback) {
+    super.locals(req, res, (err, locals) => {
+      locals.searchValue = req.sessionModel.get("searchValue");
+      callback(null, locals);
+    });
+  }
+
   saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
       try {
