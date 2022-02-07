@@ -19,7 +19,6 @@ address-results:
     - Postcode
     - <b>{{values.address-search}}</b> <a href="/postcode">Change</a>
 
-
 address-confirm:
   title: Check your address details
   warning:
