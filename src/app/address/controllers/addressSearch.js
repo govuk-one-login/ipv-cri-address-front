@@ -12,6 +12,7 @@ class AddressSearchController extends BaseController {
       const searchResults = await this.search(searchValue);
       super.saveValues(req, res, () => {
         req.sessionModel.set("searchResults", searchResults);
+        req.sessionModel.set("searchValue", searchValue);
         callback();
       });
     } catch (err) {
