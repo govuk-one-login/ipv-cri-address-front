@@ -11,4 +11,6 @@ govuk:
   error: Error
   warning: Warning
   skipLink: Skip to main content
+links:
+  changeAddress: <a href="address/edit">Change</a>
 

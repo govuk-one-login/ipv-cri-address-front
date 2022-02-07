@@ -1,0 +1,20 @@
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "hmpo-html/macro.njk" import hmpoHtml %}
+
+{% extends "form-template.njk" %}
+{% set hmpoPageKey = "address-confirm" %}
+
+{% block innerContent %}
+  {{ super() }}
+
+  {{ govukWarningText({
+    text: translate("pages.address-confirm.warning"),
+    iconFallbackText: "Warning"
+  }) }}
+
+  <h3>{{translate("pages.address-confirm.current")}}</h3>
+  {{hmpoHtml(formattedAddress)}}
+  <p>{{hmpoHtml(translate("links.changeAddress"))}}</p>
+  <br>
+
+{% endblock %}
