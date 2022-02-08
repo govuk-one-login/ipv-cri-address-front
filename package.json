@@ -19,7 +19,8 @@
     "prepare": "husky install",
     "test": "mocha",
     "test:coverage": "nyc --reporter=lcov --reporter=text-summary yarn test",
-    "test:watch": "mocha --watch"
+    "test:watch": "mocha --watch",
+    "mocks": "yarn run wiremock --port 8090 --root-dir test/mocks"
   },
   "repository": {
     "type": "git",

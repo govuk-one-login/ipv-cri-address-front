@@ -18,6 +18,8 @@ module.exports = {
   },
   ORDNANCE: {
     ORDNANCE_SURVEY_SECRET: process.env.ORDNANCE_SURVEY_SECRET,
-    ORDNANCE_API_URL: "https://api.os.uk/search/places/v1/postcode?",
+    ORDNANCE_API_URL:
+      process.env.ORDNANCE_SURVEY_URL ||
+      "https://api.os.uk/search/places/v1/postcode?",
   },
 };
