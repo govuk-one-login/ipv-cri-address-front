@@ -12,7 +12,7 @@ govuk:
   warning: Warning
   skipLink: Skip to main content
 links:
-  changeAddress: <a href="/address/edit">Change</a>
+  changeAddress: <a href="/address/edit" id="change-address">Change</a>
   changePostcode:
     - <p>Postcode <br> <b>{{addressPostcode}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search">Change</a></p>
   cantFindAddress:
