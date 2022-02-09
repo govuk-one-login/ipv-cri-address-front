@@ -1,6 +1,8 @@
 const { PORT, SESSION_SECRET } = require("./lib/config");
 const { setup } = require("hmpo-app");
 
+const scenarioHeaders = require("./lib/scenario-headers");
+
 const loggerConfig = {
   console: true,
   consoleJSON: true,
@@ -33,6 +35,8 @@ app.get("nunjucks").addGlobal("getContext", function () {
     ctx: this.ctx.ctx,
   };
 });
+
+router.use(scenarioHeaders);
 
 router.use("/oauth2", require("./app/oauth2"));
 router.use("/", require("./app/address"));

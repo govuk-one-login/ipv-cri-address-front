@@ -21,9 +21,14 @@ class AddressSearchController extends BaseController {
   }
 
   // TODO move call to backend
-  async search(postcode) {
+  async search(postcode, scenarioIDHeader) {
     const addressResults = await axios.get(
-      `${ORDNANCE_API_URL}postcode=${postcode}&key=${ORDNANCE_SURVEY_SECRET}`
+      `${ORDNANCE_API_URL}postcode=${postcode}&key=${ORDNANCE_SURVEY_SECRET}`,
+      {
+        headers: {
+          "x-scenario-id": scenarioIDHeader ? scenarioIDHeader : null,
+        },
+      }
     );
 
     const addresses = addressResults.data.results.map(this.formatAddress);
