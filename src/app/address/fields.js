@@ -22,5 +22,18 @@ module.exports = {
   "address-search": {
     type: "text",
     autocomplete: "Postcode",
+    validate: [
+      {
+        type: "required",
+      },
+      {
+        type: "minlength",
+        arguments: [5],
+      },
+      {
+        type: "maxlength",
+        arguments: [8],
+      },
+    ],
   },
 };

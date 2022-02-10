@@ -15,4 +15,9 @@ links:
   changeAddress: <a href="/address/edit">Change</a>
   changePostcode:
     - <p>Postcode <br> <b>{{searchValue}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search">Change</a></p>
+validation:
+  required: Please enter a {{label}}.
+  maxlength: 'Maximum length of  the {{label}} should be 8'
+  minlength: 'Minimum length of the {{label}} should be 5'
+  default: You must answer this question.
 
