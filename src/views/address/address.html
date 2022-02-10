@@ -1,66 +1,44 @@
 {% extends "form-template.njk" %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "hmpo-text/macro.njk" import hmpoText %}
+{% set hmpoPageKey = "address-form" %}
+{% set hmpoPageContent = "address-form" %}
 
-{% set hmpoPageKey = "identityAddress" %}
+{% set hmpoPageKey = "address-form" %}
 
 
-{% block innerContent %}
+{% block content %}
 
-  {% call govukFieldset({
-    legend: {
-      text: "What is your address?",
-      classes: "govuk-fieldset__legend--l",
-      isPageHeading: true
-    }
-  }) %}
+  <h1>{{translate("pages.address-form.title")}}</h1>
 
-    {{ govukInput({
-      label: {
-        html: 'Building and street <span class="govuk-visually-hidden">line 1 of 2</span>'
-      },
-      id: "address-line-1",
-      name: "address-line-1",
+  {{hmpoHtml(translate("links.changePostcode"))}}
+
+  {% call hmpoForm(ctx) %}
+
+    {{ hmpoText(ctx, {
+      id: "addressLine1",
+      label: translate("fields.address-line-1.label"),
       autocomplete: "address-line1"
     }) }}
 
-    {{ govukInput({
-      label: {
-        html: '<span class="govuk-visually-hidden">Building and street line 2 of 2</span>'
-      },
-      id: "address-line-2",
-      name: "address-line-2",
-      autocomplete: "address-line2"
-    }) }}
-
-    {{ govukInput({
-      label: {
-        text: "Town or city"
-      },
-      classes: "govuk-!-width-two-thirds",
-      id: "address-town",
-      name: "address-town",
+    {{ hmpoText(ctx, {
+      id: "addressLine2",
+      label: translate("fields.address-line-2.label"),
       autocomplete: "address-level2"
     }) }}
 
-    {{ govukInput({
-      label: {
-        text: "County"
-      },
-      classes: "govuk-!-width-two-thirds",
-      id: "address-county",
-      name: "address-county"
+    {{ hmpoText(ctx, {
+      id: "addressTown",
+      label: translate("fields.address-town.label")
     }) }}
 
-    {{ govukInput({
-      label: {
-        text: "Postcode"
-      },
-      classes: "govuk-input--width-10",
-      id: "address-postcode",
-      name: "address-postcode",
-      autocomplete: "postal-code"
+    {{ hmpoText(ctx, {
+      id: "addressPostcode",
+      label: translate("fields.address-postcode.label")
     }) }}
+
+    {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}
 
   {% endcall %}
 

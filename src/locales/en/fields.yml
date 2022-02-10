@@ -1,6 +1,24 @@
+address-form:
+  label: What is your address?
+
 address-search:
   label: Postcode
   classes: govuk-input--width-8
 
 address-results:
   label: Select an address
+
+address-line-1:
+  label: House name or number
+
+address-line-2:
+  label: Street name
+
+address-town:
+  label: Town or city
+
+address-county:
+  label: County
+
+address-postcode:
+  label: Postcode

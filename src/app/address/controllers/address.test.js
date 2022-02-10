@@ -51,21 +51,15 @@ describe("address controller", () => {
 
   it("should save the address into the session", async () => {
     req.body = {
-      "address-line-1": "10a",
-      "address-line-2": "street road",
-      "address-town": "small town",
-      "address-county": "Big county",
-      "address-postcode": "AB1 2CD",
+      addressLine1: "10a",
+      addressLine2: "street road",
+      addressTown: "small town",
     };
     await address.saveValues(req, res, next);
 
     expect(next).to.have.been.calledOnce;
-    expect(req.session.test.addressLine1).to.equal(req.body["address-line-1"]);
-    expect(req.session.test.addressLine2).to.equal(req.body["address-line-2"]);
-    expect(req.session.test.addressTown).to.equal(req.body["address-town"]);
-    expect(req.session.test.addressCounty).to.equal(req.body["address-county"]);
-    expect(req.session.test.addressPostcode).to.equal(
-      req.body["address-postcode"]
-    );
+    expect(req.session.test.addressLine1).to.equal(req.body["addressLine1"]);
+    expect(req.session.test.addressLine2).to.equal(req.body["addressLine2"]);
+    expect(req.session.test.addressTown).to.equal(req.body["addressTown"]);
   });
 });
