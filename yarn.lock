@@ -206,7 +206,7 @@
   dependencies:
     regexp-match-indices "1.0.2"
 
-"@cucumber/cucumber@^7.3.2":
+"@cucumber/cucumber@7.3.2":
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/@cucumber/cucumber/-/cucumber-7.3.2.tgz#e7b752530cfaf77664d3d49042ea20d543f6e334"
   integrity sha512-qqptM9w+UqXEYBAkrIGpIVPXDWv+zp0LrS89LiwHZwBp0cJg00su/iPMZ4j8TvCJiKfAwJXsAI1yjrd1POtU+w==
@@ -1352,7 +1352,7 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
-dotenv@^10.0.0:
+dotenv@10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
   integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
@@ -3501,7 +3501,7 @@ playwright-core@=1.18.1:
     yauzl "^2.10.0"
     yazl "^2.5.1"
 
-playwright@^1.18.1:
+playwright@1.18.1:
   version "1.18.1"
   resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.18.1.tgz#45c2ca6ee25c44e336985de9b51955727b5f17cf"
   integrity sha512-8EaX9EtbtAoMq5tnzIsoA3b/V86V/6Mq2skuOU4qEw+5OVxs1lwesDwmjy/RVU1Qfx5UuwSQzhp45wyH22oa+A==
@@ -3811,7 +3811,7 @@ repeat-string@^1.5.2, repeat-string@^1.6.1:
   resolved "https://registry.yarnpkg.com/repeat-string/-/repeat-string-1.6.1.tgz#8dcae470e1c88abc2d600fff4a776286da75e637"
   integrity sha1-jcrkcOHIirwtYA//Sndihtp15jc=
 
-reqres@^3.0.1:
+reqres@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/reqres/-/reqres-3.0.1.tgz#fbac0dbf19c41f70f5e3945d8dc05ab10e355a6e"
   integrity sha512-1MVCeWvmNPykvIJxcnwMSC1SDKiiLWQoX9rpohXOCoqP0vXpQnscfxNmBo5xs+qhapU4oduSS5amOf41IG+VQw==
@@ -4716,7 +4716,7 @@ winston@^2.4.5:
     isstream "0.1.x"
     stack-trace "0.0.x"
 
-wiremock@^2.32.0:
+wiremock@2.32.0:
   version "2.32.0"
   resolved "https://registry.yarnpkg.com/wiremock/-/wiremock-2.32.0.tgz#ff5bb3571154bd4fa98cfc2ec2b08d255a983056"
   integrity sha512-wLJKiBIxruJNfFQwlzHRwE74fSqWNvVA+YLZFRok6KXJI3eaoOwDpIA/z9zbNGkJz5nI6tYdlB6MkLIHMAlVmg==
