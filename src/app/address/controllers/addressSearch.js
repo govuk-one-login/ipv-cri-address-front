@@ -8,11 +8,11 @@ const {
 class AddressSearchController extends BaseController {
   async saveValues(req, res, callback) {
     try {
-      const searchValue = req.body["address-search"];
-      const searchResults = await this.search(searchValue);
+      const addressPostcode = req.body["address-search"];
+      const searchResults = await this.search(addressPostcode);
       super.saveValues(req, res, () => {
         req.sessionModel.set("searchResults", searchResults);
-        req.sessionModel.set("searchValue", searchValue);
+        req.sessionModel.set("addressPostcode", addressPostcode);
         callback();
       });
     } catch (err) {
