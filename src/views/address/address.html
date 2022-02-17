@@ -1,0 +1,40 @@
+{% extends "form-template.njk" %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "hmpo-text/macro.njk" import hmpoText %}
+{% set hmpoPageKey = "address-form" %}
+{% set hmpoPageContent = "address-form" %}
+
+{% set hmpoPageKey = "address-form" %}
+
+
+{% block content %}
+
+  <h1>{{translate("pages.address-form.title")}}</h1>
+
+  {{hmpoHtml(translate("links.changePostcode"))}}
+
+  {% call hmpoForm(ctx) %}
+
+    {{ hmpoText(ctx, {
+      id: "addressLine1",
+      label: translate("fields.address-line-1.label"),
+      autocomplete: "address-line1"
+    }) }}
+
+    {{ hmpoText(ctx, {
+      id: "addressLine2",
+      label: translate("fields.address-line-2.label"),
+      autocomplete: "address-level2"
+    }) }}
+
+    {{ hmpoText(ctx, {
+      id: "addressTown",
+      label: translate("fields.address-town.label")
+    }) }}
+
+    {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}
+
+  {% endcall %}
+
+{% endblock %}

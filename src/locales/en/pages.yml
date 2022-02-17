@@ -2,3 +2,28 @@ index:
   title: di-ipv-cri-address-front
   content:
     - Sample page for credential issuer
+
+address:
+  title: Address
+
+done:
+  title: Done
+
+address-search:
+  title: What's your current address?
+
+address-results:
+  title: What's your current address?
+  content:
+    - Postcode
+    - <b>{{values.address-search}}</b> <a href="/postcode">Change</a>
+
+address-confirm:
+  title: Check your address details
+  warning:
+      - Make sure your details are correct before you continue. You won't be able to change it later.
+  current: Current address
+  previous: Previous address
+
+address-form:
+  title: What's your current address?
