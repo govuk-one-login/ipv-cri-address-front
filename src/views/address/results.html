@@ -13,11 +13,14 @@
   {{hmpoHtml(translate("links.changePostcode"))}}
 
   {% call hmpoForm(ctx) %}
+
     {{ hmpoSelect(ctx, {
       id: "address-selection",
       label: translate("fields.address-results.label"),
       items: values.searchResults
     }) }}
+
+    {{hmpoHtml(translate("links.cantFindAddress"))}}
 
     {{ hmpoSubmit(ctx, {text: translate("buttons.select-address")}) }}
 
