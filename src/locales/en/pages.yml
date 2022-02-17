@@ -10,11 +10,10 @@ done:
   title: Done
 
 address-search:
-  title: What's your current home address?
-  content: We'll use this to verify your identity
+  title: What's your current address?
 
 address-results:
-  title: What's your current home address?
+  title: What's your current address?
   content:
     - Postcode
     - <b>{{values.address-search}}</b> <a href="/postcode">Change</a>
@@ -27,4 +26,4 @@ address-confirm:
   previous: Previous address
 
 address-form:
-  title: What's your current home address?
+  title: What's your current address?
