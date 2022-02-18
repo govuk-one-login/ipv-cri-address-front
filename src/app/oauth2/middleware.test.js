@@ -1,19 +1,9 @@
-const proxyquire = require("proxyquire");
-
-const axiosStub = {};
-const configStub = {
+const middleware = require("./middleware");
+const {
   API: {
-    BASE_URL: "https://example.org/subpath",
-    PATHS: {
-      AUTHORIZE: "/subsubpath/auth",
-    },
+    PATHS: { AUTHORIZE },
   },
-};
-
-const middleware = proxyquire("./middleware", {
-  axios: axiosStub,
-  "../../lib/config": configStub,
-});
+} = require("../../lib/config");
 
 describe("oauth middleware", () => {
   let req;
@@ -21,14 +11,10 @@ describe("oauth middleware", () => {
   let next;
 
   beforeEach(() => {
-    res = {
-      status: sinon.fake(),
-      redirect: sinon.fake(),
-      send: sinon.fake(),
-      render: sinon.fake(),
-    };
-
-    next = sinon.fake();
+    const setup = setupDefaultMocks();
+    req = setup.req;
+    res = setup.res;
+    next = setup.next;
   });
 
   describe("addAuthParamsToSession", () => {
@@ -64,28 +50,28 @@ describe("oauth middleware", () => {
   });
 
   describe("retrieveAuthorizationCode", () => {
-    let axiosResponse;
+    let authResponse;
 
     beforeEach(() => {
-      req = {
-        session: {
-          authParams: {
-            response_type: "code",
-            client_id: "s6BhdRkqt3",
-            state: "xyz",
-            redirect_uri: "https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb",
-            scope: "openid",
+      req.session = {
+        authParams: {
+          response_type: "code",
+          client_id: "s6BhdRkqt3",
+          state: "xyz",
+          redirect_uri: "https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb",
+          scope: "openid",
+        },
+      };
+
+      authResponse = {
+        data: {
+          code: {
+            value: "12345",
           },
         },
       };
 
-      axiosResponse = {
-        data: {
-          code: {},
-        },
-      };
-
-      axiosStub.get = sinon.fake.returns(axiosResponse);
+      req.axios.get = sinon.fake.returns(authResponse);
     });
 
     context("auth request", () => {
@@ -94,8 +80,8 @@ describe("oauth middleware", () => {
 
         await middleware.retrieveAuthorizationCode(req, res, next);
 
-        expect(axiosStub.get).to.have.been.calledWith(
-          "https://example.org/subpath/subsubpath/auth",
+        expect(req.axios.get).to.have.been.calledWith(
+          AUTHORIZE,
           sinon.match({
             params: { ...req.session.authParams },
           })
@@ -104,14 +90,10 @@ describe("oauth middleware", () => {
     });
 
     context("with authorization code", () => {
-      beforeEach(() => {
-        axiosResponse.data.code.value = "12345";
-      });
-
       it("should set authorization_code on req", async () => {
         await middleware.retrieveAuthorizationCode(req, res, next);
 
-        expect(req.authorization_code).to.eq(axiosResponse.data.code.value);
+        expect(req.authorization_code).to.eq("12345");
       });
       it("it should call next", async () => {
         await middleware.retrieveAuthorizationCode(req, res, next);
@@ -122,7 +104,7 @@ describe("oauth middleware", () => {
 
     context("with missing authorization code", () => {
       beforeEach(() => {
-        axiosStub.get = sinon.fake.returns(axiosResponse);
+        delete authResponse.data.code;
       });
 
       it("should send a 500 error when code is missing", async function () {
@@ -143,7 +125,7 @@ describe("oauth middleware", () => {
 
       beforeEach(() => {
         errorMessage = "server error";
-        axiosStub.get = sinon.fake.throws(new Error(errorMessage));
+        req.axios.get = sinon.fake.throws(new Error(errorMessage));
       });
 
       it("should send call next with error when code is missing", async () => {
@@ -159,25 +141,15 @@ describe("oauth middleware", () => {
   });
 
   describe("redirectToCallback", () => {
-    let axiosResponse;
-
     beforeEach(() => {
-      req = {
-        session: {
-          authParams: {
-            redirect_uri: "https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb",
-          },
-        },
-        authorization_code: "1234",
-      };
-
-      axiosResponse = {
-        data: {
-          code: {},
+      req.session = {
+        authParams: {
+          redirect_uri: "https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb",
         },
       };
+      req.authorization_code = "1234";
 
-      axiosStub.get = sinon.fake.returns(axiosResponse);
+      req.axios.get = sinon.fake.returns({});
     });
 
     it("should successfully redirects when code is valid", async function () {

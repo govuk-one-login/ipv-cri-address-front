@@ -11,4 +11,3 @@ Feature: Happy path
     Then they should see the results page
     And they have selected an address
     Then they should be able to confirm the address
-
