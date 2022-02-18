@@ -1,7 +1,5 @@
-const axios = require("axios");
 const {
   API: {
-    BASE_URL,
     PATHS: { AUTHORIZE },
   },
 } = require("../../lib/config");
@@ -27,7 +25,7 @@ module.exports = {
         scope: "openid",
       };
 
-      const apiResponse = await axios.get(`${BASE_URL}${AUTHORIZE}`, {
+      const apiResponse = await req.axios.get(AUTHORIZE, {
         params: oauthParams,
       });
 

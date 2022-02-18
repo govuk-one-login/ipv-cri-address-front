@@ -1,7 +1,8 @@
+const setScenarioHeaders = require("./lib/scenario-headers");
+const setAxiosDefaults = require("./lib/axios");
+
 const { PORT, SESSION_SECRET } = require("./lib/config");
 const { setup } = require("hmpo-app");
-
-const scenarioHeaders = require("./lib/scenario-headers");
 
 const loggerConfig = {
   console: true,
@@ -36,7 +37,8 @@ app.get("nunjucks").addGlobal("getContext", function () {
   };
 });
 
-router.use(scenarioHeaders);
+router.use(setScenarioHeaders);
+router.use(setAxiosDefaults);
 
 router.use("/oauth2", require("./app/oauth2"));
 router.use("/", require("./app/address"));
