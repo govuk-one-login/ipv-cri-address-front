@@ -60,7 +60,7 @@
     "uglify-js": "3.14.5"
   },
   "dependencies": {
-    "axios": "0.24.0",
+    "axios": "0.26.0",
     "cfenv": "1.2.4",
     "copyfiles": "2.4.1",
     "dotenv": "16.0.0",
