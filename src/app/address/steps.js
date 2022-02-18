@@ -25,10 +25,12 @@ module.exports = {
     controller: address,
     checkJourney: false,
     editable: true,
+    continueOnEdit: true,
     next: "confirm",
   },
   "/confirm": {
     controller: confirm,
+    prereqs: "/address/edit", // can enter confirm if coming from address edit
     next: "done",
   },
   // temporary display results

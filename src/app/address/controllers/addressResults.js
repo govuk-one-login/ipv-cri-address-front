@@ -3,7 +3,7 @@ const BaseController = require("hmpo-form-wizard").Controller;
 class AddressResultsController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
-      locals.searchValue = req.sessionModel.get("searchValue");
+      locals.addressPostcode = req.sessionModel.get("addressPostcode");
       callback(null, locals);
     });
   }
