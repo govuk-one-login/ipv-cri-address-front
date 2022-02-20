@@ -52,3 +52,65 @@ They can be run using:
 ### Code Owners
 
 This repo has a `CODEOWNERS` file in the root and is configured to require PRs to reviewed by Code Owners.
+# Diagrams
+
+```mermaid
+  sequenceDiagram
+
+    autonumber
+
+    participant core
+    participant frontend
+    participant api
+    participant Datastore
+    participant Postcode
+
+    rect rgb(255, 255, 230)
+
+      % Oauth start session
+      note right of core: OAuth Start
+      core->>+frontend: /authorize {jwt}
+      frontend->>+api: PUT /session {jwt}
+      api->>api: Validate JWT
+      api->>api: create session
+      api->>Datastore: write session
+      api-->>-frontend: session-id
+    end
+
+    rect rgb(255, 255, 230)
+      loop Collect addresses
+
+      %% Address postcode lookup flow
+      note right of frontend: Postcode lookup
+        frontend->>frontend: display postcode page
+        frontend->>+api: POST /postcode-lookup
+        api->>Postcode: GET postcode
+        Postcode-->>api: addresses
+        api-->>-frontend: addresses
+        frontend->>frontend: display addresses
+
+        %% do we collect all the address and then generate auth code or just one address at a time.
+
+        frontend->>frontend: confirm addresses
+      end
+
+      frontend->>+api: PUT /address
+      %% return authorisation code
+      api->>api: create authorization_code
+      api-->>Datastore: write address, authorization_code
+      api-->>-frontend: 204 (authorization code)
+      frontend-->>-core: /callback (authorization code)
+    end
+
+    rect rgb(255, 255, 230)
+      note right of core: Oauth return
+      core->>+api: /token
+      api->>api: create token
+      api->>Datastore: write token
+      api-->>-core: token
+      core->>+api: /credential/issue
+      api->>api: use AuthenticationResult in verifible-credential
+      api-->>-core: verifiable-credential
+    end
+
+```
