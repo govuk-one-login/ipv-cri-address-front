@@ -1,10 +1,6 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 const AddressConfirmController = require("./addressConfirm");
 
-const reqres = require("reqres");
-const WizardModel = require("hmpo-form-wizard/lib/wizard-model.js");
-const JourneyModel = require("hmpo-form-wizard/lib/journey-model");
-
 let req;
 let res;
 let next;
@@ -12,23 +8,10 @@ let sandbox;
 
 beforeEach(() => {
   sandbox = sinon.createSandbox();
-
-  req = reqres.req();
-  req.journeyModel = new JourneyModel(null, {
-    req,
-    key: "test",
-  });
-  req.sessionModel = new WizardModel(null, {
-    req,
-    key: "test",
-    journeyModel: req.journeyModel,
-    fields: {},
-  });
-  res = sinon.fake();
-
-  req.form = { values: {} };
-
-  next = sinon.fake();
+  const setup = setupDefaultMocks();
+  req = setup.req;
+  res = setup.res;
+  next = setup.next;
 });
 
 afterEach(() => {

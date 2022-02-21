@@ -1,8 +1,5 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 const AddressController = require("./address");
-const reqres = require("reqres");
-const WizardModel = require("hmpo-form-wizard/lib/wizard-model.js");
-const JourneyModel = require("hmpo-form-wizard/lib/journey-model");
 
 describe("address controller", () => {
   const address = new AddressController({ route: "/test" });
@@ -14,36 +11,13 @@ describe("address controller", () => {
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-
-    // Set request object.
-    req = reqres.req();
-    req.journeyModel = new JourneyModel(null, {
-      req,
-      key: "test",
-    });
-
-    afterEach(() => sandbox.restore());
-
-    req.sessionModel = new WizardModel(null, {
-      req,
-      key: "test",
-      journeyModel: req.journeyModel,
-      fields: {},
-    });
-
-    req.form = { values: {} };
-
-    // set response object.
-    res = {
-      status: sinon.fake(),
-      redirect: sinon.fake(),
-      send: sinon.fake(),
-      render: sinon.fake(),
-    };
-
-    // set next object
-    next = sinon.fake();
+    const setup = setupDefaultMocks();
+    req = setup.req;
+    res = setup.res;
+    next = setup.next;
   });
+
+  afterEach(() => sandbox.restore());
 
   it("should be an instance of BaseController", () => {
     expect(address).to.be.an.instanceOf(BaseController);
