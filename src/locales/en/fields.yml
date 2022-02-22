@@ -4,6 +4,7 @@ address-form:
 address-search:
   label: Postcode
   classes: govuk-input--width-8
+  hint: For example, SW12 2AA
 
 address-results:
   label: Select an address

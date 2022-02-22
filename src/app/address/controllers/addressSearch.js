@@ -1,18 +1,20 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-const axios = require("axios");
 
 const {
-  ORDNANCE: { ORDNANCE_API_URL, ORDNANCE_SURVEY_SECRET },
+  ORDNANCE: { ORDNANCE_SURVEY_SECRET },
 } = require("../../../lib/config");
 
 class AddressSearchController extends BaseController {
   async saveValues(req, res, callback) {
     try {
-      const searchValue = req.body["address-search"];
-      const searchResults = await this.search(searchValue);
+      const addressPostcode = req.body["address-search"];
+      const searchResults = await this.search(
+        req.ordnanceAxios,
+        addressPostcode
+      );
       super.saveValues(req, res, () => {
         req.sessionModel.set("searchResults", searchResults);
-        req.sessionModel.set("searchValue", searchValue);
+        req.sessionModel.set("addressPostcode", addressPostcode);
         callback();
       });
     } catch (err) {
@@ -21,10 +23,13 @@ class AddressSearchController extends BaseController {
   }
 
   // TODO move call to backend
-  async search(postcode) {
-    const addressResults = await axios.get(
-      `${ORDNANCE_API_URL}postcode=${postcode}&key=${ORDNANCE_SURVEY_SECRET}`
-    );
+  async search(axios, postcode) {
+    const addressResults = await axios.get(null, {
+      params: {
+        postcode: postcode,
+        key: ORDNANCE_SURVEY_SECRET,
+      },
+    });
 
     const addresses = addressResults.data.results.map(this.formatAddress);
     return addresses;

@@ -1,0 +1,54 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Address",
+      "newScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "url": "/__reset/address-success"
+      },
+      "response": {
+        "status": 200
+      }
+    },
+    {
+      "scenarioName": "Address",
+      "requiredScenarioState": "Started",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "GET",
+        "url": "/ordnance?&postcode=T35T1N&key=secret",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-success"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "results": [
+            {
+              "DPA": {
+                "ADDRESS": "TEST ADDRESS 1",
+                "BUILDING_NUMBER": "1",
+                "POST_TOWN": "TESTTOWN",
+                "POSTCODE": "TE5T1NG",
+                "THOROUGHFARE_NAME": "TEST STREET"
+              }
+            },
+            {
+              "DPA": {
+                "ADDRESS": "TEST ADDRESS 2",
+                "BUILDING_NAME": "2A",
+                "POST_TOWN": "TESTTOWN",
+                "POSTCODE": "TE5T1NG",
+                "THOROUGHFARE_NAME": "TEST STREET"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
