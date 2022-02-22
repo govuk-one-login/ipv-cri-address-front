@@ -5,11 +5,13 @@ const {
   ORDNANCE: { ORDNANCE_SURVEY_SECRET },
 } = require("../../../lib/config");
 const testData = require("../../../../test/data/testData");
+const { expect } = require("chai");
 
 let req;
 let res;
 let next;
 let sandbox;
+let axiosStub;
 
 beforeEach(() => {
   sandbox = sinon.createSandbox();
@@ -28,6 +30,11 @@ describe("Address Search controller", () => {
 
   beforeEach(() => {
     addressSearch = new AddressSearchController({ route: "/test" });
+    axiosStub = sinon.stub(axios, "get");
+  });
+
+  afterEach(() => {
+    axiosStub.restore();
   });
 
   it("should be an instance of BaseController", () => {
@@ -56,5 +63,21 @@ describe("Address Search controller", () => {
     expect(req.session.test.searchResults[1].buildingNumber).to.equal(
       "NAMED BUILDING"
     );
+    expect(req.session.test.isSuccessful).to.equal(true);
+  });
+
+  it("Should not throw an error when api throws error", async () => {
+    const testPostcode = "myPostcode";
+    axiosStub.rejects();
+    req.body["address-search"] = testPostcode;
+
+    await addressSearch.saveValues(req, res, next);
+
+    expect(next).to.have.been.calledOnce;
+    expect(axiosStub).to.have.been.calledWith(
+      `${ORDNANCE_API_URL}postcode=${testPostcode}&key=${ORDNANCE_SURVEY_SECRET}`
+    );
+    expect(req.session.test.addressPostcode).to.equal(testPostcode);
+    expect(req.session.test.isSuccessful).to.equal(false);
   });
 });
