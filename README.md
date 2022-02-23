@@ -39,7 +39,11 @@ The frontend can be configure to use this server through changing two environmen
 
 A browser extension that can modify headers can be used to set the value of the header in a web browser. Example - [Mod Header](https://modheader.com)
 
-## Running Browser tests.
+## Request properties
+
+In order to support consisten use of headers for API requests. [middleware](./src/lib/axios.js) is applied to add an instance of [axios](https://axios-http.com/) on each reqest onto `req.axios`. This is then reused in any code that uses the API.
+
+## Browser tests.
 
 Browser based tests can be run against the mock server, and should be able to be run against an instance of the API.
 
@@ -47,7 +51,20 @@ These tests are written using [Cucumber](https://cucumber.io/docs/installation/j
 
 They can be run using:
 
-`yarn run test:application`
+`yarn run test:browser`
+
+## Using mocked scenario data
+
+Any cucumber feature or scenario with a tag prefixed with `@mock-api:`
+
+eg:
+
+```
+  @mock-api:address-error
+  Scenario: Address error
+  ...
+```
+This scenario will be configured to send a `scenario-id` header of `address-error` on every web browser request.
 
 ### Code Owners
 
