@@ -16,8 +16,8 @@ module.exports = {
     fields: ["address-search"],
     next: [
       {
-        field: "isSuccessful",
-        op: (fieldValue, req, res, con) => fieldValue === con.value,
+        field: "requestIsSuccessful",
+        op: "===",
         value: true,
         next: "results",
       },

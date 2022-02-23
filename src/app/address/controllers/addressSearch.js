@@ -15,13 +15,13 @@ class AddressSearchController extends BaseController {
         addressPostcode
       );
       super.saveValues(req, res, () => {
-        req.sessionModel.set("isSuccessful", true);
+        req.sessionModel.set("requestIsSuccessful", true);
         req.sessionModel.set("searchResults", searchResults);
         req.sessionModel.set("addressPostcode", addressPostcode);
         callback();
       });
     } catch (err) {
-      req.sessionModel.set("isSuccessful", false);
+      req.sessionModel.set("requestIsSuccessful", false);
       req.sessionModel.set("addressPostcode", addressPostcode);
       callback();
     }
