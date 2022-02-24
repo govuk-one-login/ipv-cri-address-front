@@ -6,6 +6,8 @@ const {
 
 class AddressSearchController extends BaseController {
   async saveValues(req, res, callback) {
+    const addressPostcode = req.body["address-search"];
+
     try {
       const addressPostcode = req.body["address-search"];
       const searchResults = await this.search(
@@ -13,12 +15,15 @@ class AddressSearchController extends BaseController {
         addressPostcode
       );
       super.saveValues(req, res, () => {
+        req.sessionModel.set("requestIsSuccessful", true);
         req.sessionModel.set("searchResults", searchResults);
         req.sessionModel.set("addressPostcode", addressPostcode);
         callback();
       });
     } catch (err) {
-      callback(err);
+      req.sessionModel.set("requestIsSuccessful", false);
+      req.sessionModel.set("addressPostcode", addressPostcode);
+      callback();
     }
   }
 

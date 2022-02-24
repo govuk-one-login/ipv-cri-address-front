@@ -49,6 +49,26 @@
           ]
         }
       }
+    },
+    {
+      "scenarioName": "Address",
+      "requiredScenarioState": "Started",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "GET",
+        "url": "/ordnance?&postcode=XXX_XX&key=secret",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-success"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "jsonBody": {
+          "results": []
+        }
+      }
     }
   ]
 }

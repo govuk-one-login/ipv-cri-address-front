@@ -56,5 +56,24 @@ describe("Address Search controller", () => {
     expect(req.session.test.searchResults[1].buildingNumber).to.equal(
       "NAMED BUILDING"
     );
+    expect(req.session.test.requestIsSuccessful).to.equal(true);
+  });
+
+  it("Should not throw an error when api throws error", async () => {
+    const testPostcode = "myPostcode";
+    req.ordnanceAxios.get = sinon.fake.rejects();
+    req.body["address-search"] = testPostcode;
+
+    await addressSearch.saveValues(req, res, next);
+
+    expect(next).to.have.been.calledOnce;
+    expect(req.ordnanceAxios.get).to.have.been.calledWith(null, {
+      params: {
+        postcode: testPostcode,
+        key: ORDNANCE_SURVEY_SECRET,
+      },
+    });
+    expect(req.session.test.addressPostcode).to.equal(testPostcode);
+    expect(req.session.test.requestIsSuccessful).to.equal(false);
   });
 });
