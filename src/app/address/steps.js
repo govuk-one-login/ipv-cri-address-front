@@ -14,7 +14,15 @@ module.exports = {
   "/search": {
     controller: search,
     fields: ["address-search"],
-    next: "results",
+    next: [
+      {
+        field: "requestIsSuccessful",
+        op: "===",
+        value: true,
+        next: "results",
+      },
+      "address",
+    ],
   },
   "/results": {
     controller: results,
