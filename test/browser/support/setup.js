@@ -2,28 +2,16 @@ const { Before, BeforeAll, AfterAll, After } = require("@cucumber/cucumber");
 const { chromium } = require("playwright");
 const axios = require("axios");
 
-const users = {
-  "Erroring Ethem": {
-    name: "Ethem E",
-  },
-  "Not found Nigel": {
-    name: "Nigel N",
-  },
-  "Postcode mistmatch Peter": {
-    name: "Peter P",
-  },
-};
-
 BeforeAll(async function () {
   // Browsers are expensive in Playwright so only create 1
-  global.browser = await chromium.launch({
-    // Not headless so we can watch test runs
-    headless: false,
-    // Slow so we can see things happening
-    slowMo: 500,
-  });
-
-  this.allUsers = users;
+  global.browser = process.env.GITHUB_ACTIONS
+    ? await chromium.launch()
+    : await chromium.launch({
+        // Not headless so we can watch test runs
+        headless: false,
+        // Slow so we can see things happening
+        slowMo: 500,
+      });
 });
 
 AfterAll(async function () {
