@@ -10,7 +10,11 @@
 
 {% block content %}
 
-  <h1>{{translate("pages.address-form.title")}}</h1>
+  {% if values.addPreviousAddresses %}
+    <h1 id="header">{{translate("pages.address-form-previous.title")}}</h1>
+  {% else %}
+    <h1 id="header">{{translate("pages.address-form.title")}}</h1>
+  {% endif %}
 
   {{hmpoHtml(translate("links.changePostcode"))}}
 

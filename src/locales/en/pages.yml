@@ -12,6 +12,9 @@ done:
 address-search:
   title: What's your current address?
 
+address-previous:
+  title: What's your previous address?
+
 address-results:
   title: What's your current address?
   content:
@@ -27,3 +30,6 @@ address-confirm:
 
 address-form:
   title: What's your current address?
+
+address-form-previous:
+  title: What's your previous address?

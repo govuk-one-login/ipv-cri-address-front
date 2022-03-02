@@ -6,9 +6,12 @@
 {% set hmpoPageContent = "address-results" %}
 
 {% block content %}
-  <h1>{{translate("pages.address-results.title")}}</h1>
 
-  {% set hmpoTitleKey = "pages.address-results.title" %}
+  {% if values.addPreviousAddresses %}
+    <h1 id="header">{{translate("pages.address-previous.title")}}</h1>
+  {% else %}
+    <h1 id="header">{{translate("pages.address-results.title")}}</h1>
+  {% endif %}
 
   {{hmpoHtml(translate("links.changePostcode"))}}
 

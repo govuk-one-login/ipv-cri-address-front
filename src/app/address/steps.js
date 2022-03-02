@@ -39,7 +39,29 @@ module.exports = {
   "/confirm": {
     controller: confirm,
     prereqs: "/address/edit", // can enter confirm if coming from address edit
-    next: "done",
+    field: ["addPrevious"],
+    next: [
+      {
+        field: "addPreviousAddresses",
+        op: "===",
+        value: true,
+        next: "previous",
+      },
+      "done",
+    ],
+  },
+  "/previous": {
+    controller: search,
+    fields: ["address-search"],
+    next: [
+      {
+        field: "requestIsSuccessful",
+        op: "===",
+        value: true,
+        next: "results",
+      },
+      "address",
+    ],
   },
   // temporary display results
   "/done": {
