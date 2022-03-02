@@ -1,5 +1,6 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 const AddressConfirmController = require("./addressConfirm");
+const addressFactory = require("../../../../test/utils/addressFactory");
 
 let req;
 let res;
@@ -29,23 +30,23 @@ describe("Address confirmation controller", () => {
     expect(addressConfirm).to.be.an.instanceOf(BaseController);
   });
 
-  it("Should format the address in locals", async () => {
-    const houseNameNumber = "1 HOUSE";
-    const street = "STREET";
-    const town = "TOWN";
-    const postcode = "POSTCODE";
+  it("Should format the current address and previous addresses in locals", async () => {
+    const addresses = addressFactory(3);
 
-    req.sessionModel.set("addressLine1", houseNameNumber);
-    req.sessionModel.set("addressLine2", street);
-    req.sessionModel.set("addressTown", town);
-    req.sessionModel.set("addressPostcode", postcode);
+    req.sessionModel.set("addresses", addresses);
 
-    const formattedAddress = `${houseNameNumber}<br>${street},</br>${town},</br>${postcode},</br>`;
+    const formattedAddresses = addresses.map((address) => {
+      return `${address.addressLine1}<br>${address.addressLine2},<br>${address.addressTown},<br>${address.addressPostcode}<br>`;
+    });
+
+    const currentAddress = formattedAddresses.shift();
+    const params = {
+      formattedAddress: currentAddress,
+      previousAddresses: formattedAddresses,
+    };
 
     addressConfirm.locals(req, res, next);
     expect(next).to.have.been.calledOnce;
-    expect(next).to.have.been.calledWith(null, {
-      formattedAddress,
-    });
+    expect(next).to.have.been.calledWith(null, params);
   });
 });

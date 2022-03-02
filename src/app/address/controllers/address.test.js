@@ -24,16 +24,20 @@ describe("address controller", () => {
   });
 
   it("should save the address into the session", async () => {
-    req.body = {
+    const addressToSave = {
       addressLine1: "10a",
       addressLine2: "street road",
       addressTown: "small town",
     };
+
+    req.body = addressToSave;
+
     await address.saveValues(req, res, next);
 
+    const savedAddress = req.session.test.addresses[0];
     expect(next).to.have.been.calledOnce;
-    expect(req.session.test.addressLine1).to.equal(req.body["addressLine1"]);
-    expect(req.session.test.addressLine2).to.equal(req.body["addressLine2"]);
-    expect(req.session.test.addressTown).to.equal(req.body["addressTown"]);
+    expect(savedAddress.addressLine1).to.equal(addressToSave.addressLine1);
+    expect(savedAddress.addressLine2).to.equal(addressToSave.addressLine2);
+    expect(savedAddress.addressTown).to.equal(addressToSave.addressTown);
   });
 });
