@@ -26,6 +26,32 @@ Given("they searched for their postcode {string}", async function (postcode) {
   await searchPage.searchPostcode(postcode);
 });
 
+Given(
+  "they have added their current postcode {string}",
+  async function (postcode) {
+    const searchPage = new SearchPage(this.page);
+    await searchPage.goto();
+    await searchPage.searchPostcode(postcode);
+    const resultsPage = new ResultsPage(this.page);
+    await resultsPage.selectAddress();
+    await resultsPage.continue();
+  }
+);
+
+Given("they have entered the previous address journey", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  await confirmPage.previousAddressButton();
+});
+
+Given(
+  "they have searched for their previous postcode {string}",
+  async function (prevPostcode) {
+    const searchPage = new SearchPage(this.page);
+    expect(await searchPage.getPageTitle()).to.contain("previous");
+    await searchPage.searchPostcode(prevPostcode);
+  }
+);
+
 /**
  * THEN
  */
@@ -45,6 +71,18 @@ Then(/they should see the address page$/, async function () {
   expect(addressPage.isCurrentPage()).to.be.true;
 });
 
+Then(/they should see the previous results page$/, async function () {
+  const resultsPage = new ResultsPage(this.page);
+  expect(resultsPage.isCurrentPage()).to.be.true;
+  expect(await resultsPage.getPageTitle()).to.contain("previous");
+});
+
+Then(/they should be able confirm both their addresses$/, async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  expect(confirmPage.isCurrentPage()).to.be.true;
+  await confirmPage.confirmDetails();
+});
+
 /**
  * WHEN
  */
@@ -60,4 +98,10 @@ When(/they (?:have )add(?:ed)? their details manually$/, async function () {
   await addressPage.addStreet();
   await addressPage.addTownOrCity();
   await addressPage.continue();
+});
+
+When(/they have selected their previous address$/, async function () {
+  const resultsPage = new ResultsPage(this.page);
+  await resultsPage.selectAddress("PREVIOUS ADDRESS 3");
+  await resultsPage.continue();
 });

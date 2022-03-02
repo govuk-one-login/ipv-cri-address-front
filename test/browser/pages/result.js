@@ -18,6 +18,10 @@ module.exports = class PlaywrightDevPage {
     });
   }
 
+  async getPageTitle() {
+    return await this.page.textContent("#header");
+  }
+
   async continue() {
     await this.page.click("button");
   }
