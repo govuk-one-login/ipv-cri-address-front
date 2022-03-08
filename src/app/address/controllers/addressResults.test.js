@@ -41,16 +41,17 @@ describe("Address result controller", () => {
     await addressResult.saveValues(req, res, next);
 
     expect(next).to.have.been.calledOnce;
-    expect(req.session.test.addressLine1).to.equal(
-      `${expectedResponse.buildingNumber}`
+    expect(req.session.test.addresses[0].addressLine1).to.equal(
+      expectedResponse.buildingNumber
     );
-    expect(req.session.test.addressLine2).to.equal(
-      `${expectedResponse.streetName}`
+    expect(req.session.test.addresses[0].addressLine2).to.equal(
+      expectedResponse.streetName
     );
-    expect(req.session.test.addressTown).to.equal(`${expectedResponse.town}`);
-
-    expect(req.session.test.addressPostcode).to.equal(
-      `${expectedResponse.postcode}`
+    expect(req.session.test.addresses[0].addressPostcode).to.equal(
+      expectedResponse.postcode
+    );
+    expect(req.session.test.addresses[0].addressTown).to.equal(
+      expectedResponse.town
     );
   });
 });

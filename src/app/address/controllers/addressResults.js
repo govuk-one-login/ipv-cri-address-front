@@ -18,10 +18,22 @@ class AddressResultsController extends BaseController {
           (address) => address.label === selectedAddress
         );
 
-        req.sessionModel.set("addressLine1", choosenAddress.buildingNumber);
-        req.sessionModel.set("addressLine2", choosenAddress.streetName);
-        req.sessionModel.set("addressTown", choosenAddress.town);
-        req.sessionModel.set("addressPostcode", choosenAddress.postcode);
+        const address = {
+          addressLine1: choosenAddress.buildingNumber,
+          addressLine2: choosenAddress.streetName,
+          addressTown: choosenAddress.town,
+          addressPostcode: choosenAddress.postcode,
+        };
+
+        const sessionAddresses = req.sessionModel.get("addresses");
+
+        const addresses = Array.isArray(sessionAddresses)
+          ? sessionAddresses
+          : [];
+
+        addresses.push(address);
+
+        req.sessionModel.set("addresses", addresses);
         callback();
       } catch (err) {
         callback(err);

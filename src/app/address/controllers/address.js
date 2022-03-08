@@ -4,18 +4,41 @@ class AddressController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
       locals.addressPostcode = req.sessionModel.get("addressPostcode");
-      locals.addressLine1 = req.sessionModel.get("addressLine1");
-      locals.addressLine2 = req.sessionModel.get("addressLine2");
-      locals.addressTown = req.sessionModel.get("addressTown");
+
+      const addresses = req.body["addresses"];
+      // todo - get address of the selected address to edit (eg if user tries to edit previous address)
+      const currentAddress = Array.isArray(addresses) ? addresses[0] : null;
+      if (currentAddress) {
+        locals.addressLine1 = currentAddress?.addressLine1;
+        locals.addressLine2 = currentAddress?.addressLine2;
+        locals.addressTown = currentAddress?.addressTown;
+      }
+
       callback(null, locals);
     });
   }
 
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
-      req.sessionModel.set("addressLine1", req.body["addressLine1"]);
-      req.sessionModel.set("addressLine2", req.body["addressLine2"]);
-      req.sessionModel.set("addressTown", req.body["addressTown"]);
+      const addressLine1 = req.body["addressLine1"];
+      const addressLine2 = req.body["addressLine2"];
+      const addressTown = req.body["addressTown"];
+      const addressPostcode = req.sessionModel.get("addressPostcode");
+      const address = {
+        addressLine1,
+        addressLine2,
+        addressTown,
+        addressPostcode
+      }
+      const sessionsAddresses = req.sessionModel.get("addresses");
+
+      const addresses = Array.isArray(sessionsAddresses)
+        ? sessionsAddresses
+        : [];
+
+      addresses.push(address);
+
+      req.sessionModel.set("addresses", addresses);
       callback();
     });
   }

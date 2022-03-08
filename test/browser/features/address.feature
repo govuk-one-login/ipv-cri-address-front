@@ -12,7 +12,6 @@ Feature: Searching and adding an Address
     And they have selected an address
     Then they should be able to confirm the address
 
-  @run
   Scenario: Searching and unsuccessfully finding an address
     Given they searched for their postcode "XXX_XX"
     Then they should see the address page

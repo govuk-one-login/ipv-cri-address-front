@@ -69,6 +69,54 @@
           "results": []
         }
       }
+    },
+    {
+      "scenarioName": "Address",
+      "requiredScenarioState": "AddressResponses",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "GET",
+        "url": "/ordnance?&postcode=PR3VC0DE&key=secret",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-success"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "results": [
+            {
+              "DPA": {
+                "ADDRESS": "PREVIOUS ADDRESS 1",
+                "BUILDING_NUMBER": "1",
+                "POST_TOWN": "TESTTOWN",
+                "POSTCODE": "PR3VC0DE",
+                "THOROUGHFARE_NAME": "TEST STREET"
+              }
+            },
+            {
+              "DPA": {
+                "ADDRESS": "PREVIOUS ADDRESS 2",
+                "BUILDING_NAME": "2A",
+                "POST_TOWN": "TESTTOWN",
+                "POSTCODE": "PR3VC0DE",
+                "THOROUGHFARE_NAME": "TEST STREET"
+              }
+            },
+            {
+              "DPA": {
+                "ADDRESS": "PREVIOUS ADDRESS 3",
+                "BUILDING_NAME": "3A",
+                "POST_TOWN": "TESTTOWN",
+                "POSTCODE": "PR3VC0DE",
+                "THOROUGHFARE_NAME": "TEST STREET"
+              }
+            }
+          ]
+        }
+      }
     }
   ]
 }

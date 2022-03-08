@@ -11,8 +11,13 @@ module.exports = class PlaywrightDevPage {
     await this.page.click("#change-address");
   }
 
+  // TODO change selector to data-id
   async confirmDetails() {
-    await this.page.click(".govuk-button");
+    await this.page.locator(":nth-match(.govuk-button, 2)");
+  }
+
+  async previousAddressButton() {
+    await this.page.locator("id=addPreviousAddresses").click();
   }
 
   isCurrentPage() {
