@@ -38,7 +38,7 @@
   "packageManager": "yarn@2.4.3",
   "devDependencies": {
     "@cucumber/cucumber": "7.3.2",
-    "chai": "4.3.4",
+    "chai": "4.3.6",
     "chai-as-promised": "7.1.1",
     "eslint": "8.10.0",
     "eslint-config-prettier": "8.5.0",
