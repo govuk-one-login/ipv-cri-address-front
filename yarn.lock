@@ -735,7 +735,7 @@ bluebird@^3.7.2:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
-body-parser@1.19.2, body-parser@^1.19.0:
+body-parser@1.19.2, body-parser@^1.19.0, body-parser@^1.19.2:
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/body-parser/-/body-parser-1.19.2.tgz#4714ccd9c157d44797b8b5607d72c0b89952f26e"
   integrity sha512-SAAwOxgoCKMGs9uUAUFHygfLAyaniaoun6I8mFY9pRAJL9+Kec34aU+oIjDhTycub1jozEfEwx1W1IuOYxVSFw==
@@ -1337,7 +1337,7 @@ decompress-response@^6.0.0:
   dependencies:
     mimic-response "^3.1.0"
 
-deep-clone-merge@^1.5.2, deep-clone-merge@^1.5.3, deep-clone-merge@^1.5.4:
+deep-clone-merge@^1.5.2, deep-clone-merge@^1.5.4:
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/deep-clone-merge/-/deep-clone-merge-1.5.4.tgz#d2ecb85bc1bf8bb9313dd118c6674f690ae94677"
   integrity sha512-Gb/b8aAFUeX/ZkQwfpYlzVXaUOnHj0jPmh8uwF0eBGhAuFMZA1IxeuSzLGG4B1lzrp0SZsd3UhL6zvhDY7l6ZQ==
@@ -2268,19 +2268,19 @@ hmpo-config@2.2.0:
     js-yaml "^4.1.0"
     json5 "^2.2.0"
 
-hmpo-form-wizard@12.0.1:
-  version "12.0.1"
-  resolved "https://registry.yarnpkg.com/hmpo-form-wizard/-/hmpo-form-wizard-12.0.1.tgz#a601b8ae0d61cb665fe4a0656ecdc4ea9d7357c3"
-  integrity sha512-Aw2EoUJH/vBFs8C1YoKeHg+CNqwmvmgEBZ0TihRhzlaEk3MJhkDlvn6/fp/TJA6MLL54uCq0tCSO+COhA2wKfQ==
+hmpo-form-wizard@12.0.2:
+  version "12.0.2"
+  resolved "https://registry.yarnpkg.com/hmpo-form-wizard/-/hmpo-form-wizard-12.0.2.tgz#755d498c2a582ff36223e79724776810fe57f6e9"
+  integrity sha512-Qh1lAAEfXj9KhglM+KrGvHZ4BU05BjEDRZXhbmLbA7JTfpRCZQ8lBpaVZfj/fVjeFrvhND7EntJX7iz0bemitQ==
   dependencies:
-    body-parser "^1.19.0"
+    body-parser "^1.19.2"
     csrf "^3.1.0"
     debug "^4.3.3"
-    deep-clone-merge "^1.5.3"
-    hmpo-model "^4.0.2"
+    deep-clone-merge "^1.5.4"
+    hmpo-model "^4.0.4"
     json5 "^2.2.0"
     moment "^2.29.1"
-    underscore "^1.13.1"
+    underscore "^1.13.2"
 
 hmpo-i18n@5.0.1:
   version "5.0.1"
@@ -2310,10 +2310,10 @@ hmpo-logger@4.1.4:
     underscore "^1.13.1"
     winston "^2.4.5"
 
-hmpo-model@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/hmpo-model/-/hmpo-model-4.0.2.tgz#98f33691f7c06c9fff4ad96ea549d6d377f12b5e"
-  integrity sha512-atckh8oO3piR0w7l+sNdwJ+nbe411/T7fdKNMwMWWmqnNFtOei874Z86ZCNUCBmgxmRDQZDw6E77Mgp2V6PH6Q==
+hmpo-model@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/hmpo-model/-/hmpo-model-4.0.4.tgz#7cafd372d8097581a6870ac8365a0c6320975ad9"
+  integrity sha512-k9IkWmZJA11ZDi334ab0gspJhLvk+WBGUjaa7V0/PZDHAmZ4//RFLA5yJTq+q1jAcD+dYRTETcVEdm+doeU1iQ==
   dependencies:
     debug "^4.3.3"
     got "^11.8.3"
