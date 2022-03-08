@@ -1402,10 +1402,10 @@ decompress-response@^6.0.0:
   dependencies:
     mimic-response "^3.1.0"
 
-deep-clone-merge@^1.5.2, deep-clone-merge@^1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/deep-clone-merge/-/deep-clone-merge-1.5.3.tgz#20bd56815546c451c05745d5c177b8a4b4b751b2"
-  integrity sha512-EC1JkJkChD+K038oGnV2E/aNcYw9OcNA1lQtZXPO3vzcXpik/FfDX/pP/mnBgDXX72bVsjhqI0wLXBSvDGENzg==
+deep-clone-merge@^1.5.2, deep-clone-merge@^1.5.3, deep-clone-merge@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/deep-clone-merge/-/deep-clone-merge-1.5.4.tgz#d2ecb85bc1bf8bb9313dd118c6674f690ae94677"
+  integrity sha512-Gb/b8aAFUeX/ZkQwfpYlzVXaUOnHj0jPmh8uwF0eBGhAuFMZA1IxeuSzLGG4B1lzrp0SZsd3UhL6zvhDY7l6ZQ==
 
 deep-eql@^3.0.1:
   version "3.0.1"
@@ -2359,12 +2359,12 @@ hmpo-app@1.0.2:
     underscore "^1.13.1"
     uuid "^8.3.2"
 
-hmpo-components@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/hmpo-components/-/hmpo-components-5.1.0.tgz#07a21e927b092ae902faa4d856c9b95710015ed7"
-  integrity sha512-OhszOQdfS+uQq32Rd/hu/BDeKxDW0DxDio5DftN6fVzvvao4r7W4L4xoQvJrqsjolzQHbyca52VJoQIyaq/Xgw==
+hmpo-components@5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/hmpo-components/-/hmpo-components-5.2.1.tgz#1847b93167aff6b1fc833b740292143bc7eb20eb"
+  integrity sha512-J79sayI6Dqb7BeYHpdKflKzIWVNbIVhSdyLCiZks/PWG8mR3JtYFrilWBB+6XCTMz0vzX6fxyWIfU2kexbfX6g==
   dependencies:
-    deep-clone-merge "^1.5.3"
+    deep-clone-merge "^1.5.4"
     moment "^2.29.1"
     underscore "^1.13.2"
 
