@@ -696,7 +696,7 @@ astral-regex@^2.0.0:
   resolved "https://registry.yarnpkg.com/astral-regex/-/astral-regex-2.0.0.tgz#483143c567aeed4785759c0865786dc77d7d2e31"
   integrity sha512-Z7tMw1ytTXt5jqMcOP+OQteU1VuNK9Y02uuJtKQ1Sv69jXQKKg5cibLwGJow8yzZP+eAc18EmLGPal0bp36rvQ==
 
-async@^3.2.0, async@^3.2.2:
+async@^3.2.0, async@^3.2.3:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/async/-/async-3.2.3.tgz#ac53dafd3f4720ee9e8a160628f18ea91df196c9"
   integrity sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g==
@@ -2262,18 +2262,18 @@ hmpo-i18n@5.0.1:
     js-yaml "^4.1.0"
     lodash "^4.17.21"
 
-hmpo-logger@4.1.4:
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/hmpo-logger/-/hmpo-logger-4.1.4.tgz#0dc79f048c402d11d986bd32d69a963309e10bf6"
-  integrity sha512-As3Paq63hHJiMrA4JdswIwqGGiUtSVNwxQn/2pJ3LFWE5ECAHfvsuIlWyoGv26vrwc+cVKaqWDaKQaVZXQujhw==
+hmpo-logger@4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/hmpo-logger/-/hmpo-logger-4.1.5.tgz#75010fba46c2a510dd849dca89bbbf47b4413287"
+  integrity sha512-dT5MOJnQbEu5cFfD/bYpDeBZRIckVVjaurEW1FrnX6v1A1sD+NgV/elO9rwNfo0zifpV5PXMi5vJWC5YB1S4wA==
   dependencies:
-    async "^3.2.2"
+    async "^3.2.3"
     debug "^4.3.3"
     glob "^7.2.0"
-    on-finished "^2.3.0"
+    on-finished "^2.4.1"
     on-headers "^1.0.1"
     sort-object-keys "^1.1.2"
-    underscore "^1.13.1"
+    underscore "^1.13.2"
     winston "^2.4.5"
 
 hmpo-model@^4.0.4:
@@ -3436,7 +3436,14 @@ object.assign@^4.1.2:
     has-symbols "^1.0.1"
     object-keys "^1.1.1"
 
-on-finished@^2.3.0, on-finished@~2.3.0:
+on-finished@^2.3.0, on-finished@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/on-finished/-/on-finished-2.4.1.tgz#58c8c44116e54845ad57f14ab10b03533184ac3f"
+  integrity sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==
+  dependencies:
+    ee-first "1.1.1"
+
+on-finished@~2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/on-finished/-/on-finished-2.3.0.tgz#20f1336481b083cd75337992a16971aa2d906947"
   integrity sha1-IPEzZIGwg811M3mSoWlxqi2QaUc=
