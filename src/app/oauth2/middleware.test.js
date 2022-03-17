@@ -1,9 +1,16 @@
 const middleware = require("./middleware");
 const {
   API: {
-    PATHS: { AUTHORIZE },
+    PATHS: { AUTHORIZATION_CODE, AUTHORIZE },
+  },
+  APP: {
+    PATHS: { ADDRESS },
   },
 } = require("../../lib/config");
+const { expect } = require("chai");
+
+const exampleJwt =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
 describe("oauth middleware", () => {
   let req;
@@ -49,6 +56,75 @@ describe("oauth middleware", () => {
     });
   });
 
+  describe("addJWTToRequest", () => {
+    beforeEach(() => {
+      req = {
+        query: {
+          request: exampleJwt,
+        },
+      };
+    });
+
+    it("should save authParams to session", async function () {
+      await middleware.addJWTToRequest(req, res, next);
+
+      expect(req.jwt).to.equal(req.query.request);
+    });
+
+    it("should call next", async function () {
+      await middleware.addJWTToRequest(req, res, next);
+
+      expect(next).to.have.been.called;
+    });
+  });
+
+  describe("initSessionWithJWT", () => {
+    beforeEach(() => {
+      req.jwt = exampleJwt;
+      req.query = {
+        client_id: "s6BhdRkqt3",
+      };
+      req.session = {
+        authParams: {
+          response_type: "code",
+          client_id: "s6BhdRkqt3",
+          state: "xyz",
+          redirect_uri: "https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb",
+          scope: "openid",
+        },
+      };
+
+      const response = {
+        data: {
+          "session-id": "abc1234",
+        },
+      };
+      req.axios.post = sinon.fake.returns(response);
+    });
+
+    it("should call axios with the correct parameters", async function () {
+      await middleware.initSessionWithJWT(req, res, next);
+      expect(req.axios.post).to.have.been.calledWith(
+        AUTHORIZE,
+        {
+          request: exampleJwt,
+          ...req.session.authParams,
+        },
+        {
+          headers: {
+            client_id: req.query.client_id,
+          },
+        }
+      );
+      expect((req.session.tokenId = "abc1234"));
+    });
+
+    it("should call next", async function () {
+      await middleware.initSessionWithJWT(req, res, next);
+      expect(next).to.have.been.called;
+    });
+  });
+
   describe("retrieveAuthorizationCode", () => {
     let authResponse;
 
@@ -81,7 +157,7 @@ describe("oauth middleware", () => {
         await middleware.retrieveAuthorizationCode(req, res, next);
 
         expect(req.axios.get).to.have.been.calledWith(
-          AUTHORIZE,
+          AUTHORIZATION_CODE,
           sinon.match({
             params: { ...req.session.authParams },
           })
@@ -145,6 +221,7 @@ describe("oauth middleware", () => {
       req.session = {
         authParams: {
           redirect_uri: "https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb",
+          state: "abc1",
         },
       };
       req.authorization_code = "1234";
@@ -156,8 +233,20 @@ describe("oauth middleware", () => {
       await middleware.redirectToCallback(req, res);
 
       expect(res.redirect).to.have.been.calledWith(
-        `https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb?code=1234`
+        `https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb?code=1234&state=abc1`
       );
+    });
+  });
+
+  describe("redirectToAddress", () => {
+    beforeEach(() => {
+      req.axios.get = sinon.fake.returns({});
+    });
+
+    it("should successfully redirect back to address", async function () {
+      await middleware.redirectToAddress(req, res);
+
+      expect(res.redirect).to.have.been.calledWith(ADDRESS);
     });
   });
 });
