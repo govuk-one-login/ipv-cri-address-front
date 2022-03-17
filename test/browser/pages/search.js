@@ -17,7 +17,7 @@ module.exports = class PlaywrightDevPage {
   }
 
   async goto() {
-    await this.page.goto(this.url);
+    await this.page.goto(this.url); // move into a TEST_BASE_URL global const
   }
 
   isCurrentPage() {
