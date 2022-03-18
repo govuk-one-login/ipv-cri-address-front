@@ -11,7 +11,7 @@ module.exports = {
   APP: {
     BASE_URL: process.env.EXTERNAL_WEBSITE_HOST || "http://localhost:5010",
     PATHS: {
-      ADDRESS: "/address",
+      ADDRESS: "/",
     },
   },
   PORT: process.env.PORT || 5010,
