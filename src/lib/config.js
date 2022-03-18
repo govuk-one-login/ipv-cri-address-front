@@ -4,11 +4,15 @@ module.exports = {
   API: {
     BASE_URL: process.env.API_BASE_URL || "http://localhost:5007",
     PATHS: {
-      AUTHORIZE: "/authorize",
+      AUTHORIZE: "session",
+      AUTHORIZATION_CODE: "authorization-code",
     },
   },
   APP: {
     BASE_URL: process.env.EXTERNAL_WEBSITE_HOST || "http://localhost:5010",
+    PATHS: {
+      ADDRESS: "/address",
+    },
   },
   PORT: process.env.PORT || 5010,
   SESSION_SECRET: process.env.SESSION_SECRET,
