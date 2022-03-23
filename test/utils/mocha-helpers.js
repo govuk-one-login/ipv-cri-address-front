@@ -21,9 +21,6 @@ global.setupDefaultMocks = () => {
       get: sinon.fake(),
       post: sinon.fake(),
     },
-    ordnanceAxios: {
-      get: sinon.fake(),
-    },
   });
 
   req.journeyModel = new JourneyModel(null, {
