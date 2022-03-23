@@ -1,7 +1,9 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 
 const {
-  ORDNANCE: { ORDNANCE_SURVEY_SECRET },
+  API: {
+    PATHS: { POSTCODE_LOOKUP },
+  },
 } = require("../../../lib/config");
 
 class AddressSearchController extends BaseController {
@@ -11,8 +13,9 @@ class AddressSearchController extends BaseController {
     try {
       const addressPostcode = req.body["address-search"];
       const searchResults = await this.search(
-        req.ordnanceAxios,
-        addressPostcode
+        req.axios,
+        addressPostcode,
+        req.session.tokenId
       );
       super.saveValues(req, res, () => {
         req.sessionModel.set("requestIsSuccessful", true);
@@ -27,31 +30,21 @@ class AddressSearchController extends BaseController {
     }
   }
 
-  // TODO move call to backend
-  async search(axios, postcode) {
-    const addressResults = await axios.get(null, {
-      params: {
-        postcode: postcode,
-        key: ORDNANCE_SURVEY_SECRET,
-      },
-    });
+  async search(axios, postcode, sessionId) {
+    const headers = sessionId ? { session_id: sessionId } : undefined; // set the header to null should fail the req but pass the browser tests for now.
 
-    const addresses = addressResults.data.results.map(this.formatAddress);
+    const addressResults = await axios.get(`${POSTCODE_LOOKUP}/${postcode}`, {
+      headers,
+    });
+    const addresses = addressResults.data.map(this.addLabel);
     return addresses;
   }
 
-  // format the address output.
-  formatAddress(address) {
-    const formattedAddress = {};
-    formattedAddress.label = address.DPA.ADDRESS;
-    formattedAddress.buildingNumber =
-      address.DPA.BUILDING_NUMBER || address.DPA.BUILDING_NAME;
-    formattedAddress.streetName = address.DPA.THOROUGHFARE_NAME;
-    formattedAddress.postcode = address.DPA.POSTCODE;
-    formattedAddress.town = address.DPA.POST_TOWN;
-    formattedAddress.text = formattedAddress.label;
-    formattedAddress.value = formattedAddress.label;
-    return formattedAddress;
+  // add a pretty print for drop down menu.
+  // need text + value to be the same to suit the framework.
+  addLabel(address) {
+    const text = `${address.buildingNumber} ${address.thoroughfareName}, ${address.postTown}, ${address.postcode}`;
+    return { ...address, text, value: text };
   }
 }
 

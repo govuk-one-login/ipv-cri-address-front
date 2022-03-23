@@ -20,16 +20,16 @@ class AddressController extends BaseController {
 
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
-      const addressLine1 = req.body["addressLine1"];
-      const addressLine2 = req.body["addressLine2"];
-      const addressTown = req.body["addressTown"];
-      const addressPostcode = req.sessionModel.get("addressPostcode");
+      const buildingNumber = req.body["addressLine1"];
+      const thoroughfareName = req.body["addressLine2"];
+      const postTown = req.body["addressTown"];
+      const postcode = req.sessionModel.get("addressPostcode");
       const address = {
-        addressLine1,
-        addressLine2,
-        addressTown,
-        addressPostcode
-      }
+        buildingNumber,
+        thoroughfareName,
+        postTown,
+        postcode,
+      };
       const sessionsAddresses = req.sessionModel.get("addresses");
 
       const addresses = Array.isArray(sessionsAddresses)

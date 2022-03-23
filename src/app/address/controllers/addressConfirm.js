@@ -33,7 +33,7 @@ class AddressConfirmController extends BaseController {
   }
 
   formatAddress(address) {
-    return `${address.addressLine1}<br>${address.addressLine2},<br>${address.addressTown},<br>${address.addressPostcode}<br>`;
+    return `${address.buildingNumber}<br>${address.thoroughfareName},<br>${address.postTown},<br>${address.postcode}<br>`;
   }
 }
 

@@ -18,7 +18,6 @@ yarn install
 
 - `BASE_URL`: Externally accessible base url of the webserver. Used to generate the callback url as part of credential issuer oauth flows
 - `PORT` - Default port to run webserver on. (Default to `5010`)
-- `ORDNANCE_SURVEY_SECRET`- The api key for the ordnance postcode look up api.
 
 # Testing
 
