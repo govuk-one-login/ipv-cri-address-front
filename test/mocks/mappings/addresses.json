@@ -17,7 +17,7 @@
       "newScenarioState": "AddressResponses",
       "request": {
         "method": "GET",
-        "url": "/ordnance?&postcode=T35T1N&key=secret",
+        "url": "/postcode-lookup/T35T1N",
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-success"
@@ -26,28 +26,20 @@
       },
       "response": {
         "status": 200,
-        "jsonBody": {
-          "results": [
-            {
-              "DPA": {
-                "ADDRESS": "TEST ADDRESS 1",
-                "BUILDING_NUMBER": "1",
-                "POST_TOWN": "TESTTOWN",
-                "POSTCODE": "TE5T1NG",
-                "THOROUGHFARE_NAME": "TEST STREET"
-              }
-            },
-            {
-              "DPA": {
-                "ADDRESS": "TEST ADDRESS 2",
-                "BUILDING_NAME": "2A",
-                "POST_TOWN": "TESTTOWN",
-                "POSTCODE": "TE5T1NG",
-                "THOROUGHFARE_NAME": "TEST STREET"
-              }
-            }
-          ]
-        }
+        "jsonBody": [
+          {
+            "buildingNumber": "1",
+            "postTown": "TESTTOWN",
+            "postcode": "TE5T1NG",
+            "thoroughfareName": "TEST STREET"
+          },
+          {
+            "buildingNumber": "2A",
+            "postTown": "TESTTOWN",
+            "postcode": "TE5T1NG",
+            "thoroughfareName": "TEST STREET"
+          }
+        ]
       }
     },
     {
@@ -56,7 +48,7 @@
       "newScenarioState": "AddressResponses",
       "request": {
         "method": "GET",
-        "url": "/ordnance?&postcode=XXX_XX&key=secret",
+        "url": "/postcode-lookup/XXX_XX",
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-success"
@@ -65,9 +57,7 @@
       },
       "response": {
         "status": 404,
-        "jsonBody": {
-          "results": []
-        }
+        "jsonBody": []
       }
     },
     {
@@ -76,7 +66,7 @@
       "newScenarioState": "AddressResponses",
       "request": {
         "method": "GET",
-        "url": "/ordnance?&postcode=PR3VC0DE&key=secret",
+        "url": "/postcode-lookup/PR3VC0DE",
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-success"
@@ -85,37 +75,26 @@
       },
       "response": {
         "status": 200,
-        "jsonBody": {
-          "results": [
-            {
-              "DPA": {
-                "ADDRESS": "PREVIOUS ADDRESS 1",
-                "BUILDING_NUMBER": "1",
-                "POST_TOWN": "TESTTOWN",
-                "POSTCODE": "PR3VC0DE",
-                "THOROUGHFARE_NAME": "TEST STREET"
-              }
-            },
-            {
-              "DPA": {
-                "ADDRESS": "PREVIOUS ADDRESS 2",
-                "BUILDING_NAME": "2A",
-                "POST_TOWN": "TESTTOWN",
-                "POSTCODE": "PR3VC0DE",
-                "THOROUGHFARE_NAME": "TEST STREET"
-              }
-            },
-            {
-              "DPA": {
-                "ADDRESS": "PREVIOUS ADDRESS 3",
-                "BUILDING_NAME": "3A",
-                "POST_TOWN": "TESTTOWN",
-                "POSTCODE": "PR3VC0DE",
-                "THOROUGHFARE_NAME": "TEST STREET"
-              }
-            }
-          ]
-        }
+        "jsonBody": [
+          {
+            "buildingNumber": "1",
+            "postTown": "TESTTOWN",
+            "postcode": "PR3VC0DE",
+            "thoroughfareName": "TEST STREET"
+          },
+          {
+            "buildingNumber": "2A",
+            "postTown": "TESTTOWN",
+            "postcode": "PR3VC0DE",
+            "thoroughfareName": "TEST STREET"
+          },
+          {
+            "buildingNumber": "3A",
+            "postTown": "TESTTOWN",
+            "postcode": "PR3VC0DE",
+            "thoroughfareName": "TEST STREET"
+          }
+        ]
       }
     }
   ]

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node src/app.js",
-    "start:ci": "ORDNANCE_SURVEY_SECRET=secret NODE_ENV=development API_BASE_URL=http://localhost:8090/ ORDNANCE_SURVEY_URL=http://localhost:8090/ordnance? yarn dev",
+    "start:ci": "NODE_ENV=development API_BASE_URL=http://localhost:8090/ yarn dev",
     "dev": "nodemon src/app.js",
     "build": "yarn build-sass && yarn build-js && yarn copy-assets",
     "build-sass": "rm -rf dist/public/style.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
