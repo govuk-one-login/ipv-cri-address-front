@@ -42,8 +42,7 @@ module.exports = {
             headers: headers,
           }
         );
-
-        req.session.tokenId = apiResponse?.data["session-id"];
+        req.session.tokenId = apiResponse?.data["session_id"];
       }
     } catch (error) {
       next(error);

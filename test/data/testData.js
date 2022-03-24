@@ -1,42 +1,36 @@
 module.exports = {
   apiResponse: {
-    data: {
-      results: [
-        {
-          DPA: {
-            ADDRESS: "1, SOME ROAD, SOMEWHERE, SOMEPOST",
-            BUILDING_NUMBER: "1",
-            THOROUGHFARE_NAME: "SOME ROAD",
-            POST_TOWN: "SOMEWHERE",
-            POSTCODE: "SOMEPOST",
-          },
-        },
-        {
-          DPA: {
-            ADDRESS: "2, SOME ROAD, SOMEWHERE, SOMEPOST",
-            BUILDING_NAME: "NAMED BUILDING",
-            THOROUGHFARE_NAME: "SOME ROAD",
-            POST_TOWN: "SOMEWHERE",
-            POSTCODE: "SOMEPOST",
-          },
-        },
-      ],
-    },
+    data: [
+      {
+        buildingNumber: "1",
+        thoroughfareName: "SOME ROAD",
+        postTown: "SOMEWHERE",
+        postcode: "SOMEPOST",
+      },
+      {
+        buildingNumber: "NAMED BUILDING",
+        thoroughfareName: "SOME ROAD",
+        postTown: "SOMEWHERE",
+        postcode: "SOMEPOST",
+      },
+    ],
   },
   formattedAddressed: [
     {
       buildingNumber: "1",
-      streetName: "SOME ROAD",
-      town: "SOMEWHERE",
+      thoroughfareName: "SOME ROAD",
+      postTown: "SOMEWHERE",
       postcode: "SOMEPOST",
-      label: "1, SOMEROAD, SOMEWHERE, SOMEPOST",
+      text: "1, SOMEROAD, SOMEWHERE, SOMEPOST",
+      value: "1, SOMEROAD, SOMEWHERE, SOMEPOST",
     },
     {
       buildingNumber: "NAMED BUILDING",
-      streetName: "SOME ROAD",
-      town: "SOMEWHERE",
+      thoroughfareName: "SOME ROAD",
+      postTown: "SOMEWHERE",
       postcode: "SOMEPOST",
-      label: "NAMED BUILDING, SOMEROAD, SOMEWHERE, SOMEPOST",
+      text: "NAMED BUILDING, SOMEROAD, SOMEWHERE, SOMEPOST",
+      value: "NAMED BUILDING, SOMEROAD, SOMEWHERE, SOMEPOST",
     },
   ],
 };

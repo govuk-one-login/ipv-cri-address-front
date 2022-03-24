@@ -36,8 +36,8 @@ describe("address controller", () => {
 
     const savedAddress = req.session.test.addresses[0];
     expect(next).to.have.been.calledOnce;
-    expect(savedAddress.addressLine1).to.equal(addressToSave.addressLine1);
-    expect(savedAddress.addressLine2).to.equal(addressToSave.addressLine2);
-    expect(savedAddress.addressTown).to.equal(addressToSave.addressTown);
+    expect(savedAddress.buildingNumber).to.equal(addressToSave.addressLine1);
+    expect(savedAddress.thoroughfareName).to.equal(addressToSave.addressLine2);
+    expect(savedAddress.postTown).to.equal(addressToSave.addressTown);
   });
 });

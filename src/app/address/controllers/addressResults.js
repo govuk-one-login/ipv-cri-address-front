@@ -15,15 +15,11 @@ class AddressResultsController extends BaseController {
         const allAddresses = req.sessionModel.get("searchResults");
 
         const choosenAddress = allAddresses.find(
-          (address) => address.label === selectedAddress
+          (address) => address.text === selectedAddress
         );
 
-        const address = {
-          addressLine1: choosenAddress.buildingNumber,
-          addressLine2: choosenAddress.streetName,
-          addressTown: choosenAddress.town,
-          addressPostcode: choosenAddress.postcode,
-        };
+        delete choosenAddress.value;
+        delete choosenAddress.text;
 
         const sessionAddresses = req.sessionModel.get("addresses");
 
@@ -31,7 +27,7 @@ class AddressResultsController extends BaseController {
           ? sessionAddresses
           : [];
 
-        addresses.push(address);
+        addresses.push(choosenAddress);
 
         req.sessionModel.set("addresses", addresses);
         callback();

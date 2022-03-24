@@ -34,24 +34,24 @@ describe("Address result controller", () => {
   it("Should set the chosen address in the session", async () => {
     const expectedResponse = testData.formattedAddressed[1];
 
-    req.body["address-selection"] = expectedResponse.label;
+    req.body["address-selection"] = expectedResponse.value;
 
     req.sessionModel.set("searchResults", testData.formattedAddressed);
 
     await addressResult.saveValues(req, res, next);
 
     expect(next).to.have.been.calledOnce;
-    expect(req.session.test.addresses[0].addressLine1).to.equal(
+    expect(req.session.test.addresses[0].buildingNumber).to.equal(
       expectedResponse.buildingNumber
     );
-    expect(req.session.test.addresses[0].addressLine2).to.equal(
-      expectedResponse.streetName
+    expect(req.session.test.addresses[0].thoroughfareName).to.equal(
+      expectedResponse.thoroughfareName
     );
-    expect(req.session.test.addresses[0].addressPostcode).to.equal(
+    expect(req.session.test.addresses[0].postcode).to.equal(
       expectedResponse.postcode
     );
-    expect(req.session.test.addresses[0].addressTown).to.equal(
-      expectedResponse.town
+    expect(req.session.test.addresses[0].postTown).to.equal(
+      expectedResponse.postTown
     );
   });
 });

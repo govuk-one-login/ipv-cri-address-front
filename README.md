@@ -18,7 +18,6 @@ yarn install
 
 - `BASE_URL`: Externally accessible base url of the webserver. Used to generate the callback url as part of credential issuer oauth flows
 - `PORT` - Default port to run webserver on. (Default to `5010`)
-- `ORDNANCE_SURVEY_SECRET`- The api key for the ordnance postcode look up api.
 
 # Testing
 
@@ -35,7 +34,6 @@ The frontend can be configure to use this server through changing two environmen
 
 - `NODE_ENV = development` - this enables a midldeware that passes the `x-scenario-id` header from web requests through to the API.
 - `API_BASE_URL = http://localhost:8090` - this points the frontend to the wiremock instance.
-- `ORDNANCE_API_URL = http://localhost:8090` - this points to an external API for address lookup. <!-- TODO: Move Ordnance to BE -->
 
 A browser extension that can modify headers can be used to set the value of the header in a web browser. Example - [Mod Header](https://modheader.com)
 

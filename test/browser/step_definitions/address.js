@@ -102,6 +102,6 @@ When(/they (?:have )add(?:ed)? their details manually$/, async function () {
 
 When(/they have selected their previous address$/, async function () {
   const resultsPage = new ResultsPage(this.page);
-  await resultsPage.selectAddress("PREVIOUS ADDRESS 3");
+  await resultsPage.selectAddress("3A TEST STREET, TESTTOWN, PR3VC0DE");
   await resultsPage.continue();
 });
