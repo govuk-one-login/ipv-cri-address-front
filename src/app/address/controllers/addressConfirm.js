@@ -33,7 +33,14 @@ class AddressConfirmController extends BaseController {
   }
 
   formatAddress(address) {
-    return `${address.buildingNumber}<br>${address.thoroughfareName},<br>${address.postTown},<br>${address.postcode}<br>`;
+    let buildingNameNumber;
+    if (address.buildingName && address.buildingNumber) {
+      buildingNameNumber = `${address.buildingNumber} ${address.buildingName}`;
+    } else {
+      buildingNameNumber = address.buildingName || address.buildingNumber;
+    }
+
+    return `${buildingNameNumber}<br>${address.thoroughfareName},<br>${address.postTown},<br>${address.postcode}<br>`;
   }
 }
 

@@ -43,7 +43,16 @@ class AddressSearchController extends BaseController {
   // add a pretty print for drop down menu.
   // need text + value to be the same to suit the framework.
   addLabel(address) {
-    const text = `${address.buildingNumber} ${address.thoroughfareName}, ${address.postTown}, ${address.postcode}`;
+
+    let buildingNameNumber;
+    if (address.buildingName && address.buildingNumber) {
+      buildingNameNumber = `${address.buildingNumber} ${address.buildingName}`;
+    } else {
+      buildingNameNumber = address.buildingName || address.buildingNumber;
+    }
+
+    const text = `${buildingNameNumber} ${address.thoroughfareName}, ${address.postTown}, ${address.postcode}`;
+
     return { ...address, text, value: text };
   }
 }

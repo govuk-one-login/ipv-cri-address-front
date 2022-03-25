@@ -35,8 +35,16 @@ describe("Address confirmation controller", () => {
 
     req.sessionModel.set("addresses", addresses);
 
+    // factor in the address might have building name or number or both
     const formattedAddresses = addresses.map((address) => {
-      return `${address.buildingNumber}<br>${address.thoroughfareName},<br>${address.postTown},<br>${address.postcode}<br>`;
+      let buildingNameNumber;
+      if (address.buildingName && address.buildingNumber) {
+        buildingNameNumber = `${address.buildingNumber} ${address.buildingName}`;
+      } else {
+        buildingNameNumber = address.buildingName || address.buildingNumber;
+      }
+
+      return `${buildingNameNumber}<br>${address.thoroughfareName},<br>${address.postTown},<br>${address.postcode}<br>`;
     });
 
     const currentAddress = formattedAddresses.shift();
