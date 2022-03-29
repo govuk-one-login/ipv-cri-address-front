@@ -33,4 +33,11 @@ module.exports = {
       value: "NAMED BUILDING, SOMEROAD, SOMEWHERE, SOMEPOST",
     },
   ],
+  addressApiResponse: {
+    data: {
+      code: "mySuperSecretCode",
+      state: "myAwesomeState",
+      redirect_uri: "http://localhost:8085/callback",
+    },
+  },
 };
