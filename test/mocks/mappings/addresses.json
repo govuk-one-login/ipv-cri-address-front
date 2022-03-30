@@ -96,6 +96,30 @@
           }
         ]
       }
+    },
+    {
+      "scenarioName": "Address",
+      "requiredScenarioState": "AddressResponses",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "PUT",
+        "url": "/address",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-success"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "jsonBody": {
+          "data": {
+            "code": "mySuperSecretCode",
+            "state": "myAwesomeState",
+            "redirect_uri": "http://localhost:8085/callback"
+          }
+        }
+      }
     }
   ]
 }

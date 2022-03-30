@@ -1,11 +1,21 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 const AddressConfirmController = require("./addressConfirm");
 const addressFactory = require("../../../../test/utils/addressFactory");
+const { expect } = require("chai");
+
+const testData = require("../../../../test/data/testData");
+const {
+  API: {
+    PATHS: { SAVE_ADDRESS },
+  },
+} = require("../../../lib/config");
 
 let req;
 let res;
 let next;
 let sandbox;
+let addresses = [];
+const sessionId = "session-id-123";
 
 beforeEach(() => {
   sandbox = sinon.createSandbox();
@@ -13,6 +23,7 @@ beforeEach(() => {
   req = setup.req;
   res = setup.res;
   next = setup.next;
+  req.session.tokenId = sessionId;
 });
 
 afterEach(() => {
@@ -23,6 +34,8 @@ describe("Address confirmation controller", () => {
   let addressConfirm;
 
   beforeEach(() => {
+    addresses = addressFactory(3);
+    req.sessionModel.set("addresses", addresses);
     addressConfirm = new AddressConfirmController({ route: "/test" });
   });
 
@@ -31,10 +44,6 @@ describe("Address confirmation controller", () => {
   });
 
   it("Should format the current address and previous addresses in locals", async () => {
-    const addresses = addressFactory(3);
-
-    req.sessionModel.set("addresses", addresses);
-
     // factor in the address might have building name or number or both
     const formattedAddresses = addresses.map((address) => {
       let buildingNameNumber;
@@ -56,5 +65,17 @@ describe("Address confirmation controller", () => {
     addressConfirm.locals(req, res, next);
     expect(next).to.have.been.calledOnce;
     expect(next).to.have.been.calledWith(null, params);
+  });
+
+  it("Should put address to address api", async () => {
+    req.axios.put = sinon.fake.returns(testData.addressApiResponse);
+
+    addressConfirm.saveValues(req, res, next);
+    expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
+      headers: {
+        session_id: sessionId,
+      },
+    });
+    expect(next).to.not.have.been.called;
   });
 });

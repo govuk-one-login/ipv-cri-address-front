@@ -20,6 +20,7 @@ global.setupDefaultMocks = () => {
     axios: {
       get: sinon.fake(),
       post: sinon.fake(),
+      put: sinon.fake(),
     },
   });
 

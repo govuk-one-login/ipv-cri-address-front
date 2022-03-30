@@ -5,8 +5,9 @@
 {% extends "form-template.njk" %}
 {% set hmpoPageKey = "address-confirm" %}
 
-{% block innerContent %}
-  {{ super() }}
+{% block mainContent %}
+
+  <h1 id="header">{{translate("pages.address-confirm.title")}}</h1>
 
   {{ govukWarningText({
     text: translate("pages.address-confirm.warning"),
@@ -34,10 +35,16 @@
 
   {% endif %}
 
-  {{hmpoSubmit(ctx, {
-    id: "addPreviousAddresses",
-    key: "Add another address path"
-  })}}
+  {% call hmpoForm(ctx) %}
+    {{ hmpoSubmit(ctx, {
+        text: translate("buttons.next"),
+        attributes: {
+        "data-id": "next"
+      }
+    }) }}
+  {% endcall %}
+
+
 
   <br>
 {% endblock %}
