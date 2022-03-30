@@ -38,7 +38,7 @@ class AddressConfirmController extends BaseController {
           req.session.tokenId
         );
 
-        res.json({ response: data }); // todo handle redirect
+        this.redirectToCallback(res, data.redirect_uri, data.state, data.code);
       } catch (err) {
         callback(err);
       }
@@ -64,6 +64,15 @@ class AddressConfirmController extends BaseController {
     });
 
     return resp.data;
+  }
+
+  redirectToCallback(res, uri, state, code) {
+    const url = new URL(uri);
+    url.searchParams.append("code", code);
+    url.searchParams.append("state", state);
+    url.searchParams.append("id", "address");
+
+    res.redirect(url.toString());
   }
 }
 
