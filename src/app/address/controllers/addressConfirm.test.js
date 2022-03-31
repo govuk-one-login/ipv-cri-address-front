@@ -67,15 +67,26 @@ describe("Address confirmation controller", () => {
     expect(next).to.have.been.calledWith(null, params);
   });
 
-  it("Should put address to address api", async () => {
-    req.axios.put = sinon.fake.returns(testData.addressApiResponse);
+  it("Should put address to address api and redirect back to callback", async () => {
+    req.axios.put = sinon.fake.resolves(testData.addressApiResponse);
 
-    addressConfirm.saveValues(req, res, next);
+    const redirectURI = testData.addressApiResponse.data.redirect_uri;
+    const code = testData.addressApiResponse.data.code;
+    const state = testData.addressApiResponse.data.state;
+    const expectedRedirectURI = `${redirectURI}?code=${code}&state=${state}&id=address`;
+
+    await addressConfirm.saveValues(req, res, next);
+
     expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
       headers: {
         session_id: sessionId,
       },
     });
-    expect(next).to.not.have.been.called;
+
+    // All methods which send a response emit an 'end' response
+    // https://www.npmjs.com/package/reqres#usage
+    res.on("end", () => {
+      expect(res.redirect).to.have.been.calledWith(expectedRedirectURI);
+    });
   });
 });
