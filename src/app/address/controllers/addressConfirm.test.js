@@ -70,23 +70,30 @@ describe("Address confirmation controller", () => {
   it("Should put address to address api and redirect back to callback", async () => {
     req.axios.put = sinon.fake.resolves(testData.addressApiResponse);
 
-    const redirectURI = testData.addressApiResponse.data.redirect_uri;
-    const code = testData.addressApiResponse.data.code;
-    const state = testData.addressApiResponse.data.state;
-    const expectedRedirectURI = `${redirectURI}?code=${code}&state=${state}&id=address`;
+    await addressConfirm.saveValues(req, res, () => {
+      expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
+        headers: {
+          session_id: sessionId,
+        },
+      });
+      expect(req.session.test.authorization_code).to.be.equal(
+        testData.addressApiResponse.data.code
+      );
+    });
+  });
 
-    await addressConfirm.saveValues(req, res, next);
+  it("Should set error state if no code is returned", async () => {
+    const response = testData.addressApiResponse;
+    delete response.data.code;
+    req.axios.put = sinon.fake.resolves(response);
 
-    expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
-      headers: {
-        session_id: sessionId,
-      },
+    await addressConfirm.saveValues(req, res, () => {
+      expect(req.session.test.error.code).to.be.equal("server_error");
+      expect(req.session.test.error_description).to.be.equal(
+        "Failed to retrieve authorization code"
+      );
     });
 
-    // All methods which send a response emit an 'end' response
-    // https://www.npmjs.com/package/reqres#usage
-    res.on("end", () => {
-      expect(res.redirect).to.have.been.calledWith(expectedRedirectURI);
-    });
+    // expect(req.session.test.error).to.be.equal("server_error");
   });
 });

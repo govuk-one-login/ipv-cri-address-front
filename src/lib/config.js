@@ -6,6 +6,7 @@ module.exports = {
     PATHS: {
       AUTHORIZE: "session",
       AUTHORIZATION_CODE: "authorization-code",
+      AUTHORIZATION_TOKEN: "token",
       POSTCODE_LOOKUP: "postcode-lookup",
       SAVE_ADDRESS: "address",
     },

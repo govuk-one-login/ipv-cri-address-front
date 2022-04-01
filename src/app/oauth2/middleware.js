@@ -1,6 +1,6 @@
 const {
   API: {
-    PATHS: { AUTHORIZE, AUTHORIZATION_CODE },
+    PATHS: { AUTHORIZE },
   },
   APP: {
     PATHS: { ADDRESS },
@@ -50,39 +50,28 @@ module.exports = {
     next();
   },
 
-  retrieveAuthorizationCode: async (req, res, next) => {
+  redirectToCallback: async (req, res, next) => {
     try {
-      const oauthParams = {
-        ...req.session.authParams,
-        scope: "openid",
-      };
+      const authCode = req.session["hmpo-wizard-address"].authorization_code;
 
-      const apiResponse = await req.axios.get(AUTHORIZATION_CODE, {
-        params: oauthParams,
-        headers: {
-          sessionId: req.session.tokenId,
-        },
-      });
+      const url = new URL(req.session.authParams.redirect_uri);
 
-      const code = apiResponse?.data?.code?.value;
+      if (!authCode) {
+        const error = req.session["hmpo-wizard-address"].error;
+        const errorCode = error?.code;
+        const errorDescription = error?.description ?? error?.message;
 
-      if (!code) {
-        res.status(500);
-        return res.send("Missing authorization code");
+        url.searchParams.append("error", errorCode);
+        url.searchParams.append("error_description", errorDescription);
+      } else {
+        url.searchParams.append("client_id", req.session.authParams.client_id);
+        url.searchParams.append("state", req.session.authParams.state);
+        url.searchParams.append("code", authCode);
       }
-
-      req.authorization_code = code;
-
-      next();
+      res.redirect(url.toString());
     } catch (e) {
       next(e);
     }
-  },
-
-  redirectToCallback: async (req, res) => {
-    const redirectURL = `${req.session.authParams.redirect_uri}?code=${req.authorization_code}&state=${req.session.authParams.state}`;
-
-    res.redirect(redirectURL);
   },
 
   redirectToAddress: async (req, res) => {
