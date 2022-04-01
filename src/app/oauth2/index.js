@@ -5,7 +5,6 @@ const router = express.Router();
 const {
   addAuthParamsToSession,
   redirectToCallback,
-  retrieveAuthorizationCode,
   initSessionWithJWT,
   redirectToAddress,
   addJWTToRequest,
@@ -18,6 +17,6 @@ router.get(
   initSessionWithJWT,
   redirectToAddress
 );
-router.post("/authorize", retrieveAuthorizationCode, redirectToCallback);
+router.get("/callback", redirectToCallback);
 
 module.exports = router;

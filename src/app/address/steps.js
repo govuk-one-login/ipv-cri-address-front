@@ -47,7 +47,7 @@ module.exports = {
         value: true,
         next: "previous",
       },
-      "done",
+      "/oauth2/callback",
     ],
   },
   "/previous": {

@@ -38,7 +38,17 @@ class AddressConfirmController extends BaseController {
           req.session.tokenId
         );
 
-        res.json({ response: data }); // todo handle redirect
+        if (!data.code) {
+          const error = {
+            code: "server_error",
+            error_description: "Failed to retrieve authorization code",
+          };
+          req.sessionModel.set("error", error);
+          callback();
+        } else {
+          req.sessionModel.set("authorization_code", data.code);
+          callback();
+        }
       } catch (err) {
         callback(err);
       }
@@ -65,6 +75,7 @@ class AddressConfirmController extends BaseController {
 
     return resp.data;
   }
+
 }
 
 module.exports = AddressConfirmController;
