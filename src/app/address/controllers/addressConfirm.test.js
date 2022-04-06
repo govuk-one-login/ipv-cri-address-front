@@ -88,6 +88,7 @@ describe("Address confirmation controller", () => {
     req.axios.put = sinon.fake.resolves(response);
 
     await addressConfirm.saveValues(req, res, () => {
+      expect(true).to.be.false;
       expect(req.session.test.error.code).to.be.equal("server_error");
       expect(req.session.test.error_description).to.be.equal(
         "Failed to retrieve authorization code"
