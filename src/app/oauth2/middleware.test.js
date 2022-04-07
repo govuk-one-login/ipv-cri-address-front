@@ -28,10 +28,7 @@ describe("oauth middleware", () => {
     beforeEach(() => {
       req = {
         query: {
-          response_type: "code",
           client_id: "s6BhdRkqt3",
-          state: "xyz",
-          redirect_uri: "https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb",
           unusedParam: "not used",
         },
         session: {},
@@ -42,10 +39,7 @@ describe("oauth middleware", () => {
       await middleware.addAuthParamsToSession(req, res, next);
 
       expect(req.session.authParams).to.deep.equal({
-        response_type: req.query.response_type,
         client_id: req.query.client_id,
-        state: req.query.state,
-        redirect_uri: req.query.redirect_uri,
       });
     });
 
@@ -86,11 +80,7 @@ describe("oauth middleware", () => {
       };
       req.session = {
         authParams: {
-          response_type: "code",
           client_id: "s6BhdRkqt3",
-          state: "xyz",
-          redirect_uri: "https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb",
-          scope: "openid",
         },
       };
 
@@ -104,18 +94,10 @@ describe("oauth middleware", () => {
 
     it("should call axios with the correct parameters", async function () {
       await middleware.initSessionWithJWT(req, res, next);
-      expect(req.axios.post).to.have.been.calledWith(
-        AUTHORIZE,
-        {
-          request: exampleJwt,
-          ...req.session.authParams,
-        },
-        {
-          headers: {
-            client_id: req.query.client_id,
-          },
-        }
-      );
+      expect(req.axios.post).to.have.been.calledWith(AUTHORIZE, {
+        request: exampleJwt,
+        ...req.session.authParams,
+      });
       expect((req.session.tokenId = "abc1234"));
     });
 
