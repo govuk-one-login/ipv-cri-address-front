@@ -4,6 +4,7 @@ const {
   ResultsPage,
   ConfirmPage,
   AddressPage,
+  IPVCorePage,
 } = require("../pages");
 const { expect } = require("chai");
 
@@ -15,8 +16,10 @@ Given(/^^([A-Za-z ])+ is using the system$/, async function (name) {
 });
 
 Given(/^they (?:have )?start(?:ed)? the address journey$/, async function () {
+  const ipvCorePage = new IPVCorePage(this.page);
+  await ipvCorePage.chooseCredentialIssuer();
+
   const searchPage = new SearchPage(this.page);
-  await searchPage.goto();
   expect(searchPage.isCurrentPage()).to.be.true;
   expect(await searchPage.getPageTitle()).to.not.be.empty;
 });
