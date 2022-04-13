@@ -29,6 +29,10 @@ AfterAll(async function () {
 
 // Add scenario header
 Before(async function ({ pickle } = {}) {
+  if (!(process.env.MOCK_API === "true")) {
+    return;
+  }
+
   const tags = pickle.tags || [];
   const tag = tags.find((tag) => tag.name.startsWith("@mock-api:"));
 
