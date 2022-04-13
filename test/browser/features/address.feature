@@ -6,6 +6,7 @@ Feature: Searching and adding an Address
     Given Authenticalable Address Amy is using the system
     And they have started the address journey
 
+  @live
   Scenario: Searching and successfully returning a postcode
     Given they searched for their postcode "T35T1N"
     Then they should see the results page
