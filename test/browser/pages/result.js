@@ -11,7 +11,7 @@ module.exports = class PlaywrightDevPage {
     return this.page.url() === this.url;
   }
 
-  async selectAddress(value = "2A TEST STREET, TESTTOWN, TE5T1NG") {
+  async selectAddress(value = "10 WHITECHAPEL HIGH STREET, LONDON, E1 8QS") {
     await this.page.click(".govuk-select");
     await this.page.selectOption(".govuk-select", {
       value,
