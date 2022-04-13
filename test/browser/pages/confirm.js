@@ -4,7 +4,7 @@ module.exports = class PlaywrightDevPage {
    */
   constructor(page) {
     this.page = page;
-    this.url = "http://localhost:5010/confirm";
+    this.path = "/confirm";
   }
 
   async changeAddress() {
@@ -20,6 +20,8 @@ module.exports = class PlaywrightDevPage {
   }
 
   isCurrentPage() {
-    return this.page.url() === this.url;
+    const { pathname } = new URL(this.page.url());
+
+    return pathname === this.path;
   }
 };

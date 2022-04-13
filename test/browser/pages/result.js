@@ -4,11 +4,13 @@ module.exports = class PlaywrightDevPage {
    */
   constructor(page) {
     this.page = page;
-    this.url = "http://localhost:5010/results";
+    this.path = "/results";
   }
 
   isCurrentPage() {
-    return this.page.url() === this.url;
+    const { pathname } = new URL(this.page.url());
+
+    return pathname === this.path;
   }
 
   async selectAddress(value = "10 WHITECHAPEL HIGH STREET, LONDON, E1 8QS") {
