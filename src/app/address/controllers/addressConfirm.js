@@ -27,32 +27,30 @@ class AddressConfirmController extends BaseController {
     });
   }
 
-  saveValues(req, res, callback) {
-    super.saveValues(req, res, async () => {
-      try {
-        const addresses = req.sessionModel.get("addresses");
-
-        const data = await this.saveAddressess(
-          req.axios,
-          addresses,
-          req.session.tokenId
-        );
-
+  async saveValues(req, res, callback) {
+    try {
+      const addresses = req.sessionModel.get("addresses");
+      const data = await this.saveAddressess(
+        req.axios,
+        addresses,
+        req.session.tokenId
+      );
+      super.saveValues(req, res, () => {
         if (!data.code) {
           const error = {
             code: "server_error",
             error_description: "Failed to retrieve authorization code",
           };
+
           req.sessionModel.set("error", error);
-          callback();
         } else {
           req.sessionModel.set("authorization_code", data.code);
-          callback();
         }
-      } catch (err) {
-        callback(err);
-      }
-    });
+        callback();
+      });
+    } catch (err) {
+      callback(err);
+    }
   }
 
   formatAddress(address) {
@@ -75,7 +73,6 @@ class AddressConfirmController extends BaseController {
 
     return resp.data;
   }
-
 }
 
 module.exports = AddressConfirmController;

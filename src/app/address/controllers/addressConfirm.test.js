@@ -70,16 +70,15 @@ describe("Address confirmation controller", () => {
   it("Should put address to address api and redirect back to callback", async () => {
     req.axios.put = sinon.fake.resolves(testData.addressApiResponse);
 
-    await addressConfirm.saveValues(req, res, () => {
-      expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
-        headers: {
-          session_id: sessionId,
-        },
-      });
-      expect(req.session.test.authorization_code).to.be.equal(
-        testData.addressApiResponse.data.code
-      );
+    await addressConfirm.saveValues(req, res, next);
+    expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
+      headers: {
+        session_id: sessionId,
+      },
     });
+    expect(req.session.test.authorization_code).to.be.equal(
+      testData.addressApiResponse.data.code
+    );
   });
 
   it("Should set error state if no code is returned", async () => {
@@ -87,13 +86,10 @@ describe("Address confirmation controller", () => {
     delete response.data.code;
     req.axios.put = sinon.fake.resolves(response);
 
-    await addressConfirm.saveValues(req, res, () => {
-      expect(req.session.test.error.code).to.be.equal("server_error");
-      expect(req.session.test.error_description).to.be.equal(
-        "Failed to retrieve authorization code"
-      );
-    });
-
-    // expect(req.session.test.error).to.be.equal("server_error");
+    await addressConfirm.saveValues(req, res, next);
+    expect(req.session.test.error.code).to.be.equal("server_error");
+    expect(req.session.test.error.error_description).to.be.equal(
+      "Failed to retrieve authorization code"
+    );
   });
 });
