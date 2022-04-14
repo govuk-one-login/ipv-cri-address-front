@@ -60,6 +60,8 @@
     "wait-on": "6.0.1"
   },
   "dependencies": {
+    "@axe-core/cli": "^4.4.2",
+    "@axe-core/playwright": "^4.4.2",
     "axios": "0.26.1",
     "cfenv": "1.2.4",
     "copyfiles": "2.4.1",
