@@ -1,3 +1,5 @@
+const AxeBuilder = require("@axe-core/playwright").default;
+
 module.exports = class PlaywrightDevPage {
   /**
    * @param {import('@playwright/test').Page} page
@@ -15,6 +17,12 @@ module.exports = class PlaywrightDevPage {
     // Home
     await this.page.goto(this.url);
     await this.page.click("button");
+
+    if (process.env.TEST_ACCESSIBILITY === "true") {
+      const results = await new AxeBuilder({ page: this.page }).analyze();
+      console.log(Object.keys(results)); // eslint-disable-line
+      console.log(results.violations[0]); // eslint-disable-line
+    }
 
     // Credential Issuers
     await this.page
