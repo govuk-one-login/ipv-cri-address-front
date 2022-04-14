@@ -6,14 +6,15 @@ Feature: Searching and adding an Address
     Given Authenticalable Address Amy is using the system
     And they have started the address journey
 
+  @live
   Scenario: Searching and successfully returning a postcode
-    Given they searched for their postcode "T35T1N"
+    Given they searched for their postcode "E1 8QS"
     Then they should see the results page
     And they have selected an address
     Then they should be able to confirm the address
 
   Scenario: Searching and unsuccessfully finding an address
-    Given they searched for their postcode "XXX_XX"
+    Given they searched for their postcode "X1 1XX"
     Then they should see the address page
     When they have added their details manually
     Then they should be able to confirm the address

@@ -26,8 +26,6 @@ jobs:
         run: yarn lint
       - name: Run test and write coverage
         run: yarn test:coverage
-      - name: Run browser tests
-        run: npm run test:browser:ci
       - name: Run sonarcloud scan
         if: ${{ github.actor != 'dependabot[bot]' }}
         uses: sonarsource/sonarcloud-github-action@master

@@ -17,7 +17,7 @@
       "newScenarioState": "AddressResponses",
       "request": {
         "method": "GET",
-        "url": "/postcode-lookup/T35T1N",
+        "url": "/postcode-lookup/E1%208QS",
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-success"

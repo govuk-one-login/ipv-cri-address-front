@@ -4,7 +4,7 @@ module.exports = class PlaywrightDevPage {
    */
   constructor(page) {
     this.page = page;
-    this.url = "http://localhost:5010/address";
+    this.path = "/address";
   }
 
   async continue() {
@@ -20,9 +20,10 @@ module.exports = class PlaywrightDevPage {
   }
 
   isCurrentPage() {
-    return this.page.url() === this.url;
-  }
+    const { pathname } = new URL(this.page.url());
 
+    return pathname === this.path;
+  }
   async addHouseNameOrNumber(value = "1A") {
     await this.page.fill("#addressLine1", value);
   }

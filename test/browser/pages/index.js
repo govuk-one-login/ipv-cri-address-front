@@ -5,4 +5,5 @@ module.exports = {
   ErrorPage: require("./error.js"),
   ResultsPage: require("./result.js"),
   SearchPage: require("./search.js"),
+  IPVCorePage: require("./ipv-core"),
 };
