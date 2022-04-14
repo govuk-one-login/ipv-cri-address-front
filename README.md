@@ -41,6 +41,16 @@ A browser extension that can modify headers can be used to set the value of the 
 
 In order to support consisten use of headers for API requests. [middleware](./src/lib/axios.js) is applied to add an instance of [axios](https://axios-http.com/) on each reqest onto `req.axios`. This is then reused in any code that uses the API.
 
+## Testing Environment Variables
+
+#### Running against a deployed system
+
+| Variable                | Value                                              | Comment                                                                                                    |
+|-------------------------|----------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| CREDENTIAL_ISSUER_LABEL | Address CRI Dev                                    | There might be many different buttons on the credential issuer page, this allows selection of a single one |
+| CORE_STUB_URL           | https://di-ipv-core-stub.london.cloudapps.digital/ | Initial host to start the web journey on. Will be either Core or a Core stub.                              |
+| MOCK_API                | false                                              | Should the automatic mocking be used                                                                       |
+
 ## Browser tests.
 
 Browser based tests can be run against the mock server, and should be able to be run against an instance of the API.
@@ -49,8 +59,9 @@ These tests are written using [Cucumber](https://cucumber.io/docs/installation/j
 
 They can be run using:
 
-`yarn run test:browser`
-
+```sh
+./test/brower $ cucumber-js
+```
 ## Using mocked scenario data
 
 Any cucumber feature or scenario with a tag prefixed with `@mock-api:`
@@ -63,6 +74,17 @@ eg:
   ...
 ```
 This scenario will be configured to send a `scenario-id` header of `address-error` on every web browser request.
+
+
+## Using live data
+
+Most scenarios will not be able to run against a live system. These include journey flows involving errors. The few scenarios that can be run against both live and mocked data should be tagged with "@live" to make it clear they can be run against live.
+
+These should be able to be run using cucumber-js as below:
+
+```sh
+./test/brower $ cucumber-js --tags "@live"
+```
 
 ### Code Owners
 
