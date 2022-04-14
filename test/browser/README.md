@@ -39,3 +39,12 @@ Required environment variables:
    - `yarn run` runs from the root directory, so the full path to the config file needs to be specified
 
 
+## Accessibility
+
+Accessibility tests can be run as a part of the existing browser journeys using an environment variable.
+
+| Variable           | Value | Comment                                                  |
+|--------------------|-------|----------------------------------------------------------|
+| TEST_ACCESSIBILITY | true  | This conditionally enables accessibility tests to be run |
+
+

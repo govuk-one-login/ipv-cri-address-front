@@ -76,6 +76,14 @@ eg:
 This scenario will be configured to send a `scenario-id` header of `address-error` on every web browser request.
 
 
+### Accessibility
+
+Accessiblity tests can be run as a part of the existing browser journeys using an environment variable.
+
+| Variable           | Value | Comment                                                  |
+|--------------------|-------|----------------------------------------------------------|
+| TEST_ACCESSIBILITY | true  | This conditionally enables accessibility tests to be run |
+
 ## Using live data
 
 Most scenarios will not be able to run against a live system. These include journey flows involving errors. The few scenarios that can be run against both live and mocked data should be tagged with "@live" to make it clear they can be run against live.
