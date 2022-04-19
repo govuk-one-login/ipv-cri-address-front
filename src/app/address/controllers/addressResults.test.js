@@ -44,8 +44,8 @@ describe("Address result controller", () => {
     expect(req.session.test.addresses[0].buildingNumber).to.equal(
       expectedResponse.buildingNumber
     );
-    expect(req.session.test.addresses[0].thoroughfareName).to.equal(
-      expectedResponse.thoroughfareName
+    expect(req.session.test.addresses[0].streetName).to.equal(
+      expectedResponse.streetName
     );
     expect(req.session.test.addresses[0].postcode).to.equal(
       expectedResponse.postcode

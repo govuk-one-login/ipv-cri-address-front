@@ -21,12 +21,12 @@ class AddressController extends BaseController {
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
       const buildingNumber = req.body["addressLine1"];
-      const thoroughfareName = req.body["addressLine2"];
+      const streetName = req.body["addressLine2"];
       const postTown = req.body["addressTown"];
       const postcode = req.sessionModel.get("addressPostcode");
       const address = {
         buildingNumber,
-        thoroughfareName,
+        streetName,
         postTown,
         postcode,
       };
