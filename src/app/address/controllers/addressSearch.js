@@ -51,7 +51,7 @@ class AddressSearchController extends BaseController {
       buildingNameNumber = address.buildingName || address.buildingNumber;
     }
 
-    const text = `${buildingNameNumber} ${address.thoroughfareName}, ${address.postTown}, ${address.postcode}`;
+    const text = `${buildingNameNumber} ${address.streetName}, ${address.postTown}, ${address.postcode}`;
 
     return { ...address, text, value: text };
   }

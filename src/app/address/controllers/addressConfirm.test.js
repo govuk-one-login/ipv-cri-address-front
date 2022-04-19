@@ -53,7 +53,7 @@ describe("Address confirmation controller", () => {
         buildingNameNumber = address.buildingName || address.buildingNumber;
       }
 
-      return `${buildingNameNumber}<br>${address.thoroughfareName},<br>${address.postTown},<br>${address.postcode}<br>`;
+      return `${buildingNameNumber}<br>${address.streetName},<br>${address.postTown},<br>${address.postcode}<br>`;
     });
 
     const currentAddress = formattedAddresses.shift();

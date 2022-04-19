@@ -31,13 +31,13 @@
             "buildingNumber": "1",
             "postTown": "TESTTOWN",
             "postcode": "TE5T1NG",
-            "thoroughfareName": "TEST STREET"
+            "streetName": "TEST STREET"
           },
           {
             "buildingNumber": "2A",
             "postTown": "TESTTOWN",
             "postcode": "TE5T1NG",
-            "thoroughfareName": "TEST STREET"
+            "streetName": "TEST STREET"
           }
         ]
       }
@@ -80,19 +80,19 @@
             "buildingNumber": "1",
             "postTown": "TESTTOWN",
             "postcode": "PR3VC0DE",
-            "thoroughfareName": "TEST STREET"
+            "streetName": "TEST STREET"
           },
           {
             "buildingNumber": "2A",
             "postTown": "TESTTOWN",
             "postcode": "PR3VC0DE",
-            "thoroughfareName": "TEST STREET"
+            "streetName": "TEST STREET"
           },
           {
             "buildingNumber": "3A",
             "postTown": "TESTTOWN",
             "postcode": "PR3VC0DE",
-            "thoroughfareName": "TEST STREET"
+            "streetName": "TEST STREET"
           }
         ]
       }

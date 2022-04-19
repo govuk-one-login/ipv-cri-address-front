@@ -3,13 +3,13 @@ module.exports = {
     data: [
       {
         buildingNumber: "1",
-        thoroughfareName: "SOME ROAD",
+        streetName: "SOME ROAD",
         postTown: "SOMEWHERE",
         postcode: "SOMEPOST",
       },
       {
         buildingNumber: "NAMED BUILDING",
-        thoroughfareName: "SOME ROAD",
+        streetName: "SOME ROAD",
         postTown: "SOMEWHERE",
         postcode: "SOMEPOST",
       },
@@ -18,7 +18,7 @@ module.exports = {
   formattedAddressed: [
     {
       buildingNumber: "1",
-      thoroughfareName: "SOME ROAD",
+      streetName: "SOME ROAD",
       postTown: "SOMEWHERE",
       postcode: "SOMEPOST",
       text: "1, SOMEROAD, SOMEWHERE, SOMEPOST",
@@ -26,7 +26,7 @@ module.exports = {
     },
     {
       buildingNumber: "NAMED BUILDING",
-      thoroughfareName: "SOME ROAD",
+      streetName: "SOME ROAD",
       postTown: "SOMEWHERE",
       postcode: "SOMEPOST",
       text: "NAMED BUILDING, SOMEROAD, SOMEWHERE, SOMEPOST",

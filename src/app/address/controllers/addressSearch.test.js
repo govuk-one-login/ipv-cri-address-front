@@ -57,9 +57,7 @@ describe("Address Search controller", () => {
     );
     expect(req.session.test.addressPostcode).to.equal(testPostcode);
     expect(req.session.test.searchResults[0].buildingNumber).to.equal("1");
-    expect(req.session.test.searchResults[0].thoroughfareName).to.equal(
-      "SOME ROAD"
-    );
+    expect(req.session.test.searchResults[0].streetName).to.equal("SOME ROAD");
     expect(req.session.test.searchResults[0].postTown).to.equal("SOMEWHERE");
     expect(req.session.test.searchResults[0].postcode).to.equal("SOMEPOST");
     expect(req.session.test.searchResults[1].buildingNumber).to.equal(

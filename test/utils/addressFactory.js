@@ -2,7 +2,7 @@ function addressFactory(quantity) {
   const addresses = [];
   for (let i = 0; i < quantity; i++) {
     const address = {
-      thoroughfareName: `${i} street`,
+      streetName: `${i} street`,
       postTown: `${i} town`,
       postcode: `${i} code`,
     };
