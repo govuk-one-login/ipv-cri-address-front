@@ -39,6 +39,7 @@ module.exports = {
     try {
       const authCode = req.session["hmpo-wizard-address"].authorization_code;
       const url = req.session["hmpo-wizard-address"].redirect_url;
+      const state = req.session["hmpo-wizard-address"].state;
       const redirectUrl = new URL(url);
 
       if (!authCode) {
@@ -53,7 +54,7 @@ module.exports = {
           "client_id",
           req.session.authParams.client_id
         );
-        redirectUrl.searchParams.append("state", req.session.authParams.state);
+        redirectUrl.searchParams.append("state", state);
         redirectUrl.searchParams.append("code", authCode);
       }
       res.redirect(redirectUrl.toString());

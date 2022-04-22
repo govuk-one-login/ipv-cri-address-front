@@ -82,6 +82,9 @@ describe("Address confirmation controller", () => {
     expect(req.session.test.authorization_code).to.be.equal(
       testData.addressApiResponse.data.code
     );
+    expect(req.session.test.state).to.be.equal(
+      testData.addressApiResponse.data.state
+    );
   });
 
   it("Should set error state if no code is returned", async () => {
