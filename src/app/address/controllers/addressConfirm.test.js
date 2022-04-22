@@ -76,6 +76,9 @@ describe("Address confirmation controller", () => {
         session_id: sessionId,
       },
     });
+    expect(req.session.test.redirect_url).to.be.equal(
+      testData.addressApiResponse.data.redirect_uri
+    );
     expect(req.session.test.authorization_code).to.be.equal(
       testData.addressApiResponse.data.code
     );

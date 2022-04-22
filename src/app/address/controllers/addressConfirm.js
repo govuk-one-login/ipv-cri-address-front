@@ -36,6 +36,7 @@ class AddressConfirmController extends BaseController {
         req.session.tokenId
       );
       super.saveValues(req, res, () => {
+        req.sessionModel.set("redirect_url", data.redirect_uri);
         if (!data.code) {
           const error = {
             code: "server_error",

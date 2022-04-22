@@ -38,22 +38,25 @@ module.exports = {
   redirectToCallback: async (req, res, next) => {
     try {
       const authCode = req.session["hmpo-wizard-address"].authorization_code;
-
-      const url = new URL(req.session.authParams.redirect_uri);
+      const url = req.session["hmpo-wizard-address"].redirect_url;
+      const redirectUrl = new URL(url);
 
       if (!authCode) {
         const error = req.session["hmpo-wizard-address"].error;
         const errorCode = error?.code;
         const errorDescription = error?.description ?? error?.message;
 
-        url.searchParams.append("error", errorCode);
-        url.searchParams.append("error_description", errorDescription);
+        redirectUrl.searchParams.append("error", errorCode);
+        redirectUrl.searchParams.append("error_description", errorDescription);
       } else {
-        url.searchParams.append("client_id", req.session.authParams.client_id);
-        url.searchParams.append("state", req.session.authParams.state);
-        url.searchParams.append("code", authCode);
+        redirectUrl.searchParams.append(
+          "client_id",
+          req.session.authParams.client_id
+        );
+        redirectUrl.searchParams.append("state", req.session.authParams.state);
+        redirectUrl.searchParams.append("code", authCode);
       }
-      res.redirect(url.toString());
+      res.redirect(redirectUrl.toString());
     } catch (e) {
       next(e);
     }
