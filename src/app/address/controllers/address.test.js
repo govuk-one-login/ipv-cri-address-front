@@ -38,6 +38,6 @@ describe("address controller", () => {
     expect(next).to.have.been.calledOnce;
     expect(savedAddress.buildingNumber).to.equal(addressToSave.addressLine1);
     expect(savedAddress.streetName).to.equal(addressToSave.addressLine2);
-    expect(savedAddress.postTown).to.equal(addressToSave.addressTown);
+    expect(savedAddress.addressLocality).to.equal(addressToSave.addressTown);
   });
 });

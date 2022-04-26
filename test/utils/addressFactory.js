@@ -3,8 +3,8 @@ function addressFactory(quantity) {
   for (let i = 0; i < quantity; i++) {
     const address = {
       streetName: `${i} street`,
-      postTown: `${i} town`,
-      postcode: `${i} code`,
+      addressLocality: `${i} town`,
+      postalCode: `${i} code`,
     };
 
     // factor in when an address has building name or building number or both

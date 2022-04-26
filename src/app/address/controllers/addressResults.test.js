@@ -47,11 +47,11 @@ describe("Address result controller", () => {
     expect(req.session.test.addresses[0].streetName).to.equal(
       expectedResponse.streetName
     );
-    expect(req.session.test.addresses[0].postcode).to.equal(
-      expectedResponse.postcode
+    expect(req.session.test.addresses[0].postalCode).to.equal(
+      expectedResponse.postalCode
     );
-    expect(req.session.test.addresses[0].postTown).to.equal(
-      expectedResponse.postTown
+    expect(req.session.test.addresses[0].addressLocality).to.equal(
+      expectedResponse.addressLocality
     );
   });
 });
