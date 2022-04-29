@@ -23,11 +23,12 @@ describe("address controller", () => {
     expect(address).to.be.an.instanceOf(BaseController);
   });
 
-  it("should save the address into the session", async () => {
+  it("should save the address into the session - flat example", async () => {
     const addressToSave = {
-      addressLine1: "10a",
-      addressLine2: "street road",
-      addressTown: "small town",
+      addressFlatNumber: "10a",
+      addressHouseName: "My buildng name",
+      addressStreetName: "street road",
+      addressTownOrCity: "small town",
     };
 
     req.body = addressToSave;
@@ -36,8 +37,70 @@ describe("address controller", () => {
 
     const savedAddress = req.session.test.addresses[0];
     expect(next).to.have.been.calledOnce;
-    expect(savedAddress.buildingNumber).to.equal(addressToSave.addressLine1);
-    expect(savedAddress.streetName).to.equal(addressToSave.addressLine2);
-    expect(savedAddress.addressLocality).to.equal(addressToSave.addressTown);
+    expect(savedAddress.buildingNumber).to.equal(
+      addressToSave.addressFlatNumber
+    );
+    expect(savedAddress.streetName).to.equal(addressToSave.addressStreetName);
+    expect(savedAddress.addressLocality).to.equal(
+      addressToSave.addressTownOrCity
+    );
+    expect(savedAddress.buildingName).to.equal(addressToSave.addressHouseName);
+  });
+
+  it("should save the address into the session - house example", async () => {
+    const addressToSave = {
+      addressHouseNumber: "10a",
+      addressStreetName: "street road",
+      addressTownOrCity: "small town",
+    };
+
+    req.body = addressToSave;
+
+    await address.saveValues(req, res, next);
+
+    const savedAddress = req.session.test.addresses[0];
+    expect(next).to.have.been.calledOnce;
+    expect(savedAddress.buildingNumber).to.equal(
+      addressToSave.addressHouseNumber
+    );
+    expect(savedAddress.streetName).to.equal(addressToSave.addressStreetName);
+    expect(savedAddress.addressLocality).to.equal(
+      addressToSave.addressTownOrCity
+    );
+  });
+
+  it("should append the address to the saved addresses", async () => {
+    const addressToSave = {
+      addressFlatNumber: "1a",
+      addressHouseName: "My building",
+      addressStreetName: "avenue",
+      addressTownOrCity: "large town",
+    };
+
+    const existingAddresses = [
+      {
+        buildingNumber: "10a",
+        streetName: "street road",
+        addressLocality: "small town",
+        postalCode: "WD6 123",
+      },
+    ];
+    req.sessionModel.set("addresses", existingAddresses);
+
+    req.body = addressToSave;
+
+    await address.saveValues(req, res, next);
+
+    const savedAddresses = req.session.test.addresses;
+    const existingAddress = savedAddresses[0];
+    const newAddress = savedAddresses[1];
+
+    expect(next).to.have.been.calledOnce;
+    expect(existingAddress).to.be.equal(existingAddresses[0]);
+    expect(newAddress.buildingNumber).to.equal(addressToSave.addressFlatNumber);
+    expect(newAddress.streetName).to.equal(addressToSave.addressStreetName);
+    expect(newAddress.addressLocality).to.equal(
+      addressToSave.addressTownOrCity
+    );
   });
 });
