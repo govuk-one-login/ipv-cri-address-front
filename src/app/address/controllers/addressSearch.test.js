@@ -55,12 +55,17 @@ describe("Address Search controller", () => {
         },
       }
     );
+    expect(req.session.test.searchResults[0]).to.deep.equal({
+      text: `${testData.apiResponse.data.length} addresses found`,
+    });
     expect(req.session.test.addressPostcode).to.equal(testPostcode);
-    expect(req.session.test.searchResults[0].buildingNumber).to.equal("1");
-    expect(req.session.test.searchResults[0].streetName).to.equal("SOME ROAD");
-    expect(req.session.test.searchResults[0].postTown).to.equal("SOMEWHERE");
-    expect(req.session.test.searchResults[0].postcode).to.equal("SOMEPOST");
-    expect(req.session.test.searchResults[1].buildingNumber).to.equal(
+    expect(req.session.test.searchResults[1].buildingNumber).to.equal("1");
+    expect(req.session.test.searchResults[1].streetName).to.equal("SOME ROAD");
+    expect(req.session.test.searchResults[1].addressLocality).to.equal(
+      "SOMEWHERE"
+    );
+    expect(req.session.test.searchResults[1].postalCode).to.equal("SOMEPOST");
+    expect(req.session.test.searchResults[2].buildingName).to.equal(
       "NAMED BUILDING"
     );
     expect(req.session.test.requestIsSuccessful).to.equal(true);

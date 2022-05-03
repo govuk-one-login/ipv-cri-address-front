@@ -37,7 +37,12 @@ class AddressSearchController extends BaseController {
       headers,
     });
     const addresses = addressResults.data.map(this.addLabel);
-    return addresses;
+
+    const defaultMessage = {
+      text: `${addresses.length} addresses found`,
+    };
+
+    return [defaultMessage, ...addresses];
   }
 
   // add a pretty print for drop down menu.
