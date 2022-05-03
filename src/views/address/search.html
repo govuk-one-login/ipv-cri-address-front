@@ -1,3 +1,27 @@
 {% extends "form-template.njk" %}
 {% set hmpoPageKey = "address-search" %}
 {% set hmpoPageContent = "address-search" %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-select/macro.njk" import hmpoSelect %}
+{% from "hmpo-text/macro.njk" import hmpoText %}
+
+{% block mainContent %}
+
+  <h1 id="header">{{translate("pages.address-search.title")}} </h1>
+  {% call hmpoForm(ctx) %}
+
+    {{ hmpoText(ctx, {
+      id: "address-search",
+      label: {
+        key: translate(fields.address-search.label),
+        classes: "govuk-label govuk-label--m"
+      },
+      classes: "govuk-!-width-one-half",
+      hint:  translate("fields.address-search.hint")
+    }) }}
+
+    {{ hmpoSubmit(ctx, {text: translate("buttons.find-address")}) }}
+
+  {% endcall %}
+
+{% endblock %}
