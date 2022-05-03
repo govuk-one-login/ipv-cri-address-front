@@ -15,13 +15,14 @@ class AddressConfirmController extends BaseController {
         return this.formatAddress(address);
       });
 
+
       const currentAddress = addresses.shift();
 
-      locals.formattedAddress = currentAddress;
+      const previousAddress = addresses.shift();
 
-      if (addresses.length) {
-        locals.previousAddresses = addresses;
-      }
+      locals.currentAddressRowValue = currentAddress.text;
+      locals.yearMovedRowValue = currentAddress.addressValidFrom;
+      locals.previousAddressRowValue = previousAddress?.text;
 
       callback(null, locals);
     });
@@ -63,7 +64,8 @@ class AddressConfirmController extends BaseController {
       buildingNameNumber = address.buildingName || address.buildingNumber;
     }
 
-    return `${buildingNameNumber}<br>${address.streetName},<br>${address.addressLocality},<br>${address.postalCode}<br>`;
+    const text = `${buildingNameNumber}<br>${address.streetName},<br>${address.addressLocality},<br>${address.postalCode}<br>`;
+    return { ...address, text };
   }
 
   async saveAddressess(axios, addresses, sessionId) {

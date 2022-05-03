@@ -34,3 +34,9 @@ address-year-from:
   title: What year did you start living at this address?
   classes: govuk-input--width-4
   label: Year
+
+address-confirm:
+  current: Current address
+  year-current: Year moved in to current address
+  previous: Previous address
+  change: Change

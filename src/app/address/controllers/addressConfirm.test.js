@@ -34,7 +34,7 @@ describe("Address confirmation controller", () => {
   let addressConfirm;
 
   beforeEach(() => {
-    addresses = addressFactory(3);
+    addresses = addressFactory(2);
     req.sessionModel.set("addresses", addresses);
     addressConfirm = new AddressConfirmController({ route: "/test" });
   });
@@ -57,9 +57,11 @@ describe("Address confirmation controller", () => {
     });
 
     const currentAddress = formattedAddresses.shift();
+    const previousAddress = formattedAddresses.shift();
     const params = {
-      formattedAddress: currentAddress,
-      previousAddresses: formattedAddresses,
+      currentAddressRowValue: currentAddress,
+      yearMovedRowValue: undefined, // todo empty until year from is implemented.
+      previousAddressRowValue: previousAddress,
     };
 
     addressConfirm.locals(req, res, next);
