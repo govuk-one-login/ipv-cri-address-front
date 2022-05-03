@@ -20,16 +20,9 @@ class AddressController extends BaseController {
 
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
-      const buildingNumber = req.body["addressLine1"];
-      const streetName = req.body["addressLine2"];
-      const addressLocality = req.body["addressTown"];
-      const postalCode = req.sessionModel.get("addressPostcode");
-      const address = {
-        buildingNumber,
-        streetName,
-        addressLocality,
-        postalCode,
-      };
+      const address = this.buildAddress(req.body);
+      address.postalCode = req.sessionModel.get("addressPostcode");
+
       const sessionsAddresses = req.sessionModel.get("addresses");
 
       const addresses = Array.isArray(sessionsAddresses)
@@ -41,6 +34,24 @@ class AddressController extends BaseController {
       req.sessionModel.set("addresses", addresses);
       callback();
     });
+  }
+
+  buildAddress(reqBody) {
+    const addressFlatNumber = reqBody.addressFlatNumber || null;
+    const addressHouseNumber = reqBody.addressHouseNumber || null;
+    const addressHouseName = reqBody.addressHouseName || null;
+    const addressStreetName = reqBody.addressStreetName;
+    const addressTownOrCity = reqBody.addressTownOrCity;
+    // const addressValidFrom = reqBody.addressValidFrom; // todo
+
+    const address = {
+      buildingNumber: addressFlatNumber || addressHouseNumber,
+      buildingName: addressHouseName,
+      streetName: addressStreetName,
+      addressLocality: addressTownOrCity,
+    };
+
+    return address;
   }
 }
 module.exports = AddressController;

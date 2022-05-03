@@ -21,20 +21,43 @@
   {% call hmpoForm(ctx) %}
 
     {{ hmpoText(ctx, {
-      id: "addressLine1",
-      label: translate("fields.address-line-1.label"),
-      autocomplete: "address-line1"
+      id: "addressFlatNumber",
+      label: translate("fields.address-line-flat.label"),
+      classes: "govuk-input--width-5"
     }) }}
 
     {{ hmpoText(ctx, {
-      id: "addressLine2",
-      label: translate("fields.address-line-2.label"),
-      autocomplete: "address-level2"
+      id: "addressHouseNumber",
+      label: translate("fields.address-line-house.label"),
+      classes: "govuk-input--width-5"
     }) }}
 
     {{ hmpoText(ctx, {
-      id: "addressTown",
-      label: translate("fields.address-town.label")
+      id: "addressHouseName",
+      label: translate("fields.address-line-house-name.label"),
+      classes: "govuk-input--width-20"
+  }) }}
+
+    {{ hmpoText(ctx, {
+      id: "addressStreetName",
+      autocomplete: "street-address",
+      label: translate("fields.address-line-street.label"),
+      classes: "govuk-input--width-20"
+    }) }}
+
+    {{ hmpoText(ctx, {
+      id: "addressTownOrCity",
+      autocomplete: "address-level1",
+      label: translate("fields.address-town.label"),
+      classes: "govuk-input--width-20"
+    }) }}
+
+    <h4>{{translate("fields.address-year-from.title")}}</h4>
+
+    {{ hmpoText(ctx, {
+      id: "addressValidFrom",
+      label: translate("fields.address-year-from.label"),
+      classes: "govuk-input--width-4"
     }) }}
 
     {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}

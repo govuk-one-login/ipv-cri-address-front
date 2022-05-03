@@ -9,10 +9,16 @@ address-search:
 address-results:
   label: Select an address
 
-address-line-1:
-  label: House name or number
+address-line-flat:
+  label: Flat number
 
-address-line-2:
+address-line-house:
+  label: House number
+
+address-line-house-name:
+  label: House name
+
+address-line-street:
   label: Street name
 
 address-town:
@@ -23,3 +29,8 @@ address-county:
 
 address-postcode:
   label: Postcode
+
+address-year-from:
+  title: What year did you start living at this address?
+  classes: govuk-input--width-4
+  label: Year
