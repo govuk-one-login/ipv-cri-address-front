@@ -14,6 +14,26 @@
     {
       "scenarioName": "Address",
       "requiredScenarioState": "Started",
+      "newScenarioState": "PostcodeLookup",
+      "request": {
+        "method": "POST",
+        "urlPath": "/session",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-success"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "session-id": "ABADCAFE"
+        }
+      }
+    },
+    {
+      "scenarioName": "Address",
+      "requiredScenarioState": "PostcodeLookup",
       "newScenarioState": "AddressResponses",
       "request": {
         "method": "GET",
@@ -29,15 +49,15 @@
         "jsonBody": [
           {
             "buildingNumber": "1",
-            "postTown": "TESTTOWN",
-            "postcode": "TE5T1NG",
-            "streetName": "TEST STREET"
+            "addressLocality": "LONDON",
+            "postalCode": "E1 8QS",
+            "streetName": "WHITECHAPEL HIGH STREET"
           },
           {
-            "buildingNumber": "2A",
-            "postTown": "TESTTOWN",
-            "postcode": "TE5T1NG",
-            "streetName": "TEST STREET"
+            "buildingNumber": "10",
+            "addressLocality": "LONDON",
+            "postalCode": "E1 8QS",
+            "streetName": "WHITECHAPEL HIGH STREET"
           }
         ]
       }
@@ -51,7 +71,8 @@
         "url": "/postcode-lookup/XXX_XX",
         "headers": {
           "x-scenario-id": {
-            "equalTo": "address-success"
+            "equalTo": "address-success",
+            "absent": false
           }
         }
       },
@@ -78,20 +99,20 @@
         "jsonBody": [
           {
             "buildingNumber": "1",
-            "postTown": "TESTTOWN",
+            "addressLocality": "TESTTOWN",
             "postcode": "PR3VC0DE",
             "streetName": "TEST STREET"
           },
           {
             "buildingNumber": "2A",
-            "postTown": "TESTTOWN",
-            "postcode": "PR3VC0DE",
+            "addressLocality": "TESTTOWN",
+            "postalCode": "PR3VC0DE",
             "streetName": "TEST STREET"
           },
           {
             "buildingNumber": "3A",
-            "postTown": "TESTTOWN",
-            "postcode": "PR3VC0DE",
+            "addressLocality": "TESTTOWN",
+            "postalCode": "PR3VC0DE",
             "streetName": "TEST STREET"
           }
         ]
@@ -113,11 +134,9 @@
       "response": {
         "status": 201,
         "jsonBody": {
-          "data": {
             "code": "mySuperSecretCode",
             "state": "myAwesomeState",
             "redirect_uri": "http://localhost:8085/callback"
-          }
         }
       }
     }

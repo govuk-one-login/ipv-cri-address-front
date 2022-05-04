@@ -1,7 +1,7 @@
 module.exports = {
   default: {
     publishQuiet: true,
-    paths: ["./features/**/**.feature"],
-    require: ["./support/**/*.js", "./step_definitions/**/*.js"],
+    paths: ["./test/browser/features/**/**.feature"],
+    require: ["./test/browser/support/**/*.js", "./test/browser/step_definitions/**/*.js"],
   },
 };
