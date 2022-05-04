@@ -7,9 +7,14 @@ const {
 } = require("@cucumber/cucumber");
 const { chromium } = require("playwright");
 const axios = require("axios");
+const {default: AxeBuilder} = require("@axe-core/playwright");
 
 // FIXME This is large due to cold starts
 setDefaultTimeout(30 * 1000);
+
+// HOOKS
+// Multiple Before hooks are executed in the order that they were defined.
+// Multiple After hooks are executed in the reverse order that they were defined.
 
 BeforeAll(async function () {
   // Browsers are expensive in Playwright so only create 1
@@ -47,16 +52,48 @@ Before(async function ({ pickle } = {}) {
   await axios.get(`${process.env.MOCK_API_URL}/__reset/${header}`);
 });
 
-// Create a new test context and page per scenario
+// Create a new test context
 Before(async function () {
   this.context = await global.browser.newContext({});
+});
 
-  if (this.SCENARIO_ID_HEADER) {
-    await this.context.setExtraHTTPHeaders({
-      "x-scenario-id": this.SCENARIO_ID_HEADER,
-    });
+// Add scenario headers if required
+Before(async function () {
+  if (!this.SCENARIO_ID_HEADER) {
+    return;
+  }
+  await this.context.setExtraHTTPHeaders({
+    "x-scenario-id": this.SCENARIO_ID_HEADER,
+  });
+});
+
+const evntFunction = (pageFromLoadEvent) => {
+  console.log(`page from load event: ${pageFromLoadEvent.url()}`);
+
+    // const results = await new AxeBuilder({ page: this.page }).analyze();
+    // console.log(Object.keys(results)); // eslint-disable-line
+    // console.log(results.violations[0]); // eslint-disable-line
+};
+
+// Setup accessibility if required
+Before(async function () {
+  if (!(process.env.TEST_ACCESSIBILITY === "true")) {
+    return;
   }
 
+  this.context.on("page", (pageFromContextEvent) => {
+    console.log(`page from event: ${pageFromContextEvent.url()}`);
+
+    pageFromContextEvent.on("load", evntFunction);
+
+    pageFromContextEvent.on("close", (pageFromCloseEvent) => {
+      pageFromCloseEvent.off("load", evntFunction);
+    });
+  });
+});
+
+// Create new page
+Before(async function () {
   this.page = await this.context.newPage();
 });
 

@@ -18,12 +18,6 @@ module.exports = class PlaywrightDevPage {
     await this.page.goto(this.url);
     await this.page.click("button");
 
-    if (process.env.TEST_ACCESSIBILITY === "true") {
-      const results = await new AxeBuilder({ page: this.page }).analyze();
-      console.log(Object.keys(results)); // eslint-disable-line
-      console.log(results.violations[0]); // eslint-disable-line
-    }
-
     // Credential Issuers
     await this.page
       .locator(`input[value='${process.env.CREDENTIAL_ISSUER_LABEL}']`)
