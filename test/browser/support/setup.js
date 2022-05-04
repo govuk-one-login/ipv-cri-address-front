@@ -7,7 +7,8 @@ const {
 } = require("@cucumber/cucumber");
 const { chromium } = require("playwright");
 const axios = require("axios");
-const {default: AxeBuilder} = require("@axe-core/playwright");
+
+const { handlePageLoad } = require("../lib/accessibility");
 
 // FIXME This is large due to cold starts
 setDefaultTimeout(30 * 1000);
@@ -67,27 +68,21 @@ Before(async function () {
   });
 });
 
-const evntFunction = (pageFromLoadEvent) => {
-  console.log(`page from load event: ${pageFromLoadEvent.url()}`);
-
-    // const results = await new AxeBuilder({ page: this.page }).analyze();
-    // console.log(Object.keys(results)); // eslint-disable-line
-    // console.log(results.violations[0]); // eslint-disable-line
-};
-
 // Setup accessibility if required
 Before(async function () {
-  if (!(process.env.TEST_ACCESSIBILITY === "true")) {
+  if (!process.env.TEST_ACCESSIBILITY) {
     return;
   }
+
+  console.log("ACCESSIBILITY!")
 
   this.context.on("page", (pageFromContextEvent) => {
     console.log(`page from event: ${pageFromContextEvent.url()}`);
 
-    pageFromContextEvent.on("load", evntFunction);
+    pageFromContextEvent.on("load", handlePageLoad);
 
     pageFromContextEvent.on("close", (pageFromCloseEvent) => {
-      pageFromCloseEvent.off("load", evntFunction);
+      pageFromCloseEvent.off("load", handlePageLoad);
     });
   });
 });

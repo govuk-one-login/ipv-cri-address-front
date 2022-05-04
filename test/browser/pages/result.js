@@ -26,5 +26,9 @@ module.exports = class PlaywrightDevPage {
 
   async continue() {
     await this.page.click("button");
+    // await Promise.all([
+    //   this.page.waitForNavigation()
+    //   this.page.click("button"),
+    // ])
   }
 };

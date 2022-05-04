@@ -1,5 +1,3 @@
-const AxeBuilder = require("@axe-core/playwright").default;
-
 module.exports = class PlaywrightDevPage {
   /**
    * @param {import('@playwright/test').Page} page
@@ -16,7 +14,11 @@ module.exports = class PlaywrightDevPage {
   async chooseCredentialIssuer() {
     // Home
     await this.page.goto(this.url);
-    await this.page.click("button");
+
+    await Promise.all([
+      this.page.waitForNavigation(),
+      this.page.click("button"),
+    ]);
 
     // Credential Issuers
     await this.page
