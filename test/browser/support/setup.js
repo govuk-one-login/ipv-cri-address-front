@@ -69,23 +69,23 @@ Before(async function () {
 });
 
 // Setup accessibility if required
-Before(async function () {
-  if (!process.env.TEST_ACCESSIBILITY) {
-    return;
-  }
-
-  console.log("ACCESSIBILITY!")
-
-  this.context.on("page", (pageFromContextEvent) => {
-    console.log(`page from event: ${pageFromContextEvent.url()}`);
-
-    pageFromContextEvent.on("load", handlePageLoad);
-
-    pageFromContextEvent.on("close", (pageFromCloseEvent) => {
-      pageFromCloseEvent.off("load", handlePageLoad);
-    });
-  });
-});
+// Before(async function () {
+//   if (!process.env.TEST_ACCESSIBILITY) {
+//     return;
+//   }
+//
+//   console.log("ACCESSIBILITY!")
+//
+//   this.context.on("page", (pageFromContextEvent) => {
+//     console.log(`page from event: ${pageFromContextEvent.url()}`);
+//
+//     pageFromContextEvent.on("load", handlePageLoad);
+//
+//     pageFromContextEvent.on("close", (pageFromCloseEvent) => {
+//       pageFromCloseEvent.off("load", handlePageLoad);
+//     });
+//   });
+// });
 
 // Create new page
 Before(async function () {
