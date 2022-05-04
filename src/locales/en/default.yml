@@ -18,8 +18,10 @@ links:
   cantFindAddress:
     - <p><a href="/address/edit">I cannot find my address in the list</a></p>
 validation:
-  required: Please enter a {{label}}.
-  maxlength: 'Maximum length of  the {{label}} should be 8'
-  minlength: 'Minimum length of the {{label}} should be 5'
+  required: Enter a {{label}}.
+  postcodeLength: 'Your {{label}} should be between 5 and 7 characters'
+  alphaNumeric: 'Your {{label}} should only include numbers and letters'
+  missingNumericOrAlpha: 'Your {{label}} should include numbers and letters'
+  isUkPostcode: 'Enter a UK postcode'
   default: You must answer this question.
 

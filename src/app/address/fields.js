@@ -1,3 +1,10 @@
+const {
+  postcodeLength,
+  alphaNumeric,
+  missingAlphaOrNumeric,
+  isUkPostcode,
+} = require("./validators/postcodeValidator");
+
 module.exports = {
   "address-line-1": {
     type: "text",
@@ -22,17 +29,31 @@ module.exports = {
   "address-search": {
     type: "text",
     autocomplete: "Postcode",
+    formatter: [
+      {
+        type: "removeSpaces",
+        fn: (val) => val.replace(/\s+/g, ""),
+      },
+    ],
     validate: [
       {
         type: "required",
       },
       {
-        type: "minlength",
-        arguments: [5],
+        type: "postcodeLength",
+        fn: postcodeLength,
       },
       {
-        type: "maxlength",
-        arguments: [8],
+        type: "alphaNumeric",
+        fn: alphaNumeric,
+      },
+      {
+        type: "missingNumericOrAlpha",
+        fn: missingAlphaOrNumeric,
+      },
+      {
+        type: "isUkPostcode",
+        fn: isUkPostcode,
       },
     ],
   },
