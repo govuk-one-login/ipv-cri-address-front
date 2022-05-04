@@ -1,9 +1,9 @@
 
 buttons:
   next: Continue
-  select-address: Select Address
+  select-address: Select address
   cancel: Cancel
-  address-search: Find address
+  find-address: Find address
 govuk:
   serviceName: Prove your identity
   backLink: Back
