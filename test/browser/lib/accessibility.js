@@ -1,6 +1,10 @@
 const { default: AxeBuilder } = require("@axe-core/playwright");
 
 const analysePage = async (page) => {
+  if (!process.env.TEST_ACCESSIBILITY) {
+    return;
+  }
+
   console.log("analysePage");
   const results = await new AxeBuilder({ page }).analyze();
   console.log(Object.keys(results)); // eslint-disable-line

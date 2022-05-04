@@ -17,6 +17,8 @@ Given(/^^([A-Za-z ])+ is using the system$/, async function (name) {
 
 Given(/^they (?:have )?start(?:ed)? the address journey$/, async function () {
   const ipvCorePage = new IPVCorePage(this.page);
+  await ipvCorePage.checkAccessibility();
+
   await ipvCorePage.chooseCredentialIssuer();
 
   const searchPage = new SearchPage(this.page);

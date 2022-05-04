@@ -1,3 +1,5 @@
+const {analysePage} = require('../lib/accessibility');
+
 module.exports = class PlaywrightDevPage {
   /**
    * @param {import('@playwright/test').Page} page
@@ -5,6 +7,11 @@ module.exports = class PlaywrightDevPage {
   constructor(page) {
     this.page = page;
     this.url = process.env.CORE_STUB_URL || "http://localhost:8085";
+  }
+
+
+  async checkAccessibility() {
+    await analysePage(this.page);
   }
 
   isCurrentPage() {
