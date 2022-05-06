@@ -14,22 +14,15 @@ class AddressResultsController extends BaseController {
         const selectedAddress = req.body["address-selection"];
         const allAddresses = req.sessionModel.get("searchResults");
 
-        const choosenAddress = allAddresses.find(
-          (address) => address.text === selectedAddress
-        );
+        const chosenAddress = Object.assign(
+          {},
+          allAddresses.find((address) => address.text === selectedAddress)
+        ); // force deep copy
 
-        delete choosenAddress.value;
-        delete choosenAddress.text;
+        delete chosenAddress.value;
+        delete chosenAddress.text;
 
-        const sessionAddresses = req.sessionModel.get("addresses");
-
-        const addresses = Array.isArray(sessionAddresses)
-          ? sessionAddresses
-          : [];
-
-        addresses.push(choosenAddress);
-
-        req.sessionModel.set("addresses", addresses);
+        req.sessionModel.set("chosenAddress", chosenAddress);
         callback();
       } catch (err) {
         callback(err);

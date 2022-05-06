@@ -27,11 +27,10 @@ module.exports = {
   "/results": {
     controller: results,
     fields: ["address-results"],
-    next: "confirm",
+    next: "address",
   },
   "/address": {
     controller: address,
-    checkJourney: false,
     editable: true,
     continueOnEdit: true,
     next: "confirm",

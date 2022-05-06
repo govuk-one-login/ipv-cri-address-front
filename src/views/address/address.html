@@ -4,11 +4,11 @@
 {% from "hmpo-text/macro.njk" import hmpoText %}
 {% set hmpoPageKey = "address-form" %}
 {% set hmpoPageContent = "address-form" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 
 {% set hmpoPageKey = "address-form" %}
 
-
-{% block content %}
+{% block mainContent %}
 
   {% if values.addPreviousAddresses %}
     <h1 id="header">{{translate("pages.address-form-previous.title")}}</h1>
@@ -20,44 +20,54 @@
 
   {% call hmpoForm(ctx) %}
 
-    {{ hmpoText(ctx, {
+    {{ govukInput({
       id: "addressFlatNumber",
-      label: translate("fields.address-line-flat.label"),
-      classes: "govuk-input--width-5"
+      name: "addressFlatNumber",
+      label: { text: translate("fields.address-line-flat.label") },
+      classes: "govuk-input--width-5",
+      value: addressFlatNumber
     }) }}
 
-    {{ hmpoText(ctx, {
+    {{ govukInput({
       id: "addressHouseNumber",
-      label: translate("fields.address-line-house.label"),
-      classes: "govuk-input--width-5"
+      name: "addressHouseNumber",
+      label: { text: translate("fields.address-line-house.label") },
+      classes: "govuk-input--width-5",
+      value: addressHouseNumber
     }) }}
 
-    {{ hmpoText(ctx, {
+    {{ govukInput({
       id: "addressHouseName",
-      label: translate("fields.address-line-house-name.label"),
-      classes: "govuk-input--width-20"
-  }) }}
-
-    {{ hmpoText(ctx, {
-      id: "addressStreetName",
-      autocomplete: "street-address",
-      label: translate("fields.address-line-street.label"),
-      classes: "govuk-input--width-20"
+      name: "addressHouseName",
+      label: { text: translate("fields.address-line-house-name.label") },
+      classes: "govuk-input--width-20",
+      value: addressHouseName
     }) }}
 
-    {{ hmpoText(ctx, {
+    {{ govukInput({
+      id: "addressStreetName",
+      name: "addressStreetName",
+      label: { text: translate("fields.address-line-street.label") },
+      classes: "govuk-input--width-20",
+      value: addressStreetName
+    }) }}
+
+    {{ govukInput({
       id: "addressTownOrCity",
-      autocomplete: "address-level1",
-      label: translate("fields.address-town.label"),
-      classes: "govuk-input--width-20"
+      name: "addressTownOrCity",
+      label: { text: translate("fields.address-town.label") },
+      classes: "govuk-input--width-20",
+      value: addressTownOrCity
     }) }}
 
     <h4>{{translate("fields.address-year-from.title")}}</h4>
 
-    {{ hmpoText(ctx, {
+    {{ govukInput({
       id: "addressValidFrom",
-      label: translate("fields.address-year-from.label"),
-      classes: "govuk-input--width-4"
+      name: "addressValidFrom",
+      label: { text: translate("fields.address-year-from.label") },
+      classes: "govuk-input--width-4",
+      value: addressValidFrom
     }) }}
 
     {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}

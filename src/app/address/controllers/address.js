@@ -4,16 +4,15 @@ class AddressController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
       locals.addressPostcode = req.sessionModel.get("addressPostcode");
+      const address = req.sessionModel.get("chosenAddress");
 
-      const addresses = req.body["addresses"];
-      // todo - get address of the selected address to edit (eg if user tries to edit previous address)
-      const currentAddress = Array.isArray(addresses) ? addresses[0] : null;
-      if (currentAddress) {
-        locals.addressLine1 = currentAddress?.addressLine1;
-        locals.addressLine2 = currentAddress?.addressLine2;
-        locals.addressTown = currentAddress?.addressTown;
+      if (address) {
+        locals.addressFlatNumber = address.addressFlatNumber;
+        locals.addressHouseNumber = address.buildingNumber;
+        locals.addressHouseName = address.buildingName;
+        locals.addressStreetName = address.streetName;
+        locals.addressTownOrCity = address.addressLocality;
       }
-
       callback(null, locals);
     });
   }
