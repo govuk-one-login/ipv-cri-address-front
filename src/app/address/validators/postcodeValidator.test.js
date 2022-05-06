@@ -5,7 +5,7 @@ const {
   isUkPostcode,
 } = require("./postcodeValidator");
 
-const validPostcodes = ["E18QS", "PA296YP"];
+const validPostcodes = ["E18QS", "PA296YP", "SW1A2AA", "AA11AA"];
 const invalidPostcodeLength = ["1", "88888888", "4444", ""];
 const invalidAlphaOnly = ["abcde", "VXYZ", "AbCdEf"];
 const invalidIntOnly = ["11111", "123456", "000000"];
