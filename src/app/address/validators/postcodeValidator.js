@@ -16,9 +16,12 @@ module.exports = {
   },
   isUkPostcode: function (val) {
     // taken from https://en.wikipedia.org/wiki/Postcodes_in_the_United_Kingdom#Validation
-    const ukPostcodeRegex =
-      /^(([A-Z]{1,2}[0-9][A-Z0-9]?|ASCN|STHL|TDCU|BBND|[BFS]IQQ|PCRN|TKCA) ?[0-9][A-Z]{2}|BFPO ?[0-9]{1,4}|(KY[0-9]|MSR|VG|AI)[ -]?[0-9]{4}|[A-Z]{2} ?[0-9]{2}|GE ?CX|GIR ?0A{2}|SAN ?TA1)$/i;
+    // simpler regex to just validate the postcode format
 
+    // 1 or 2 letters followed by a number
+    // optionally a letter or number
+    // A optional space followed by a number and two letters
+    const ukPostcodeRegex = /^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i;
     return val.match(ukPostcodeRegex) ? true : false;
   },
 };
