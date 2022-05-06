@@ -22,7 +22,7 @@ address-results:
     - <b>{{values.address-search}}</b> <a href="/postcode">Change</a>
 
 address-confirm:
-  title: Check your details
+  title: Check your address details
   warning:
       - Make sure your details are correct before you continue. You will not be able to change them later.
   current: Current address
