@@ -18,7 +18,7 @@ links:
   cantFindAddress:
     - <p><a href="/address/edit">I cannot find my address in the list</a></p>
 validation:
-  required: Enter a {{label}}.
+  required: Enter your {{label}}.
   postcodeLength: 'Your {{label}} should be between 5 and 7 characters'
   alphaNumeric: 'Your {{label}} should only include numbers and letters'
   missingNumericOrAlpha: 'Your {{label}} should include numbers and letters'
