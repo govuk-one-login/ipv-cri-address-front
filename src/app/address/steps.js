@@ -33,6 +33,14 @@ module.exports = {
     controller: address,
     editable: true,
     continueOnEdit: true,
+    fields: [
+      "addressFlatNumber",
+      "addressHouseNumber",
+      "addressHouseName",
+      "addressStreetName",
+      "addressLocality",
+      "addressYearFrom",
+    ],
     next: "confirm",
   },
   "/confirm": {

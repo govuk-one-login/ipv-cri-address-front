@@ -23,7 +23,7 @@
     {{ govukInput({
       id: "addressFlatNumber",
       name: "addressFlatNumber",
-      label: { text: translate("fields.address-line-flat.label") },
+      label: { text: translate("fields.addressFlatNumber.label") },
       classes: "govuk-input--width-5",
       value: addressFlatNumber
     }) }}
@@ -31,7 +31,7 @@
     {{ govukInput({
       id: "addressHouseNumber",
       name: "addressHouseNumber",
-      label: { text: translate("fields.address-line-house.label") },
+      label: { text: translate("fields.addressHouseNumber.label") },
       classes: "govuk-input--width-5",
       value: addressHouseNumber
     }) }}
@@ -39,7 +39,7 @@
     {{ govukInput({
       id: "addressHouseName",
       name: "addressHouseName",
-      label: { text: translate("fields.address-line-house-name.label") },
+      label: { text: translate("fields.addressHouseName.label") },
       classes: "govuk-input--width-20",
       value: addressHouseName
     }) }}
@@ -47,27 +47,27 @@
     {{ govukInput({
       id: "addressStreetName",
       name: "addressStreetName",
-      label: { text: translate("fields.address-line-street.label") },
+      label: { text: translate("fields.addressStreetName.label") },
       classes: "govuk-input--width-20",
       value: addressStreetName
     }) }}
 
     {{ govukInput({
-      id: "addressTownOrCity",
-      name: "addressTownOrCity",
-      label: { text: translate("fields.address-town.label") },
+      id: "addressLocality",
+      name: "addressLocality",
+      label: { text: translate("fields.addressLocality.label") },
       classes: "govuk-input--width-20",
-      value: addressTownOrCity
+      value: addressLocality
     }) }}
 
-    <h4>{{translate("fields.address-year-from.title")}}</h4>
+    <h4>{{translate("fields.addressYearFrom.title")}}</h4>
 
     {{ govukInput({
-      id: "addressValidFrom",
-      name: "addressValidFrom",
-      label: { text: translate("fields.address-year-from.label") },
+      id: "addressYearFrom",
+      name: "addressYearFrom",
+      label: { text: translate("fields.addressYearFrom.label") },
       classes: "govuk-input--width-4",
-      value: addressValidFrom
+      value: addressYearFrom
     }) }}
 
     {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}

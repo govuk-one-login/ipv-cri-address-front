@@ -28,7 +28,7 @@ describe("address controller", () => {
       addressFlatNumber: "10a",
       addressHouseName: "My buildng name",
       addressStreetName: "street road",
-      addressTownOrCity: "small town",
+      addressLocality: "small town",
     };
 
     req.body = addressToSave;
@@ -42,7 +42,7 @@ describe("address controller", () => {
     );
     expect(savedAddress.streetName).to.equal(addressToSave.addressStreetName);
     expect(savedAddress.addressLocality).to.equal(
-      addressToSave.addressTownOrCity
+      addressToSave.addressLocality
     );
     expect(savedAddress.buildingName).to.equal(addressToSave.addressHouseName);
   });
@@ -51,7 +51,7 @@ describe("address controller", () => {
     const addressToSave = {
       addressHouseNumber: "10a",
       addressStreetName: "street road",
-      addressTownOrCity: "small town",
+      addressLocality: "small town",
     };
 
     req.body = addressToSave;
@@ -65,7 +65,7 @@ describe("address controller", () => {
     );
     expect(savedAddress.streetName).to.equal(addressToSave.addressStreetName);
     expect(savedAddress.addressLocality).to.equal(
-      addressToSave.addressTownOrCity
+      addressToSave.addressLocality
     );
   });
 
@@ -74,7 +74,7 @@ describe("address controller", () => {
       addressFlatNumber: "1a",
       addressHouseName: "My building",
       addressStreetName: "avenue",
-      addressTownOrCity: "large town",
+      addressLocality: "large town",
     };
 
     const existingAddresses = [
@@ -99,8 +99,6 @@ describe("address controller", () => {
     expect(existingAddress).to.be.equal(existingAddresses[0]);
     expect(newAddress.buildingNumber).to.equal(addressToSave.addressFlatNumber);
     expect(newAddress.streetName).to.equal(addressToSave.addressStreetName);
-    expect(newAddress.addressLocality).to.equal(
-      addressToSave.addressTownOrCity
-    );
+    expect(newAddress.addressLocality).to.equal(addressToSave.addressLocality);
   });
 });

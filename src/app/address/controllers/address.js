@@ -11,7 +11,7 @@ class AddressController extends BaseController {
         locals.addressHouseNumber = address.buildingNumber;
         locals.addressHouseName = address.buildingName;
         locals.addressStreetName = address.streetName;
-        locals.addressTownOrCity = address.addressLocality;
+        locals.addressLocality = address.addressLocality;
       }
       callback(null, locals);
     });
@@ -40,14 +40,14 @@ class AddressController extends BaseController {
     const addressHouseNumber = reqBody.addressHouseNumber || null;
     const addressHouseName = reqBody.addressHouseName || null;
     const addressStreetName = reqBody.addressStreetName;
-    const addressTownOrCity = reqBody.addressTownOrCity;
+    const addressLocality = reqBody.addressLocality;
     // const addressValidFrom = reqBody.addressValidFrom; // todo
 
     const address = {
       buildingNumber: addressFlatNumber || addressHouseNumber,
       buildingName: addressHouseName,
       streetName: addressStreetName,
-      addressLocality: addressTownOrCity,
+      addressLocality,
     };
 
     return address;
