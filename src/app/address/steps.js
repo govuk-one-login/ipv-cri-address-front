@@ -13,7 +13,7 @@ module.exports = {
   },
   "/search": {
     controller: search,
-    fields: ["address-search"],
+    fields: ["addressSearch"],
     next: [
       {
         field: "requestIsSuccessful",
@@ -51,7 +51,7 @@ module.exports = {
   },
   "/previous": {
     controller: search,
-    fields: ["address-search"],
+    fields: ["addressSearch"],
     next: [
       {
         field: "requestIsSuccessful",

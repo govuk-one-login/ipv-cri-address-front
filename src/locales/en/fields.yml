@@ -1,7 +1,7 @@
 address-form:
   label: What is your address?
 
-address-search:
+addressSearch:
   label: Postcode
   hint: For example, SW12 2AA
 

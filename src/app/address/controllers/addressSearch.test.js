@@ -42,7 +42,7 @@ describe("Address Search controller", () => {
   it("Should call api with a postcode and save results to session", async () => {
     const testPostcode = "myPostcode";
     req.axios.get = sinon.fake.returns(testData.apiResponse);
-    req.body["address-search"] = testPostcode;
+    req.body["addressSearch"] = testPostcode;
 
     await addressSearch.saveValues(req, res, next);
 
@@ -74,7 +74,7 @@ describe("Address Search controller", () => {
   it("Should not throw an error when api throws error", async () => {
     const testPostcode = "myPostcode";
     req.axios.get = sinon.fake.rejects();
-    req.body["address-search"] = testPostcode;
+    req.body["addressSearch"] = testPostcode;
 
     await addressSearch.saveValues(req, res, next);
 

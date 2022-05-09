@@ -6,7 +6,7 @@ const {
 } = require("./validators/postcodeValidator");
 
 module.exports = {
-  "address-search": {
+  addressSearch: {
     type: "text",
     autocomplete: "Postcode",
     formatter: [
