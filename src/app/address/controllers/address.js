@@ -1,5 +1,9 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 
+const {
+  validateHouseNumberAndName,
+} = require("../validators/addressValidator");
+
 class AddressController extends BaseController {
   getValues(req, res, callback) {
     super.getValues(req, res, (err, values) => {
@@ -35,6 +39,26 @@ class AddressController extends BaseController {
       }
       callback(null, values);
     });
+  }
+
+  validateFields(req, res, callback) {
+    // add custom validator for houseName/Number check.
+    const formFields = req.form.options.fields;
+    const houseName = req.body.addressHouseName;
+    const houseNumber = req.body.addressHouseNumber;
+
+    formFields.addressHouseNumber?.validate.push({
+      fn: validateHouseNumberAndName,
+      arguments: [houseName],
+      message: "Enter a house name or house number",
+    });
+    formFields.addressHouseName?.validate.push({
+      fn: validateHouseNumberAndName,
+      arguments: [houseNumber],
+      message: "Enter a house name or house number",
+    });
+
+    super.validateFields(req, res, callback);
   }
 
   async saveValues(req, res, callback) {

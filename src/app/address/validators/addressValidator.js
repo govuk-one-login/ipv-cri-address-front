@@ -8,4 +8,10 @@ module.exports = {
   isPreviousYear: function (val) {
     return new Date(val).getFullYear() <= new Date().getFullYear();
   },
+  validateHouseNumberAndName: function (houseName, houseNumber) {
+    if (!houseName.trim() && !houseNumber.trim()) {
+      return false;
+    }
+    return true;
+  },
 };

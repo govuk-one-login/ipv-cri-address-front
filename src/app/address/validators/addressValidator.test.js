@@ -1,6 +1,7 @@
 const {
   alphaNumericWithSpecialChars,
   isPreviousYear,
+  validateHouseNumberAndName,
 } = require("./addressValidator");
 
 const today = new Date();
@@ -51,6 +52,23 @@ describe("Address validator", () => {
     it("should pass with valid dates", () => {
       const results = invalidFutureYears.map(isPreviousYear);
       results.forEach((val) => expect(val).to.equal(false));
+    });
+  });
+
+  describe("validateHouseNumberAndName", () => {
+    it("should pass when both values exist", () => {
+      const results = validateHouseNumberAndName("number", "name");
+      expect(results).to.equal(true);
+    });
+
+    it("should fail when the both values dont exist", () => {
+      const results = validateHouseNumberAndName("", "");
+      expect(results).to.equal(false);
+    });
+
+    it("shoudl pass when one value exists", () => {
+      const results = validateHouseNumberAndName("", "name");
+      expect(results).to.equal(true);
     });
   });
 });
