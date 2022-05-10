@@ -1,4 +1,5 @@
 const BaseController = require("hmpo-form-wizard").Controller;
+const addressFactory = require("../../../../test/utils/addressFactory");
 const AddressController = require("./address");
 
 describe("address controller", () => {
@@ -29,6 +30,7 @@ describe("address controller", () => {
       addressHouseName: "My buildng name",
       addressStreetName: "street road",
       addressLocality: "small town",
+      addressYearFrom: "2022",
     };
 
     req.body = addressToSave;
@@ -52,6 +54,7 @@ describe("address controller", () => {
       addressHouseNumber: "10a",
       addressStreetName: "street road",
       addressLocality: "small town",
+      addressYearFrom: "2022",
     };
 
     req.body = addressToSave;
@@ -75,16 +78,10 @@ describe("address controller", () => {
       addressHouseName: "My building",
       addressStreetName: "avenue",
       addressLocality: "large town",
+      addressYearFrom: "2022",
     };
 
-    const existingAddresses = [
-      {
-        buildingNumber: "10a",
-        streetName: "street road",
-        addressLocality: "small town",
-        postalCode: "WD6 123",
-      },
-    ];
+    const existingAddresses = addressFactory(1);
     req.sessionModel.set("addresses", existingAddresses);
 
     req.body = addressToSave;
