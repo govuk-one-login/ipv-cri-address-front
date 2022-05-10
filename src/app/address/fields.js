@@ -5,8 +5,13 @@ const {
   isUkPostcode,
 } = require("./validators/postcodeValidator");
 
+const {
+  alphaNumericWithSpecialChars,
+  isPreviousYear,
+} = require("./validators/addressValidator");
+
 module.exports = {
-  "address-search": {
+  addressSearch: {
     type: "text",
     autocomplete: "Postcode",
     formatter: [
@@ -34,6 +39,97 @@ module.exports = {
       {
         type: "isUkPostcode",
         fn: isUkPostcode,
+      },
+    ],
+  },
+  addressFlatNumber: {
+    type: "text",
+    validate: [
+      {
+        type: "maxlength",
+        fn: "maxlength",
+        arguments: [30],
+      },
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  addressHouseNumber: {
+    type: "text",
+    validate: [
+      {
+        type: "maxlength",
+        fn: "maxlength",
+        arguments: [10],
+      },
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  addressHouseName: {
+    type: "text",
+    validate: [
+      {
+        type: "maxlength",
+        fn: "maxlength",
+        arguments: [50],
+      },
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  addressStreetName: {
+    type: "text",
+    validate: [
+      {
+        type: "required",
+      },
+      {
+        type: "maxlength",
+        fn: "maxlength",
+        arguments: [60],
+      },
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  addressLocality: {
+    type: "text",
+    validate: [
+      {
+        type: "required",
+      },
+      {
+        type: "maxlength",
+        fn: "maxlength",
+        arguments: [60],
+      },
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  addressYearFrom: {
+    type: "number",
+    validate: [
+      {
+        type: "required",
+      },
+      {
+        type: "date-year",
+      },
+      {
+        type: "isPreviousDate",
+        fn: isPreviousYear,
       },
     ],
   },

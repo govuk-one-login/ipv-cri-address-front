@@ -13,7 +13,7 @@ module.exports = {
   },
   "/search": {
     controller: search,
-    fields: ["address-search"],
+    fields: ["addressSearch"],
     next: [
       {
         field: "requestIsSuccessful",
@@ -33,6 +33,14 @@ module.exports = {
     controller: address,
     editable: true,
     continueOnEdit: true,
+    fields: [
+      "addressFlatNumber",
+      "addressHouseNumber",
+      "addressHouseName",
+      "addressStreetName",
+      "addressLocality",
+      "addressYearFrom",
+    ],
     next: "confirm",
   },
   "/confirm": {
@@ -51,7 +59,7 @@ module.exports = {
   },
   "/previous": {
     controller: search,
-    fields: ["address-search"],
+    fields: ["addressSearch"],
     next: [
       {
         field: "requestIsSuccessful",

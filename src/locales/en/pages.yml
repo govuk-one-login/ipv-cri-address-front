@@ -9,7 +9,7 @@ address:
 done:
   title: Done
 
-address-search:
+addressSearch:
   title: What is your current home address?
 
 address-previous:
@@ -19,7 +19,7 @@ address-results:
   title: What is your current home address?
   content:
     - Postcode
-    - <b>{{values.address-search}}</b> <a href="/postcode">Change</a>
+    - <b>{{values.addressSearch}}</b> <a href="/postcode">Change</a>
 
 address-confirm:
   title: Check your details

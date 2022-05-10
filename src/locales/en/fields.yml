@@ -1,38 +1,45 @@
 address-form:
   label: What is your address?
 
-address-search:
+addressSearch:
   label: Postcode
   hint: For example, SW12 2AA
 
-address-results:
-  label: Select an address
-
-address-line-flat:
+addressFlatNumber:
   label: Flat number
+  validation:
+    maxlength: Check you've entered your flat number correctly
 
-address-line-house:
+addressHouseNumber:
   label: House number
+  validation:
+    maxlength: Check you've entered your house number correctly
 
-address-line-house-name:
+addressHouseName:
   label: House name
+  validation:
+    maxlength: Check you've entered your house name correctly
 
-address-line-street:
+addressStreetName:
   label: Street name
+  validation:
+    maxlength: Check you've entered your street name correctly
 
-address-town:
+addressLocality:
   label: Town or city
+  validation:
+    maxlength: Check you've entered your town or city correctly
 
-address-county:
-  label: County
-
-address-postcode:
-  label: Postcode
-
-address-year-from:
+addressYearFrom:
   title: What year did you start living at this address?
   classes: govuk-input--width-4
   label: Year
+  validation:
+    default: Enter a valid date
+    isPreviousDate: The date you moved into this address must be in the past
+
+address-results:
+  label: Select an address
 
 address-confirm:
   current: Current address
