@@ -5,6 +5,7 @@ function addressFactory(quantity) {
       streetName: `${i} street`,
       addressLocality: `${i} town`,
       postalCode: `${i} code`,
+      validFrom: String(new Date().getFullYear()),
     };
 
     // factor in when an address has building name or building number or both
