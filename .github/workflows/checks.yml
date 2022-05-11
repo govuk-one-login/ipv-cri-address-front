@@ -41,10 +41,14 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    steps:
       - uses: actions/checkout@v2
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          node-version: 16.13.1
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install
       - name: Assume temporary AWS role
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -67,7 +71,7 @@ jobs:
         working-directory: ./test/browser
         env:
           CONFIG_DIRECTORY: config
-        run: docker exec web-address npm run test:browser:ci
+        run: yarn run cucumber-js --config test/browser/cucumber.js
       - name: Docker Compose Down
         working-directory: ./test/browser
         if: always()
