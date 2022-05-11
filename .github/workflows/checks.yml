@@ -32,3 +32,43 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # obtained from https://sonarcloud.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  run-browser-tests:
+    runs-on: ubuntu-latest
+    environment: di-ipv-cri-dev
+    env:
+      AWS_REGION: eu-west-2
+      ENVIRONMENT: dev
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Assume temporary AWS role
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.GH_ACTIONS_CORE_STUB_CONFIG_S3_ROLE_ARN }}
+          aws-region: eu-west-2
+      - name: Fetch config from S3
+        working-directory: ./test/browser
+        run: aws s3 sync s3://${{ secrets.STUB_CONFIG_BUCKET_NAME }} config
+      #      - name: Assume temporary AWS role
+      #        uses: aws-actions/configure-aws-credentials@v1
+      #        with:
+      #          role-to-assume: ${{ secrets.GH_ACTIONS_CORE_STUB_CONFIG_S3_ROLE_ARN }}
+      #          aws-region: eu-west-2
+      #      - name: Pull core-stub
+      #        run: docker pull aws_account_id.dkr.ecr.us-west-2.amazonaws.com/core-stub:latest
+      - name: Docker Compose Up
+        working-directory: ./test/browser
+        run: docker-compose up -d
+      - name: Run browser tests
+        working-directory: ./test/browser
+        env:
+          CONFIG_DIRECTORY: config
+        run: docker exec web-address npm run test:browser:ci
+      - name: Docker Compose Down
+        working-directory: ./test/browser
+        if: always()
+        run: docker-compose down
