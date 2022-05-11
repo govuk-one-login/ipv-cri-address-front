@@ -39,3 +39,23 @@ Required environment variables:
    - `yarn run` runs from the root directory, so the full path to the config file needs to be specified
 
 
+
+## Authenticating to GHCR.io
+
+https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+
+https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+
+1. generate new token
+2. permissions: read:packages
+3. Save token as environment variable
+
+> echo $PAT | docker login ghcr.io -u GITHUB_USER_NAME --password-stdin  
+❯ docker pull ghcr.io/alphagov/di/di-ipv-core-stub:latest
+
+
+https://mkjwk.org/
+
+- publicEncryptionJwkBase64 - RSA
+- CORE_STUB_SIGNING_PRIVATE_KEY_JWK_BASE64 - EC
+

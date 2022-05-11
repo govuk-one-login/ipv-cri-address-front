@@ -11,10 +11,9 @@ services:
   core-stub:
     image: ghcr.io/alphagov/di/di-ipv-core-stub:latest
     environment:
+      CORE_STUB_SIGNING_PRIVATE_KEY_JWK_BASE64: 'eyJrdHkiOiAiRUMiLCJkIjogIk1abGdZaU1tb3ZiMXUtZldnY0lxU19VWWVHZm1GR0NLNzhIT0QxeG95RFUiLCJ1c2UiOiAic2lnIiwiY3J2IjogIlAtMjU2Iiwia2lkIjogInNpZy0xNjUyMjg3NDAyIiwieCI6ICI2T1B1alpMY09QY3o2RURORWlqdG5Ic1BneDY2bm5jbzFnZ0dOcUNqV09jIiwieSI6ICJsX0xaRkdyV2xOUjFXWXNPMjJFN3ZTazJoUW4waDgtMUxjbDVkT1JWeW8wIiwiYWxnIjogIkVTMjU2In0K'
+      CORE_STUB_SIGNING_PUBLIC_JWK: '{"kty":"EC","crv":"P-256","x":"E9ZzuOoqcVU4pVB9rpmTzezjyOPRlOmPGJHKi8RSlIM","y":"KlTMZthHZUkYz5AleTQ8jff0TJiS3q2OB9L5Fw4xA04"}'
       CORE_STUB_CONFIG_FILE: "/app/di-ipv-config.yaml"
-      CORE_STUB_KEYSTORE_ALIAS: ipv-core-stub
-      CORE_STUB_KEYSTORE_PASSWORD: "puppet"
-      CORE_STUB_KEYSTORE_FILE: "/app/keystore.jks"
       CORE_STUB_USER_DATA_PATH: "/app/experian-uat-users-large.zip"
 
     volumes:
