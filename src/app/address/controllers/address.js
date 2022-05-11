@@ -41,13 +41,16 @@ class AddressController extends BaseController {
     const addressHouseName = reqBody.addressHouseName || null;
     const addressStreetName = reqBody.addressStreetName;
     const addressLocality = reqBody.addressLocality;
-    // const addressValidFrom = reqBody.addressValidFrom; // todo
+    const addressYearFrom = new Date(reqBody.addressYearFrom)
+      .toISOString()
+      .split("T")[0];
 
     const address = {
       buildingNumber: addressFlatNumber || addressHouseNumber,
       buildingName: addressHouseName,
       streetName: addressStreetName,
       addressLocality,
+      validFrom: addressYearFrom,
     };
 
     return address;

@@ -21,7 +21,9 @@ class AddressConfirmController extends BaseController {
       const previousAddress = addresses.shift();
 
       locals.currentAddressRowValue = currentAddress.text;
-      locals.yearMovedRowValue = currentAddress.addressValidFrom;
+      locals.validFromRow = String(
+        new Date(currentAddress.validFrom).getFullYear()
+      );
       locals.previousAddressRowValue = previousAddress?.text;
 
       callback(null, locals);

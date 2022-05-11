@@ -60,7 +60,7 @@ describe("Address confirmation controller", () => {
     const previousAddress = formattedAddresses.shift();
     const params = {
       currentAddressRowValue: currentAddress,
-      yearMovedRowValue: undefined, // todo empty until year from is implemented.
+      validFromRow: String(new Date().getFullYear()),
       previousAddressRowValue: previousAddress,
     };
 
