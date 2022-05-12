@@ -46,3 +46,15 @@ address-confirm:
   year-current: Year moved in to current address
   previous: Previous address
   change: Change
+
+addressLivingDuration:
+  label: Have you lived here for more than 3 months?
+  hint: We'll need to ask you where you lived before if you've recently moved to this address.
+  items:
+    isAfterThreeMonths:
+      "true":
+        label: "yes"
+        value: "yes"
+      "false":
+        value: "no"
+        label: "no"
