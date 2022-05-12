@@ -8,6 +8,24 @@
 {% extends "form-template.njk" %}
 {% set hmpoPageKey = "address-confirm" %}
 
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+
+{% block beforeContent %}
+    {{ govukPhaseBanner({
+    tag: {
+        text: "beta"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="https://signin.account.gov.uk/contact-us?supportType=PUBLIC">feedback</a> will help us to improve it.'
+    }) }}
+
+    {% block backLink %}
+        {% if backLink %}
+            {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+        {% endif %}
+    {% endblock %}
+{% endblock %}
+
+
 {% block mainContent %}
 
   <h1 id="header">{{translate("pages.address-confirm.title")}}</h1>

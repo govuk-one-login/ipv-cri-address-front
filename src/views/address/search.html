@@ -3,6 +3,16 @@
 {% set hmpoPageContent = "addressSearch" %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-text/macro.njk" import hmpoText %}
+{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+
+{% block beforeContent %}
+    {{ govukPhaseBanner({
+    tag: {
+        text: "beta"
+    },
+    html: 'This is a new service – your <a class="govuk-link" href="https://signin.account.gov.uk/contact-us?supportType=PUBLIC">feedback</a> will help us to improve it.'
+    }) }}
+{% endblock %}
 
 {% block mainContent %}
 
