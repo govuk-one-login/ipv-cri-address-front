@@ -51,10 +51,8 @@ addressLivingDuration:
   label: Have you lived here for more than 3 months?
   hint: We'll need to ask you where you lived before if you've recently moved to this address.
   items:
-    isAfterThreeMonths:
-      "true":
-        label: "yes"
-        value: "yes"
-      "false":
-        value: "no"
-        label: "no"
+    moreInfoRequired:
+      moreInfoRequired:
+        text: "No"
+      moreInfoNotRequired:
+        text: "Yes"
