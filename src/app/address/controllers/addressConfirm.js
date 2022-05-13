@@ -15,15 +15,15 @@ class AddressConfirmController extends BaseController {
         return this.formatAddress(address);
       });
 
-
       const currentAddress = addresses.shift();
-
       const previousAddress = addresses.shift();
 
+      const yearFrom = new Date(currentAddress.validFrom).getFullYear();
+      const today = new Date();
+
+      locals.isMoreInfoRequirred = this.isMoreInfoRequired(yearFrom, today);
       locals.currentAddressRowValue = currentAddress.text;
-      locals.validFromRow = String(
-        new Date(currentAddress.validFrom).getFullYear()
-      );
+      locals.validFromRow = String(yearFrom);
       locals.previousAddressRowValue = previousAddress?.text;
 
       callback(null, locals);
@@ -78,6 +78,27 @@ class AddressConfirmController extends BaseController {
     });
 
     return resp.data;
+  }
+
+  // yearFrom = int
+  // checkDate = date
+  // return true if same year or cant tell if within 3 months
+  isMoreInfoRequired(yearFrom, checkDate) {
+    // constructor requires month
+    if (checkDate.getFullYear() === yearFrom) {
+      return true; // We dont know what month they moved.
+    }
+
+    const threeMonthsAgo = new Date(
+      checkDate.getFullYear(),
+      checkDate.getMonth() - 3
+    );
+
+    // If 3monthsAgo is still 2022 and yearFrom = 2021.
+    // Return false
+    // if 3monthsAgo is previous year 2021 and yearFrom = 2020
+    // Return true
+    return threeMonthsAgo.getFullYear() <= yearFrom;
   }
 }
 
