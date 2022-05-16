@@ -1,0 +1,42 @@
+
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{{ govukInput({
+  id: "addressFlatNumber",
+  name: "addressFlatNumber",
+  label: { text: translate("fields.addressFlatNumber.label") },
+  classes: "govuk-input--width-5",
+  value: addressFlatNumber
+}) }}
+
+{{ govukInput({
+  id: "addressHouseNumber",
+  name: "addressHouseNumber",
+  label: { text: translate("fields.addressHouseNumber.label") },
+  classes: "govuk-input--width-5",
+  value: addressHouseNumber
+}) }}
+
+{{ govukInput({
+  id: "addressHouseName",
+  name: "addressHouseName",
+  label: { text: translate("fields.addressHouseName.label") },
+  classes: "govuk-input--width-20",
+  value: addressHouseName
+}) }}
+
+{{ govukInput({
+  id: "addressStreetName",
+  name: "addressStreetName",
+  label: { text: translate("fields.addressStreetName.label") },
+  classes: "govuk-input--width-20",
+  value: addressStreetName
+}) }}
+
+{{ govukInput({
+  id: "addressLocality",
+  name: "addressLocality",
+  label: { text: translate("fields.addressLocality.label") },
+  classes: "govuk-input--width-20",
+  value: addressLocality
+}) }}

@@ -1,0 +1,11 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+<h4>{{translate("fields.addressYearFrom.title")}}</h4>
+
+{{ govukInput({
+  id: "addressYearFrom",
+  name: "addressYearFrom",
+  label: { text: translate("fields.addressYearFrom.label") },
+  classes: "govuk-input--width-4",
+  value: addressYearFrom
+}) }}
