@@ -5,7 +5,6 @@ class AddressController extends BaseController {
     super.locals(req, res, (err, locals) => {
       locals.addressPostcode = req.sessionModel.get("addressPostcode");
       const address = req.sessionModel.get("chosenAddress");
-
       if (address) {
         locals.addressFlatNumber = address.addressFlatNumber;
         locals.addressHouseNumber = address.buildingNumber;
@@ -19,7 +18,8 @@ class AddressController extends BaseController {
 
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
-      const address = this.buildAddress(req.body);
+      const isPreviousAddress = req.sessionModel.get("addPreviousAddresses");
+      const address = this.buildAddress(req.body, isPreviousAddress);
       address.postalCode = req.sessionModel.get("addressPostcode");
 
       const sessionsAddresses = req.sessionModel.get("addresses");
@@ -35,15 +35,20 @@ class AddressController extends BaseController {
     });
   }
 
-  buildAddress(reqBody) {
+  buildAddress(reqBody, isPreviousAddress) {
     const addressFlatNumber = reqBody.addressFlatNumber || null;
     const addressHouseNumber = reqBody.addressHouseNumber || null;
     const addressHouseName = reqBody.addressHouseName || null;
     const addressStreetName = reqBody.addressStreetName;
     const addressLocality = reqBody.addressLocality;
-    const addressYearFrom = new Date(reqBody.addressYearFrom)
-      .toISOString()
-      .split("T")[0];
+
+    // only want year from for current address
+    let addressYearFrom = null;
+    if (!isPreviousAddress) {
+      addressYearFrom = new Date(reqBody.addressYearFrom)
+        .toISOString()
+        .split("T")[0];
+    }
 
     const address = {
       buildingNumber: addressFlatNumber || addressHouseNumber,
