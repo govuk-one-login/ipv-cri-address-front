@@ -51,12 +51,12 @@ module.exports = {
         field: "addPreviousAddresses",
         op: "===",
         value: true,
-        next: "previous",
+        next: "previous/search",
       },
       "/oauth2/callback",
     ],
   },
-  "/previous": {
+  "/previous/search": {
     controller: search,
     fields: ["addressSearch"],
     next: [
@@ -64,9 +64,27 @@ module.exports = {
         field: "requestIsSuccessful",
         op: "===",
         value: true,
-        next: "results",
+        next: "previous/results",
       },
-      "address",
+      "previous/address",
     ],
+  },
+  "/previous/results": {
+    controller: results,
+    fields: ["address-results"],
+    next: "previous/address",
+  },
+  "/previous/address": {
+    controller: address,
+    editable: true,
+    continueOnEdit: true,
+    fields: [
+      "addressFlatNumber",
+      "addressHouseNumber",
+      "addressHouseName",
+      "addressStreetName",
+      "addressLocality",
+    ],
+    next: "confirm",
   },
 };

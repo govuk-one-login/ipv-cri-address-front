@@ -9,14 +9,13 @@
 
 {% block mainContent %}
 
-  <h1 id="header">{{translate("pages.address-form.title")}}</h1>
+  <h1 id="header">{{translate("pages.address-form-previous.title")}}</h1>
 
-  {{hmpoHtml(translate("links.changePostcode"))}}
+  {{hmpoHtml(translate("links.previous.changePostcode"))}}
 
   {% call hmpoForm(ctx) %}
 
-    {% include "./templates/address-input-fields.html" %}
-    {% include "./templates/address-year-from-field.html" %}
+    {% include "../templates/address-input-fields.html" %}
 
     {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}
 
