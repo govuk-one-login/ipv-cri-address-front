@@ -37,8 +37,7 @@ class AddressConfirmController extends BaseController {
     try {
 
       const moreInfoRequired = req.body.moreInfoRequired;
-      const isPreviousJourney = req.sessionModel.get("addPreviousAddresses");
-      if (moreInfoRequired && !isPreviousJourney) {
+      if (moreInfoRequired) {
         req.sessionModel.set("addPreviousAddresses", true);
         callback();
       } else {
@@ -50,6 +49,8 @@ class AddressConfirmController extends BaseController {
         );
 
         super.saveValues(req, res, () => {
+          // if we're into save values we're finished with gathering addresses
+          req.sessionModel.set("addPreviousAddresses", false);
           req.sessionModel.set("redirect_url", data.redirect_uri);
           req.sessionModel.set("state", data.state);
 
