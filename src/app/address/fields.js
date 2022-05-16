@@ -133,4 +133,12 @@ module.exports = {
       },
     ],
   },
+  moreInfoRequired: {
+    type: "radio",
+    validate: [
+      {
+        type: "required",
+      },
+    ],
+  },
 };

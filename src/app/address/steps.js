@@ -1,5 +1,4 @@
 const address = require("./controllers/address");
-const done = require("./controllers/done");
 const search = require("./controllers/addressSearch");
 const results = require("./controllers/addressResults");
 const confirm = require("./controllers/addressConfirm");
@@ -45,8 +44,8 @@ module.exports = {
   },
   "/confirm": {
     controller: confirm,
-    prereqs: "/address/edit", // can enter confirm if coming from address edit
-    field: ["addPrevious"],
+    prereqs: "/address/edit",
+    field: ["addPrevious", "moreInfoRequired"],
     next: [
       {
         field: "addPreviousAddresses",
@@ -69,9 +68,5 @@ module.exports = {
       },
       "address",
     ],
-  },
-  // temporary display results
-  "/done": {
-    controller: done,
   },
 };

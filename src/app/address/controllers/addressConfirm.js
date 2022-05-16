@@ -21,6 +21,9 @@ class AddressConfirmController extends BaseController {
       const yearFrom = new Date(currentAddress.validFrom).getFullYear();
       const today = new Date();
 
+      locals.addPreviousAddresses = !req.sessionModel.get(
+        "addPreviousAddresses"
+      );
       locals.isMoreInfoRequirred = this.isMoreInfoRequired(yearFrom, today);
       locals.currentAddressRowValue = currentAddress.text;
       locals.validFromRow = String(yearFrom);
@@ -32,27 +35,38 @@ class AddressConfirmController extends BaseController {
 
   async saveValues(req, res, callback) {
     try {
-      const addresses = req.sessionModel.get("addresses");
-      const data = await this.saveAddressess(
-        req.axios,
-        addresses,
-        req.session.tokenId
-      );
-      super.saveValues(req, res, () => {
-        req.sessionModel.set("redirect_url", data.redirect_uri);
-        req.sessionModel.set("state", data.state);
-        if (!data.code) {
-          const error = {
-            code: "server_error",
-            error_description: "Failed to retrieve authorization code",
-          };
 
-          req.sessionModel.set("error", error);
-        } else {
-          req.sessionModel.set("authorization_code", data.code);
-        }
+      const moreInfoRequired = req.body.moreInfoRequired;
+      if (moreInfoRequired) {
+        req.sessionModel.set("addPreviousAddresses", true);
         callback();
-      });
+      } else {
+        const addresses = req.sessionModel.get("addresses");
+        const data = await this.saveAddressess(
+          req.axios,
+          addresses,
+          req.session.tokenId
+        );
+
+        super.saveValues(req, res, () => {
+          // if we're into save values we're finished with gathering addresses
+          req.sessionModel.set("addPreviousAddresses", false);
+          req.sessionModel.set("redirect_url", data.redirect_uri);
+          req.sessionModel.set("state", data.state);
+
+          if (!data.code) {
+            const error = {
+              code: "server_error",
+              error_description: "Failed to retrieve authorization code",
+            };
+
+            req.sessionModel.set("error", error);
+          } else {
+            req.sessionModel.set("authorization_code", data.code);
+          }
+          callback();
+        });
+      }
     } catch (err) {
       callback(err);
     }

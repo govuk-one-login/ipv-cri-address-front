@@ -60,15 +60,25 @@
       value: addressLocality
     }) }}
 
-    <h4>{{translate("fields.addressYearFrom.title")}}</h4>
+    {% if values.addPreviousAddresses %}
+      {{ govukInput({
+        id: "addressYearFrom",
+        name: "addressYearFrom",
+        label: { text: translate("fields.addressYearFrom.label") },
+        classes: "govuk-input--width-4",
+        value: "2022"
+      }) }}
+    {% else %}
+      <h4>{{translate("fields.addressYearFrom.title")}}</h4>
 
-    {{ govukInput({
-      id: "addressYearFrom",
-      name: "addressYearFrom",
-      label: { text: translate("fields.addressYearFrom.label") },
-      classes: "govuk-input--width-4",
-      value: addressYearFrom
-    }) }}
+      {{ govukInput({
+        id: "addressYearFrom",
+        name: "addressYearFrom",
+        label: { text: translate("fields.addressYearFrom.label") },
+        classes: "govuk-input--width-4",
+        value: addressYearFrom
+      }) }}
+    {% endif %}
 
     {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}
 
