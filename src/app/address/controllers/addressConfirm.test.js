@@ -60,10 +60,11 @@ describe("Address confirmation controller", () => {
       const currentAddress = formattedAddresses.shift();
       const previousAddress = formattedAddresses.shift();
       const params = {
+        addPreviousAddresses: true,
+        isMoreInfoRequirred: true,
         currentAddressRowValue: currentAddress,
         validFromRow: String(new Date().getFullYear()),
         previousAddressRowValue: previousAddress,
-        isMoreInfoRequirred: true,
       };
 
       addressConfirm.locals(req, res, next);
