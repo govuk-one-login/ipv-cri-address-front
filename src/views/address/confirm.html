@@ -1,3 +1,4 @@
+{% extends "./templates/address-base.html" %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% from "hmpo-html/macro.njk" import hmpoHtml %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
@@ -5,25 +6,7 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 
-{% extends "form-template.njk" %}
 {% set hmpoPageKey = "address-confirm" %}
-
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-
-{% block beforeContent %}
-    {{ govukPhaseBanner({
-    tag: {
-        text: "beta"
-    },
-    html: 'This is a new service – your <a class="govuk-link" href="https://signin.account.gov.uk/contact-us?supportType=PUBLIC">feedback</a> will help us to improve it.'
-    }) }}
-
-    {% block backLink %}
-        {% if backLink %}
-            {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-        {% endif %}
-    {% endblock %}
-{% endblock %}
 
 
 {% block mainContent %}

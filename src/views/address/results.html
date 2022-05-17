@@ -1,20 +1,9 @@
-{% extends "form-template.njk" %}
+{% extends "./templates/address-base.html" %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-select/macro.njk" import hmpoSelect %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% set hmpoPageKey = "address-results" %}
 {% set hmpoPageContent = "address-results" %}
-{% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-
-
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-  tag: {
-      text: "beta"
-  },
-  html: 'This is a new service – your <a class="govuk-link" href="https://signin.account.gov.uk/contact-us?supportType=PUBLIC">feedback</a> will help us to improve it.'
-  }) }}
-{% endblock %}
 
 {% block content %}
 
@@ -24,7 +13,7 @@
 
   {% call hmpoForm(ctx) %}
 
-    {% include "./templates/address-results-field.html" %}
+    {% include "./components/address-results-field.html" %}
 
     {{ hmpoHtml(translate("links.cantFindAddress")) }}
 
