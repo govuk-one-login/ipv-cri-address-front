@@ -1,3 +1,4 @@
+{% extends "./templates/address-base.html" %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 {% from "hmpo-html/macro.njk" import hmpoHtml %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
@@ -5,8 +6,8 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 
-{% extends "form-template.njk" %}
 {% set hmpoPageKey = "address-confirm" %}
+
 
 {% block mainContent %}
 
