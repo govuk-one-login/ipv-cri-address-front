@@ -134,9 +134,9 @@
       "response": {
         "status": 201,
         "jsonBody": {
-            "code": "mySuperSecretCode",
-            "state": "myAwesomeState",
-            "redirect_uri": "http://localhost:8085/callback"
+          "code": "mySuperSecretCode",
+          "state": "myAwesomeState",
+          "redirect_uri": "http://localhost:8085/callback"
         }
       }
     }

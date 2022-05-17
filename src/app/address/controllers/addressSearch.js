@@ -48,7 +48,6 @@ class AddressSearchController extends BaseController {
   // add a pretty print for drop down menu.
   // need text + value to be the same to suit the framework.
   addLabel(address) {
-
     let buildingNameNumber;
     if (address.buildingName && address.buildingNumber) {
       buildingNameNumber = `${address.buildingNumber} ${address.buildingName}`;
