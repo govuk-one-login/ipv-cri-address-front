@@ -5,6 +5,7 @@ module.exports = function (wallaby) {
       "src/**/*.js",
       "test/utils/**/*.js",
       ".mocharc.yaml",
+      "test/data/**",
     ],
 
     tests: [
