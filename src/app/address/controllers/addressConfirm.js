@@ -35,7 +35,6 @@ class AddressConfirmController extends BaseController {
 
   async saveValues(req, res, callback) {
     try {
-
       const moreInfoRequired = req.body.moreInfoRequired;
       if (moreInfoRequired) {
         req.sessionModel.set("addPreviousAddresses", true);

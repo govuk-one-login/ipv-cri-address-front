@@ -4,14 +4,13 @@ A number of environment variables are needed by the browser tests, as they affec
 
 ## Environment variables
 
-| env var                    | example                        | description                                                       |
-|----------------------------|--------------------------------|-------------------------------------------------------------------|
-| CORE_STUB_CONFIG_DIRECTORY | config/stubs/di-ipv-core-stub/ | Location of the config directory including the Keystore           |
-| CREDENTIAL_ISSUER_LABEL    | Address Development            | Label to click on inside the Core stub instance                   |
-| CORE_STUB_URL              | http://localhost:8085          | URL of the core stub, where the tests start                       |
-| MOCK_API_URL               | http://localhost:8090          | URL of the mock API, used to reset scenarios as required          |
-| MOCK_API                   | true                           | Use the mock API                                                  |
-
+| env var                    | example                        | description                                              |
+| -------------------------- | ------------------------------ | -------------------------------------------------------- |
+| CORE_STUB_CONFIG_DIRECTORY | config/stubs/di-ipv-core-stub/ | Location of the config directory including the Keystore  |
+| CREDENTIAL_ISSUER_LABEL    | Address Development            | Label to click on inside the Core stub instance          |
+| CORE_STUB_URL              | http://localhost:8085          | URL of the core stub, where the tests start              |
+| MOCK_API_URL               | http://localhost:8090          | URL of the mock API, used to reset scenarios as required |
+| MOCK_API                   | true                           | Use the mock API                                         |
 
 ## Running against mocks
 
@@ -37,5 +36,3 @@ Required environment variables:
 
 1. `yarn run cucumber-js --config test/browser/cucumber.js`
    - `yarn run` runs from the root directory, so the full path to the config file needs to be specified
-
-

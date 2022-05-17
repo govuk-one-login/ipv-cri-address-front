@@ -24,7 +24,7 @@ address-results:
 address-confirm:
   title: Check your details
   warning:
-      - Make sure your details are correct before you continue. You will not be able to change them later.
+    - Make sure your details are correct before you continue. You will not be able to change them later.
   current: Current address
   previous: Previous address
 
