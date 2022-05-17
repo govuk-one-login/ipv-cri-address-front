@@ -8,7 +8,7 @@ module.exports = function (req, res, next) {
     baseURL: BASE_URL,
   });
 
-  if (req.scenarioIDHeader) {
+  if (req.scenarioIDHeader && req.axios?.defaults?.headers?.common) {
     req.axios.defaults.headers.common["x-scenario-id"] = req.scenarioIDHeader;
   }
 
