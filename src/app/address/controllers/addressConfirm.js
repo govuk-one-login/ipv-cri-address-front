@@ -37,6 +37,8 @@ class AddressConfirmController extends BaseController {
     try {
       const moreInfoRequired = req.body.moreInfoRequired;
       if (moreInfoRequired) {
+        // reset variables specific to current address journey
+        req.sessionModel.set("addressSearch", null);
         req.sessionModel.set("addPreviousAddresses", true);
         callback();
       } else {

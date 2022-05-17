@@ -105,6 +105,13 @@ describe("Address confirmation controller", () => {
         "Failed to retrieve authorization code"
       );
     });
+
+    it("Should reset journey wide variables and enter previous journey when more information is required", async () => {
+      req.body.moreInfoRequired = true;
+      await addressConfirm.saveValues(req, res, next);
+      expect(req.session.test.addressSearch).to.equal(null);
+      expect(req.session.test.addPreviousAddresses).to.equal(true);
+    });
   });
 
   describe("isMoreInfoRequired", () => {
