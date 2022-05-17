@@ -118,12 +118,13 @@ describe("oauth middleware", () => {
 
       req.session = {
         authParams: {
-          redirect_uri: redirect,
-          state,
           client_id: clientId,
         },
         "hmpo-wizard-address": {
           authorization_code: code,
+          redirect_url: redirect,
+          state,
+          client_id: clientId,
         },
       };
 
@@ -133,11 +134,9 @@ describe("oauth middleware", () => {
     it("should successfully redirects when code is valid", async () => {
       await middleware.redirectToCallback(req, res, next);
 
-      res.on("end", () => {
-        expect(res.redirect).to.have.been.calledWith(
-          `${redirect}?client_id=${clientId}&state=${state}&code=${code}`
-        );
-      });
+      expect(res.redirect).to.have.been.calledWith(
+        `${redirect}?client_id=${clientId}&state=${state}&code=${code}`
+      );
     });
 
     it("should redirects with error when error present", async () => {
@@ -153,11 +152,21 @@ describe("oauth middleware", () => {
 
       await middleware.redirectToCallback(req, res, next);
 
-      res.on("end", () => {
-        expect(res.redirect).to.have.been.calledWith(
-          `${redirect}?error=${errorCode}&error_description=${description}`
-        );
-      });
+      expect(res.redirect).to.have.been.calledWith(
+        `${redirect}?error=${errorCode}&error_description=${description}`
+      );
+    });
+
+    it("should call next with URL error if redirect_uri not present", async () => {
+      delete req.session["hmpo-wizard-address"].redirect_url;
+
+      await middleware.redirectToCallback(req, res, next);
+
+      expect(next).to.have.been.calledWith(
+        sinon.match
+          .instanceOf(TypeError)
+          .and(sinon.match.has("code", "ERR_INVALID_URL"))
+      );
     });
   });
 
