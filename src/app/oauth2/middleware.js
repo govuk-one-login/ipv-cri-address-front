@@ -20,6 +20,14 @@ module.exports = {
   },
 
   initSessionWithJWT: async (req, res, next) => {
+    if (!req.jwt) {
+      return next(new Error("Missing JWT"));
+    }
+
+    if (!req.session?.authParams?.client_id) {
+      return next(new Error("Missing client_id"));
+    }
+
     const requestJWT = req.jwt;
     try {
       if (requestJWT) {
@@ -27,6 +35,7 @@ module.exports = {
           request: req.jwt,
           client_id: req.session.authParams.client_id,
         });
+
         req.session.tokenId = apiResponse?.data["session_id"];
       }
       return next();

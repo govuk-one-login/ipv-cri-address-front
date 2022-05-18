@@ -93,7 +93,31 @@ describe("oauth middleware", () => {
       };
     });
 
-    context("with missing properties", () => {});
+    context("with missing properties", () => {
+      it("should call next with an error when req.jwt is missing", async () => {
+        delete req.jwt;
+
+        await middleware.initSessionWithJWT(req, res, next);
+
+        expect(next).to.have.been.calledWith(
+          sinon.match
+            .instanceOf(Error)
+            .and(sinon.match.has("message", "Missing JWT"))
+        );
+      });
+
+      it("should call next with an error when req.session.authParams.client_id is missing", async () => {
+        delete req.session.authParams;
+
+        await middleware.initSessionWithJWT(req, res, next);
+
+        expect(next).to.have.been.calledWith(
+          sinon.match
+            .instanceOf(Error)
+            .and(sinon.match.has("message", "Missing client_id"))
+        );
+      });
+    });
 
     context("on authorization request", () => {
       it("should call axios with the correct parameters", async function () {
