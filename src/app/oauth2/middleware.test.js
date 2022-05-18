@@ -73,6 +73,8 @@ describe("oauth middleware", () => {
   });
 
   describe("initSessionWithJWT", () => {
+    let response;
+
     beforeEach(() => {
       req.jwt = exampleJwt;
       req.query = {
@@ -84,12 +86,11 @@ describe("oauth middleware", () => {
         },
       };
 
-      const response = {
+      response = {
         data: {
           "session-id": "abc1234",
         },
       };
-      req.axios.post = sinon.fake.returns(response);
     });
 
     context("with missing properties", () => {});
@@ -105,6 +106,10 @@ describe("oauth middleware", () => {
       });
 
       context("with API result", () => {
+        beforeEach(() => {
+          req.axios.post = sinon.fake.returns(response);
+        });
+
         it("should save 'session_id' into req.session", () => {});
 
         it("should call next", async function () {
@@ -114,7 +119,19 @@ describe("oauth middleware", () => {
       });
 
       context("with API error", () => {
-        it("should call next with error");
+        beforeEach(async () => {
+          req.axios.post = sinon.fake.throws(new Error("API error"));
+
+          await middleware.initSessionWithJWT(req, res, next);
+        });
+
+        it("should call next with error", () => {
+          expect(next).to.have.been.calledWith(
+            sinon.match
+              .instanceOf(Error)
+              .and(sinon.match.has("message", "API error"))
+          );
+        });
       });
     });
   });
