@@ -4,9 +4,6 @@ const cfenvStub = {};
 
 const redis = proxyquire("./redis", {
   cfenv: cfenvStub,
-  "../lib/config": {
-    REDIS: { SESSION_URL: "example.org", PORT: "4321" },
-  },
 });
 
 describe("redis", () => {
@@ -33,7 +30,7 @@ describe("redis", () => {
         getServiceURL: sinon.fake(),
       });
 
-      const redisConfig = redis();
+      const redisConfig = redis({ SESSION_URL: "example.org", PORT: "4321" });
 
       expect(redisConfig).to.include({
         connectionString: "redis://example.org:4321",

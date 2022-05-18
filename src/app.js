@@ -1,7 +1,7 @@
 const setScenarioHeaders = require("./lib/scenario-headers");
 const setAxiosDefaults = require("./lib/axios");
 
-const { PORT, SESSION_SECRET } = require("./lib/config");
+const { PORT, SESSION_SECRET, REDIS } = require("./lib/config");
 const { setup } = require("hmpo-app");
 
 const loggerConfig = {
@@ -10,7 +10,7 @@ const loggerConfig = {
   app: false,
 };
 
-const redisConfig = require("./lib/redis")();
+const redisConfig = require("./lib/redis")(REDIS);
 
 const sessionConfig = {
   cookieName: "service_session",
