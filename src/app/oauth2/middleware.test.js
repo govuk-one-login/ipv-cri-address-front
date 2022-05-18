@@ -88,7 +88,7 @@ describe("oauth middleware", () => {
 
       response = {
         data: {
-          "session-id": "abc1234",
+          session_id: "abc1234",
         },
       };
     });
@@ -98,22 +98,25 @@ describe("oauth middleware", () => {
     context("on authorization request", () => {
       it("should call axios with the correct parameters", async function () {
         await middleware.initSessionWithJWT(req, res, next);
+
         expect(req.axios.post).to.have.been.calledWith(AUTHORIZE, {
           request: exampleJwt,
           ...req.session.authParams,
         });
-        expect((req.session.tokenId = "abc1234"));
       });
 
       context("with API result", () => {
-        beforeEach(() => {
+        beforeEach(async () => {
           req.axios.post = sinon.fake.returns(response);
+
+          await middleware.initSessionWithJWT(req, res, next);
         });
 
-        it("should save 'session_id' into req.session", () => {});
+        it("should save 'session_id' into req.session", () => {
+          expect(req.session.tokenId).to.equal("abc1234");
+        });
 
-        it("should call next", async function () {
-          await middleware.initSessionWithJWT(req, res, next);
+        it("should call next", function () {
           expect(next).to.have.been.called;
         });
       });
