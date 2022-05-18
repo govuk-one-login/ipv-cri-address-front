@@ -40,7 +40,13 @@ module.exports = {
       const authCode = req.session["hmpo-wizard-address"].authorization_code;
       const url = req.session["hmpo-wizard-address"].redirect_url;
       const state = req.session["hmpo-wizard-address"].state;
-      const redirectUrl = new URL(url);
+
+      let redirectUrl;
+      try {
+        redirectUrl = new URL(url);
+      } catch (e) {
+        return next(e);
+      }
 
       if (!authCode) {
         const error = req.session["hmpo-wizard-address"].error;
@@ -57,9 +63,9 @@ module.exports = {
         redirectUrl.searchParams.append("state", state);
         redirectUrl.searchParams.append("code", authCode);
       }
-      res.redirect(redirectUrl.toString());
+      return res.redirect(redirectUrl.toString());
     } catch (e) {
-      next(e);
+      return next(e);
     }
   },
 
