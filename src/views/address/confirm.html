@@ -115,7 +115,7 @@
 
   {% call hmpoForm(ctx) %}
 
-    {% if isMoreInfoRequirred and addPreviousAddresses %}
+    {% if isMoreInfoRequirred %}
       {{ govukRadios({
         classes: "govuk-radios--inline",
         id: "moreInfoRequired",
