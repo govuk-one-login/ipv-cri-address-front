@@ -73,6 +73,8 @@ describe("oauth middleware", () => {
   });
 
   describe("initSessionWithJWT", () => {
+    let response;
+
     beforeEach(() => {
       req.jwt = exampleJwt;
       req.query = {
@@ -84,26 +86,80 @@ describe("oauth middleware", () => {
         },
       };
 
-      const response = {
+      response = {
         data: {
-          "session-id": "abc1234",
+          session_id: "abc1234",
         },
       };
-      req.axios.post = sinon.fake.returns(response);
     });
 
-    it("should call axios with the correct parameters", async function () {
-      await middleware.initSessionWithJWT(req, res, next);
-      expect(req.axios.post).to.have.been.calledWith(AUTHORIZE, {
-        request: exampleJwt,
-        ...req.session.authParams,
+    context("with missing properties", () => {
+      it("should call next with an error when req.jwt is missing", async () => {
+        delete req.jwt;
+
+        await middleware.initSessionWithJWT(req, res, next);
+
+        expect(next).to.have.been.calledWith(
+          sinon.match
+            .instanceOf(Error)
+            .and(sinon.match.has("message", "Missing JWT"))
+        );
       });
-      expect((req.session.tokenId = "abc1234"));
+
+      it("should call next with an error when req.session.authParams.client_id is missing", async () => {
+        delete req.session.authParams;
+
+        await middleware.initSessionWithJWT(req, res, next);
+
+        expect(next).to.have.been.calledWith(
+          sinon.match
+            .instanceOf(Error)
+            .and(sinon.match.has("message", "Missing client_id"))
+        );
+      });
     });
 
-    it("should call next", async function () {
-      await middleware.initSessionWithJWT(req, res, next);
-      expect(next).to.have.been.called;
+    context("on authorization request", () => {
+      it("should call axios with the correct parameters", async function () {
+        await middleware.initSessionWithJWT(req, res, next);
+
+        expect(req.axios.post).to.have.been.calledWith(AUTHORIZE, {
+          request: exampleJwt,
+          ...req.session.authParams,
+        });
+      });
+
+      context("with API result", () => {
+        beforeEach(async () => {
+          req.axios.post = sinon.fake.returns(response);
+
+          await middleware.initSessionWithJWT(req, res, next);
+        });
+
+        it("should save 'session_id' into req.session", () => {
+          expect(req.session.tokenId).to.equal("abc1234");
+        });
+
+        it("should call next", function () {
+          expect(next).to.have.been.called;
+        });
+      });
+
+      context("with API error", () => {
+        beforeEach(async () => {
+          req.axios.post = sinon.fake.throws(new Error("API error"));
+
+          await middleware.initSessionWithJWT(req, res, next);
+        });
+
+        it("should call next with error", () => {
+          expect(next).to.have.been.calledWith(
+            sinon.match
+              .instanceOf(Error)
+              .and(sinon.match.has("message", "API error"))
+          );
+        });
+      });
     });
   });
 
