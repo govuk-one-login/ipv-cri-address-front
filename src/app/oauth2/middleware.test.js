@@ -92,6 +92,8 @@ describe("oauth middleware", () => {
       req.axios.post = sinon.fake.returns(response);
     });
 
+    context("with missing properties", () => {});
+
     context("on authorization request", () => {
       it("should call axios with the correct parameters", async function () {
         await middleware.initSessionWithJWT(req, res, next);
@@ -103,10 +105,16 @@ describe("oauth middleware", () => {
       });
 
       context("with API result", () => {
+        it("should save 'session_id' into req.session", () => {});
+
         it("should call next", async function () {
           await middleware.initSessionWithJWT(req, res, next);
           expect(next).to.have.been.called;
         });
+      });
+
+      context("with API error", () => {
+        it("should call next with error");
       });
     });
   });
