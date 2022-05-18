@@ -6,6 +6,8 @@ const {
   },
 } = require("../../../lib/config");
 
+const { addOAuthPropertiesToSessionModel } = require("../../../lib/oauth");
+
 class AddressConfirmController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
@@ -52,19 +54,12 @@ class AddressConfirmController extends BaseController {
         super.saveValues(req, res, () => {
           // if we're into save values we're finished with gathering addresses
           req.sessionModel.set("addPreviousAddresses", false);
-          req.sessionModel.set("redirect_url", data.redirect_uri);
-          req.sessionModel.set("state", data.state);
 
-          if (!data.code) {
-            const error = {
-              code: "server_error",
-              error_description: "Failed to retrieve authorization code",
-            };
+          addOAuthPropertiesToSessionModel({
+            sessionModel: req.sessionModel,
+            data,
+          });
 
-            req.sessionModel.set("error", error);
-          } else {
-            req.sessionModel.set("authorization_code", data.code);
-          }
           callback();
         });
       }
