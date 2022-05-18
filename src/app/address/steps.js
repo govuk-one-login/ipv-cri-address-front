@@ -32,6 +32,7 @@ module.exports = {
     controller: address,
     editable: true,
     continueOnEdit: true,
+    prereqs: ["/search"],
     fields: [
       "addressFlatNumber",
       "addressHouseNumber",
@@ -78,6 +79,7 @@ module.exports = {
     controller: address,
     editable: true,
     continueOnEdit: true,
+    prereqs: ["/previous/search"],
     fields: [
       "addressFlatNumber",
       "addressHouseNumber",

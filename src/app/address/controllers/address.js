@@ -3,14 +3,34 @@ const BaseController = require("hmpo-form-wizard").Controller;
 class AddressController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
-      locals.addressPostcode = req.sessionModel.get("addressPostcode");
-      const address = req.sessionModel.get("chosenAddress");
+      const addresses = req.sessionModel.get("addresses");
+      let address;
+
+      if (req.originalUrl === "/previous/address/edit") {
+        // edit previous address
+        address = addresses[1];
+        locals.addressPostcode = address.postalCode;
+      } else if (req.originalUrl === "/address/edit") {
+        // edit current address
+        address = addresses[0];
+        locals.addressPostcode = address.postalCode;
+      } else {
+        // edit the chosen address
+        address = req.sessionModel.get("chosenAddress");
+        locals.addressPostcode = req.sessionModel.get("addressPostcode");
+      }
+
       if (address) {
         locals.addressFlatNumber = address.addressFlatNumber;
         locals.addressHouseNumber = address.buildingNumber;
         locals.addressHouseName = address.buildingName;
         locals.addressStreetName = address.streetName;
         locals.addressLocality = address.addressLocality;
+
+        const yearFrom = address.validFrom
+          ? new Date(address.validFrom).getFullYear()
+          : null;
+        locals.addressYearFrom = yearFrom;
       }
       callback(null, locals);
     });
@@ -18,8 +38,10 @@ class AddressController extends BaseController {
 
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
-      const isPreviousAddress = req.sessionModel.get("addPreviousAddresses");
+      const isPreviousAddress = req.originalUrl.startsWith("/previous/address");
+
       const address = this.buildAddress(req.body, isPreviousAddress);
+
       address.postalCode = req.sessionModel.get("addressPostcode");
 
       const sessionsAddresses = req.sessionModel.get("addresses");
@@ -28,7 +50,11 @@ class AddressController extends BaseController {
         ? sessionsAddresses
         : [];
 
-      addresses.push(address);
+      if (isPreviousAddress) {
+        addresses[1] = address;
+      } else {
+        addresses[0] = address;
+      }
 
       req.sessionModel.set("addresses", addresses);
       callback();
