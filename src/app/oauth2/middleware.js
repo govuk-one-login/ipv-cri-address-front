@@ -49,7 +49,6 @@ module.exports = {
   redirectToCallback: async (req, res, next) => {
     try {
       const redirectUrl = buildRedirectUrl({
-        sessionModel: req.session["hmpo-wizard-address"],
         authParams: req.session.authParams,
       });
 
