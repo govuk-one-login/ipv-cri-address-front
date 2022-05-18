@@ -92,18 +92,22 @@ describe("oauth middleware", () => {
       req.axios.post = sinon.fake.returns(response);
     });
 
-    it("should call axios with the correct parameters", async function () {
-      await middleware.initSessionWithJWT(req, res, next);
-      expect(req.axios.post).to.have.been.calledWith(AUTHORIZE, {
-        request: exampleJwt,
-        ...req.session.authParams,
+    context("on authorization request", () => {
+      it("should call axios with the correct parameters", async function () {
+        await middleware.initSessionWithJWT(req, res, next);
+        expect(req.axios.post).to.have.been.calledWith(AUTHORIZE, {
+          request: exampleJwt,
+          ...req.session.authParams,
+        });
+        expect((req.session.tokenId = "abc1234"));
       });
-      expect((req.session.tokenId = "abc1234"));
-    });
 
-    it("should call next", async function () {
-      await middleware.initSessionWithJWT(req, res, next);
-      expect(next).to.have.been.called;
+      context("with API result", () => {
+        it("should call next", async function () {
+          await middleware.initSessionWithJWT(req, res, next);
+          expect(next).to.have.been.called;
+        });
+      });
     });
   });
 
