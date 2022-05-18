@@ -7,6 +7,8 @@ const {
   },
 } = require("../../lib/config");
 
+const { buildRedirectUrl } = require("../../lib/oauth");
+
 module.exports = {
   addAuthParamsToSession: async (req, res, next) => {
     req.session.authParams = { client_id: req.query.client_id };
@@ -46,32 +48,11 @@ module.exports = {
 
   redirectToCallback: async (req, res, next) => {
     try {
-      const authCode = req.session["hmpo-wizard-address"].authorization_code;
-      const url = req.session["hmpo-wizard-address"].redirect_url;
-      const state = req.session["hmpo-wizard-address"].state;
+      const redirectUrl = buildRedirectUrl({
+        sessionModel: req.session["hmpo-wizard-address"],
+        authParams: req.session.authParams,
+      });
 
-      let redirectUrl;
-      try {
-        redirectUrl = new URL(url);
-      } catch (e) {
-        return next(e);
-      }
-
-      if (!authCode) {
-        const error = req.session["hmpo-wizard-address"].error;
-        const errorCode = error?.code;
-        const errorDescription = error?.description ?? error?.message;
-
-        redirectUrl.searchParams.append("error", errorCode);
-        redirectUrl.searchParams.append("error_description", errorDescription);
-      } else {
-        redirectUrl.searchParams.append(
-          "client_id",
-          req.session.authParams.client_id
-        );
-        redirectUrl.searchParams.append("state", state);
-        redirectUrl.searchParams.append("code", authCode);
-      }
       return res.redirect(redirectUrl.toString());
     } catch (e) {
       return next(e);

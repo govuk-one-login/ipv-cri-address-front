@@ -14,4 +14,26 @@ module.exports = {
       sessionModel.set("authorization_code", data.code);
     }
   },
+  buildRedirectUrl: ({ sessionModel, authParams }) => {
+    const authCode = sessionModel.authorization_code;
+    const url = sessionModel.redirect_url;
+    const state = sessionModel.state;
+
+    let redirectUrl = new URL(url);
+
+    if (!authCode) {
+      const error = sessionModel.error;
+      const errorCode = error?.code;
+      const errorDescription = error?.description ?? error?.message;
+
+      redirectUrl.searchParams.append("error", errorCode);
+      redirectUrl.searchParams.append("error_description", errorDescription);
+    } else {
+      redirectUrl.searchParams.append("client_id", authParams.client_id);
+      redirectUrl.searchParams.append("state", state);
+      redirectUrl.searchParams.append("code", authCode);
+    }
+
+    return redirectUrl;
+  },
 };
