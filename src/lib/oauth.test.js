@@ -1,6 +1,64 @@
-const { buildRedirectUrl } = require("./oauth");
+const {
+  addOAuthPropertiesToSessionModel,
+  buildRedirectUrl,
+} = require("./oauth");
 
 describe("oauth lib", () => {
+  describe("addOAuthPropertiesToSessionModel", () => {
+    let sessionModel;
+    let data;
+    let setSpy;
+
+    beforeEach(() => {
+      const setup = setupDefaultMocks();
+      sessionModel = setup.req?.sessionModel;
+
+      setSpy = sinon.spy(sessionModel, "set");
+      data = {};
+    });
+
+    afterEach(() => {
+      setSpy.restore();
+    });
+
+    it("should save 'redirect_url' to sessionModel", () => {
+      data.redirect_uri = "http://example.net";
+
+      addOAuthPropertiesToSessionModel({ sessionModel, data });
+
+      expect(setSpy).to.have.been.calledWith("redirect_url", data.redirect_uri);
+    });
+
+    it("should save 'state' to sessionModel", () => {
+      data.state = "http://example.net";
+
+      addOAuthPropertiesToSessionModel({ sessionModel, data });
+
+      expect(setSpy).to.have.been.calledWith("state", data.state);
+    });
+
+    describe("with authorization_code", () => {
+      it("should save 'authorization_code' to sessionModel", () => {
+        data.code = "C0DE";
+
+        addOAuthPropertiesToSessionModel({ sessionModel, data });
+
+        expect(setSpy).to.have.been.calledWith("authorization_code", data.code);
+      });
+    });
+
+    describe("without authorization_code", () => {
+      it("should save 'error' to sessionModel", () => {
+        addOAuthPropertiesToSessionModel({ sessionModel, data });
+
+        expect(setSpy).to.have.been.calledWith("error", {
+          code: "server_error",
+          error_description: "Failed to retrieve authorization code",
+        });
+      });
+    });
+  });
+
   describe("buildRedirectUrl", () => {
     let sessionModel;
     let authParams;
