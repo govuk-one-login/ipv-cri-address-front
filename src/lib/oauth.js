@@ -1,7 +1,7 @@
 module.exports = {
-  addOAuthPropertiesToSessionModel: ({ sessionModel, data } = {}) => {
-    sessionModel.set("redirect_url", data.redirect_uri);
-    sessionModel.set("state", data.state);
+  addOAuthPropertiesToSession: ({ authParams, data } = {}) => {
+    authParams.redirect_url = data.redirect_uri;
+    authParams.state = data.state;
 
     if (!data.code) {
       const error = {
@@ -9,20 +9,20 @@ module.exports = {
         error_description: "Failed to retrieve authorization code",
       };
 
-      sessionModel.set("error", error);
+      authParams.error = error;
     } else {
-      sessionModel.set("authorization_code", data.code);
+      authParams.authorization_code = data.code;
     }
   },
-  buildRedirectUrl: ({ sessionModel, authParams }) => {
-    const authCode = sessionModel.authorization_code;
-    const url = sessionModel.redirect_url;
-    const state = sessionModel.state;
+  buildRedirectUrl: ({ authParams }) => {
+    const authCode = authParams.authorization_code;
+    const url = authParams.redirect_url;
+    const state = authParams.state;
 
     let redirectUrl = new URL(url);
 
     if (!authCode) {
-      const error = sessionModel.error;
+      const error = authParams.error;
       const errorCode = error?.code;
       const errorDescription = error?.description ?? error?.message;
 

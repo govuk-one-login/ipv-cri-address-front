@@ -175,12 +175,9 @@ describe("oauth middleware", () => {
       req.session = {
         authParams: {
           client_id: clientId,
-        },
-        "hmpo-wizard-address": {
           authorization_code: code,
           redirect_url: redirect,
           state,
-          client_id: clientId,
         },
       };
 
@@ -196,12 +193,12 @@ describe("oauth middleware", () => {
     });
 
     it("should redirects with error when error present", async () => {
-      delete req.session["hmpo-wizard-address"].authorization_code;
+      delete req.session.authParams.authorization_code;
 
       const errorCode = "123";
       const description = "myDescription";
 
-      req.session["hmpo-wizard-address"].error = {
+      req.session.authParams.error = {
         code: errorCode,
         description: description,
       };
@@ -214,7 +211,7 @@ describe("oauth middleware", () => {
     });
 
     it("should call next with URL error if redirect_uri not present", async () => {
-      delete req.session["hmpo-wizard-address"].redirect_url;
+      delete req.session.authParams.redirect_url;
 
       await middleware.redirectToCallback(req, res, next);
 

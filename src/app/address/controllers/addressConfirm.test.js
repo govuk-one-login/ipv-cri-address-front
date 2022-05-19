@@ -24,6 +24,7 @@ beforeEach(() => {
   res = setup.res;
   next = setup.next;
   req.session.tokenId = sessionId;
+  req.session.authParams = {};
 });
 
 afterEach(() => {
@@ -83,13 +84,13 @@ describe("Address confirmation controller", () => {
           session_id: sessionId,
         },
       });
-      expect(req.session.test.redirect_url).to.be.equal(
+      expect(req.session.authParams.redirect_url).to.be.equal(
         testData.addressApiResponse.data.redirect_uri
       );
-      expect(req.session.test.authorization_code).to.be.equal(
+      expect(req.session.authParams.authorization_code).to.be.equal(
         testData.addressApiResponse.data.code
       );
-      expect(req.session.test.state).to.be.equal(
+      expect(req.session.authParams.state).to.be.equal(
         testData.addressApiResponse.data.state
       );
     });
@@ -100,8 +101,8 @@ describe("Address confirmation controller", () => {
       req.axios.put = sinon.fake.resolves(response);
 
       await addressConfirm.saveValues(req, res, next);
-      expect(req.session.test.error.code).to.be.equal("server_error");
-      expect(req.session.test.error.error_description).to.be.equal(
+      expect(req.session.authParams.error.code).to.be.equal("server_error");
+      expect(req.session.authParams.error.error_description).to.be.equal(
         "Failed to retrieve authorization code"
       );
     });
