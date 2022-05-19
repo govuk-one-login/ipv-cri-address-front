@@ -25,12 +25,12 @@ describe("address controller", () => {
     expect(address).to.be.an.instanceOf(BaseController);
   });
 
-  describe("locals", () => {
+  describe("getValues", () => {
     it("should only prepopulate postalcode if no address has been chosen", () => {
       const generatedAddress = addressFactory(1);
       req.sessionModel.set("addressPostcode", generatedAddress[0].postalCode);
 
-      address.locals(req, res, next);
+      address.getValues(req, res, next);
 
       expect(next).to.have.been.calledOnce;
       expect(next).to.have.been.calledWith(null, {
@@ -44,51 +44,58 @@ describe("address controller", () => {
 
       req.sessionModel.set("chosenAddress", generatedAddress[0]);
 
-      address.locals(req, res, next);
+      address.getValues(req, res, next);
       expect(next).to.have.been.calledOnce;
-      expect(next).to.have.been.calledWith(null, {
-        addressPostcode: generatedAddress[0].postalCode,
-        addressHouseNumber: generatedAddress[0].buildingNumber,
-        addressStreetName: generatedAddress[0].streetName,
-        addressLocality: generatedAddress[0].addressLocality,
-        addressYearFrom: Number(generatedAddress[0].validFrom),
-        addressFlatNumber: undefined,
-        addressHouseName: generatedAddress[0].buildingName,
-      });
+      expect(next).to.have.been.calledWith(
+        null,
+        sinon.match({
+          addressPostcode: generatedAddress[0].postalCode,
+          addressHouseNumber: generatedAddress[0].buildingNumber,
+          addressStreetName: generatedAddress[0].streetName,
+          addressLocality: generatedAddress[0].addressLocality,
+          addressYearFrom: Number(generatedAddress[0].validFrom),
+          addressHouseName: generatedAddress[0].buildingName,
+        })
+      );
     });
 
     it("should prepopulate with the previous address when in editing previous address route", () => {
       const generatedAddress = addressFactory(2);
       req.originalUrl = "/previous/address/edit";
       req.sessionModel.set("addresses", generatedAddress);
-      address.locals(req, res, next);
+      address.getValues(req, res, next);
       expect(next).to.have.been.calledOnce;
-      expect(next).to.have.been.calledWith(null, {
-        addressPostcode: generatedAddress[1].postalCode,
-        addressHouseNumber: generatedAddress[1].buildingNumber,
-        addressHouseName: generatedAddress[1].buildingName,
-        addressStreetName: generatedAddress[1].streetName,
-        addressLocality: generatedAddress[1].addressLocality,
-        addressYearFrom: Number(generatedAddress[1].validFrom),
-        addressFlatNumber: generatedAddress[1].buildingNumber,
-      });
+      expect(next).to.have.been.calledWith(
+        null,
+        sinon.match({
+          addressPostcode: generatedAddress[1].postalCode,
+          addressHouseNumber: generatedAddress[1].buildingNumber,
+          addressHouseName: generatedAddress[1].buildingName,
+          addressStreetName: generatedAddress[1].streetName,
+          addressLocality: generatedAddress[1].addressLocality,
+          addressYearFrom: Number(generatedAddress[1].validFrom),
+          addressFlatNumber: generatedAddress[1].buildingNumber,
+        })
+      );
     });
 
     it("should prepopulate with the current address when in editing current address route", () => {
       const generatedAddress = addressFactory(2);
       req.originalUrl = "/address/edit";
       req.sessionModel.set("addresses", generatedAddress);
-      address.locals(req, res, next);
+      address.getValues(req, res, next);
       expect(next).to.have.been.calledOnce;
-      expect(next).to.have.been.calledWith(null, {
-        addressPostcode: generatedAddress[0].postalCode,
-        addressHouseNumber: generatedAddress[0].buildingNumber,
-        addressHouseName: generatedAddress[0].buildingName,
-        addressStreetName: generatedAddress[0].streetName,
-        addressLocality: generatedAddress[0].addressLocality,
-        addressYearFrom: Number(generatedAddress[0].validFrom),
-        addressFlatNumber: undefined,
-      });
+      expect(next).to.have.been.calledWith(
+        null,
+        sinon.match({
+          addressPostcode: generatedAddress[0].postalCode,
+          addressHouseNumber: generatedAddress[0].buildingNumber,
+          addressHouseName: generatedAddress[0].buildingName,
+          addressStreetName: generatedAddress[0].streetName,
+          addressLocality: generatedAddress[0].addressLocality,
+          addressYearFrom: Number(generatedAddress[0].validFrom),
+        })
+      );
     });
   });
 
