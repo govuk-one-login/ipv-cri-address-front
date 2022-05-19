@@ -3,7 +3,7 @@ address-form:
 
 addressSearch:
   label: Postcode
-  hint: For example, SW12 2AA
+  hint: For example, SW1A 2AA
 
 addressFlatNumber:
   label: Flat number
@@ -31,19 +31,19 @@ addressLocality:
     maxlength: Check you've entered your town or city correctly
 
 addressYearFrom:
-  title: What year did you start living at this address?
+  title: When did you start living at this address?
   classes: govuk-input--width-4
   label: Year
   validation:
     default: Enter a valid date
-    isPreviousDate: The date you moved into this address must be in the past
+    isPreviousDate: The date you started living at this address must be in the past
 
 address-results:
   label: Select an address
 
 address-confirm:
   current: Current address
-  year-current: Year moved in to current address
+  year-current: Year you started living at this address
   previous: Previous address
   change: Change
 

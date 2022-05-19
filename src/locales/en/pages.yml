@@ -10,13 +10,13 @@ done:
   title: Done
 
 addressSearch:
-  title: What is your current home address?
+  title: What's your current home address?
 
 address-previous:
-  title: What is your previous home address?
+  title: What's your previous home address?
 
 address-results:
-  title: What is your current home address?
+  title: What's your current home address?
   content:
     - Postcode
     - <b>{{values.addressSearch}}</b> <a href="/postcode">Change</a>
@@ -29,7 +29,7 @@ address-confirm:
   previous: Previous address
 
 address-form:
-  title: What is your current home address?
+  title: What's your current home address?
 
 address-form-previous:
-  title: What is your previous home address?
+  title: What's your previous home address?
