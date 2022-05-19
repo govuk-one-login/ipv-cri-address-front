@@ -6,7 +6,7 @@ const {
   },
 } = require("../../../lib/config");
 
-const { addOAuthPropertiesToSession } = require("../../../lib/oauth");
+const { addOAuthPropertiesToSession } = require("../../../common/lib/oauth");
 
 class AddressConfirmController extends BaseController {
   locals(req, res, callback) {

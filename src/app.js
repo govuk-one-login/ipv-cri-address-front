@@ -1,5 +1,5 @@
-const setScenarioHeaders = require("./lib/scenario-headers");
-const setAxiosDefaults = require("./lib/axios");
+const setScenarioHeaders = require("./common/lib/scenario-headers");
+const setAxiosDefaults = require("./common/lib/axios");
 
 const { setAPIConfig, setOAuthPaths } = require("./lib/settings");
 
@@ -13,7 +13,7 @@ const loggerConfig = {
   app: false,
 };
 
-const redisConfig = require("./lib/redis")(REDIS);
+const redisConfig = require("./common/lib/redis")(REDIS);
 
 const sessionConfig = {
   cookieName: "service_session",
@@ -51,7 +51,8 @@ setOAuthPaths({ app, entryPointPath: APP.PATHS.ADDRESS });
 router.use(setScenarioHeaders);
 router.use(setAxiosDefaults);
 
-router.use("/oauth2", require("./app/oauth2"));
+router.use("/oauth2", require("./common/routes/oauth2"));
+
 router.use("/", require("./app/address"));
 
 router.use("^/$", (req, res) => {
