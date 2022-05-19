@@ -1,12 +1,3 @@
-const {
-  API: {
-    PATHS: { AUTHORIZE },
-  },
-  APP: {
-    PATHS: { ADDRESS },
-  },
-} = require("../../lib/config");
-
 const { buildRedirectUrl } = require("../../lib/oauth");
 
 module.exports = {
@@ -30,10 +21,15 @@ module.exports = {
       return next(new Error("Missing client_id"));
     }
 
+    const authorizePath = req.app.get("API.PATHS.AUTHORIZE");
+    if (!authorizePath) {
+      return next(new Error("Missing API.PATHS.AUTHORIZE value"));
+    }
+
     const requestJWT = req.jwt;
     try {
       if (requestJWT) {
-        const apiResponse = await req.axios.post(AUTHORIZE, {
+        const apiResponse = await req.axios.post(authorizePath, {
           request: req.jwt,
           client_id: req.session.authParams.client_id,
         });
@@ -58,7 +54,12 @@ module.exports = {
     }
   },
 
-  redirectToAddress: async (req, res) => {
-    res.redirect(ADDRESS);
+  redirectToEntryPoint: async (req, res, next) => {
+    const entryPointPath = req.app.get("APP.PATHS.ENTRYPOINT");
+    if (!entryPointPath) {
+      return next(new Error("Missing APP.PATHS.ENTRYPOINT value"));
+    }
+
+    res.redirect(entryPointPath);
   },
 };
