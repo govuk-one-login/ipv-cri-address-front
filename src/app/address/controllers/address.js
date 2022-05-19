@@ -84,6 +84,10 @@ class AddressController extends BaseController {
       validFrom: addressYearFrom,
     };
 
+    if (isPreviousAddress) {
+      delete address.validFrom;
+    }
+
     return address;
   }
 }
