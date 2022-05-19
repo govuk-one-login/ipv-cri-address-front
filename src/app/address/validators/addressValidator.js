@@ -3,7 +3,7 @@ module.exports = {
     if (!val) {
       return true; // handle when field is optional
     }
-    return !!val.match(/^[0-9A-Z'\\/* -]+$/i);
+    return !!val.match(/^[0-9A-Z'.,\\/* -]+$/i);
   },
   isPreviousYear: function (val) {
     return new Date(val).getFullYear() <= new Date().getFullYear();

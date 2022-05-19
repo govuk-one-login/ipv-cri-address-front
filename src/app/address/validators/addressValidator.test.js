@@ -5,7 +5,13 @@ const {
 
 const today = new Date();
 const nextYear = String(today.getFullYear() + 1);
-const validInput = ["1a", "White Chapel", "Aldgate High Street", "London"];
+const validInput = [
+  "1a",
+  "White Chapel",
+  "Aldgate High Street",
+  "London",
+  "ST. JOHN'S ROAD",
+];
 
 const validYears = [
   "2021",
