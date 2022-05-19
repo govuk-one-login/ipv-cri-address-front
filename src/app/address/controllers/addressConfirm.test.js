@@ -61,8 +61,7 @@ describe("Address confirmation controller", () => {
       const currentAddress = formattedAddresses.shift();
       const previousAddress = formattedAddresses.shift();
       const params = {
-        addPreviousAddresses: true,
-        isMoreInfoRequirred: true,
+        isMoreInfoRequirred: false, // not required as we already have a previous address
         currentAddressRowValue: currentAddress,
         validFromRow: String(new Date().getFullYear()),
         previousAddressRowValue: previousAddress,

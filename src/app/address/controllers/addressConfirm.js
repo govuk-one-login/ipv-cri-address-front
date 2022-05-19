@@ -23,10 +23,9 @@ class AddressConfirmController extends BaseController {
       const yearFrom = new Date(currentAddress.validFrom).getFullYear();
       const today = new Date();
 
-      locals.addPreviousAddresses = !req.sessionModel.get(
-        "addPreviousAddresses"
-      );
-      locals.isMoreInfoRequirred = this.isMoreInfoRequired(yearFrom, today);
+      // if no previous addresses + more info is required, then radio button menu is rendered
+      locals.isMoreInfoRequirred =
+        this.isMoreInfoRequired(yearFrom, today) && !previousAddress;
       locals.currentAddressRowValue = currentAddress.text;
       locals.validFromRow = String(yearFrom);
       locals.previousAddressRowValue = previousAddress?.text;
