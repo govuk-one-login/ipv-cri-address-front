@@ -17,9 +17,6 @@ address-previous:
 
 address-results:
   title: What's your current home address?
-  content:
-    - Postcode
-    - <b>{{values.addressSearch}}</b> <a href="/postcode">Change</a>
 
 address-confirm:
   title: Check your details

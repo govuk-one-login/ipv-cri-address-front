@@ -1,42 +1,37 @@
 
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "hmpo-text/macro.njk" import hmpoText %}
 
-{{ govukInput({
+{{ hmpoText(ctx, {
   id: "addressFlatNumber",
   name: "addressFlatNumber",
   label: { text: translate("fields.addressFlatNumber.label") },
-  classes: "govuk-input--width-5",
-  value: addressFlatNumber
+  classes: "govuk-input--width-5"
 }) }}
 
-{{ govukInput({
+{{ hmpoText(ctx, {
   id: "addressHouseNumber",
   name: "addressHouseNumber",
   label: { text: translate("fields.addressHouseNumber.label") },
-  classes: "govuk-input--width-5",
-  value: addressHouseNumber
+  classes: "govuk-input--width-5"
 }) }}
 
-{{ govukInput({
+{{ hmpoText(ctx, {
   id: "addressHouseName",
   name: "addressHouseName",
   label: { text: translate("fields.addressHouseName.label") },
-  classes: "govuk-input--width-20",
-  value: addressHouseName
+  classes: "govuk-input--width-20"
 }) }}
 
-{{ govukInput({
+{{ hmpoText(ctx,{
   id: "addressStreetName",
   name: "addressStreetName",
   label: { text: translate("fields.addressStreetName.label") },
-  classes: "govuk-input--width-20",
-  value: addressStreetName
+  classes: "govuk-input--width-20"
 }) }}
 
-{{ govukInput({
+{{ hmpoText(ctx, {
   id: "addressLocality",
   name: "addressLocality",
   label: { text: translate("fields.addressLocality.label") },
-  classes: "govuk-input--width-20",
-  value: addressLocality
+  classes: "govuk-input--width-20"
 }) }}

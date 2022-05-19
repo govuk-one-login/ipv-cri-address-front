@@ -1,38 +1,38 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 
 class AddressController extends BaseController {
-  locals(req, res, callback) {
-    super.locals(req, res, (err, locals) => {
+  getValues(req, res, callback) {
+    super.getValues(req, res, (err, values) => {
       const addresses = req.sessionModel.get("addresses");
       let address;
 
       if (req.originalUrl === "/previous/address/edit") {
         // edit previous address
         address = addresses[1];
-        locals.addressPostcode = address.postalCode;
+        values.addressPostcode = address.postalCode;
       } else if (req.originalUrl === "/address/edit") {
         // edit current address
         address = addresses[0];
-        locals.addressPostcode = address.postalCode;
+        values.addressPostcode = address.postalCode;
       } else {
         // edit the chosen address
         address = req.sessionModel.get("chosenAddress");
-        locals.addressPostcode = req.sessionModel.get("addressPostcode");
+        values.addressPostcode = req.sessionModel.get("addressPostcode");
       }
 
       if (address) {
-        locals.addressFlatNumber = address.addressFlatNumber;
-        locals.addressHouseNumber = address.buildingNumber;
-        locals.addressHouseName = address.buildingName;
-        locals.addressStreetName = address.streetName;
-        locals.addressLocality = address.addressLocality;
+        values.addressFlatNumber = address.addressFlatNumber;
+        values.addressHouseNumber = address.buildingNumber;
+        values.addressHouseName = address.buildingName;
+        values.addressStreetName = address.streetName;
+        values.addressLocality = address.addressLocality;
 
         const yearFrom = address.validFrom
           ? new Date(address.validFrom).getFullYear()
           : null;
-        locals.addressYearFrom = yearFrom;
+        values.addressYearFrom = yearFrom;
       }
-      callback(null, locals);
+      callback(null, values);
     });
   }
 
