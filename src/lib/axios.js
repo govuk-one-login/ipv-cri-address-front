@@ -1,11 +1,14 @@
 const axios = require("axios");
-const {
-  API: { BASE_URL },
-} = require("./config");
 
 module.exports = function (req, res, next) {
+  const baseURL = req.app.get("API.BASE_URL");
+
+  if (!baseURL) {
+    next(new Error("Missing API.BASE_URL value"));
+  }
+
   req.axios = axios.create({
-    baseURL: BASE_URL,
+    baseURL,
   });
 
   if (req.scenarioIDHeader && req.axios?.defaults?.headers?.common) {

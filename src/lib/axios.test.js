@@ -1,14 +1,8 @@
 const proxyquire = require("proxyquire");
 
 let axiosStub = {};
-
 const axios = proxyquire("./axios", {
   axios: axiosStub,
-  "./config": {
-    API: {
-      BASE_URL: "http://example.net",
-    },
-  },
 });
 
 describe("axios", () => {
@@ -23,6 +17,11 @@ describe("axios", () => {
     req = setup.req;
     res = setup.res;
     next = setup.next;
+
+    req.app = {
+      get: sinon.stub(),
+    };
+    req.app.get.withArgs("API.BASE_URL").returns("http://example.net");
 
     axiosClient = {};
 

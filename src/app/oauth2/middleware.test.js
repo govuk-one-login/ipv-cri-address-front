@@ -1,13 +1,4 @@
 const middleware = require("./middleware");
-const {
-  API: {
-    PATHS: { AUTHORIZE },
-  },
-  APP: {
-    PATHS: { ADDRESS },
-  },
-} = require("../../lib/config");
-const { expect } = require("chai");
 
 const exampleJwt =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
@@ -117,13 +108,32 @@ describe("oauth middleware", () => {
             .and(sinon.match.has("message", "Missing client_id"))
         );
       });
+
+      it("should call next with an error when API.PATHS.AUTHORIZE is missing", async () => {
+        await middleware.initSessionWithJWT(req, res, next);
+
+        expect(next).to.have.been.calledWith(
+          sinon.match
+            .instanceOf(Error)
+            .and(
+              sinon.match.has("message", "Missing API.PATHS.AUTHORIZE value")
+            )
+        );
+      });
     });
 
     context("on authorization request", () => {
+      beforeEach(() => {
+        req.app = {
+          get: sinon.stub(),
+        };
+        req.app.get.withArgs("API.PATHS.AUTHORIZE").returns("/api/authorize");
+      });
+
       it("should call axios with the correct parameters", async function () {
         await middleware.initSessionWithJWT(req, res, next);
 
-        expect(req.axios.post).to.have.been.calledWith(AUTHORIZE, {
+        expect(req.axios.post).to.have.been.calledWith("/api/authorize", {
           request: exampleJwt,
           ...req.session.authParams,
         });
@@ -226,12 +236,31 @@ describe("oauth middleware", () => {
   describe("redirectToAddress", () => {
     beforeEach(() => {
       req.axios.get = sinon.fake.returns({});
+      req.app = {
+        get: sinon.stub(),
+      };
     });
 
     it("should successfully redirect back to address", async function () {
-      await middleware.redirectToAddress(req, res);
+      req.app.get.withArgs("APP.PATHS.ENTRYPOINT").returns("/app/entry");
 
-      expect(res.redirect).to.have.been.calledWith(ADDRESS);
+      await middleware.redirectToEntryPoint(req, res, next);
+
+      expect(res.redirect).to.have.been.calledWith("/app/entry");
+    });
+
+    context("with missing APP.PATHS.ENTRYPOINT", () => {
+      it("should call next with error", async () => {
+        await middleware.redirectToEntryPoint(req, res, next);
+
+        expect(next).to.have.been.calledWith(
+          sinon.match
+            .instanceOf(Error)
+            .and(
+              sinon.match.has("message", "Missing APP.PATHS.ENTRYPOINT value")
+            )
+        );
+      });
     });
   });
 });

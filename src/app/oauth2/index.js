@@ -6,7 +6,7 @@ const {
   addAuthParamsToSession,
   redirectToCallback,
   initSessionWithJWT,
-  redirectToAddress,
+  redirectToEntryPoint,
   addJWTToRequest,
 } = require("./middleware");
 
@@ -15,7 +15,7 @@ router.get(
   addAuthParamsToSession,
   addJWTToRequest,
   initSessionWithJWT,
-  redirectToAddress
+  redirectToEntryPoint
 );
 router.get("/callback", redirectToCallback);
 
