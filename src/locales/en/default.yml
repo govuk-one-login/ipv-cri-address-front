@@ -15,7 +15,7 @@ links:
   changePostcode:
     - <p>Postcode <br> <b>{{addressPostcode}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search">Change</a></p>
   cantFindAddress:
-    - <p><a href="/address/edit">I cannot find my address in the list</a></p>
+    - <p><a href="/address">I cannot find my address in the list</a></p>
   previous:
     changeAddress:
       - <a href="/previous/address/edit" id="change-address">Change</a>
