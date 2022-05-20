@@ -39,55 +39,59 @@ describe("Address Search controller", () => {
     expect(addressSearch).to.be.an.instanceOf(BaseController);
   });
 
-  it("Should call api with a postcode and save results to session", async () => {
-    const testPostcode = "myPostcode";
-    req.axios.get = sinon.fake.returns(testData.apiResponse);
-    req.body["addressSearch"] = testPostcode;
+  describe("saveValues", () => {
+    it("Should call api with a postcode and save results to session", async () => {
+      const testPostcode = "myPostcode";
+      req.axios.get = sinon.fake.returns(testData.apiResponse);
+      req.body["addressSearch"] = testPostcode;
 
-    await addressSearch.saveValues(req, res, next);
+      await addressSearch.saveValues(req, res, next);
 
-    expect(next).to.have.been.calledOnce;
-    expect(req.axios.get).to.have.been.calledWith(
-      `${POSTCODE_LOOKUP}/${testPostcode}`,
-      {
-        headers: {
-          session_id: sessionId,
-        },
-      }
-    );
-    expect(req.session.test.searchResults[0]).to.deep.equal({
-      text: `${testData.apiResponse.data.length} addresses found`,
+      expect(next).to.have.been.calledOnce;
+      expect(req.axios.get).to.have.been.calledWith(
+        `${POSTCODE_LOOKUP}/${testPostcode}`,
+        {
+          headers: {
+            session_id: sessionId,
+          },
+        }
+      );
+      expect(req.session.test.searchResults[0]).to.deep.equal({
+        text: `${testData.apiResponse.data.length} addresses found`,
+      });
+      expect(req.session.test.addressPostcode).to.equal(testPostcode);
+      expect(req.session.test.searchResults[1].buildingNumber).to.equal("1");
+      expect(req.session.test.searchResults[1].streetName).to.equal(
+        "SOME ROAD"
+      );
+      expect(req.session.test.searchResults[1].addressLocality).to.equal(
+        "SOMEWHERE"
+      );
+      expect(req.session.test.searchResults[1].postalCode).to.equal("SOMEPOST");
+      expect(req.session.test.searchResults[2].buildingName).to.equal(
+        "NAMED BUILDING"
+      );
+      expect(req.session.test.requestIsSuccessful).to.equal(true);
     });
-    expect(req.session.test.addressPostcode).to.equal(testPostcode);
-    expect(req.session.test.searchResults[1].buildingNumber).to.equal("1");
-    expect(req.session.test.searchResults[1].streetName).to.equal("SOME ROAD");
-    expect(req.session.test.searchResults[1].addressLocality).to.equal(
-      "SOMEWHERE"
-    );
-    expect(req.session.test.searchResults[1].postalCode).to.equal("SOMEPOST");
-    expect(req.session.test.searchResults[2].buildingName).to.equal(
-      "NAMED BUILDING"
-    );
-    expect(req.session.test.requestIsSuccessful).to.equal(true);
-  });
 
-  it("Should not throw an error when api throws error", async () => {
-    const testPostcode = "myPostcode";
-    req.axios.get = sinon.fake.rejects();
-    req.body["addressSearch"] = testPostcode;
+    it("Should not throw an error when api throws error", async () => {
+      const testPostcode = "myPostcode";
+      req.axios.get = sinon.fake.rejects();
+      req.body["addressSearch"] = testPostcode;
 
-    await addressSearch.saveValues(req, res, next);
+      await addressSearch.saveValues(req, res, next);
 
-    expect(next).to.have.been.calledOnce;
-    expect(req.axios.get).to.have.been.calledWith(
-      `${POSTCODE_LOOKUP}/${testPostcode}`,
-      {
-        headers: {
-          session_id: sessionId,
-        },
-      }
-    );
-    expect(req.session.test.addressPostcode).to.equal(testPostcode);
-    expect(req.session.test.requestIsSuccessful).to.equal(false);
+      expect(next).to.have.been.calledOnce;
+      expect(req.axios.get).to.have.been.calledWith(
+        `${POSTCODE_LOOKUP}/${testPostcode}`,
+        {
+          headers: {
+            session_id: sessionId,
+          },
+        }
+      );
+      expect(req.session.test.addressPostcode).to.equal(testPostcode);
+      expect(req.session.test.requestIsSuccessful).to.equal(false);
+    });
   });
 });
