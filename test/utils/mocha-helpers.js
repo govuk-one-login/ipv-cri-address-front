@@ -16,7 +16,11 @@ global.expect = expect;
 
 global.setupDefaultMocks = () => {
   const req = reqres.req({
-    form: { values: {} },
+    form: {
+      options: {
+        fields: {},
+      },
+    },
     axios: {
       get: sinon.fake(),
       post: sinon.fake(),
