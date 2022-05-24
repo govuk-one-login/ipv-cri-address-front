@@ -60,17 +60,20 @@ describe("Address Search controller", () => {
         text: `${testData.apiResponse.data.length} addresses found`,
       });
       expect(req.session.test.addressPostcode).to.equal(testPostcode);
-      expect(req.session.test.searchResults[1].buildingNumber).to.equal("1");
-      expect(req.session.test.searchResults[1].streetName).to.equal(
-        "SOME ROAD"
-      );
-      expect(req.session.test.searchResults[1].addressLocality).to.equal(
-        "SOMEWHERE"
-      );
-      expect(req.session.test.searchResults[1].postalCode).to.equal("SOMEPOST");
-      expect(req.session.test.searchResults[2].buildingName).to.equal(
-        "NAMED BUILDING"
-      );
+
+      // test each object matches the expected response in testData
+      req.session.test.searchResults.forEach((searchResult, index) => {
+        // first result should be a summary.
+        if (index === 0) {
+          expect(searchResult.text).to.equal(
+            `${testData.apiResponse.data.length} addresses found`
+          );
+        } else {
+          expect(searchResult).to.deep.equal(
+            testData.formattedAddressed[index - 1]
+          );
+        }
+      });
       expect(req.session.test.requestIsSuccessful).to.equal(true);
     });
 
