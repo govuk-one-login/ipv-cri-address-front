@@ -38,11 +38,6 @@ jobs:
           docker build -t "address-front-build:${IMAGE_TAG}" .
           docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/jim-test-address:${IMAGE_TAG}"
           docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/jim-test-address:latest"
-      # - name: Push docker image to build
-      #   env:
-      #     IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
-      #   run: |
-      #     docker push "${{ secrets.BUILD_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-build:${IMAGE_TAG}"
       - name: Push docker image to development
         env:
           ECR_REGISTRY: ${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com
@@ -51,11 +46,3 @@ jobs:
         run: |
            docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-development:${IMAGE_TAG}"
            docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-development:latest"
-      # - name: Create template.yaml and sha zip file and upload to artifacts S3
-      #   env:
-      #     IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
-      #   run: |
-      #     cd ${GITHUB_WORKSPACE}/deploy || exit 1
-      #     echo "${IMAGE_TAG}" > image_tag.txt
-      #     zip template.zip template.yaml image_tag.txt # Need deploy directory created
-      #     aws s3 cp template.zip s3://TODO_BUCKET_NAME/address-front/
