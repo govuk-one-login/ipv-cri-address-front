@@ -36,9 +36,8 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE} || exit 1
           docker build -t "address-front-build:${IMAGE_TAG}" .
-          # docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.BUILD_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-build:${IMAGE_TAG}"
-          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-development:${IMAGE_TAG}"
-          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-development:latest"
+          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/jim-test-address:${IMAGE_TAG}"
+          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/jim-test-address:latest"
       # - name: Push docker image to build
       #   env:
       #     IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
