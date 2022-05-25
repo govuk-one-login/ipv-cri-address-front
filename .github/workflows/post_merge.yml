@@ -2,7 +2,7 @@ name: Docker build, ECR push, template copy to S3
 on:
   push:
     branches:
-      - main
+      - KBV-423-Github-Actions-build-push
 
 jobs:
   dockerBuildAndPush:
@@ -18,13 +18,13 @@ jobs:
       - name: Set up AWS creds
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN }} # Need this created
+          role-to-assume: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN }}
           aws-region: eu-west-2
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registries: ${{ secrets.DEVELOPMENT_ACCOUNT_ID }},${{ secrets.BUILD_ACCOUNT_ID }} # Need this created
+          registries: ${{ secrets.DEVELOPMENT_ACCOUNT_ID }},${{ secrets.BUILD_ACCOUNT_ID }}
       - name: Create tag
         id: create-tag
         run: |
@@ -52,11 +52,11 @@ jobs:
         run: |
            docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-development:${IMAGE_TAG}"
            docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-development:latest"
-      - name: Create template.yaml and sha zip file and upload to artifacts S3
-        env:
-          IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
-        run: |
-          cd ${GITHUB_WORKSPACE}/deploy || exit 1
-          echo "${IMAGE_TAG}" > image_tag.txt
-          zip template.zip template.yaml image_tag.txt # Need deploy directory created
-          aws s3 cp template.zip s3://TODO_BUCKET_NAME/address-front/
+      # - name: Create template.yaml and sha zip file and upload to artifacts S3
+      #   env:
+      #     IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
+      #   run: |
+      #     cd ${GITHUB_WORKSPACE}/deploy || exit 1
+      #     echo "${IMAGE_TAG}" > image_tag.txt
+      #     zip template.zip template.yaml image_tag.txt # Need deploy directory created
+      #     aws s3 cp template.zip s3://TODO_BUCKET_NAME/address-front/
