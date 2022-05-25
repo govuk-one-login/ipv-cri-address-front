@@ -24,7 +24,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registries: ${{ secrets.DEVELOPMENT_ACCOUNT_ID }},${{ secrets.BUILD_ACCOUNT_ID }}
+          registries: ${{ secrets.DEVELOPMENT_ACCOUNT_ID }}
       - name: Create tag
         id: create-tag
         run: |
@@ -36,14 +36,14 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE} || exit 1
           docker build -t "address-front-build:${IMAGE_TAG}" .
-          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.BUILD_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-build:${IMAGE_TAG}"
+          # docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.BUILD_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-build:${IMAGE_TAG}"
           docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-development:${IMAGE_TAG}"
           docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-development:latest"
-      - name: Push docker image to build
-        env:
-          IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
-        run: |
-          docker push "${{ secrets.BUILD_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-build:${IMAGE_TAG}"
+      # - name: Push docker image to build
+      #   env:
+      #     IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
+      #   run: |
+      #     docker push "${{ secrets.BUILD_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-front-build:${IMAGE_TAG}"
       - name: Push docker image to development
         env:
           ECR_REGISTRY: ${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com
