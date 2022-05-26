@@ -18,7 +18,7 @@ jobs:
       - name: Set up AWS creds
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.DEV_GH_ACTIONS_DEV_ROLE_ARN }}
+          role-to-assume: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN }}
           aws-region: eu-west-2
       - name: Login to Amazon ECR
         id: login-ecr
@@ -54,4 +54,3 @@ jobs:
           echo "${IMAGE_TAG}" > image_tag.txt
           zip template.zip template.yaml image_tag.txt
           aws s3 cp template.zip s3://address-cri-front-pipeli-githubartifactsourcebuck-zitx1m7ppg2v/
-          
