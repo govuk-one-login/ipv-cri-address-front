@@ -34,7 +34,7 @@ describe("Address result controller", () => {
   it("Should set the chosen address in the session", async () => {
     const expectedResponse = testData.formattedAddressed[1];
 
-    req.body["address-selection"] = expectedResponse.value;
+    req.body.addressResult = expectedResponse.value;
 
     req.sessionModel.set("searchResults", testData.formattedAddressed);
 

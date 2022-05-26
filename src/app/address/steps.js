@@ -25,7 +25,7 @@ module.exports = {
   },
   "/results": {
     controller: results,
-    fields: ["address-results"],
+    fields: ["addressResults"],
     next: "address",
   },
   "/address": {
@@ -72,7 +72,7 @@ module.exports = {
   },
   "/previous/results": {
     controller: results,
-    fields: ["address-results"],
+    fields: ["addressResults"],
     next: "previous/address",
   },
   "/previous/address": {
