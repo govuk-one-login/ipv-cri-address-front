@@ -34,7 +34,7 @@ describe("Address result controller", () => {
   it("Should set the chosen address in the session", async () => {
     const expectedResponse = testData.formattedAddressed[1];
 
-    req.body.addressResult = expectedResponse.value;
+    req.form.values.addressResults = expectedResponse.value;
 
     req.sessionModel.set("searchResults", testData.formattedAddressed);
 
@@ -44,6 +44,7 @@ describe("Address result controller", () => {
     expect(req.session.test.chosenAddress.buildingNumber).to.equal(
       expectedResponse.buildingNumber
     );
+
     expect(req.session.test.chosenAddress.streetName).to.equal(
       expectedResponse.streetName
     );

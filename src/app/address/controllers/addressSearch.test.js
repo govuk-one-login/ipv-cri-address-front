@@ -58,6 +58,7 @@ describe("Address Search controller", () => {
       );
       expect(req.session.test.searchResults[0]).to.deep.equal({
         text: `${testData.apiResponse.data.length} addresses found`,
+        value: "",
       });
       expect(req.session.test.addressPostcode).to.equal(testPostcode);
 

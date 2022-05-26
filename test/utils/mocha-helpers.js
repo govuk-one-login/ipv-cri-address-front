@@ -20,6 +20,7 @@ global.setupDefaultMocks = () => {
       options: {
         fields: {},
       },
+      values: {},
     },
     axios: {
       get: sinon.fake(),
