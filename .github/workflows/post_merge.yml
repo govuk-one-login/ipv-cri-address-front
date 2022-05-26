@@ -52,5 +52,5 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/deploy || exit 1
           echo "${IMAGE_TAG}" > image_tag.txt
-          zip template.zip template.yaml image_tag.txt
+          zip template.zip cf-template.yaml image_tag.txt
           aws s3 cp template.zip s3://address-cri-front-pipeli-githubartifactsourcebuck-zitx1m7ppg2v/
