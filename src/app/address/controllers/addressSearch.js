@@ -1,3 +1,7 @@
+const {
+  generateSearchResultString,
+} = require("../presenters/addressPresenter");
+
 const BaseController = require("hmpo-form-wizard").Controller;
 
 const {
@@ -36,7 +40,10 @@ class AddressSearchController extends BaseController {
     const addressResults = await axios.get(`${POSTCODE_LOOKUP}/${postcode}`, {
       headers,
     });
-    const addresses = addressResults.data.map(this.addLabel);
+    const addresses = addressResults.data.map((address) => {
+      const textView = generateSearchResultString(address);
+      return { ...address, text: textView, value: textView };
+    });
 
     const defaultMessage = {
       text: `${addresses.length} addresses found`,
@@ -44,57 +51,6 @@ class AddressSearchController extends BaseController {
     };
 
     return [defaultMessage, ...addresses];
-  }
-
-  // add a pretty print for drop down menu.
-  // need text + value to be the same to suit the framework.
-  addLabel(address) {
-    let buildingNames = [];
-    let streetNames = [];
-    let localityNames = [];
-
-    // handle building name
-    if (address.organisationName) {
-      buildingNames.push(address.organisationName);
-    }
-    if (address.departmentName) {
-      buildingNames.push(address.departmentName);
-    }
-    if (address.buildingName) {
-      buildingNames.push(address.buildingName);
-    }
-    if (address.subBuildingName) {
-      buildingNames.push(address.subBuildingName);
-    }
-    if (address.buildingNumber) {
-      buildingNames.push(address.buildingNumber);
-    }
-
-    // street names
-    if (address.dependentStreetName) {
-      streetNames.push(address.dependentStreetName);
-    }
-    if (address.streetName) {
-      streetNames.push(address.streetName);
-    }
-
-    // locality names
-    if (address.doubleDependentAddressLocality) {
-      localityNames.push(address.doubleDependentAddressLocality);
-    }
-    if (address.dependentAddressLocality) {
-      localityNames.push(address.dependentAddressLocality);
-    }
-    if (address.addressLocality) {
-      localityNames.push(address.addressLocality);
-    }
-
-    const fullBuildingName = buildingNames.join(" ");
-    const fullStreetName = streetNames.join(" ");
-    const fullLocality = localityNames.join(" ");
-    const text = `${fullBuildingName} ${fullStreetName}, ${fullLocality}, ${address.postalCode}`;
-
-    return { ...address, text, value: text };
   }
 }
 

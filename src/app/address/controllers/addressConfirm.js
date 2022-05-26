@@ -1,5 +1,7 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 
+const { generateHTMLofAddress } = require("../presenters/addressPresenter");
+
 const {
   API: {
     PATHS: { SAVE_ADDRESS },
@@ -14,7 +16,8 @@ class AddressConfirmController extends BaseController {
       const sessionAddresses = req.sessionModel.get("addresses");
 
       const addresses = sessionAddresses.map((address) => {
-        return this.formatAddress(address);
+        const addressHtml = generateHTMLofAddress(address);
+        return { ...address, text: addressHtml };
       });
 
       const currentAddress = addresses.shift();
@@ -65,18 +68,6 @@ class AddressConfirmController extends BaseController {
     } catch (err) {
       callback(err);
     }
-  }
-
-  formatAddress(address) {
-    let buildingNameNumber;
-    if (address.buildingName && address.buildingNumber) {
-      buildingNameNumber = `${address.buildingNumber} ${address.buildingName}`;
-    } else {
-      buildingNameNumber = address.buildingName || address.buildingNumber;
-    }
-
-    const text = `${buildingNameNumber}<br>${address.streetName},<br>${address.addressLocality},<br>${address.postalCode}<br>`;
-    return { ...address, text };
   }
 
   async saveAddressess(axios, addresses, sessionId) {
