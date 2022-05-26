@@ -40,6 +40,7 @@ class AddressSearchController extends BaseController {
 
     const defaultMessage = {
       text: `${addresses.length} addresses found`,
+      value: "",
     };
 
     return [defaultMessage, ...addresses];
