@@ -26,7 +26,7 @@ describe("address controller", () => {
   });
 
   describe("getValues", () => {
-    it("should only prepopulate postalcode if no address has been chosen", () => {
+    it("should prepopulate postcode with input address when no address has been chosen", () => {
       const generatedAddress = addressFactory(1);
       req.sessionModel.set("addressPostcode", generatedAddress[0].postalCode);
 
@@ -226,7 +226,7 @@ describe("address controller", () => {
     };
 
     const existingAddresses = addressFactory(2);
-
+    existingAddresses[1].subBuildingName = "SubBuilding 1";
     req.sessionModel.set("addresses", existingAddresses);
     req.originalUrl = "/previous/address/edit";
     req.body = addressToSave;
@@ -249,5 +249,33 @@ describe("address controller", () => {
     expect(modifiedPreviousAddress.addressStreetName).to.equal(
       addressToSave.streetName
     );
+    expect(modifiedPreviousAddress.subBuildingName).to.equal(
+      existingAddresses[1].subBuildingName
+    );
+  });
+
+  it("should delete the UPRN when overwriting the saved address", async () => {
+    const addressToSave = {
+      addressFlatNumber: "1a",
+      addressHouseName: "My building",
+      addressStreetName: "avenue",
+      addressLocality: "large town",
+      addressYearFrom: "2022",
+    };
+
+    const existingAddresses = addressFactory(2);
+    existingAddresses[1].subBuildingName = "SubBuilding 1";
+    existingAddresses[1].uprn = "123abc";
+    req.sessionModel.set("addresses", existingAddresses);
+    req.originalUrl = "/previous/address/edit";
+    req.body = addressToSave;
+
+    await address.saveValues(req, res, next);
+
+    const savedAddresses = req.session.test.addresses;
+    const modifiedPreviousAddress = savedAddresses[1];
+    expect(next).to.have.been.calledOnce;
+
+    expect(modifiedPreviousAddress.uprn).to.be.undefined;
   });
 });
