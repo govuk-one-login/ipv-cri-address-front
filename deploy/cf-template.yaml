@@ -64,6 +64,8 @@ Resources:
           Subnets:
             - Fn::ImportValue:
                 !Sub "${VpcStackName}-PrivateSubnetIdA"
+            - Fn::ImportValue:
+                !Sub "${VpcStackName}-PrivateSubnetIdB"
       PropagateTags: SERVICE
       TaskDefinition: !Ref TaskDefinition
       Tags:
@@ -237,6 +239,8 @@ Resources:
       Subnets:
         - Fn::ImportValue:
             !Sub "${VpcStackName}-PrivateSubnetIdA"
+        - Fn::ImportValue:
+            !Sub "${VpcStackName}-PrivateSubnetIdB"
       LoadBalancerAttributes:
         - Key: access_logs.s3.enabled
           Value: "true"
@@ -468,3 +472,5 @@ Outputs:
   ApiGatewayEndpoint:
     Description: The base URI for this application.
     Value: !GetAtt ApiGateway.ApiEndpoint
+    Export:
+      Name: address-front-${Environment}-AddressFrontGatewayID
