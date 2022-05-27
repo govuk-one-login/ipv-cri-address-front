@@ -36,16 +36,16 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE} || exit 1
           docker build -t "address-front-build:${IMAGE_TAG}" .
-          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-cri-front-ecr-containerrepository-axy8pytttvdo:${IMAGE_TAG}"
-          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-cri-front-ecr-containerrepository-axy8pytttvdo:latest"
+          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:${IMAGE_TAG}"
+          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:latest
       - name: Push docker image to development
         env:
           ECR_REGISTRY: ${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com
           ECR_REPOSITORY: address-front-development
           IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
         run: |
-           docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-cri-front-ecr-containerrepository-axy8pytttvdo:${IMAGE_TAG}"
-           docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/address-cri-front-ecr-containerrepository-axy8pytttvdo:latest"
+           docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:${IMAGE_TAG}"
+           docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:katest"
       - name: Create template.yaml and sha zip file and upload to artifacts S3
         env:
           IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
