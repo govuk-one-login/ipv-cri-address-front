@@ -45,7 +45,7 @@ jobs:
           IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
         run: |
            docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:${IMAGE_TAG}"
-           docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:katest"
+           docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:latest"
       - name: Create template.yaml and sha zip file and upload to artifacts S3
         env:
           IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
