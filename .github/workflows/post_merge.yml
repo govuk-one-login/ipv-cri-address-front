@@ -37,7 +37,7 @@ jobs:
           cd ${GITHUB_WORKSPACE} || exit 1
           docker build -t "address-front-build:${IMAGE_TAG}" .
           docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:${IMAGE_TAG}"
-          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:latest
+          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:latest"
       - name: Push docker image to development
         env:
           ECR_REGISTRY: ${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com
