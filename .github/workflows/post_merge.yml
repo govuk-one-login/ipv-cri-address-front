@@ -36,21 +36,21 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE} || exit 1
           docker build -t "address-front-build:${IMAGE_TAG}" .
-          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/kbv-415-address-front-test-containerrepository-r1jdxt4kwuln:${IMAGE_TAG}"
-          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/kbv-415-address-front-test-containerrepository-r1jdxt4kwuln:latest"
+          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:${IMAGE_TAG}"
+          docker tag "address-front-build:${IMAGE_TAG}" "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:latest
       - name: Push docker image to development
         env:
           ECR_REGISTRY: ${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com
           ECR_REPOSITORY: address-front-development
           IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
         run: |
-           docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/kbv-415-address-front-test-containerrepository-r1jdxt4kwuln:${IMAGE_TAG}"
-           docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/kbv-415-address-front-test-containerrepository-r1jdxt4kwuln:latest"
+           docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:${IMAGE_TAG}"
+           docker push "${{ secrets.DEVELOPMENT_ACCOUNT_ID }}.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:katest"
       - name: Create template.yaml and sha zip file and upload to artifacts S3
         env:
           IMAGE_TAG: ${{ steps.create-tag.outputs.image_tag }}
         run: |
           cd ${GITHUB_WORKSPACE}/deploy || exit 1
           echo "${IMAGE_TAG}" > image_tag.txt
-          zip template.zip template.yaml image_tag.txt
+          zip template.zip cf-template.yaml image_tag.txt
           aws s3 cp template.zip s3://address-cri-front-pipeli-githubartifactsourcebuck-zitx1m7ppg2v/
