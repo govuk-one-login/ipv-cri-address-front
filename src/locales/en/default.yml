@@ -25,9 +25,9 @@ links:
       - <p><a href="/previous/address">I cannot find my address in the list</a></p>
 validation:
   required: Enter your {{label}}.
-  postcodeLength: "Your {{label}} should be between 5 and 7 characters"
-  alphaNumeric: "Your {{label}} should only include numbers and letters"
-  missingNumericOrAlpha: "Your {{label}} should include numbers and letters"
-  isUkPostcode: "Enter a UK postcode"
-  alphaNumericWithSpecialChars: Your {{ label }} should not include any special characters or symbols
+  postcodeLength: "Your {{label}} should be between 5 and 7 characters."
+  alphaNumeric: "Your {{label}} should only include numbers and letters."
+  missingNumericOrAlpha: "Your {{label}} should include numbers and letters."
+  isUkPostcode: "Enter a UK postcode."
+  alphaNumericWithSpecialChars: Your {{ label }} should not include any special characters or symbols.
   default: You must answer this question.
