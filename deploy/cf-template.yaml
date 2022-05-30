@@ -469,8 +469,6 @@ Resources:
           Value: alphagov/di-devplatform-deploy/sam-deploy-pipeline/tests/fargate-app/template.yaml
 
 Outputs:
-  ApiGatewayEndpoint:
+  FrontGatewayEndpoint:
     Description: The base URI for this application.
     Value: !GetAtt ApiGateway.ApiEndpoint
-    Export:
-      Name: address-front-${Environment}-AddressFrontGatewayID
