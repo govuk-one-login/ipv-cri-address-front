@@ -259,25 +259,27 @@ Resources:
             Principal:
               Service: ecs-tasks.amazonaws.com
         Version: 2012-10-17
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
       Policies:
-        - PolicyName: PullAddressFrontImage
+        - PolicyName: CreateLogGroup
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
-                  - "ecr:BatchGetImage"
-                  - "ecr:GetDownloadUrlForLayer"
-                  - "ecr:GetAuthorizationToken"
-                Resource:
-                  - '*'
-              - Effect: Allow
-                Action:
-                  - "logs:CreateLogStream"
-                  - "logs:PutLogEvents"
-                Resource:
-                  - !GetAtt "ECSAccessLogsGroup.Arn"
-                  - !Sub "${ECSAccessLogsGroup.Arn}:*"
+                  - logs:CreateLogGroup
+                Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:*"
+      PermissionsBoundary: !If
+        - UsePermissionsBoundary
+        - !Ref PermissionsBoundary
+        - !Ref AWS::NoValue
+      Tags:
+        - Key: Name
+          Value: !Sub "${AWS::StackName}-TaskExecutionRole"
+        - Key: Service
+          Value: ci/cd
+
   ECSTaskRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -288,6 +290,15 @@ Resources:
             Principal:
               Service: ecs-tasks.amazonaws.com
         Version: 2012-10-17
+      PermissionsBoundary: !If
+        - UsePermissionsBoundary
+        - !Ref PermissionsBoundary
+        - !Ref AWS::NoValue
+      Tags:
+        - Key: Name
+          Value: !Sub "${AWS::StackName}-TaskRole"
+        - Key: Service
+          Value: ci/cd
 
   ApiGwHttpEndpoint:
       Type: 'AWS::ApiGatewayV2::Api'
