@@ -141,4 +141,12 @@ module.exports = {
       },
     ],
   },
+  addressResults: {
+    type: "list",
+    validate: [
+      {
+        type: "required",
+      },
+    ],
+  },
 };

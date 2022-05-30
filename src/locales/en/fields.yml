@@ -38,8 +38,10 @@ addressYearFrom:
     default: Enter a valid date
     isPreviousDate: The date you started living at this address must be in the past
 
-address-results:
+addressResults:
   label: Select an address
+  validation:
+    required: Choose an address from the list
 
 address-confirm:
   current: Current address

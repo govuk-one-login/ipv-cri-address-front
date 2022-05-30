@@ -11,7 +11,7 @@ class AddressResultsController extends BaseController {
   saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
       try {
-        const selectedAddress = req.body["address-selection"];
+        const selectedAddress = req.form.values.addressResults;
         const allAddresses = req.sessionModel.get("searchResults");
 
         const chosenAddress = Object.assign(
