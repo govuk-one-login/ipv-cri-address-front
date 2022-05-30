@@ -30,6 +30,7 @@ Parameters:
     Description: >-
       The number of Address front ecs tasks to run.
     Type: Number
+    Default: 1
 
 Conditions:
   IsNotDevelopment: !Or
