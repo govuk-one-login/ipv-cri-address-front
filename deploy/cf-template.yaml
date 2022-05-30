@@ -31,6 +31,10 @@ Parameters:
       The number of Address front ecs tasks to run.
     Type: Number
     Default: 1
+  PermissionsBoundary:
+    Description: "The ARN of the permissions boundary to apply when creating IAM roles"
+    Type: String
+    Default: "none"
 
 Conditions:
   IsNotDevelopment: !Or
@@ -38,7 +42,12 @@ Conditions:
     - !Equals [ !Ref Environment, staging ]
     - !Equals [ !Ref Environment, integration ]
     - !Equals [ !Ref Environment, production ]
-
+  UsePermissionsBoundary:
+    Fn::Not:
+      - Fn::Equals:
+          - !Ref PermissionsBoundary
+          - "none"
+          
 Resources:
   # Security Groups for the ECS service and load balancer
   LoadBalancerSG:
