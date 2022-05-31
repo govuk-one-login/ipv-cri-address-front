@@ -22,15 +22,6 @@ Parameters:
     Description: The name of the environment to deploy to.
     Type: String
     AllowedPattern: ((production)|(integration)|(staging)|(build)|(dev.*))
-  ImageTag:
-    Description: The tag of Address-front image to deploy in the task definition.
-    Type: String
-    Default: latest
-  DesiredTaskCount:
-    Description: >-
-      The number of Address front ecs tasks to run.
-    Type: Number
-    Default: 1
   PermissionsBoundary:
     Description: "The ARN of the permissions boundary to apply when creating IAM roles"
     Type: String
@@ -201,7 +192,7 @@ Resources:
         DeploymentCircuitBreaker:
           Enable: TRUE
           Rollback: TRUE
-      DesiredCount: !Ref DesiredTaskCount
+      DesiredCount: 1
       EnableECSManagedTags: false
       HealthCheckGracePeriodSeconds: 60
       LaunchType: FARGATE
@@ -234,7 +225,7 @@ Resources:
     Properties:
       ContainerDefinitions:
         - Essential: true
-          Image: !Sub "322814139578.dkr.ecr.eu-west-2.amazonaws.com/di-ipv-cri-address-front-ecr-containerrepository-k8dgaf0biixr:${ImageTag}"
+          Image: CONTAINER-IMAGE-PLACEHOLDER
           Name: app
           Environment:
             - Name: API_BASE_URL
