@@ -107,7 +107,7 @@ Resources:
     Condition: IsNotDevelopment
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub ipv-Address-${Environment}-access-logs
+      BucketName: !Sub di-ipv-cri-address-${Environment}-access-logs
       VersioningConfiguration:
         Status: "Enabled"
       PublicAccessBlockConfiguration:
@@ -135,7 +135,7 @@ Resources:
             Action:
               - s3:PutObject
             Resource:
-              - !Sub arn:aws:s3:::${AccessLogsBucket}/Address-front-${Environment}/AWSLogs/${AWS::AccountId}/*
+              - !Sub arn:aws:s3:::${AccessLogsBucket}/address-front-${Environment}/AWSLogs/${AWS::AccountId}/*
 
   # Private Application Load Balancer
   LoadBalancer:
@@ -157,7 +157,7 @@ Resources:
           - Key: access_logs.s3.bucket
             Value: !Ref AccessLogsBucket
           - Key: access_logs.s3.prefix
-            Value: !Sub Address-front-${Environment}
+            Value: !Sub address-front-${Environment}
         - !Ref AWS::NoValue
 
   LoadBalancerListenerTargetGroupECS:
@@ -238,7 +238,9 @@ Resources:
           Name: app
           Environment:
             - Name: API_BASE_URL
-              Value: https://bq8jhfyzri.execute-api.eu-west-2.amazonaws.com/dev/
+              Value:
+                Fn::ImportValue:
+                  !Sub di-ipv-cri-address-api-AddressApiBaseUrl
             - Name: EXTERNAL_WEBSITE_HOST
               Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
           PortMappings:
@@ -249,7 +251,7 @@ Resources:
             Options:
               awslogs-group : !Ref ECSAccessLogsGroup
               awslogs-region : !Sub ${AWS::Region}
-              awslogs-stream-prefix : !Sub Address-front-${Environment}
+              awslogs-stream-prefix : !Sub address-front-${Environment}
       Cpu: '512'
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
       Memory: '1024'
@@ -312,7 +314,7 @@ Resources:
   ApiGwHttpEndpoint:
       Type: 'AWS::ApiGatewayV2::Api'
       Properties:
-          Name: !Sub ipv-Address-front-${Environment}
+          Name: !Sub ipv-address-front-${Environment}
           ProtocolType: HTTP
 
   ApiGwHttpEndpointIntegration:
@@ -374,5 +376,3 @@ Outputs:
     Export:
       Name: !Sub "${AWS::StackName}-IPVAddressFrontGatewayID"
     Value: !Ref ApiGwHttpEndpoint
-
-
