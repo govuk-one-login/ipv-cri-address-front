@@ -2,11 +2,14 @@ FROM node:16.13.1-alpine3.15@sha256:a2c7f8ebdec79619fba306cec38150db44a45b48380d
 
 WORKDIR /app
 
-COPY /src ./src
 COPY .yarn ./.yarn
-COPY package.json yarn.lock .yarnrc.yml ./
+COPY  yarn.lock .yarnrc.yml ./
 
-RUN [ "yarn", "set", "version", "./.yarn/releases/yarn-1.22.17.cjs" ]
+RUN [ "yarn", "set", "version", "1.22.17" ]
+
+COPY /src ./src
+COPY package.json ./
+
 RUN yarn install
 RUN yarn build
 
