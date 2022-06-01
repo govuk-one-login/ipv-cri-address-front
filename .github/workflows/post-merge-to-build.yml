@@ -51,5 +51,6 @@ jobs:
       - name: Upload CloudFormation artifacts to S3
         env:
           ARTIFACT_BUCKET: ${{ secrets.FRONT_ARTIFACT_BUCKET }}
-        run: aws s3 cp template.zip "s3://$ARTIFACT_BUCKET/template.zip" --metadata "repository=$GITHUB_REPOSITORY,commitsha=$GITHUB_SHA"
-
+        run: |
+          cd ${GITHUB_WORKSPACE}/deploy || exit 1
+          aws s3 cp template.zip "s3://$ARTIFACT_BUCKET/template.zip" --metadata "repository=$GITHUB_REPOSITORY,commitsha=$GITHUB_SHA"
