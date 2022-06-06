@@ -2,7 +2,7 @@ name: Docker build, ECR push, template copy to S3
 on:
   push:
     branches:
-      - KBV-423-Github_actions_devbuild
+      - main
 
 jobs:
   dockerBuildAndPush:
