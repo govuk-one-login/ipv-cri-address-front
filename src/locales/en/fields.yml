@@ -49,12 +49,15 @@ address-confirm:
   previous: Previous address
   change: Change
 
-addressLivingDuration:
+isAddressMoreThanThreeMonths:
   label: Have you lived here for more than 3 months?
   hint: We'll need to ask you where you lived before if you've recently moved to this address.
   items:
-    moreInfoRequired:
-      moreInfoRequired:
-        text: "No"
-      moreInfoNotRequired:
-        text: "Yes"
+    moreThanThreeMonths:
+      label: "Yes"
+      value: "Yes"
+    lessThanThreeMonths:
+      label: "No"
+      value: "No"
+  validation:
+    confirmationValidation: Select yes if you've lived at this address for more than 3 months

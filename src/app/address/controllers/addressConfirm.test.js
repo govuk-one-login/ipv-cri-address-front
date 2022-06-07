@@ -61,7 +61,7 @@ describe("Address confirmation controller", () => {
       const currentAddress = formattedAddresses.shift();
       const previousAddress = formattedAddresses.shift();
       const params = {
-        isMoreInfoRequirred: false, // not required as we already have a previous address
+        isMoreInfoRequired: false, // not required as we already have a previous address
         currentAddressRowValue: currentAddress,
         validFromRow: String(new Date().getFullYear()),
         previousAddressRowValue: previousAddress,
@@ -107,7 +107,7 @@ describe("Address confirmation controller", () => {
     });
 
     it("Should reset journey wide variables and enter previous journey when more information is required", async () => {
-      req.body.moreInfoRequired = true;
+      req.form.values.isAddressMoreThanThreeMonths = "lessThanThreeMonths";
       await addressConfirm.saveValues(req, res, next);
       expect(req.session.test.addressSearch).to.equal(null);
       expect(req.session.test.addPreviousAddresses).to.equal(true);
