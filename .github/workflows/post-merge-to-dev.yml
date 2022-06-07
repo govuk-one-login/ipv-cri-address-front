@@ -8,6 +8,8 @@ jobs:
   dockerBuildAndPush:
     name: Docker build and push
     runs-on: ubuntu-latest
+    env:
+      AWS_REGION: eu-west-2
     permissions:
       id-token: write
       contents: read
@@ -35,17 +37,22 @@ jobs:
           docker build -t $DEV_ECR_REGISTRY/$DEV_ECR_REPOSITORY:$GITHUB_SHA .
           docker push $DEV_ECR_REGISTRY/$DEV_ECR_REPOSITORY:$GITHUB_SHA
 
-      - name: Update SAM template
+      - name: SAM Validate
+        run: sam validate --region ${{ env.AWS_REGION }} -t deploy/template.yaml
+
+      - name: Update SAM template with ECR image
         env:
           DEV_ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           DEV_ECR_REPOSITORY: ${{ secrets.DEV_ECR_REPOSITORY }}
         run: |
           cd ${GITHUB_WORKSPACE}/deploy || exit 1
-          sed -i "s|CONTAINER-IMAGE-PLACEHOLDER|$DEV_ECR_REGISTRY/$DEV_ECR_REPOSITORY:$GITHUB_SHA|" cf-template.yaml
+          sed -i "s|CONTAINER-IMAGE-PLACEHOLDER|$DEV_ECR_REGISTRY/$DEV_ECR_REPOSITORY:$GITHUB_SHA|" template.yaml
 
-      - name: Create template.yaml and sha zip file and upload to artifacts S3
+      - name: Create template.yaml and sha zip file
         run: |
           cd ${GITHUB_WORKSPACE}/deploy || exit 1
+          sam build -t template.yaml
+          mv .aws-sam/build/template.yaml cf-template.yaml
           zip template.zip cf-template.yaml
 
       - name: Upload CloudFormation artifacts to S3
