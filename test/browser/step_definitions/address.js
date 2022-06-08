@@ -4,8 +4,8 @@ const {
   ResultsPage,
   ConfirmPage,
   AddressPage,
-  IPVCorePage,
   RelyingPartyPage,
+  ProblemPage,
 } = require("../pages");
 const { expect } = require("chai");
 
@@ -112,4 +112,17 @@ When(/they have selected their previous address$/, async function () {
   const resultsPage = new ResultsPage(this.page);
   await resultsPage.selectAddress("3A TEST STREET, TESTTOWN, PR3VC0DE");
   await resultsPage.continue();
+});
+
+When(/they see the problem page$/, async function () {
+  const problemPage = new ProblemPage(this.page);
+
+  expect(problemPage.isCurrentPage()).to.be.true;
+});
+
+When(/they choose manual entry/, async function () {
+  const problemPage = new ProblemPage(this.page);
+
+  await problemPage.chooseManualEntry();
+  await problemPage.continue();
 });

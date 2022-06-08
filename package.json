@@ -22,7 +22,7 @@
     "test:coverage": "nyc --reporter=lcov --reporter=text-summary yarn test",
     "test:watch": "mocha --watch",
     "mocks": "yarn run wiremock --port 8010 --root-dir test/mocks",
-    "test:browser": "wait-on tcp:8010 tcp:5010 && cucumber-js --config test/browser/cucumber.js",
+    "test:browser": "wait-on tcp:8010 tcp:5010 && MOCK_API=true cucumber-js --config test/browser/cucumber.js",
     "test:browser:ci": "npm-run-all -p -r start:ci mocks test:browser"
   },
   "repository": {

@@ -11,10 +11,10 @@ Feature: Searching and adding an Address
     Given they searched for their postcode "E1 8QS"
     Then they should see the results page
     And they have selected an address
-    Then they should be able to confirm the address
+    Then they should see the address page
 
   Scenario: Searching and unsuccessfully finding an address
     Given they searched for their postcode "X1 1XX"
+    And they see the problem page
+    When they choose manual entry
     Then they should see the address page
-    When they have added their details manually
-    Then they should be able to confirm the address
