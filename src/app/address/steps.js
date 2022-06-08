@@ -46,7 +46,7 @@ module.exports = {
   "/confirm": {
     controller: confirm,
     prereqs: "/address/edit",
-    field: ["addPrevious", "moreInfoRequired"],
+    fields: ["addPrevious", "isAddressMoreThanThreeMonths"],
     next: [
       {
         field: "addPreviousAddresses",

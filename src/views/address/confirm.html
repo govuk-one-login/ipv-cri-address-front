@@ -1,9 +1,9 @@
 {% extends "./templates/address-base.html" %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-{% from "hmpo-html/macro.njk" import hmpoHtml %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "hmpo-radios/macro.njk" import hmpoRadios %}
+
 
 
 {% set hmpoPageKey = "address-confirm" %}
@@ -115,32 +115,19 @@
 
   {% call hmpoForm(ctx) %}
 
-    {% if isMoreInfoRequirred %}
-      {{ govukRadios({
-        classes: "govuk-radios--inline",
-        id: "moreInfoRequired",
-        name: "moreInfoRequired",
-        value: moreInfoRequired,
-        fieldset: {
-          legend: {
-            text: translate("fields.addressLivingDuration.label"),
-            classes: "govuk-fieldset__legend--s"
-          }
+    {% if isMoreInfoRequired %}
+
+      {{ hmpoRadios(ctx, {
+        id: "isAddressMoreThanThreeMonths",
+        name: "isAddressMoreThanThreeMonths",
+        value: "isAddressMoreThanThreeMonths",
+        inline: true,
+        label: {
+          classes: ["govuk-fieldset__legend--s"]
         },
-        hint: {
-          text: translate("fields.addressLivingDuration.hint")
-        },
-        items: [
-          {
-            value: false,
-            text: translate("fields.addressLivingDuration.items.moreInfoRequired.moreInfoNotRequired.text")
-          },
-          {
-            value: true,
-            text: translate("fields.addressLivingDuration.items.moreInfoRequired.moreInfoRequired.text")
-          }
-        ]
+        fields: isAddressMoreThanThreeMonths.items
       }) }}
+
     {% endif %}
 
     {{ hmpoSubmit(ctx, {

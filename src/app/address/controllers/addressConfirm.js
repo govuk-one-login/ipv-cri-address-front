@@ -3,6 +3,10 @@ const BaseController = require("hmpo-form-wizard").Controller;
 const { generateHTMLofAddress } = require("../presenters/addressPresenter");
 
 const {
+  confirmationValidation,
+} = require("../validators/confirmationValidator");
+
+const {
   API: {
     PATHS: { SAVE_ADDRESS },
   },
@@ -27,7 +31,7 @@ class AddressConfirmController extends BaseController {
       const today = new Date();
 
       // if no previous addresses + more info is required, then radio button menu is rendered
-      locals.isMoreInfoRequirred =
+      locals.isMoreInfoRequired =
         this.isMoreInfoRequired(yearFrom, today) && !previousAddress;
       locals.currentAddressRowValue = currentAddress.text;
       locals.validFromRow = String(yearFrom);
@@ -37,10 +41,25 @@ class AddressConfirmController extends BaseController {
     });
   }
 
+  validateFields(req, res, callback) {
+    // add custom validator for houseName/Number check.
+    const formFields = req.form.options.fields;
+    const addresses = req.sessionModel.get("addresses");
+    const hasPreviousAddresses = addresses.length === 2 ? true : false;
+
+    formFields.isAddressMoreThanThreeMonths?.validate.push({
+      fn: confirmationValidation,
+      arguments: [hasPreviousAddresses],
+    });
+
+    super.validateFields(req, res, callback);
+  }
+
   async saveValues(req, res, callback) {
     try {
-      const moreInfoRequired = req.body.moreInfoRequired;
-      if (moreInfoRequired) {
+      const isAddressMoreThanThreeMonths =
+        req.form.values.isAddressMoreThanThreeMonths;
+      if (isAddressMoreThanThreeMonths === "lessThanThreeMonths") {
         // reset variables specific to current address journey
         req.sessionModel.set("addressSearch", null);
         req.sessionModel.set("addPreviousAddresses", true);
