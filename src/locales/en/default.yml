@@ -23,6 +23,8 @@ links:
       - <p>Postcode <br> <b>{{values.addressPostcode}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/previous/search">Change</a></p>
     cantFindAddress:
       - <p><a href="/previous/address">I cannot find my address in the list</a></p>
+  helpContact:
+    - <p><a href="https://signin.account.gov.uk/contact-us?supportType=PUBLIC" target="_blank">Contact the GOV.UK account team (opens in a new tab)</a></p>
 validation:
   required: Enter your {{label}}.
   postcodeLength: "Your {{label}} should be between 5 and 7 characters."

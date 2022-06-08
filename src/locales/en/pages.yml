@@ -30,3 +30,7 @@ address-form:
 
 address-form-previous:
   title: What's your previous home address?
+
+addressProblem:
+  title: There is a problem
+  content: We cannot find any addresses with the postcode <b>{{values.addressPostcode}}</b>.

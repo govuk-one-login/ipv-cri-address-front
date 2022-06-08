@@ -1,0 +1,24 @@
+{% from "hmpo-radios/macro.njk" import hmpoRadios %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+
+<h1 id="header">{{translate("pages.addressProblem.title")}}</h1>
+{% call hmpoForm(ctx) %}
+
+  {{hmpoHtml(translate("pages.addressProblem.content"))}}
+
+  {{ hmpoRadios(ctx, {
+      id: "addressBreak",
+      name: "addressBreak",
+      value: "addressBreak",
+      legend: {
+        classes: ["govuk-fieldset__legend--s"]
+      },
+      fields: addressBreak.items
+    })
+  }}
+
+  {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}
+
+ {{hmpoHtml(translate("links.helpContact"))}}
+
+{% endcall %}

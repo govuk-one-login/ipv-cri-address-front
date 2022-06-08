@@ -49,6 +49,16 @@ address-confirm:
   previous: Previous address
   change: Change
 
+addressBreak:
+  legend: "What would you like to do?"
+  validation:
+    required: You must choose an option to continue
+  items:
+    continue:
+      label: Continue with {{values.addressPostcode}} and enter the rest of your address details manually
+    retry:
+      label: Try entering your postcode again
+
 isAddressMoreThanThreeMonths:
   label: Have you lived here for more than 3 months?
   hint: We'll need to ask you where you lived before if you've recently moved to this address.

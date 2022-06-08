@@ -138,6 +138,11 @@ module.exports = {
     items: ["moreThanThreeMonths", "lessThanThreeMonths"],
     validate: [], // custom validator in addressConfirm.js
   },
+  addressBreak: {
+    type: "radios",
+    items: ["continue", "retry"],
+    validate: ["required"],
+  },
   addressResults: {
     type: "list",
     validate: [

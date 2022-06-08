@@ -20,7 +20,18 @@ module.exports = {
         value: true,
         next: "results",
       },
-      "address",
+      "problem",
+    ],
+  },
+  "/problem": {
+    fields: ["addressBreak"],
+    next: [
+      {
+        field: "addressBreak",
+        value: "continue",
+        next: "/address",
+      },
+      "/search",
     ],
   },
   "/results": {
@@ -67,7 +78,18 @@ module.exports = {
         value: true,
         next: "previous/results",
       },
-      "previous/address",
+      "previous/problem",
+    ],
+  },
+  "/previous/problem": {
+    fields: ["addressBreak"],
+    next: [
+      {
+        field: "addressBreak",
+        value: "continue",
+        next: "/previous/address",
+      },
+      "/previous/search",
     ],
   },
   "/previous/results": {
