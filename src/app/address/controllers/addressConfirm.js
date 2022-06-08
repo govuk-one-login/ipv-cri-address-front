@@ -47,9 +47,16 @@ class AddressConfirmController extends BaseController {
     const addresses = req.sessionModel.get("addresses");
     const hasPreviousAddresses = addresses.length === 2 ? true : false;
 
+    const currentAddress = addresses[0];
+
+    const yearFrom = new Date(currentAddress.validFrom).getFullYear();
+    const today = new Date();
+
+    const isMoreInfoRequired = this.isMoreInfoRequired(yearFrom, today);
+
     formFields.isAddressMoreThanThreeMonths?.validate.push({
       fn: confirmationValidation,
-      arguments: [hasPreviousAddresses],
+      arguments: [hasPreviousAddresses, isMoreInfoRequired],
     });
 
     super.validateFields(req, res, callback);
