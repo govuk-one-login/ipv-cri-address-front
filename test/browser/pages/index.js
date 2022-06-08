@@ -6,4 +6,5 @@ module.exports = {
   ResultsPage: require("./result.js"),
   SearchPage: require("./search.js"),
   IPVCorePage: require("./ipv-core"),
+  RelyingPartyPage: require("./relying-party"),
 };

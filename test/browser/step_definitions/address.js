@@ -5,6 +5,7 @@ const {
   ConfirmPage,
   AddressPage,
   IPVCorePage,
+  RelyingPartyPage,
 } = require("../pages");
 const { expect } = require("chai");
 
@@ -13,15 +14,19 @@ const { expect } = require("chai");
  */
 Given(/^^([A-Za-z ])+ is using the system$/, async function (name) {
   this.user = this.allUsers[name];
+
+  const rpPage = new RelyingPartyPage(this.page);
+
+  await rpPage.goto();
 });
 
 Given(/^they (?:have )?start(?:ed)? the address journey$/, async function () {
-  const ipvCorePage = new IPVCorePage(this.page);
-  await ipvCorePage.chooseCredentialIssuer();
-
-  const searchPage = new SearchPage(this.page);
-  expect(searchPage.isCurrentPage()).to.be.true;
-  expect(await searchPage.getPageTitle()).to.not.be.empty;
+  // const ipvCorePage = new IPVCorePage(this.page);
+  // await ipvCorePage.chooseCredentialIssuer();
+  //
+  // const searchPage = new SearchPage(this.page);
+  // expect(searchPage.isCurrentPage()).to.be.true;
+  // expect(await searchPage.getPageTitle()).to.not.be.empty;
 });
 
 Given("they searched for their postcode {string}", async function (postcode) {
