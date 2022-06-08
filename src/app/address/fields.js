@@ -133,13 +133,10 @@ module.exports = {
       },
     ],
   },
-  moreInfoRequired: {
-    type: "radio",
-    validate: [
-      {
-        type: "required",
-      },
-    ],
+  isAddressMoreThanThreeMonths: {
+    type: "radios",
+    items: ["moreThanThreeMonths", "lessThanThreeMonths"],
+    validate: [], // custom validator in addressConfirm.js
   },
   addressResults: {
     type: "list",
