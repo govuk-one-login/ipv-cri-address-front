@@ -12,8 +12,6 @@ const {
   },
 } = require("../../../lib/config");
 
-const { addOAuthPropertiesToSession } = require("../../../common/lib/oauth");
-
 class AddressConfirmController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
@@ -75,20 +73,12 @@ class AddressConfirmController extends BaseController {
         callback();
       } else {
         const addresses = req.sessionModel.get("addresses");
-        const data = await this.saveAddressess(
-          req.axios,
-          addresses,
-          req.session.tokenId
-        );
+
+        await this.saveAddressess(req.axios, addresses, req.session.tokenId);
 
         super.saveValues(req, res, () => {
           // if we're into save values we're finished with gathering addresses
           req.sessionModel.set("addPreviousAddresses", false);
-
-          addOAuthPropertiesToSession({
-            authParams: req.session.authParams,
-            data,
-          });
 
           callback();
         });

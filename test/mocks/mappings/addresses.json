@@ -27,7 +27,9 @@
       "response": {
         "status": 200,
         "jsonBody": {
-          "session-id": "ABADCAFE"
+          "session_id": "ABADCAFE",
+          "state": "sT@t3",
+          "redirect_uri": "http://example.net/return"
         }
       }
     },
@@ -121,7 +123,7 @@
     {
       "scenarioName": "Address",
       "requiredScenarioState": "AddressResponses",
-      "newScenarioState": "AddressResponses",
+      "newScenarioState": "AuthCode",
       "request": {
         "method": "PUT",
         "url": "/address",
@@ -133,10 +135,30 @@
       },
       "response": {
         "status": 201,
+        "jsonBody": {}
+      }
+    },
+    {
+      "scenarioName": "Address",
+      "requiredScenarioState": "AuthCode",
+      "request": {
+        "method": "GET",
+        "urlPath": "/authorization",
+        "headers": {
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "x-scenario-id": {
+            "equalTo": "address-success"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
         "jsonBody": {
-          "code": "mySuperSecretCode",
-          "state": "myAwesomeState",
-          "redirect_uri": "http://localhost:8085/callback"
+          "authorizationCode": {
+            "value": "FACEFEED"
+          }
         }
       }
     }
