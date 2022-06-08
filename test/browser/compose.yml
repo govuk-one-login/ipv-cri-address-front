@@ -7,7 +7,7 @@ services:
     volumes:
       - "../mocks:/home/wiremock"
     ports:
-      - "8090:8080"
+      - "8010:8080"
   core-stub:
     image: ghcr.io/alphagov/di/di-ipv-core-stub:latest
     environment:
@@ -29,8 +29,8 @@ services:
       dockerfile: local.Dockerfile
     environment:
       REDIS_SESSION_URL: db
-      API_BASE_URL: http://172.17.0.1:8090
-      #      API_BASE_URL: http://mocks:8090
+      API_BASE_URL: http://172.17.0.1:8010
+      #      API_BASE_URL: http://mocks:8010
       PORT: 5010
       NODE_ENV: development
     ports:
