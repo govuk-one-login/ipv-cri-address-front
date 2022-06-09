@@ -4,7 +4,8 @@ const {
   ResultsPage,
   ConfirmPage,
   AddressPage,
-  IPVCorePage,
+  RelyingPartyPage,
+  ProblemPage,
 } = require("../pages");
 const { expect } = require("chai");
 
@@ -13,15 +14,19 @@ const { expect } = require("chai");
  */
 Given(/^^([A-Za-z ])+ is using the system$/, async function (name) {
   this.user = this.allUsers[name];
+
+  const rpPage = new RelyingPartyPage(this.page);
+
+  await rpPage.goto();
 });
 
 Given(/^they (?:have )?start(?:ed)? the address journey$/, async function () {
-  const ipvCorePage = new IPVCorePage(this.page);
-  await ipvCorePage.chooseCredentialIssuer();
-
-  const searchPage = new SearchPage(this.page);
-  expect(searchPage.isCurrentPage()).to.be.true;
-  expect(await searchPage.getPageTitle()).to.not.be.empty;
+  // const ipvCorePage = new IPVCorePage(this.page);
+  // await ipvCorePage.chooseCredentialIssuer();
+  //
+  // const searchPage = new SearchPage(this.page);
+  // expect(searchPage.isCurrentPage()).to.be.true;
+  // expect(await searchPage.getPageTitle()).to.not.be.empty;
 });
 
 Given("they searched for their postcode {string}", async function (postcode) {
@@ -107,4 +112,17 @@ When(/they have selected their previous address$/, async function () {
   const resultsPage = new ResultsPage(this.page);
   await resultsPage.selectAddress("3A TEST STREET, TESTTOWN, PR3VC0DE");
   await resultsPage.continue();
+});
+
+When(/they see the problem page$/, async function () {
+  const problemPage = new ProblemPage(this.page);
+
+  expect(problemPage.isCurrentPage()).to.be.true;
+});
+
+When(/they choose manual entry/, async function () {
+  const problemPage = new ProblemPage(this.page);
+
+  await problemPage.chooseManualEntry();
+  await problemPage.continue();
 });

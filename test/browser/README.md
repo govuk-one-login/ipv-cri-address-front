@@ -9,7 +9,7 @@ A number of environment variables are needed by the browser tests, as they affec
 | CORE_STUB_CONFIG_DIRECTORY | config/stubs/di-ipv-core-stub/ | Location of the config directory including the Keystore  |
 | CREDENTIAL_ISSUER_LABEL    | Address Development            | Label to click on inside the Core stub instance          |
 | CORE_STUB_URL              | http://localhost:8085          | URL of the core stub, where the tests start              |
-| MOCK_API_URL               | http://localhost:8090          | URL of the mock API, used to reset scenarios as required |
+| MOCK_API_URL               | http://localhost:8010          | URL of the mock API, used to reset scenarios as required |
 | MOCK_API                   | true                           | Use the mock API                                         |
 
 ## Running against mocks
@@ -19,7 +19,7 @@ Required environment variables:
 - `CORE_STUB_CONFIG_DIRECTORY` - config/stubs/di-ipv-core-stub/
 - `CREDENTIAL_ISSUER_LABEL`- Address Local
 - `CORE_STUB_URL` - http://localhost:8085
-- `MOCK_API_URL` - http://localhost:8090
+- `MOCK_API_URL` - http://localhost:8010
 - `MOCK_API` - true
 
 1. `docker-compose up`
