@@ -1,3 +1,7 @@
+const {
+  addressSelectorValidator,
+} = require("../validators/addressSelectorValidation");
+
 const BaseController = require("hmpo-form-wizard").Controller;
 
 class AddressResultsController extends BaseController {
@@ -8,16 +12,33 @@ class AddressResultsController extends BaseController {
     });
   }
 
+  validateFields(req, res, callback) {
+    const formFields = req.form.options.fields;
+    const addresses = req.sessionModel.get("addresses");
+
+    if (addresses) {
+      const currentAddress = addresses[0];
+
+      const selectedAddress = req.form.values.addressResults;
+      const searchResults = req.sessionModel.get("searchResults");
+      const chosenAddress = this.getAddress(selectedAddress, searchResults);
+
+      formFields.addressResults?.validate.push({
+        fn: addressSelectorValidator,
+        arguments: [chosenAddress, currentAddress],
+      });
+    }
+
+    super.validateFields(req, res, callback);
+  }
+
   saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
       try {
         const selectedAddress = req.form.values.addressResults;
-        const allAddresses = req.sessionModel.get("searchResults");
+        const searchResults = req.sessionModel.get("searchResults");
 
-        const chosenAddress = Object.assign(
-          {},
-          allAddresses.find((address) => address.text === selectedAddress)
-        ); // force deep copy
+        const chosenAddress = this.getAddress(selectedAddress, searchResults);
 
         delete chosenAddress.value;
         delete chosenAddress.text;
@@ -28,6 +49,15 @@ class AddressResultsController extends BaseController {
         callback(err);
       }
     });
+  }
+
+  getAddress(selectedAddress, searchResults) {
+    const chosenAddress = Object.assign(
+      {},
+      searchResults.find((address) => address.text === selectedAddress)
+    );
+
+    return chosenAddress;
   }
 }
 

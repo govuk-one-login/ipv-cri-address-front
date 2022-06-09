@@ -42,6 +42,7 @@ addressResults:
   label: Select an address
   validation:
     required: Choose an address from the list
+    addressSelectorValidator: Your previous address cannot be the same as your current address
 
 address-confirm:
   current: Current address
