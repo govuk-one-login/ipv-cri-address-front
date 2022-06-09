@@ -4983,10 +4983,10 @@ winston@^2.4.5:
     isstream "0.1.x"
     stack-trace "0.0.x"
 
-wiremock@2.32.0:
-  version "2.32.0"
-  resolved "https://registry.yarnpkg.com/wiremock/-/wiremock-2.32.0.tgz#ff5bb3571154bd4fa98cfc2ec2b08d255a983056"
-  integrity sha512-wLJKiBIxruJNfFQwlzHRwE74fSqWNvVA+YLZFRok6KXJI3eaoOwDpIA/z9zbNGkJz5nI6tYdlB6MkLIHMAlVmg==
+wiremock@2.33.2:
+  version "2.33.2"
+  resolved "https://registry.yarnpkg.com/wiremock/-/wiremock-2.33.2.tgz#1b06f6f0649c668b65fac584b76e3c5aff606bc7"
+  integrity sha512-6nwyIC2VIQXtALr3oc9HA1P2OPcO8VeSY2nIPUzQ1n3Z8xOEgI3v9HE9Jmq77Ufemf5U1MY07BPmJDHu1J3NlQ==
   dependencies:
     npm-java-runner "^0.0.17"
 
