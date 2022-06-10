@@ -13,7 +13,7 @@ govuk:
 links:
   changeAddress: <a href="/address/edit" id="change-address" data-id="changeAddress">Change</a>
   changePostcode:
-    - <p>Postcode <br> <b>{{values.addressPostcode}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search" data-id="changePostcode">Change</a></p>
+    - <p>Postcode <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search" data-id="changePostcode">Change</a></p>
   cantFindAddress:
     - <p><a href="/address" data-id="cantFindAddress">I cannot find my address in the list</a></p>
   previous:

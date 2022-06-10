@@ -45,9 +45,43 @@ module.exports = class PlaywrightDevPage {
   }
 
   async addYearFrom(value) {
-    if (value === "") {
+    if (value === "current") {
       value = new Date().getFullYear();
+    } else if (value === "future") {
+      value = new Date().getFullYear() + 1;
     }
     await this.page.fill("#addressYearFrom", `${value}`);
+  }
+
+  getHouseNumber() {
+    return this.page.inputValue("#addressHouseNumber");
+  }
+
+  getFlatNumber() {
+    return this.page.inputValue("#addressFlatNumber");
+  }
+
+  getStreet() {
+    return this.page.inputValue("#addressStreetName");
+  }
+
+  getHouseName() {
+    return this.page.inputValue("#addressHouseName");
+  }
+
+  getTownOrCity() {
+    return this.page.inputValue("#addressLocality");
+  }
+
+  getYearFrom() {
+    return this.page.inputValue("#addressYearFrom");
+  }
+
+  getErrorSummary() {
+    return this.page.textContent(".govuk-error-summary");
+  }
+
+  getPostcode() {
+    return this.page.textContent('[data-id="changePostcodeValue"]');
   }
 };

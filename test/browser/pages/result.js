@@ -20,6 +20,10 @@ module.exports = class PlaywrightDevPage {
     });
   }
 
+  getPostcode() {
+    return this.page.textContent('[data-id="changePostcodeValue"]');
+  }
+
   async selectCantFindMyAddress() {
     await this.page.click('[data-id="cantFindAddress"]');
   }
