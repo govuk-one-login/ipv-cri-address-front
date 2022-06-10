@@ -6,6 +6,8 @@ const {
   AddressPage,
   RelyingPartyPage,
   ProblemPage,
+  PreviousPage,
+  IPVCorePage,
 } = require("../pages");
 const { expect } = require("chai");
 
@@ -63,6 +65,12 @@ Given(
 /**
  * THEN
  */
+
+Then(/they should see the search page$/, async function () {
+  const searchPage = new SearchPage(this.page);
+  expect(searchPage.isCurrentPage()).to.be.true;
+});
+
 Then(/they should see the results page$/, async function () {
   const resultsPage = new ResultsPage(this.page);
   expect(resultsPage.isCurrentPage()).to.be.true;
@@ -89,6 +97,62 @@ Then(/they should be able confirm both their addresses$/, async function () {
   const confirmPage = new ConfirmPage(this.page);
   expect(confirmPage.isCurrentPage()).to.be.true;
   await confirmPage.confirmDetails();
+});
+
+Then("they should continue to the confirm page", async function () {
+  const addressPage = new AddressPage(this.page);
+  await addressPage.continue();
+});
+
+Then("they should see the confirmation page", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  expect(confirmPage.isCurrentPage()).to.be.true;
+});
+
+Then("they should be able to confirm their details", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  await confirmPage.confirmDetails();
+});
+
+Then("they should see the additional details selector", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  const isVisible = await confirmPage.isRadioSelectorVisible();
+  expect(isVisible).to.equal(true);
+});
+
+Then("they should not see the additional details selector", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  const isVisible = await confirmPage.isRadioSelectorVisible();
+  expect(isVisible).to.equal(false);
+});
+
+Then(
+  "they can select they have lived their for {string}",
+  async function (value) {
+    const confirmPage = new ConfirmPage(this.page);
+    if (value === ">3") {
+      await confirmPage.selectYesRadioButton();
+    } else {
+      await confirmPage.selectNoRadioButton();
+    }
+  }
+);
+
+Then("they should see the previous address page", async function () {
+  const previousPage = new PreviousPage(this.page);
+  expect(previousPage.isCurrentPage()).to.be.true;
+});
+
+Then("they should redirected back to core", async function () {
+  // will probably change
+  const core = new IPVCorePage(this.page);
+  expect(core.isCorePage()).to.be.true;
+});
+
+Then("they should see an error message {string}", async function (value) {
+  const searchPage = new SearchPage(this.page);
+  const error = await searchPage.getErrorSummary();
+  expect(error).to.contain(value);
 });
 
 /**
@@ -125,4 +189,26 @@ When(/they choose manual entry/, async function () {
 
   await problemPage.chooseManualEntry();
   await problemPage.continue();
+});
+
+When(/they choose go back to search/, async function () {
+  const problemPage = new ProblemPage(this.page);
+
+  await problemPage.chooseGoBackToSearch();
+  await problemPage.continue();
+});
+
+When("they can add their residency date {string}", async function (date) {
+  const addressPage = new AddressPage(this.page);
+  await addressPage.addYearFrom(date);
+});
+
+When(/they have selected Cant find address$/, async function () {
+  const resultsPage = new ResultsPage(this.page);
+  await resultsPage.selectCantFindMyAddress();
+});
+
+When(/they select change postcode$/, async function () {
+  const resultsPage = new ResultsPage(this.page);
+  await resultsPage.selectChangePostcode();
 });

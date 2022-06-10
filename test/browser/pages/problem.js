@@ -17,6 +17,10 @@ module.exports = class PlaywrightDevPage {
     await this.page.check("#addressBreak");
   }
 
+  async chooseGoBackToSearch() {
+    await this.page.check("#addressBreak-retry");
+  }
+
   async continue() {
     await this.page.click("button");
   }

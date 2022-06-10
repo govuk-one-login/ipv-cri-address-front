@@ -15,13 +15,21 @@ module.exports = class PlaywrightDevPage {
     await this.page.click('[data-id="next"]');
   }
 
-  async previousAddressButton() {
-    await this.page.locator("id=addPreviousAddresses").click();
+  async isRadioSelectorVisible() {
+    return await this.page.isVisible('[data-id="getPreviousAddressRadios"]');
+  }
+  async selectNoRadioButton() {
+    await this.page
+      .locator("id=isAddressMoreThanThreeMonths-lessThanThreeMonths")
+      .click();
+  }
+
+  async selectYesRadioButton() {
+    await this.page.locator("id=isAddressMoreThanThreeMonths").click();
   }
 
   isCurrentPage() {
     const { pathname } = new URL(this.page.url());
-
     return pathname === this.path;
   }
 };

@@ -26,4 +26,8 @@ module.exports = class PlaywrightDevPage {
 
     return pathname === this.path;
   }
+
+  getErrorSummary() {
+    return this.page.textContent(".govuk-error-summary");
+  }
 };

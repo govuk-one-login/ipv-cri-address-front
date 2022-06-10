@@ -11,18 +11,18 @@ govuk:
   warning: Warning
   skipLink: Skip to main content
 links:
-  changeAddress: <a href="/address/edit" id="change-address">Change</a>
+  changeAddress: <a href="/address/edit" id="change-address" data-id="changeAddress">Change</a>
   changePostcode:
-    - <p>Postcode <br> <b>{{values.addressPostcode}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search">Change</a></p>
+    - <p>Postcode <br> <b>{{values.addressPostcode}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search" data-id="changePostcode">Change</a></p>
   cantFindAddress:
-    - <p><a href="/address">I cannot find my address in the list</a></p>
+    - <p><a href="/address" data-id="cantFindAddress">I cannot find my address in the list</a></p>
   previous:
     changeAddress:
-      - <a href="/previous/address/edit" id="change-address">Change</a>
+      - <a href="/previous/address/edit" id="change-address" data-id="changePreviousAddress">Change</a>
     changePostcode:
-      - <p>Postcode <br> <b>{{values.addressPostcode}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/previous/search">Change</a></p>
+      - <p>Postcode <br> <b>{{values.addressPostcode}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/previous/search" data-id="changePreviousPostcode">Change</a></p>
     cantFindAddress:
-      - <p><a href="/previous/address">I cannot find my address in the list</a></p>
+      - <p><a href="/previous/address" cantFindPreviousAddress>I cannot find my address in the list</a></p>
   helpContact:
     - <p><a href="https://signin.account.gov.uk/contact-us?supportType=PUBLIC" target="_blank">Contact the GOV.UK account team (opens in a new tab)</a></p>
 validation:

@@ -24,15 +24,30 @@ module.exports = class PlaywrightDevPage {
 
     return pathname === this.path;
   }
-  async addHouseNameOrNumber(value = "1A") {
-    await this.page.fill("#addressLine1", value);
+  async addHouseNumber(value = "1A") {
+    await this.page.fill("#addressHouseNumber", value);
+  }
+
+  async addFlatNumber(value = "1A") {
+    await this.page.fill("#addressFlatNumber", value);
+  }
+
+  async addHouseName(value = "myHouse") {
+    await this.page.fill("#addressHouseName", value);
   }
 
   async addStreet(value = "test") {
-    await this.page.fill("#addressLine2", value);
+    await this.page.fill("#addressStreetName", value);
   }
 
   async addTownOrCity(value = "testTown") {
-    await this.page.fill("#addressTown", value);
+    await this.page.fill("#addressLocality", value);
+  }
+
+  async addYearFrom(value) {
+    if (value === "") {
+      value = new Date().getFullYear();
+    }
+    await this.page.fill("#addressYearFrom", `${value}`);
   }
 };
