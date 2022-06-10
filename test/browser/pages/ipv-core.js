@@ -11,6 +11,10 @@ module.exports = class PlaywrightDevPage {
     return this.page.url() === this.url;
   }
 
+  isCorePage() {
+    return new URL(this.page.url()).host === new URL(this.url).host;
+  }
+
   async chooseCredentialIssuer() {
     // Home
     await this.page.goto(this.url);

@@ -1,0 +1,42 @@
+const { When, Then } = require("@cucumber/cucumber");
+const { ResultsPage } = require("../pages");
+const { expect } = require("chai");
+
+Then(/they should see the results page$/, async function () {
+  const resultsPage = new ResultsPage(this.page);
+  expect(resultsPage.isCurrentPage()).to.be.true;
+});
+
+Then(/they should see the previous results page$/, async function () {
+  const resultsPage = new ResultsPage(this.page);
+  expect(resultsPage.isCurrentPage()).to.be.true;
+  expect(await resultsPage.getPageTitle()).to.contain("previous");
+});
+
+Then("they should see the result postcode {string}", async function (value) {
+  const resultPage = new ResultsPage(this.page);
+  const input = await resultPage.getPostcode();
+  expect(input).to.equal(value);
+});
+
+When(/they (?:have )select(?:ed)? an address$/, async function () {
+  const resultPage = new ResultsPage(this.page);
+  await resultPage.selectAddress();
+  await resultPage.continue();
+});
+
+When(/they have selected their previous address$/, async function () {
+  const resultsPage = new ResultsPage(this.page);
+  await resultsPage.selectAddress("3A TEST STREET, TESTTOWN, PR3VC0DE");
+  await resultsPage.continue();
+});
+
+When(/they have selected Cant find address$/, async function () {
+  const resultsPage = new ResultsPage(this.page);
+  await resultsPage.selectCantFindMyAddress();
+});
+
+When(/they select change postcode$/, async function () {
+  const resultsPage = new ResultsPage(this.page);
+  await resultsPage.selectChangePostcode();
+});
