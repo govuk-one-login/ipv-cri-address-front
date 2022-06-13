@@ -23,17 +23,20 @@ module.exports = class PlaywrightDevPage {
     await this.page.click('[data-id="next"]');
   }
 
-  async isRadioSelectorVisible() {
-    return await this.page.isVisible('[data-id="getPreviousAddressRadios"]');
-  }
   async selectNoRadioButton() {
     await this.page
-      .locator("id=isAddressMoreThanThreeMonths-lessThanThreeMonths")
+      .locator("#isAddressMoreThanThreeMonths-lessThanThreeMonths")
       .click();
   }
 
+  async returnRadioLegend() {
+    return this.page.textContent(
+      "#isAddressMoreThanThreeMonths-fieldset > legend"
+    );
+  }
+
   async selectYesRadioButton() {
-    await this.page.locator("id=isAddressMoreThanThreeMonths").click();
+    await this.page.locator("#isAddressMoreThanThreeMonths").click();
   }
 
   isCurrentPage() {
@@ -41,30 +44,25 @@ module.exports = class PlaywrightDevPage {
     return pathname === this.path;
   }
 
-  async returnCurrentAddress() {
-    const currAddressResp = await this.page
-      .locator(
-        "#main-content > div > div > dl > div:nth-child(1) > dd.govuk-summary-list__value"
-      )
-      .allTextContents();
-    return currAddressResp[0];
+  returnCurrentAddress() {
+    return this.page.textContent(
+      "#main-content > div > div > dl > div:nth-child(1) > dd.govuk-summary-list__value"
+    );
   }
 
-  async returnYearFromValue() {
-    const yearResp = await this.page
-      .locator(
-        "#main-content > div > div > dl > div:nth-child(2) > dd.govuk-summary-list__value"
-      )
-      .allTextContents();
-    return yearResp[0];
+  returnYearFromValue() {
+    return this.page.textContent(
+      "#main-content > div > div > dl > div:nth-child(2) > dd.govuk-summary-list__value"
+    );
   }
 
-  async returnPreviousAddressValue() {
-    const yearResp = await this.page
-      .locator(
-        "#main-content > div > div > dl > div:nth-child(3) > dd.govuk-summary-list__value"
-      )
-      .allTextContents();
-    return yearResp[0];
+  returnPreviousAddressValue() {
+    return this.page.textContent(
+      "#main-content > div > div > dl > div:nth-child(3) > dd.govuk-summary-list__value"
+    );
+  }
+
+  getErrorSummary() {
+    return this.page.textContent(".govuk-error-summary");
   }
 };

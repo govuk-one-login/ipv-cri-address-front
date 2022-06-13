@@ -86,6 +86,17 @@ These should be able to be run using cucumber-js as below:
 ./test/brower $ cucumber-js --tags "@live"
 ```
 
+## Running browser tests in isolation
+
+You can run browser tests in isolation by decorating the scenario with a `@only` tag and then running `yarn run test:browser:ci:only`.
+
+eg:
+```
+  @only
+  Scenario: Address error
+  ...
+```
+
 ### Code Owners
 
 This repo has a `CODEOWNERS` file in the root and is configured to require PRs to reviewed by Code Owners.

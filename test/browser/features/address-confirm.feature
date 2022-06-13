@@ -12,7 +12,7 @@ Feature: Happy Path - confirming address details
 
     Scenario: Adding an year date that should show the previous address modal
       Given they are on the address page
-      When they add their residency date "current"
+      When they add their residency date "2022"
       And they continue to confirm address
       Then they should see the confirm page
       And they should see the previous address modal
@@ -22,7 +22,15 @@ Feature: Happy Path - confirming address details
       When they add their residency date "2000"
       And they continue to confirm address
       Then they should see the confirm page
-      And they should not see the previous address modal
+
+    Scenario: Adding an year date that should show the previous address modal
+      Given they are on the address page
+      When they add their residency date "2022"
+      And they continue to confirm address
+      Then they should see the confirm page
+      And they should see the previous address modal
+      When they confirm their details
+      Then they should see an error message "more than 3 months"
 
     Scenario: Changing an address
       Given they are on the address page
