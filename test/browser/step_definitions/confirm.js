@@ -1,4 +1,4 @@
-const { Then } = require("@cucumber/cucumber");
+const { Then, When } = require("@cucumber/cucumber");
 const { ConfirmPage } = require("../pages");
 const { expect } = require("chai");
 
@@ -51,4 +51,36 @@ Then(
 Then("they should see the confirm page", function () {
   const confirmPage = new ConfirmPage(this.page);
   expect(confirmPage.isCurrentPage()).to.be.true;
+});
+
+Then("they should see the previous address modal", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  expect(await confirmPage.isRadioSelectorVisible()).to.be.true;
+});
+
+Then("they should not see the previous address modal", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  expect(await confirmPage.isRadioSelectorVisible()).to.be.false;
+});
+
+Then("they should see the address value {string}", async function (value) {
+  const confirmPage = new ConfirmPage(this.page);
+  const text = await confirmPage.returnCurrentAddress();
+  expect(text).to.contain(value);
+});
+
+Then("they should see the year value {string}", async function (value) {
+  const confirmPage = new ConfirmPage(this.page);
+  const text = await confirmPage.returnYearFromValue();
+  expect(text).to.contain(value);
+});
+
+When("they click change current address", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  await confirmPage.changeCurrentAddress();
+});
+
+When("they click change year from", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  await confirmPage.changeYearFrom();
 });

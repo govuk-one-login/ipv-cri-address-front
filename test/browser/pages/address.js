@@ -4,7 +4,7 @@ module.exports = class PlaywrightDevPage {
    */
   constructor(page) {
     this.page = page;
-    this.path = "/address";
+    this.paths = ["/address", "/address/edit"];
   }
 
   async continue() {
@@ -22,7 +22,7 @@ module.exports = class PlaywrightDevPage {
   isCurrentPage() {
     const { pathname } = new URL(this.page.url());
 
-    return pathname === this.path;
+    return this.paths.findIndex((val) => val === pathname) !== -1;
   }
   async addHouseNumber(value = "1A") {
     await this.page.fill("#addressHouseNumber", value);

@@ -7,8 +7,16 @@ module.exports = class PlaywrightDevPage {
     this.path = "/confirm";
   }
 
-  async changeAddress() {
-    await this.page.click("#change-address");
+  async changeCurrentAddress() {
+    await this.page.click('[data-id="currentAddressChange"]');
+  }
+
+  async changeYearFrom() {
+    await this.page.click('[data-id="yearFromChange"]');
+  }
+
+  async changePreviousAddress() {
+    await this.page.click('[data-id="previousAddressChange"]');
   }
 
   async confirmDetails() {
@@ -31,5 +39,32 @@ module.exports = class PlaywrightDevPage {
   isCurrentPage() {
     const { pathname } = new URL(this.page.url());
     return pathname === this.path;
+  }
+
+  async returnCurrentAddress() {
+    const currAddressResp = await this.page
+      .locator(
+        "#main-content > div > div > dl > div:nth-child(1) > dd.govuk-summary-list__value"
+      )
+      .allTextContents();
+    return currAddressResp[0];
+  }
+
+  async returnYearFromValue() {
+    const yearResp = await this.page
+      .locator(
+        "#main-content > div > div > dl > div:nth-child(2) > dd.govuk-summary-list__value"
+      )
+      .allTextContents();
+    return yearResp[0];
+  }
+
+  async returnPreviousAddressValue() {
+    const yearResp = await this.page
+      .locator(
+        "#main-content > div > div > dl > div:nth-child(3) > dd.govuk-summary-list__value"
+      )
+      .allTextContents();
+    return yearResp[0];
   }
 };
