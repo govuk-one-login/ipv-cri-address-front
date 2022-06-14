@@ -4,7 +4,7 @@ module.exports = class PlaywrightDevPage {
    */
   constructor(page) {
     this.page = page;
-    this.path = "/address";
+    this.paths = ["/address", "/address/edit"];
   }
 
   async continue() {
@@ -22,7 +22,7 @@ module.exports = class PlaywrightDevPage {
   isCurrentPage() {
     const { pathname } = new URL(this.page.url());
 
-    return pathname === this.path;
+    return this.paths.findIndex((val) => val === pathname) !== -1;
   }
   async addHouseNumber(value = "1A") {
     await this.page.fill("#addressHouseNumber", value);
@@ -45,9 +45,43 @@ module.exports = class PlaywrightDevPage {
   }
 
   async addYearFrom(value) {
-    if (value === "") {
+    if (value === "current") {
       value = new Date().getFullYear();
+    } else if (value === "future") {
+      value = new Date().getFullYear() + 1;
     }
     await this.page.fill("#addressYearFrom", `${value}`);
+  }
+
+  getHouseNumber() {
+    return this.page.inputValue("#addressHouseNumber");
+  }
+
+  getFlatNumber() {
+    return this.page.inputValue("#addressFlatNumber");
+  }
+
+  getStreet() {
+    return this.page.inputValue("#addressStreetName");
+  }
+
+  getHouseName() {
+    return this.page.inputValue("#addressHouseName");
+  }
+
+  getTownOrCity() {
+    return this.page.inputValue("#addressLocality");
+  }
+
+  getYearFrom() {
+    return this.page.inputValue("#addressYearFrom");
+  }
+
+  getErrorSummary() {
+    return this.page.textContent(".govuk-error-summary");
+  }
+
+  getPostcode() {
+    return this.page.textContent('[data-id="changePostcodeValue"]');
   }
 };

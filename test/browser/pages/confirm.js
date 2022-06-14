@@ -7,29 +7,62 @@ module.exports = class PlaywrightDevPage {
     this.path = "/confirm";
   }
 
-  async changeAddress() {
-    await this.page.click("#change-address");
+  async changeCurrentAddress() {
+    await this.page.click('[data-id="currentAddressChange"]');
+  }
+
+  async changeYearFrom() {
+    await this.page.click('[data-id="yearFromChange"]');
+  }
+
+  async changePreviousAddress() {
+    await this.page.click('[data-id="previousAddressChange"]');
   }
 
   async confirmDetails() {
     await this.page.click('[data-id="next"]');
   }
 
-  async isRadioSelectorVisible() {
-    return await this.page.isVisible('[data-id="getPreviousAddressRadios"]');
-  }
   async selectNoRadioButton() {
     await this.page
-      .locator("id=isAddressMoreThanThreeMonths-lessThanThreeMonths")
+      .locator("#isAddressMoreThanThreeMonths-lessThanThreeMonths")
       .click();
   }
 
+  async returnRadioLegend() {
+    return this.page.textContent(
+      "#isAddressMoreThanThreeMonths-fieldset > legend"
+    );
+  }
+
   async selectYesRadioButton() {
-    await this.page.locator("id=isAddressMoreThanThreeMonths").click();
+    await this.page.locator("#isAddressMoreThanThreeMonths").click();
   }
 
   isCurrentPage() {
     const { pathname } = new URL(this.page.url());
     return pathname === this.path;
+  }
+
+  returnCurrentAddress() {
+    return this.page.textContent(
+      "#main-content > div > div > dl > div:nth-child(1) > dd.govuk-summary-list__value"
+    );
+  }
+
+  returnYearFromValue() {
+    return this.page.textContent(
+      "#main-content > div > div > dl > div:nth-child(2) > dd.govuk-summary-list__value"
+    );
+  }
+
+  returnPreviousAddressValue() {
+    return this.page.textContent(
+      "#main-content > div > div > dl > div:nth-child(3) > dd.govuk-summary-list__value"
+    );
+  }
+
+  getErrorSummary() {
+    return this.page.textContent(".govuk-error-summary");
   }
 };
