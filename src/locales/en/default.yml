@@ -20,9 +20,9 @@ links:
     changeAddress:
       - <a href="/previous/address/edit" id="change-address" data-id="changePreviousAddress">Change</a>
     changePostcode:
-      - <p>Postcode <br> <b>{{values.addressPostcode}}</b> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/previous/search" data-id="changePreviousPostcode">Change</a></p>
+      - <p>Postcode <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/previous/search" data-id="changePostcode">Change</a></p>
     cantFindAddress:
-      - <p><a href="/previous/address" cantFindPreviousAddress>I cannot find my address in the list</a></p>
+      - <p><a href="/previous/address" data-id="cantFindAddress">I cannot find my address in the list</a></p>
   helpContact:
     - <p><a href="https://signin.account.gov.uk/contact-us?supportType=PUBLIC" target="_blank">Contact the GOV.UK account team (opens in a new tab)</a></p>
 validation:

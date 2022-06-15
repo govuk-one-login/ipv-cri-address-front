@@ -14,7 +14,7 @@
     {
       "scenarioName": "Address",
       "requiredScenarioState": "Started",
-      "newScenarioState": "PostcodeLookup",
+      "newScenarioState": "AddressResponses",
       "request": {
         "method": "POST",
         "urlPath": "/session",
@@ -33,7 +33,7 @@
     },
     {
       "scenarioName": "Address",
-      "requiredScenarioState": "PostcodeLookup",
+      "requiredScenarioState": "AddressResponses",
       "newScenarioState": "AddressResponses",
       "request": {
         "method": "GET",

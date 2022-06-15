@@ -23,7 +23,7 @@ Feature: Happy Path - confirming address details
       And they continue to confirm address
       Then they should see the confirm page
 
-    Scenario: Adding an year date that should show the previous address modal
+    Scenario: Not selecting a radio button should show a validation message
       Given they are on the address page
       When they add their residency date "2022"
       And they continue to confirm address
@@ -31,6 +31,16 @@ Feature: Happy Path - confirming address details
       And they should see the previous address modal
       When they confirm their details
       Then they should see an error message "more than 3 months"
+
+    Scenario: Selecting less than 3 months residence should move the user to the previous address journey
+      Given they are on the address page
+      When they add their residency date "2022"
+      And they continue to confirm address
+      Then they should see the confirm page
+      And they should see the previous address modal
+      When they select the less than three months radio button
+      And they confirm their details
+      Then they should see the previous address search page
 
     Scenario: Changing an address
       Given they are on the address page
@@ -55,5 +65,7 @@ Feature: Happy Path - confirming address details
       And they continue to confirm address
       Then they should see the confirm page
       And they should see the year value "2010"
+
+
 
 
