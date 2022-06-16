@@ -81,7 +81,6 @@ class AddressConfirmController extends BaseController {
         callback();
       } else {
         const addresses = req.sessionModel.get("addresses");
-
         const previousAddress =
           req.session["hmpo-wizard-previous"]?.addresses[1];
 
@@ -89,7 +88,8 @@ class AddressConfirmController extends BaseController {
           // temp
           addresses.push(previousAddress);
         }
-       await this.saveAddressess(
+
+        await this.saveAddressess(
           req.axios,
           addresses,
           req.session.tokenId
