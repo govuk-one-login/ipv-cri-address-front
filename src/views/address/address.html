@@ -1,4 +1,4 @@
-{% extends "./templates/address-base.html" %}
+{% extends "../templates/address-base.html" %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 
@@ -15,8 +15,8 @@
 
   {% call hmpoForm(ctx) %}
 
-    {% include "./components/address-input-fields.html" %}
-    {% include "./components/address-year-from-field.html" %}
+    {% include "../components/address-input-fields.html" %}
+    {% include "../components/address-year-from-field.html" %}
 
     {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}
 
