@@ -1,7 +1,7 @@
-const address = require("./controllers/address");
-const search = require("./controllers/addressSearch");
-const results = require("./controllers/addressResults");
-const confirm = require("./controllers/addressConfirm");
+const address = require("../../controllers/address");
+const search = require("../../controllers/addressSearch");
+const results = require("../../controllers/addressResults");
+const confirm = require("../../controllers/addressConfirm");
 
 module.exports = {
   "/": {
@@ -63,52 +63,9 @@ module.exports = {
         field: "addPreviousAddresses",
         op: "===",
         value: true,
-        next: "previous/search",
+        next: "/previous/search",
       },
       "/oauth2/callback",
     ],
-  },
-  "/previous/search": {
-    controller: search,
-    fields: ["addressSearch"],
-    next: [
-      {
-        field: "requestIsSuccessful",
-        op: "===",
-        value: true,
-        next: "previous/results",
-      },
-      "previous/problem",
-    ],
-  },
-  "/previous/problem": {
-    fields: ["addressBreak"],
-    next: [
-      {
-        field: "addressBreak",
-        value: "continue",
-        next: "/previous/address",
-      },
-      "/previous/search",
-    ],
-  },
-  "/previous/results": {
-    controller: results,
-    fields: ["addressResults"],
-    next: "previous/address",
-  },
-  "/previous/address": {
-    controller: address,
-    editable: true,
-    continueOnEdit: true,
-    prereqs: ["/previous/search"],
-    fields: [
-      "addressFlatNumber",
-      "addressHouseNumber",
-      "addressHouseName",
-      "addressStreetName",
-      "addressLocality",
-    ],
-    next: "confirm",
   },
 };

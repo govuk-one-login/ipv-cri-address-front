@@ -3,12 +3,12 @@ const {
   alphaNumeric,
   missingAlphaOrNumeric,
   isUkPostcode,
-} = require("./validators/postcodeValidator");
+} = require("../validators/postcodeValidator");
 
 const {
   alphaNumericWithSpecialChars,
   isPreviousYear,
-} = require("./validators/addressValidator");
+} = require("../validators/addressValidator");
 
 module.exports = {
   addressSearch: {
