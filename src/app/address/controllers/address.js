@@ -63,7 +63,7 @@ class AddressController extends BaseController {
 
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
-      const isPreviousAddress = req.originalUrl.startsWith("/previous/address");
+      const isPreviousAddress = req.originalUrl.includes("previous");
       const sessionsAddresses = req.sessionModel.get("addresses");
       const addresses = Array.isArray(sessionsAddresses)
         ? sessionsAddresses

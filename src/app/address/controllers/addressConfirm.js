@@ -15,9 +15,15 @@ const {
 class AddressConfirmController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
-      const sessionAddresses = req.sessionModel.get("addresses");
+      const currentAddressRaw = req.sessionModel.get("addresses")[0];
+      const previousAddressRaw =
+        req.session["hmpo-wizard-previous"]?.addresses[1];
 
-      const addresses = sessionAddresses.map((address) => {
+      const ad = [currentAddressRaw];
+      if (previousAddressRaw) {
+        ad.push(previousAddressRaw);
+      }
+      const addresses = ad.map((address) => {
         const addressHtml = generateHTMLofAddress(address);
         return { ...address, text: addressHtml };
       });
@@ -42,10 +48,12 @@ class AddressConfirmController extends BaseController {
   validateFields(req, res, callback) {
     // add custom validator for houseName/Number check.
     const formFields = req.form.options.fields;
-    const addresses = req.sessionModel.get("addresses");
-    const hasPreviousAddresses = addresses.length === 2 ? true : false;
+    const addresses = req.sessionModel.get("addresses")[0];
 
-    const currentAddress = addresses[0];
+    const previousAddressRaw =
+      req.session["hmpo-wizard-previous"]?.addresses[1];
+
+    const currentAddress = addresses;
 
     const yearFrom = new Date(currentAddress.validFrom).getFullYear();
     const today = new Date();
@@ -55,7 +63,7 @@ class AddressConfirmController extends BaseController {
     if (isMoreInfoRequired) {
       formFields.isAddressMoreThanThreeMonths?.validate.push({
         fn: confirmationValidation,
-        arguments: [hasPreviousAddresses],
+        arguments: [!!previousAddressRaw],
       });
     }
 
@@ -74,7 +82,18 @@ class AddressConfirmController extends BaseController {
       } else {
         const addresses = req.sessionModel.get("addresses");
 
-        await this.saveAddressess(req.axios, addresses, req.session.tokenId);
+        const previousAddress =
+          req.session["hmpo-wizard-previous"]?.addresses[1];
+
+        if (addresses.length !== 2) {
+          // temp
+          addresses.push(previousAddress);
+        }
+       await this.saveAddressess(
+          req.axios,
+          addresses,
+          req.session.tokenId
+        );
 
         super.saveValues(req, res, () => {
           // if we're into save values we're finished with gathering addresses
