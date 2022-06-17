@@ -1,4 +1,4 @@
-{% extends "./templates/address-base.html" %}
+{% extends "../templates/address-base.html" %}
 {% set hmpoPageKey = "addressSearch" %}
 {% set hmpoPageContent = "addressSearch" %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
@@ -10,7 +10,7 @@
   <h1 id="header">{{translate("pages.addressSearch.title")}} </h1>
   {% call hmpoForm(ctx) %}
 
-    {% include "./components/address-search-field.html" %}
+    {% include "../components/address-search-field.html" %}
 
     {{ hmpoSubmit(ctx, {text: translate("buttons.find-address")}) }}
 

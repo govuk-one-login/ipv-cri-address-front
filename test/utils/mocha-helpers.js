@@ -27,6 +27,9 @@ global.setupDefaultMocks = () => {
       post: sinon.fake(),
       put: sinon.fake(),
     },
+    session: {
+      "hmpo-wizard-previous": {},
+    },
   });
 
   req.journeyModel = new JourneyModel(null, {
