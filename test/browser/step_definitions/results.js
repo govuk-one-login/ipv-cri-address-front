@@ -19,9 +19,13 @@ Then("they should see the result postcode {string}", async function (value) {
   expect(input).to.equal(value);
 });
 
-When(/they (?:have )select(?:ed)? an address$/, async function () {
+When("they have selected an address {string}", async function (value) {
   const resultPage = new ResultsPage(this.page);
-  await resultPage.selectAddress();
+  if (value === "") {
+    await resultPage.selectAddress();
+  } else {
+    await resultPage.selectAddress(value);
+  }
   await resultPage.continue();
 });
 

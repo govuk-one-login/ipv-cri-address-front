@@ -7,7 +7,7 @@ Feature: Happy Path - confirming preselected address details and date invalidati
     And they have started the address journey
     And they searched for their postcode "E1 8QS"
     Then they should see the results page
-    And they have selected an address
+    And they have selected an address ""
     Then they should see the address page
 
     Scenario: Changing address values and successfully passing validation when a previous date is added
