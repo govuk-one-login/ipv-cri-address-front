@@ -83,27 +83,8 @@ describe("Address confirmation controller", () => {
           session_id: sessionId,
         },
       });
-      expect(req.session.authParams.redirect_url).to.be.equal(
-        testData.addressApiResponse.data.redirect_uri
-      );
-      expect(req.session.authParams.authorization_code).to.be.equal(
-        testData.addressApiResponse.data.code
-      );
-      expect(req.session.authParams.state).to.be.equal(
-        testData.addressApiResponse.data.state
-      );
-    });
 
-    it("Should set error state if no code is returned", async () => {
-      const response = testData.addressApiResponse;
-      delete response.data.code;
-      req.axios.put = sinon.fake.resolves(response);
-
-      await addressConfirm.saveValues(req, res, next);
-      expect(req.session.authParams.error.code).to.be.equal("server_error");
-      expect(req.session.authParams.error.error_description).to.be.equal(
-        "Failed to retrieve authorization code"
-      );
+      expect(next).to.have.been.calledWith();
     });
 
     it("Should reset journey wide variables and enter previous journey when more information is required", async () => {

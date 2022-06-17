@@ -1,5 +1,7 @@
-const setScenarioHeaders = require("./common/lib/scenario-headers");
-const setAxiosDefaults = require("./common/lib/axios");
+const commonExpress = require("di-ipv-cri-common-express");
+
+const setScenarioHeaders = commonExpress.lib.scenarioHeaders;
+const setAxiosDefaults = commonExpress.lib.axios;
 
 const { setAPIConfig, setOAuthPaths } = require("./lib/settings");
 
@@ -13,7 +15,7 @@ const loggerConfig = {
   app: false,
 };
 
-const redisConfig = require("./common/lib/redis")(REDIS);
+const redisConfig = commonExpress.lib.redis(REDIS);
 
 const sessionConfig = {
   cookieName: "service_session",
@@ -43,7 +45,8 @@ app.get("nunjucks").addGlobal("getContext", function () {
 setAPIConfig({
   app,
   baseUrl: API.BASE_URL,
-  authorizePath: API.PATHS.AUTHORIZE,
+  sessionPath: API.PATHS.SESSION,
+  authorizationPath: API.PATHS.AUTHORIZATION,
 });
 
 setOAuthPaths({ app, entryPointPath: APP.PATHS.ADDRESS });
@@ -51,7 +54,7 @@ setOAuthPaths({ app, entryPointPath: APP.PATHS.ADDRESS });
 router.use(setScenarioHeaders);
 router.use(setAxiosDefaults);
 
-router.use("/oauth2", require("./common/routes/oauth2"));
+router.use("/oauth2", commonExpress.routes.oauth2);
 
 router.use("/", require("./app/address"));
 
