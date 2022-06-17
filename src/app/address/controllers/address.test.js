@@ -58,45 +58,6 @@ describe("address controller", () => {
         })
       );
     });
-
-    it("should prepopulate with the previous address when in editing previous address route", () => {
-      const generatedAddress = addressFactory(2);
-      req.originalUrl = "/previous/address/edit";
-      req.sessionModel.set("addresses", generatedAddress);
-      address.getValues(req, res, next);
-      expect(next).to.have.been.calledOnce;
-      expect(next).to.have.been.calledWith(
-        null,
-        sinon.match({
-          addressPostcode: generatedAddress[1].postalCode,
-          addressHouseNumber: generatedAddress[1].buildingNumber,
-          addressHouseName: generatedAddress[1].buildingName,
-          addressStreetName: generatedAddress[1].streetName,
-          addressLocality: generatedAddress[1].addressLocality,
-          addressYearFrom: Number(generatedAddress[1].validFrom),
-          addressFlatNumber: generatedAddress[1].buildingNumber,
-        })
-      );
-    });
-
-    it("should prepopulate with the current address when in editing current address route", () => {
-      const generatedAddress = addressFactory(2);
-      req.originalUrl = "/address/edit";
-      req.sessionModel.set("addresses", generatedAddress);
-      address.getValues(req, res, next);
-      expect(next).to.have.been.calledOnce;
-      expect(next).to.have.been.calledWith(
-        null,
-        sinon.match({
-          addressPostcode: generatedAddress[0].postalCode,
-          addressHouseNumber: generatedAddress[0].buildingNumber,
-          addressHouseName: generatedAddress[0].buildingName,
-          addressStreetName: generatedAddress[0].streetName,
-          addressLocality: generatedAddress[0].addressLocality,
-          addressYearFrom: Number(generatedAddress[0].validFrom),
-        })
-      );
-    });
   });
 
   describe("saveValues", () => {
@@ -113,7 +74,7 @@ describe("address controller", () => {
 
       await address.saveValues(req, res, next);
 
-      const savedAddress = req.session.test.addresses[0];
+      const savedAddress = req.sessionModel.get("address");
       expect(next).to.have.been.calledOnce;
       expect(savedAddress.buildingNumber).to.equal(
         addressToSave.addressFlatNumber
@@ -139,7 +100,7 @@ describe("address controller", () => {
 
       await address.saveValues(req, res, next);
 
-      const savedAddress = req.session.test.addresses[0];
+      const savedAddress = req.sessionModel.get("address");
       expect(next).to.have.been.calledOnce;
       expect(savedAddress.buildingNumber).to.equal(
         addressToSave.addressHouseNumber
@@ -150,7 +111,7 @@ describe("address controller", () => {
       );
     });
 
-    it("should append the address to the saved addresses", async () => {
+    it("should overwrite the current address when current address already exists", async () => {
       const addressToSave = {
         addressFlatNumber: "1a",
         addressHouseName: "My building",
@@ -160,122 +121,50 @@ describe("address controller", () => {
       };
 
       const existingAddresses = addressFactory(1);
-      req.sessionModel.set("addresses", existingAddresses);
+      req.sessionModel.set("address", existingAddresses[0]);
 
       req.body = addressToSave;
-      req.originalUrl = "/previous/address";
 
       await address.saveValues(req, res, next);
 
-      const savedAddresses = req.session.test.addresses;
-      const existingAddress = savedAddresses[0];
-      const newAddress = savedAddresses[1];
+      const savedAddresses = req.sessionModel.get("address");
 
       expect(next).to.have.been.calledOnce;
-      expect(existingAddress).to.be.equal(existingAddresses[0]);
-      expect(newAddress.buildingNumber).to.equal(
+      expect(savedAddresses.buildingName).to.equal(
+        addressToSave.addressHouseName
+      );
+      expect(savedAddresses.buildingNumber).to.equal(
         addressToSave.addressFlatNumber
       );
-      expect(newAddress.streetName).to.equal(addressToSave.addressStreetName);
-      expect(newAddress.addressLocality).to.equal(
+      expect(savedAddresses.addressLocality).to.equal(
         addressToSave.addressLocality
       );
+      expect(savedAddresses.addressStreetName).to.equal(
+        addressToSave.streetName
+      );
     });
-  });
 
-  it("should overwrite the current address when current address already exists", async () => {
-    const addressToSave = {
-      addressFlatNumber: "1a",
-      addressHouseName: "My building",
-      addressStreetName: "avenue",
-      addressLocality: "large town",
-      addressYearFrom: "2022",
-    };
+    it("should delete the UPRN when overwriting the saved address", async () => {
+      const addressToSave = {
+        addressFlatNumber: "1a",
+        addressHouseName: "My building",
+        addressStreetName: "avenue",
+        addressLocality: "large town",
+        addressYearFrom: "2022",
+      };
 
-    const existingAddresses = addressFactory(1);
-    req.sessionModel.set("addresses", existingAddresses);
+      const existingAddresses = addressFactory(2);
+      existingAddresses[1].subBuildingName = "SubBuilding 1";
+      existingAddresses[1].uprn = "123abc";
+      req.sessionModel.set("address", existingAddresses[1]);
+      req.body = addressToSave;
 
-    req.body = addressToSave;
+      await address.saveValues(req, res, next);
 
-    await address.saveValues(req, res, next);
+      const savedAddresses = req.sessionModel.get("address");
+      expect(next).to.have.been.calledOnce;
 
-    const savedAddresses = req.session.test.addresses;
-
-    expect(next).to.have.been.calledOnce;
-    expect(savedAddresses[0].buildingName).to.equal(
-      addressToSave.addressHouseName
-    );
-    expect(savedAddresses[0].buildingNumber).to.equal(
-      addressToSave.addressFlatNumber
-    );
-    expect(savedAddresses[0].addressLocality).to.equal(
-      addressToSave.addressLocality
-    );
-    expect(savedAddresses[0].addressStreetName).to.equal(
-      addressToSave.streetName
-    );
-  });
-
-  it("should overwrite the previous address when previous address already exists and in previous journey", async () => {
-    const addressToSave = {
-      addressFlatNumber: "1a",
-      addressHouseName: "My building",
-      addressStreetName: "avenue",
-      addressLocality: "large town",
-      addressYearFrom: "2022",
-    };
-
-    const existingAddresses = addressFactory(2);
-    existingAddresses[1].subBuildingName = "SubBuilding 1";
-    req.sessionModel.set("addresses", existingAddresses);
-    req.originalUrl = "/previous/address/edit";
-    req.body = addressToSave;
-
-    await address.saveValues(req, res, next);
-
-    const savedAddresses = req.session.test.addresses;
-    const modifiedPreviousAddress = savedAddresses[1];
-    expect(next).to.have.been.calledOnce;
-
-    expect(modifiedPreviousAddress.buildingName).to.equal(
-      addressToSave.addressHouseName
-    );
-    expect(modifiedPreviousAddress.buildingNumber).to.equal(
-      addressToSave.addressFlatNumber
-    );
-    expect(modifiedPreviousAddress.addressLocality).to.equal(
-      addressToSave.addressLocality
-    );
-    expect(modifiedPreviousAddress.addressStreetName).to.equal(
-      addressToSave.streetName
-    );
-    expect(modifiedPreviousAddress.subBuildingName).to.equal(
-      existingAddresses[1].subBuildingName
-    );
-  });
-
-  it("should delete the UPRN when overwriting the saved address", async () => {
-    const addressToSave = {
-      addressFlatNumber: "1a",
-      addressHouseName: "My building",
-      addressStreetName: "avenue",
-      addressLocality: "large town",
-      addressYearFrom: "2022",
-    };
-
-    const existingAddresses = addressFactory(2);
-    existingAddresses[1].subBuildingName = "SubBuilding 1";
-    existingAddresses[1].uprn = "123abc";
-    req.sessionModel.set("addresses", existingAddresses);
-    req.originalUrl = "/previous/address/edit";
-    req.body = addressToSave;
-
-    await address.saveValues(req, res, next);
-
-    const savedAddresses = req.session.test.addresses;
-    const modifiedPreviousAddress = savedAddresses[1];
-    expect(next).to.have.been.calledOnce;
-
-    expect(modifiedPreviousAddress.uprn).to.be.undefined;
+      expect(savedAddresses.uprn).to.be.undefined;
+    });
   });
 });

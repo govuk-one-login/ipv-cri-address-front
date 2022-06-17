@@ -36,7 +36,8 @@ describe("Address confirmation controller", () => {
 
   beforeEach(() => {
     addresses = addressFactory(2);
-    req.sessionModel.set("addresses", addresses);
+    req.sessionModel.set("address", addresses[0]);
+    req.session["hmpo-wizard-previous"].address = addresses[1];
     addressConfirm = new AddressConfirmController({ route: "/test" });
   });
 
@@ -61,7 +62,6 @@ describe("Address confirmation controller", () => {
       const currentAddress = formattedAddresses.shift();
       const previousAddress = formattedAddresses.shift();
       const params = {
-        isMoreInfoRequired: false, // not required as we already have a previous address
         currentAddressRowValue: currentAddress,
         validFromRow: String(new Date().getFullYear()),
         previousAddressRowValue: previousAddress,
@@ -90,7 +90,6 @@ describe("Address confirmation controller", () => {
     it("Should reset journey wide variables and enter previous journey when more information is required", async () => {
       req.form.values.isAddressMoreThanThreeMonths = "lessThanThreeMonths";
       await addressConfirm.saveValues(req, res, next);
-      expect(req.session.test.addressSearch).to.equal(null);
       expect(req.session.test.addPreviousAddresses).to.equal(true);
     });
   });
