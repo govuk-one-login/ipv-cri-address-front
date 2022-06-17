@@ -20,3 +20,10 @@ Then(
     expect(error).to.contain(value);
   }
 );
+
+// Previous specific
+
+Then("they should see the previous address search page", function () {
+  const searchPage = new SearchPage(this.page);
+  expect(searchPage.isCurrentPage()).to.be.true;
+});

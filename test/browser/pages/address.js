@@ -4,7 +4,12 @@ module.exports = class PlaywrightDevPage {
    */
   constructor(page) {
     this.page = page;
-    this.paths = ["/address", "/address/edit"];
+    this.paths = [
+      "/address",
+      "/address/edit",
+      "/previous/address",
+      "/previous/address/edit",
+    ];
   }
 
   async continue() {

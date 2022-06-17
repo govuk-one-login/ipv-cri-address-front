@@ -79,3 +79,8 @@ When("they confirm their details", async function () {
   const confirmPage = new ConfirmPage(this.page);
   await confirmPage.confirmDetails();
 });
+
+When("they select the less than three months radio button", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  await confirmPage.selectNoRadioButton();
+});
