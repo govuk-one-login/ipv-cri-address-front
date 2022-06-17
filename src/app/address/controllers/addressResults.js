@@ -13,19 +13,24 @@ class AddressResultsController extends BaseController {
   }
 
   validateFields(req, res, callback) {
-    const formFields = req.form.options.fields;
-    const addresses = req.sessionModel.get("addresses");
+    const currentWizard = req?.sessionModel?.options?.key;
 
-    if (addresses) {
-      const currentAddress = addresses[0];
-
+    let checkAddress;
+    if (currentWizard.endsWith("previous")) {
+      checkAddress = req.session["hmpo-wizard-address"]?.address;
+    } else {
+      checkAddress = req.session["hmpo-wizard-previous"]?.address;
+    }
+    // only need to validate the address when there is another address already.
+    if (checkAddress) {
+      const formFields = req.form.options.fields;
       const selectedAddress = req.form.values.addressResults;
       const searchResults = req.sessionModel.get("searchResults");
       const chosenAddress = this.getAddress(selectedAddress, searchResults);
 
       formFields.addressResults?.validate.push({
         fn: addressSelectorValidator,
-        arguments: [chosenAddress, currentAddress],
+        arguments: [chosenAddress, checkAddress],
       });
     }
 
@@ -43,7 +48,7 @@ class AddressResultsController extends BaseController {
         delete chosenAddress.value;
         delete chosenAddress.text;
 
-        req.sessionModel.set("chosenAddress", chosenAddress);
+        req.sessionModel.set("address", chosenAddress);
         callback();
       } catch (err) {
         callback(err);

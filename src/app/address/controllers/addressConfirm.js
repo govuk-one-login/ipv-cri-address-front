@@ -15,55 +15,44 @@ const {
 class AddressConfirmController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
-      const currentAddressRaw = req.sessionModel.get("addresses")[0];
-      const previousAddressRaw =
-        req.session["hmpo-wizard-previous"]?.addresses[1];
+      const currentAddress = req.sessionModel.get("address");
+      const previousAddress = req.session["hmpo-wizard-previous"]?.address;
 
-      const ad = [currentAddressRaw];
-      if (previousAddressRaw) {
-        ad.push(previousAddressRaw);
-      }
-      const addresses = ad.map((address) => {
-        const addressHtml = generateHTMLofAddress(address);
-        return { ...address, text: addressHtml };
-      });
-
-      const currentAddress = addresses.shift();
-      const previousAddress = addresses.shift();
+      const currentAddressHtml = generateHTMLofAddress(currentAddress);
+      const previousAddressHtml = previousAddress
+        ? generateHTMLofAddress(previousAddress)
+        : null;
 
       const yearFrom = new Date(currentAddress.validFrom).getFullYear();
       const today = new Date();
 
       // if no previous addresses + more info is required, then radio button menu is rendered
-      locals.isMoreInfoRequired =
-        this.isMoreInfoRequired(yearFrom, today) && !previousAddress;
-      locals.currentAddressRowValue = currentAddress.text;
+      if (!previousAddress) {
+        locals.isMoreInfoRequired = this.isMoreInfoRequired(yearFrom, today);
+      }
+      locals.currentAddressRowValue = currentAddressHtml;
       locals.validFromRow = String(yearFrom);
-      locals.previousAddressRowValue = previousAddress?.text;
+      locals.previousAddressRowValue = previousAddressHtml;
 
       callback(null, locals);
     });
   }
 
   validateFields(req, res, callback) {
-    // add custom validator for houseName/Number check.
     const formFields = req.form.options.fields;
-    const addresses = req.sessionModel.get("addresses")[0];
-
-    const previousAddressRaw =
-      req.session["hmpo-wizard-previous"]?.addresses[1];
-
-    const currentAddress = addresses;
+    const currentAddress = req.sessionModel.get("address");
+    const previousAddress = req.session["hmpo-wizard-previous"]?.address;
 
     const yearFrom = new Date(currentAddress.validFrom).getFullYear();
     const today = new Date();
 
     const isMoreInfoRequired = this.isMoreInfoRequired(yearFrom, today);
 
-    if (isMoreInfoRequired) {
+    // if we need more info and a previou address does not exist, add validation
+    if (isMoreInfoRequired && !previousAddress) {
       formFields.isAddressMoreThanThreeMonths?.validate.push({
         fn: confirmationValidation,
-        arguments: [!!previousAddressRaw],
+        arguments: [],
       });
     }
 
@@ -76,24 +65,19 @@ class AddressConfirmController extends BaseController {
         req.form.values.isAddressMoreThanThreeMonths;
       if (isAddressMoreThanThreeMonths === "lessThanThreeMonths") {
         // reset variables specific to current address journey
-        req.sessionModel.set("addressSearch", null);
         req.sessionModel.set("addPreviousAddresses", true);
         callback();
       } else {
-        const addresses = req.sessionModel.get("addresses");
+        const currentAddress = req.sessionModel.get("address");
+        const previousAddress = req.session["hmpo-wizard-previous"]?.address;
 
-        const previousAddress =
-          req.session["hmpo-wizard-previous"]?.addresses[1];
+        const addresses = [currentAddress];
 
-        if (addresses.length !== 2) {
-          // temp
+        if (previousAddress) {
           addresses.push(previousAddress);
         }
-       await this.saveAddressess(
-          req.axios,
-          addresses,
-          req.session.tokenId
-        );
+
+        await this.saveAddressess(req.axios, addresses, req.session.tokenId);
 
         super.saveValues(req, res, () => {
           // if we're into save values we're finished with gathering addresses
