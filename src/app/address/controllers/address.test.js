@@ -42,7 +42,7 @@ describe("address controller", () => {
       const generatedAddress = addressFactory(1);
       req.sessionModel.set("addressPostcode", generatedAddress[0].postalCode);
 
-      req.sessionModel.set("chosenAddress", generatedAddress[0]);
+      req.sessionModel.set("address", generatedAddress[0]);
 
       address.getValues(req, res, next);
       expect(next).to.have.been.calledOnce;

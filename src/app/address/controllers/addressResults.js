@@ -43,7 +43,7 @@ class AddressResultsController extends BaseController {
         delete chosenAddress.value;
         delete chosenAddress.text;
 
-        req.sessionModel.set("chosenAddress", chosenAddress);
+        req.sessionModel.set("address", chosenAddress);
         callback();
       } catch (err) {
         callback(err);

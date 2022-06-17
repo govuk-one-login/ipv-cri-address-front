@@ -7,23 +7,9 @@ const {
 class AddressController extends BaseController {
   getValues(req, res, callback) {
     super.getValues(req, res, (err, values) => {
-      const addresses = req.sessionModel.get("addresses");
-      let address;
-
-      if (req.originalUrl === "/previous/address/edit") {
-        // edit previous address
-        address = addresses[1];
-        values.addressPostcode = address.postalCode;
-      } else if (req.originalUrl === "/address/edit") {
-        // edit current address
-        address = addresses[0];
-        values.addressPostcode = address.postalCode;
-      } else {
-        // edit the chosen address
-        address = req.sessionModel.get("chosenAddress");
-        values.addressPostcode =
-          address?.postalCode || req.sessionModel.get("addressPostcode");
-      }
+      const address = req.sessionModel.get("address");
+      values.addressPostcode =
+        address?.postalCode || req.sessionModel.get("addressPostcode");
 
       if (address) {
         values.addressFlatNumber = address.addressFlatNumber;
@@ -63,39 +49,16 @@ class AddressController extends BaseController {
 
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
-      const isPreviousAddress = req.originalUrl.includes("previous");
-      const sessionsAddresses = req.sessionModel.get("addresses");
-      const addresses = Array.isArray(sessionsAddresses)
-        ? sessionsAddresses
-        : [];
+      const chosenAddress = req.sessionModel.get("address"); // empty object if no address chosen on
 
-      let chosenAddress = {};
-      if (req.originalUrl === "/previous/address/edit") {
-        chosenAddress = addresses[1];
-      } else if (req.originalUrl === "/address/edit") {
-        chosenAddress = addresses[0];
-      } else {
-        chosenAddress = req.sessionModel.get("chosenAddress") || {}; // empty object if no address chosen on address results
-      }
-
-      const address = this.buildAddress(
-        req.body,
-        isPreviousAddress,
-        chosenAddress
-      );
+      const address = this.buildAddress(req.body, chosenAddress);
 
       // only set postcode when we dont use OS response postcode
       if (!address.postalCode) {
         address.postalCode = req.sessionModel.get("addressPostcode");
       }
 
-      if (isPreviousAddress) {
-        addresses[1] = address;
-      } else {
-        addresses[0] = address;
-      }
-
-      req.sessionModel.set("addresses", addresses);
+      req.sessionModel.set("address", address);
       callback();
     });
   }
@@ -109,12 +72,12 @@ class AddressController extends BaseController {
       addressLocality,
       addressYearFrom,
     } = undefined,
-    isPreviousAddress,
     chosenAddress
   ) {
     // only want year from for current address
     let yearFrom = null;
-    if (!isPreviousAddress) {
+
+    if (addressYearFrom) {
       yearFrom = new Date(addressYearFrom).toISOString().split("T")[0];
     }
 
