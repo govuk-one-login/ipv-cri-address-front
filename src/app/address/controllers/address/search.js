@@ -1,6 +1,6 @@
 const {
   generateSearchResultString,
-} = require("../presenters/addressPresenter");
+} = require("../../presenters/addressPresenter");
 
 const BaseController = require("hmpo-form-wizard").Controller;
 
@@ -8,7 +8,7 @@ const {
   API: {
     PATHS: { POSTCODE_LOOKUP },
   },
-} = require("../../../lib/config");
+} = require("../../../../lib/config");
 
 class AddressSearchController extends BaseController {
   async saveValues(req, res, callback) {

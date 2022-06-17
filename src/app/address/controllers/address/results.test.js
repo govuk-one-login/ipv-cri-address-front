@@ -1,7 +1,7 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-const AddressResultController = require("./addressResults");
+const AddressResultController = require("./results");
 
-const testData = require("../../../../test/data/testData");
+const testData = require("../../../../../test/data/testData");
 
 let req;
 let res;

@@ -1,6 +1,6 @@
 const {
   addressSelectorValidator,
-} = require("../validators/addressSelectorValidation");
+} = require("../../validators/addressSelectorValidation");
 
 const BaseController = require("hmpo-form-wizard").Controller;
 

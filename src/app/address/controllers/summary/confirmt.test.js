@@ -1,14 +1,14 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-const AddressConfirmController = require("./addressConfirm");
-const addressFactory = require("../../../../test/utils/addressFactory");
+const AddressConfirmController = require("./confirm");
+const addressFactory = require("../../../../../test/utils/addressFactory");
 const { expect } = require("chai");
 
-const testData = require("../../../../test/data/testData");
+const testData = require("../../../../../test/data/testData");
 const {
   API: {
     PATHS: { SAVE_ADDRESS },
   },
-} = require("../../../lib/config");
+} = require("../../../../lib/config");
 
 let req;
 let res;
