@@ -6,7 +6,6 @@ module.exports = {
   "/search": {
     controller: search,
     fields: ["addressSearch"],
-    resetJourney: true,
     entryPoint: true,
     next: [
       {

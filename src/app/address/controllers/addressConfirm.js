@@ -77,11 +77,7 @@ class AddressConfirmController extends BaseController {
           addresses.push(previousAddress);
         }
 
-        const data = await this.saveAddressess(
-          req.axios,
-          addresses,
-          req.session.tokenId
-        );
+        await this.saveAddressess(req.axios, addresses, req.session.tokenId);
 
         super.saveValues(req, res, () => {
           // if we're into save values we're finished with gathering addresses

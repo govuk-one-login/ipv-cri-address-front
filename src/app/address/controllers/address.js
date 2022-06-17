@@ -49,7 +49,7 @@ class AddressController extends BaseController {
 
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
-      const chosenAddress = req.sessionModel.get("address"); // empty object if no address chosen on
+      const chosenAddress = req.sessionModel.get("address") || {}; // empty object if no address chosen on
 
       const address = this.buildAddress(req.body, chosenAddress);
 
