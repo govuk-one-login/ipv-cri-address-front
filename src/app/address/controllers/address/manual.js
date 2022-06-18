@@ -59,15 +59,8 @@ class AddressController extends BaseController {
         address.postalCode = req.sessionModel.get("addressPostcode");
       }
 
-      const currentWizard = req?.sessionModel?.options?.key;
       req.sessionModel.set("address", address); // set for /edit routes
 
-      // set for /confirm
-      if (currentWizard.endsWith("previous")) {
-        req.sessionModel.set("previousAddress", address);
-      } else {
-        req.sessionModel.set("currentAddress", address);
-      }
       callback();
     });
   }
