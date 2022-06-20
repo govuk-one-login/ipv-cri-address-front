@@ -14,7 +14,7 @@ const {
 
 class AddressConfirmController extends BaseController {
   locals(req, res, callback) {
-    super.locals(req, res, (err, locals) => {
+    super.locals(req, res, (_err, locals) => {
       const currentAddress = req.journeyModel.get("currentAddress");
       const previousAddress = req.journeyModel.get("previousAddress");
 

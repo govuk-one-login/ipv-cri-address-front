@@ -6,7 +6,7 @@ const BaseController = require("hmpo-form-wizard").Controller;
 
 class AddressResultsController extends BaseController {
   locals(req, res, callback) {
-    super.locals(req, res, (err, locals) => {
+    super.locals(req, res, (_err, locals) => {
       locals.addressPostcode = req.sessionModel.get("addressPostcode");
       callback(null, locals);
     });
@@ -57,12 +57,10 @@ class AddressResultsController extends BaseController {
   }
 
   getAddress(selectedAddress, searchResults) {
-    const chosenAddress = Object.assign(
+    return Object.assign(
       {},
       searchResults.find((address) => address.text === selectedAddress)
     );
-
-    return chosenAddress;
   }
 }
 

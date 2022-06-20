@@ -13,9 +13,7 @@ const {
 class AddressSearchController extends BaseController {
   async saveValues(req, res, callback) {
     const addressPostcode = req.body["addressSearch"];
-
     try {
-      const addressPostcode = req.body["addressSearch"];
       const searchResults = await this.search(
         req.axios,
         addressPostcode,

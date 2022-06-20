@@ -6,7 +6,7 @@ const {
 
 class AddressController extends BaseController {
   getValues(req, res, callback) {
-    super.getValues(req, res, (err, values) => {
+    super.getValues(req, res, (_err, values) => {
       const address = req.sessionModel.get("address");
 
       values.addressPostcode =
@@ -52,7 +52,7 @@ class AddressController extends BaseController {
     super.saveValues(req, res, () => {
       const chosenAddress = req.sessionModel.get("address") || {}; // empty object if no address chosen on
 
-      const address = this.buildAddress(req.body, chosenAddress);
+      const address = this.buildAddress(chosenAddress, req.body);
 
       // only set postcode when we dont use OS response postcode
       if (!address.postalCode) {
@@ -66,6 +66,7 @@ class AddressController extends BaseController {
   }
 
   buildAddress(
+    chosenAddress,
     {
       addressFlatNumber,
       addressHouseNumber,
@@ -73,8 +74,7 @@ class AddressController extends BaseController {
       addressStreetName,
       addressLocality,
       addressYearFrom,
-    } = undefined,
-    chosenAddress
+    } = undefined
   ) {
     // only want year from for current address
     let yearFrom = null;
