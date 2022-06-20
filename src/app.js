@@ -1,3 +1,6 @@
+require("express");
+require("express-async-errors");
+
 const commonExpress = require("di-ipv-cri-common-express");
 
 const setScenarioHeaders = commonExpress.lib.scenarioHeaders;
