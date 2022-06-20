@@ -23,6 +23,10 @@ module.exports = class PlaywrightDevPage {
     return this.page.textContent('[data-id="changePostcodeValue"]');
   }
 
+  getErrorSummary() {
+    return this.page.textContent(".govuk-error-summary");
+  }
+
   async selectCantFindMyAddress() {
     await this.page.click('[data-id="cantFindAddress"]');
   }

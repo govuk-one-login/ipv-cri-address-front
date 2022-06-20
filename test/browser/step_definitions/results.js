@@ -23,6 +23,8 @@ When("they have selected an address {string}", async function (value) {
   const resultPage = new ResultsPage(this.page);
   if (value === "") {
     await resultPage.selectAddress();
+  } else if (value === "default") {
+    await resultPage.selectAddress("");
   } else {
     await resultPage.selectAddress(value);
   }
@@ -44,3 +46,12 @@ When(/they select change postcode$/, async function () {
   const resultsPage = new ResultsPage(this.page);
   await resultsPage.selectChangePostcode();
 });
+
+Then(
+  "they should see an error message on the results page {string}",
+  async function (value) {
+    const resultsPage = new ResultsPage(this.page);
+    const text = await resultsPage.getErrorSummary();
+    expect(text).to.include(value);
+  }
+);
