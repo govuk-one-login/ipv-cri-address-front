@@ -13,14 +13,7 @@ class AddressResultsController extends BaseController {
   }
 
   validateFields(req, res, callback) {
-    const currentWizard = req?.sessionModel?.options?.key;
-
-    let checkAddress;
-    if (currentWizard.endsWith("previous")) {
-      checkAddress = req.session["hmpo-wizard-address"]?.address;
-    } else {
-      checkAddress = req.session["hmpo-wizard-previous"]?.address;
-    }
+    const checkAddress = req.journeyModel.get("currentAddress");
     // only need to validate the address when there is another address already.
     if (checkAddress) {
       const formFields = req.form.options.fields;
