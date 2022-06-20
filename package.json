@@ -65,7 +65,7 @@
     "axios": "0.27.2",
     "cfenv": "1.2.4",
     "copyfiles": "2.4.1",
-    "di-ipv-cri-common-express": "alphagov/di-ipv-cri-common-express.git#v0.0.11",
+    "di-ipv-cri-common-express": "alphagov/di-ipv-cri-common-express.git#v0.0.12",
     "dotenv": "16.0.1",
     "express": "4.18.1",
     "express-async-errors": "3.1.1",
