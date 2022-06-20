@@ -1,7 +1,7 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 const { expect } = require("chai");
-const addressFactory = require("../../../../test/utils/addressFactory");
-const AddressController = require("./address");
+const addressFactory = require("../../../../../test/utils/addressFactory");
+const AddressController = require("./manual");
 
 describe("address controller", () => {
   const address = new AddressController({ route: "/test" });

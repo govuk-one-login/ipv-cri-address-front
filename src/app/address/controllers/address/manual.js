@@ -2,12 +2,13 @@ const BaseController = require("hmpo-form-wizard").Controller;
 
 const {
   validateHouseNumberAndName,
-} = require("../validators/addressValidator");
+} = require("../../validators/addressValidator");
 
 class AddressController extends BaseController {
   getValues(req, res, callback) {
     super.getValues(req, res, (err, values) => {
       const address = req.sessionModel.get("address");
+
       values.addressPostcode =
         address?.postalCode || req.sessionModel.get("addressPostcode");
 
@@ -58,7 +59,8 @@ class AddressController extends BaseController {
         address.postalCode = req.sessionModel.get("addressPostcode");
       }
 
-      req.sessionModel.set("address", address);
+      req.sessionModel.set("address", address); // set for /edit routes
+
       callback();
     });
   }

@@ -13,7 +13,7 @@ const {
 module.exports = {
   addressSearch: {
     type: "text",
-    autocomplete: "Postcode",
+    autocomplete: "postal-code",
     formatter: [
       {
         type: "removeSpaces",
@@ -132,11 +132,6 @@ module.exports = {
         fn: isPreviousYear,
       },
     ],
-  },
-  isAddressMoreThanThreeMonths: {
-    type: "radios",
-    items: ["moreThanThreeMonths", "lessThanThreeMonths"],
-    validate: [], // custom validator in addressConfirm.js
   },
   addressBreak: {
     type: "radios",

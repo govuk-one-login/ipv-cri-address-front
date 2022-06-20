@@ -1,14 +1,14 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-const AddressConfirmController = require("./addressConfirm");
-const addressFactory = require("../../../../test/utils/addressFactory");
+const AddressConfirmController = require("./confirm");
+const addressFactory = require("../../../../../test/utils/addressFactory");
 const { expect } = require("chai");
 
-const testData = require("../../../../test/data/testData");
+const testData = require("../../../../../test/data/testData");
 const {
   API: {
     PATHS: { SAVE_ADDRESS },
   },
-} = require("../../../lib/config");
+} = require("../../../../lib/config");
 
 let req;
 let res;
@@ -36,8 +36,8 @@ describe("Address confirmation controller", () => {
 
   beforeEach(() => {
     addresses = addressFactory(2);
-    req.sessionModel.set("address", addresses[0]);
-    req.session["hmpo-wizard-previous"].address = addresses[1];
+    req.journeyModel.set("currentAddress", addresses[0]);
+    req.journeyModel.set("previousAddress", addresses[1]);
     addressConfirm = new AddressConfirmController({ route: "/test" });
   });
 

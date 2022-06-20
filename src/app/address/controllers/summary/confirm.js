@@ -1,22 +1,22 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 
-const { generateHTMLofAddress } = require("../presenters/addressPresenter");
+const { generateHTMLofAddress } = require("../../presenters/addressPresenter");
 
 const {
   confirmationValidation,
-} = require("../validators/confirmationValidator");
+} = require("../../validators/confirmationValidator");
 
 const {
   API: {
     PATHS: { SAVE_ADDRESS },
   },
-} = require("../../../lib/config");
+} = require("../../../../lib/config");
 
 class AddressConfirmController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
-      const currentAddress = req.sessionModel.get("address");
-      const previousAddress = req.session["hmpo-wizard-previous"]?.address;
+      const currentAddress = req.journeyModel.get("currentAddress");
+      const previousAddress = req.journeyModel.get("previousAddress");
 
       const currentAddressHtml = generateHTMLofAddress(currentAddress);
       const previousAddressHtml = previousAddress
@@ -40,8 +40,8 @@ class AddressConfirmController extends BaseController {
 
   validateFields(req, res, callback) {
     const formFields = req.form.options.fields;
-    const currentAddress = req.sessionModel.get("address");
-    const previousAddress = req.session["hmpo-wizard-previous"]?.address;
+    const currentAddress = req.journeyModel.get("currentAddress");
+    const previousAddress = req.journeyModel.get("previousAddress");
 
     const yearFrom = new Date(currentAddress.validFrom).getFullYear();
     const today = new Date();
@@ -68,8 +68,8 @@ class AddressConfirmController extends BaseController {
         req.sessionModel.set("addPreviousAddresses", true);
         callback();
       } else {
-        const currentAddress = req.sessionModel.get("address");
-        const previousAddress = req.session["hmpo-wizard-previous"]?.address;
+        const currentAddress = req.journeyModel.get("currentAddress");
+        const previousAddress = req.journeyModel.get("previousAddress");
 
         const addresses = [currentAddress];
 

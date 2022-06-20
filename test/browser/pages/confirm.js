@@ -4,7 +4,7 @@ module.exports = class PlaywrightDevPage {
    */
   constructor(page) {
     this.page = page;
-    this.path = "/confirm";
+    this.path = "/summary/confirm";
   }
 
   async changeCurrentAddress() {

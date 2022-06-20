@@ -1,13 +1,13 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-const AddressSearchController = require("./addressSearch");
+const AddressSearchController = require("./search");
 
-const testData = require("../../../../test/data/testData");
+const testData = require("../../../../../test/data/testData");
 
 const {
   API: {
     PATHS: { POSTCODE_LOOKUP },
   },
-} = require("../../../lib/config");
+} = require("../../../../lib/config");
 
 let req;
 let res;

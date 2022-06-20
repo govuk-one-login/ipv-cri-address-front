@@ -1,7 +1,6 @@
-const address = require("../../controllers/address");
-const search = require("../../controllers/addressSearch");
-const results = require("../../controllers/addressResults");
-const confirm = require("../../controllers/addressConfirm");
+const address = require("../../controllers/address/manual");
+const search = require("../../controllers/address/search");
+const results = require("../../controllers/address/results");
 
 module.exports = {
   "/": {
@@ -52,20 +51,6 @@ module.exports = {
       "addressLocality",
       "addressYearFrom",
     ],
-    next: "confirm",
-  },
-  "/confirm": {
-    controller: confirm,
-    prereqs: "/address/edit",
-    fields: ["addPrevious", "isAddressMoreThanThreeMonths"],
-    next: [
-      {
-        field: "addPreviousAddresses",
-        op: "===",
-        value: true,
-        next: "/previous/search",
-      },
-      "/oauth2/callback",
-    ],
+    next: "/summary/confirm",
   },
 };

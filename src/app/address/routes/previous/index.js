@@ -1,13 +1,19 @@
 const express = require("express");
 const steps = require("./steps");
-const fields = require("../fields");
+const sharedFields = require("../sharedFields");
+const fields = require("./fields");
 
 const router = express.Router();
 
+const allFields = {
+  ...fields,
+  ...sharedFields,
+};
+
 router.use(
-  require("hmpo-form-wizard")(steps, fields, {
+  require("hmpo-form-wizard")(steps, allFields, {
     name: "previous",
-    journeyName: "previous",
+    journeyName: "addressCRI",
     templatePath: "previous",
   })
 );

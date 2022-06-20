@@ -1,8 +1,13 @@
-const address = require("../../controllers/address");
-const search = require("../../controllers/addressSearch");
-const results = require("../../controllers/addressResults");
+const address = require("../../controllers/address/manual");
+const search = require("../../controllers/address/search");
+const results = require("../../controllers/address/results");
 
 module.exports = {
+  "/": {
+    entryPoint: true,
+    skip: true,
+    next: "search",
+  },
   "/search": {
     controller: search,
     fields: ["addressSearch"],
@@ -45,6 +50,6 @@ module.exports = {
       "addressStreetName",
       "addressLocality",
     ],
-    next: "/confirm",
+    next: "/summary/confirm",
   },
 };
