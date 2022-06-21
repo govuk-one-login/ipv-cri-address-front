@@ -13,7 +13,7 @@ module.exports = class PlaywrightDevPage {
   }
 
   async continue() {
-    await this.page.click(".govuk-button");
+    await this.page.click("#continue");
   }
 
   async goto() {

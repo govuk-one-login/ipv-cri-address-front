@@ -9,6 +9,8 @@ const setScenarioHeaders = commonExpress.lib.scenarioHeaders;
 const setAxiosDefaults = commonExpress.lib.axios;
 
 const { setAPIConfig, setOAuthPaths } = require("./lib/settings");
+const { setGTM } = require("di-ipv-cri-common-express/src/lib/settings");
+const { getGTM } = require("di-ipv-cri-common-express/src/lib/locals");
 
 const { API, APP, PORT, SESSION_SECRET, REDIS } = require("./lib/config");
 
@@ -62,6 +64,14 @@ setAPIConfig({
 });
 
 setOAuthPaths({ app, entryPointPath: APP.PATHS.ADDRESS });
+
+setGTM({
+  app,
+  id: APP.ANALYTICS.ID,
+  analyticsCookieDomain: APP.ANALYTICS.COOKIE_DOMAIN,
+});
+
+router.use(getGTM);
 
 router.use(setScenarioHeaders);
 router.use(setAxiosDefaults);

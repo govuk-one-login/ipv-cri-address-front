@@ -1,6 +1,8 @@
 {% extends "base-form.njk" %}
 {% set hmpoPageKey = "addressSearch" %}
 {% set hmpoPageContent = "addressSearch" %}
+{% set gtmJourney = "address - middle" %}
+
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-text/macro.njk" import hmpoText %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
@@ -20,7 +22,7 @@
       hint:  translate("fields.addressSearch.hint")
     }) }}
 
-    {{ hmpoSubmit(ctx, {text: translate("buttons.find-address")}) }}
+    {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.find-address")}) }}
 
   {% endcall %}
 

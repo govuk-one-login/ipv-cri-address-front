@@ -15,6 +15,10 @@ module.exports = {
     PATHS: {
       ADDRESS: "/",
     },
+    ANALYTICS: {
+      ID: process.env.GTM_ID,
+      COOKIE_DOMAIN: process.env.ANALYTICS_DOMAIN || "localhost",
+    },
   },
   PORT: process.env.PORT || 5010,
   SESSION_SECRET: process.env.SESSION_SECRET,

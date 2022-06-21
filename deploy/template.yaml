@@ -325,6 +325,10 @@ Resources:
               Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
             - Name: REDIS_SESSION_URL
               Value: !GetAtt RedisCache.RedisEndpoint.Address
+            - Name: GTM_ID
+              Value: !If [ IsProduction, "GTM-TT5HDKV", "GTM-TK92W68" ]
+            - Name: ANALYTICS_DOMAIN
+              Value: !If [ IsProduction, "account.gov.uk", !Sub "${Environment}.account.gov.uk" ]
           PortMappings:
             - ContainerPort: 8080
               Protocol: tcp
