@@ -18,3 +18,8 @@ Feature: Happy Path - confirming preselected address details and date invalidati
       Given they have selected an address "default"
       Then they should see the results page
       And they should see an error message on the results page "Choose an address"
+
+    Scenario: Showing validation message when same address is chosen
+      Given they have selected an address ""
+      Then they should see the results page
+      And they should see an error message on the results page "previous address cannot be the same"
