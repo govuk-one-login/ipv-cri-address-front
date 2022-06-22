@@ -10,6 +10,22 @@ govuk:
   error: Error
   warning: Warning
   skipLink: Skip to main content
+  phaseBanner:
+    tag: beta
+    content: This is a new service – your <a href="https://signin.account.gov.uk/contact-us" class="govuk-link" rel="noopener" target="_blank">feedback (opens in new tab)</a> will help us to improve it.
+  footerNavItems:
+    meta:
+      items:
+        - href: https://signin.account.gov.uk/accessibility-statement
+          text: Accessibility statement
+        - href: https://www.gov.uk/help/cookies
+          text: Cookies
+        - href: https://signin.account.gov.uk/terms-and-conditions
+          text: Terms and conditions
+        - href: https://signin.account.gov.uk/privacy-notice
+          text: Privacy notice
+        - href: https://signin.account.gov.uk/contact-us
+          text: Support
 links:
   changeAddress: <a href="/address/edit" id="change-address" data-id="changeAddress">Change</a>
   changePostcode:

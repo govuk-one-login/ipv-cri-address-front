@@ -1,0 +1,19 @@
+phaseBanner:
+  tag: "beta"
+  content: 'This is a new service – your <a  href="/contact-us?supportType=PUBLIC" class="govuk-link" rel="noopener" target="_blank">feedback</a> will help us to improve it.'
+footer:
+  accessibilityStatement:
+    pageTitle: "Accessibility statement"
+    linkText: "Accessibility statement"
+  cookies:
+    pageTitle: "Cookie Policy"
+    linkText: "Cookies"
+  terms:
+    pageTitle: "Terms and conditions"
+    linkText: "Terms and conditions"
+  privacy:
+    pageTitle: "Privacy notice"
+    linkText: "Privacy notice"
+  support:
+    pageTitle: "Support"
+    linkText: "Support"

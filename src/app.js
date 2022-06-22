@@ -1,6 +1,8 @@
 require("express");
 require("express-async-errors");
 
+const path = require("path");
+
 const commonExpress = require("di-ipv-cri-common-express");
 
 const setScenarioHeaders = commonExpress.lib.scenarioHeaders;
@@ -35,6 +37,13 @@ const { app, router } = setup({
     public: "/public",
   },
   publicDirs: ["../dist/public"],
+  views: [
+    path.resolve(
+      path.dirname(require.resolve("di-ipv-cri-common-express")),
+      "components"
+    ),
+    "views",
+  ],
   dev: true,
 });
 
