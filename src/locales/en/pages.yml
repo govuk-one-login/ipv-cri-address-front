@@ -14,13 +14,16 @@ done:
   title: Done
 
 addressSearch:
-  title: What's your current home address?
+  title: Find your address
 
-address-previous:
-  title: What was your previous address?
+address-previous-search:
+  title: Find your previous address
 
 address-results:
-  title: What's your current home address?
+  title: Choose your address
+
+address-previous-results:
+  title: Choose your previous address
 
 address-confirm:
   title: Confirm your details
@@ -32,10 +35,13 @@ address-confirm:
     next: I confirm my details are correct
 
 address-form:
-  title: What's your current home address?
-
-address-form-previous:
-  title: What was your previous address?
+  title: Enter your address
+  check-details:
+    title: Check your address
+  previous:
+    title: Enter your previous address
+    check-details:
+      title: Check your previous address
 
 addressProblem:
   title: There is a problem

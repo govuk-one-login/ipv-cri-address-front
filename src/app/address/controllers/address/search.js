@@ -29,6 +29,7 @@ class AddressSearchController extends BaseController {
       });
     } catch (err) {
       req.sessionModel.set("requestIsSuccessful", false);
+      req.sessionModel.set("checkDetailsHeader", false);
       req.sessionModel.set("addressPostcode", addressPostcode);
       callback();
     }

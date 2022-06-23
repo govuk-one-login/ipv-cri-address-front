@@ -24,7 +24,7 @@ Feature: Happy Path - confirming preselected address details and date invalidati
       Given they are on the address page
       When they add their residency date ""
       And they continue to confirm address
-      Then they should see an error message on the address page "valid date"
+      Then they should see an error message on the address page "Enter the year using only 4 digits"
 
     Scenario: Changing address values and unsuccessfully passing validation when the date is in the future
       Given they are on the address page

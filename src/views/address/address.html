@@ -9,7 +9,11 @@
 
 {% block mainContent %}
 
-  <h1 id="header">{{translate("pages.address-form.title")}}</h1>
+  {% if values.checkDetailsHeader === true %}
+    <h1 id="header">{{translate("pages.address-form.check-details.title")}}</h1>
+  {% else %}
+     <h1 id="header">{{translate("pages.address-form.title")}}</h1>
+  {% endif %}
 
   {{hmpoHtml(translate("links.changePostcode"))}}
 

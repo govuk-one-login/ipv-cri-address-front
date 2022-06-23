@@ -13,7 +13,11 @@
 
   {% call hmpoForm(ctx) %}
 
-    {% include "../components/address-results-field.html" %}
+    {{ hmpoSelect(ctx, {
+      id: "addressResults",
+      label: translate("fields.addressResults.label"),
+      items: values.searchResults
+    }) }}
 
     {{ hmpoHtml(translate("links.cantFindAddress")) }}
 

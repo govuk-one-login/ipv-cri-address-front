@@ -42,7 +42,7 @@ module.exports = {
     controller: address,
     editable: true,
     continueOnEdit: true,
-    prereqs: ["/previous/search"],
+    prereqs: ["/search"],
     fields: [
       "addressFlatNumber",
       "addressHouseNumber",

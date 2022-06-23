@@ -2,8 +2,13 @@ address-form:
   label: What is your address?
 
 addressSearch:
-  label: Postcode
-  hint: For example, SW1A 2AA
+  label: Enter your postcode
+  hint: Enter the postcode of your current home address. This must be a UK postcode, for example SW1A 2AA.
+  previous:
+    label: Enter your previous postcode
+    hint: This must be a UK postcode, for example SW1A 2AA.
+  validation:
+    required: Enter your postcode
 
 addressFlatNumber:
   label: Flat number
@@ -33,13 +38,19 @@ addressLocality:
 addressYearFrom:
   title: When did you start living at this address?
   classes: govuk-input--width-4
-  label: Year
+  label: Enter the year you started living at this address, for example 2017
   validation:
-    default: Enter a valid date
+    default: Enter the year using only 4 digits
     isPreviousDate: The date you started living at this address must be in the past
 
 addressResults:
-  label: Select an address
+  label: Choose your current home address from the list
+  validation:
+    required: Choose an address from the list
+    addressSelectorValidator: Your previous address cannot be the same as your current address
+
+addressResultsPrevious:
+  label: Choose your previous address from the list
   validation:
     required: Choose an address from the list
     addressSelectorValidator: Your previous address cannot be the same as your current address
@@ -48,7 +59,10 @@ address-confirm:
   current: Current address
   year-current: Year you started living at this address
   previous: Previous address
-  change: Change
+  change:
+    change-current-address: change<span class="govuk-visually-hidden"> your current address</span>
+    change-current-yearfrom: change<span class="govuk-visually-hidden"> the year you started living at your current address</span>
+    change-previous-address: change<span class="govuk-visually-hidden"> your previous address</span>
 
 addressBreak:
   legend: "What would you like to do?"
