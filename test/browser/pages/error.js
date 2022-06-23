@@ -7,11 +7,11 @@ module.exports = class PlaywrightDevPage {
   }
 
   getErrorTitle() {
-    return this.page.textContent('[data-page="errors.error"]');
+    return this.page.textContent('[data-id="error-title"]');
   }
 
   getSomethingWentWrongMessage() {
-    return "Something went wrong!";
+    return "Sorry, there is a problem with the service";
   }
 
   isCurrentPage() {

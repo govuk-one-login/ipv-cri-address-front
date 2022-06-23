@@ -3,6 +3,10 @@ index:
   content:
     - Sample page for credential issuer
 
+error:
+  unrecoverable:
+    title: Sorry, there is a problem with the service
+
 address:
   title: Address
 
