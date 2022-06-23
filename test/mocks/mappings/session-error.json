@@ -1,0 +1,40 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "session-error",
+      "newScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "url": "/__reset/session-error"
+      },
+      "response": {
+        "status": 200
+      }
+    },
+    {
+      "scenarioName": "session-error",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "POST",
+        "url": "/session",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "session-error"
+          }
+        },
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "request": "${json-unit.any-string}",
+              "client_id": "${json-unit.any-string}"
+            },
+            "ignoreArrayOrder": true
+          }
+        ]
+      },
+      "response": {
+        "status": 500
+      }
+    }
+  ]
+}

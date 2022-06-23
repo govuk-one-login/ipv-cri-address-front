@@ -75,3 +75,5 @@ router.use("/summary", require("./app/address/routes/summary"));
 router.use("^/$", (req, res) => {
   res.render("index");
 });
+
+router.use(commonExpress.lib.errorHandling.redirectAsErrorToCallback);
