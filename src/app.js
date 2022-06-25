@@ -48,12 +48,15 @@ const sessionConfig = {
   ...(SESSION_TABLE_NAME && { sessionStore: dynamoDBSessionStore }),
 };
 
+const helmetConfig = require("di-ipv-cri-common-express/src/lib/helmet");
+
 const { app, router } = setup({
   config: { APP_ROOT: __dirname },
   port: PORT,
   logs: loggerConfig,
   session: sessionConfig,
   redis: SESSION_TABLE_NAME ? false : commonExpress.lib.redis(),
+  helmet: helmetConfig,
   urls: {
     public: "/public",
   },
