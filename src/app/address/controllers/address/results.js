@@ -41,6 +41,7 @@ class AddressResultsController extends BaseController {
         delete chosenAddress.value;
         delete chosenAddress.text;
 
+        req.sessionModel.set("checkDetailsHeader", true);
         req.sessionModel.set("address", chosenAddress);
         callback();
       } catch (err) {

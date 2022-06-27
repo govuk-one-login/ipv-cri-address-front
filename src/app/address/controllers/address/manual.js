@@ -24,6 +24,10 @@ class AddressController extends BaseController {
           : null;
         values.addressYearFrom = yearFrom;
       }
+
+      if (req.url.includes("edit")) {
+        values.checkDetailsHeader = "false";
+      }
       callback(null, values);
     });
   }

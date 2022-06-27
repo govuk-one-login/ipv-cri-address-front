@@ -1,15 +1,23 @@
 {% extends "base-form.njk" %}
-{% set hmpoPageKey = "address-previous" %}
-{% set hmpoPageContent = "address-previous" %}
+{% set hmpoPageKey = "address-previous-search" %}
+{% set hmpoPageContent = "address-previous-search" %}
 {% from "hmpo-text/macro.njk" import hmpoText %}
 
 {% block mainContent %}
 
-  <h1 id="header">{{translate("pages.address-previous.title")}} </h1>
+  <h1 id="header">{{translate("pages.address-previous-search.title")}} </h1>
 
   {% call hmpoForm(ctx) %}
 
-    {% include "../components/address-search-field.html" %}
+    {{ hmpoText(ctx, {
+      id: "addressSearch",
+      label: {
+        text: translate("fields.addressSearch.previous.label"),
+        classes: "govuk-label govuk-label--m"
+      },
+      classes: "govuk-!-width-one-half",
+      hint:  translate("fields.addressSearch.previous.hint")
+    }) }}
 
     {{ hmpoSubmit(ctx, {text: translate("buttons.find-address")}) }}
 

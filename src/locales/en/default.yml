@@ -1,6 +1,6 @@
 buttons:
   next: Continue
-  select-address: Select address
+  select-address: Choose address
   cancel: Cancel
   find-address: Find address
 govuk:
@@ -38,16 +38,16 @@ error:
     buttonLink: https://www.gov.uk/
 
 links:
-  changeAddress: <a href="/address/edit" id="change-address" data-id="changeAddress">Change</a>
-  changePostcode:
-    - <p>Postcode <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search" data-id="changePostcode">Change</a></p>
+  changeAddress: <a href="/address/edit" id="change-address" data-id="changeAddress">Change<span class="govuk-visually-hidden"> your current address</span></a>
+  changeYearFrom: <a href="/address/edit" id="change-address" data-id="changeAddress">Change<span class="govuk-visually-hidden"> the year you started living at your current address</span></a>
+  changePostcode: <p>Postcode <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search" data-id="changePostcode">Change<span class="govuk-visually-hidden"> your current postcode</span></a></p>
   cantFindAddress:
     - <p><a href="/address" data-id="cantFindAddress">I cannot find my address in the list</a></p>
   previous:
     changeAddress:
-      - <a href="/previous/address/edit" id="change-address" data-id="changePreviousAddress">Change</a>
+      - <a href="/previous/address/edit" id="change-address" data-id="changePreviousAddress">Change<span class="govuk-visually-hidden"> your previous address </span></a>
     changePostcode:
-      - <p>Postcode <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/previous/search" data-id="changePostcode">Change</a></p>
+      - <p>Postcode <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/previous/search" data-id="changePostcode">Change<span class="govuk-visually-hidden"> your previous postcode </span></a></p>
     cantFindAddress:
       - <p><a href="/previous/address" data-id="cantFindAddress">I cannot find my address in the list</a></p>
   helpContact:

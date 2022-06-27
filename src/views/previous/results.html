@@ -2,18 +2,22 @@
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-select/macro.njk" import hmpoSelect %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
-{% set hmpoPageKey = "address-previous" %}
-{% set hmpoPageContent = "address-previous" %}
+{% set hmpoPageKey = "address-previous-results" %}
+{% set hmpoPageContent = "address-previous-results" %}
 
 {% block mainContent %}
 
-  <h1 id="header">{{translate("pages.address-previous.title")}}</h1>
+  <h1 id="header">{{translate("pages.address-previous-results.title")}}</h1>
 
   {{hmpoHtml(translate("links.previous.changePostcode"))}}
 
   {% call hmpoForm(ctx) %}
 
-    {% include "../components/address-results-field.html" %}
+    {{ hmpoSelect(ctx, {
+      id: "addressResults",
+      label: translate("fields.addressResultsPrevious.label"),
+      items: values.searchResults
+    }) }}
 
     {{ hmpoHtml(translate("links.previous.cantFindAddress")) }}
 
