@@ -44,7 +44,7 @@ const dynamoDBSessionStore = new DynamoDBStore({
 const sessionConfig = {
   cookieName: "service_session",
   secret: SESSION_SECRET,
-  sessionStore: dynamoDBSessionStore,
+  ...(SESSION_TABLE_NAME && { sessionStore: dynamoDBSessionStore }),
 };
 
 const { app, router } = setup({
@@ -52,7 +52,7 @@ const { app, router } = setup({
   port: PORT,
   logs: loggerConfig,
   session: sessionConfig,
-  redis: false,
+  redis: SESSION_TABLE_NAME ? false : commonExpress.lib.redis(),
   urls: {
     public: "/public",
   },
