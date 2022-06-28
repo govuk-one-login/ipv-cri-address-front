@@ -2,9 +2,6 @@ require("express");
 require("express-async-errors");
 
 const path = require("path");
-const session = require("express-session");
-const AWS = require("aws-sdk");
-const DynamoDBStore = require("connect-dynamodb")(session);
 
 const commonExpress = require("di-ipv-cri-common-express");
 
@@ -15,13 +12,7 @@ const { setAPIConfig, setOAuthPaths } = require("./lib/settings");
 const { setGTM } = require("di-ipv-cri-common-express/src/lib/settings");
 const { getGTM } = require("di-ipv-cri-common-express/src/lib/locals");
 
-const {
-  API,
-  APP,
-  PORT,
-  SESSION_SECRET,
-  SESSION_TABLE_NAME,
-} = require("./lib/config");
+const { API, APP, PORT, SESSION_SECRET, REDIS } = require("./lib/config");
 
 const { setup } = require("hmpo-app");
 
@@ -31,20 +22,11 @@ const loggerConfig = {
   app: false,
 };
 
-AWS.config.update({
-  region: "eu-west-2",
-});
-const dynamodb = new AWS.DynamoDB();
-
-const dynamoDBSessionStore = new DynamoDBStore({
-  client: dynamodb,
-  table: SESSION_TABLE_NAME,
-});
+const redisConfig = commonExpress.lib.redis(REDIS);
 
 const sessionConfig = {
   cookieName: "service_session",
   secret: SESSION_SECRET,
-  ...(SESSION_TABLE_NAME && { sessionStore: dynamoDBSessionStore }),
 };
 
 const { app, router } = setup({
@@ -52,7 +34,7 @@ const { app, router } = setup({
   port: PORT,
   logs: loggerConfig,
   session: sessionConfig,
-  redis: SESSION_TABLE_NAME ? false : commonExpress.lib.redis(),
+  redis: redisConfig,
   urls: {
     public: "/public",
   },

@@ -22,7 +22,6 @@ module.exports = {
   },
   PORT: process.env.PORT || 5010,
   SESSION_SECRET: process.env.SESSION_SECRET,
-  SESSION_TABLE_NAME: process.env.SESSION_TABLE_NAME,
   REDIS: {
     SESSION_URL: process.env.REDIS_SESSION_URL,
     PORT: process.env.REDIS_PORT || 6379,
