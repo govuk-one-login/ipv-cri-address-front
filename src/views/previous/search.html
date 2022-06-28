@@ -1,6 +1,8 @@
 {% extends "base-form.njk" %}
 {% set hmpoPageKey = "address-previous-search" %}
 {% set hmpoPageContent = "address-previous-search" %}
+{% set gtmJourney = "address - prev - middle" %}
+
 {% from "hmpo-text/macro.njk" import hmpoText %}
 
 {% block mainContent %}
@@ -19,7 +21,7 @@
       hint:  translate("fields.addressSearch.previous.hint")
     }) }}
 
-    {{ hmpoSubmit(ctx, {text: translate("buttons.find-address")}) }}
+    {{ hmpoSubmit(ctx, {id:"continue", text: translate("buttons.find-address")}) }}
 
   {% endcall %}
 

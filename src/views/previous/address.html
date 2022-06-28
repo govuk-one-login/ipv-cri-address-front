@@ -4,6 +4,7 @@
 
 {% set hmpoPageKey = "address-form-previous" %}
 {% set hmpoPageContent = "address-form-previous" %}
+{% set gtmJourney = "address - prev - start" %}
 
 {% block mainContent %}
 
@@ -19,7 +20,7 @@
 
     {% include "../components/address-input-fields.html" %}
 
-    {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}
+    {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
 

@@ -4,6 +4,7 @@
 
 {% set hmpoPageKey = "address-form" %}
 {% set hmpoPageContent = "address-form" %}
+{% set gtmJourney = "address - start" %}
 
 {% set hmpoPageKey = "address-form" %}
 
@@ -22,7 +23,7 @@
     {% include "../components/address-input-fields.html" %}
     {% include "../components/address-year-from-field.html" %}
 
-    {{ hmpoSubmit(ctx, {text: translate("buttons.next")}) }}
+    {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
 

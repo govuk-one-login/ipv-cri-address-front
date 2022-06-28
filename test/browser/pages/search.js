@@ -14,7 +14,7 @@ module.exports = class PlaywrightDevPage {
 
   async searchPostcode(postcode = "TE5T1NG") {
     await this.page.fill(".govuk-input", postcode);
-    await this.page.click("button");
+    await this.page.click("#continue");
   }
 
   async goto() {

@@ -4,6 +4,8 @@
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% set hmpoPageKey = "address-previous-results" %}
 {% set hmpoPageContent = "address-previous-results" %}
+{% set gtmJourney = "address - prev - middle" %}
+
 
 {% block mainContent %}
 
@@ -21,7 +23,7 @@
 
     {{ hmpoHtml(translate("links.previous.cantFindAddress")) }}
 
-    {{ hmpoSubmit(ctx, {text: translate("buttons.select-address")}) }}
+    {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.select-address")}) }}
 
   {% endcall %}
 
