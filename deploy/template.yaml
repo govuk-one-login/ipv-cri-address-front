@@ -399,6 +399,24 @@ Resources:
             Principal:
               Service: ecs-tasks.amazonaws.com
         Version: 2012-10-17
+      Policies:
+        - PolicyName: AddressFrontDynamoDBSessionAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "dynamodb:BatchGetItem"
+                  - "dynamodb:DescribeTable"
+                  - "dynamodb:GetItem"
+                  - "dynamodb:Query"
+                  - "dynamodb:Scan"
+                  - "dynamodb:BatchWriteItem"
+                  - "dynamodb:DeleteItem"
+                  - "dynamodb:UpdateItem"
+                  - "dynamodb:PutItem"
+                Resource:
+                  - !GetAtt AddressFrontSessionsTable.Arn
       PermissionsBoundary: !If
         - UsePermissionsBoundary
         - !Ref PermissionsBoundary
@@ -496,6 +514,27 @@ Resources:
         PredefinedMetricSpecification:
           PredefinedMetricType: ECSServiceAverageCPUUtilization
         TargetValue: 70.0
+
+
+  AddressFrontSessionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      # checkov:skip=CKV_AWS_28: Point in time recovery is not necessary for this table.
+      TableName: !Sub "address-front-sessions-${Environment}"
+      BillingMode: "PAY_PER_REQUEST"
+      AttributeDefinitions:
+        - AttributeName: "id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "id"
+          KeyType: "HASH"
+      TimeToLiveSpecification:
+        AttributeName: "expires"
+        Enabled: true
+      SSESpecification:
+        # checkov:skip=CKV_AWS_119: Implement Customer Managed Keys in PYIC-1391
+        SSEEnabled: true
+        SSEType: KMS
 
 # Outputs
 
