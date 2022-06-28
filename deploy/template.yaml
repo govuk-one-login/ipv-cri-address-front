@@ -323,10 +323,6 @@ Resources:
                     Environment: !Ref Environment
             - Name: EXTERNAL_WEBSITE_HOST
               Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
-            - Name: SESSION_TABLE_NAME
-              Value: !Sub
-                - "cri-address-front-sessions-${Environment}"
-                - Environment: !Ref Environment
             - Name: REDIS_SESSION_URL
               Value: !GetAtt RedisCache.RedisEndpoint.Address
             - Name: GTM_ID
