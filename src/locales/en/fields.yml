@@ -36,7 +36,7 @@ addressLocality:
     maxlength: Check you've entered your town or city correctly
 
 addressYearFrom:
-  title: When did you start living at this address?
+  title: When did you start living here?
   classes: govuk-input--width-4
   label: Enter the year you started living at this address, for example 2017
   validation:
@@ -60,9 +60,9 @@ address-confirm:
   year-current: Year you started living at this address
   previous: Previous address
   change:
-    change-current-address: change<span class="govuk-visually-hidden"> your current address</span>
-    change-current-yearfrom: change<span class="govuk-visually-hidden"> the year you started living at your current address</span>
-    change-previous-address: change<span class="govuk-visually-hidden"> your previous address</span>
+    change-current-address: Change<span class="govuk-visually-hidden"> your current address</span>
+    change-current-yearfrom: Change<span class="govuk-visually-hidden"> the year you started living at your current address</span>
+    change-previous-address: Change<span class="govuk-visually-hidden"> your previous address</span>
 
 addressBreak:
   legend: "What would you like to do?"
