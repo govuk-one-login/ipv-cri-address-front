@@ -1491,9 +1491,10 @@ destroy@1.2.0:
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.2.0.tgz#4803735509ad8be552934c67df614f94e66fa015"
   integrity sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==
 
-di-ipv-cri-common-express@alphagov/di-ipv-cri-common-express.git#v0.0.19:
-  version "0.0.19"
-  resolved "https://codeload.github.com/alphagov/di-ipv-cri-common-express/tar.gz/d627081b9ebe8120d757b4f610953b400900f7ea"
+di-ipv-cri-common-express@alphagov/di-ipv-cri-common-express.git#v0.0.21:
+  version "0.0.21"
+  uid "1adf1f2597997b48f0abdaece9b3931dbc7f1cc4"
+  resolved "https://codeload.github.com/alphagov/di-ipv-cri-common-express/tar.gz/1adf1f2597997b48f0abdaece9b3931dbc7f1cc4"
   dependencies:
     hmpo-logger "6.1.1"
 
