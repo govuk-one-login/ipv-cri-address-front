@@ -308,6 +308,14 @@ Resources:
       LogGroupName: !Sub /aws/ecs/${AWS::StackName}-AddressFront-ECS
       RetentionInDays: 14
 
+  ECSAccessLogsGroupSubscriptionFilter:
+    Type: AWS::Logs::SubscriptionFilter
+    Condition: IsNotDevelopment
+    Properties:
+      DestinationArn: "arn:aws:logs:eu-west-2:885513274347:destination:csls_cw_logs_destination_prod"
+      FilterPattern: ""
+      LogGroupName: !Ref ECSAccessLogsGroup
+
   ECSServiceTaskDefinition:
     Type: 'AWS::ECS::TaskDefinition'
     Properties:
@@ -481,6 +489,14 @@ Resources:
     Type: AWS::Logs::LogGroup
     Properties:
       LogGroupName: !Sub /aws/apigateway/${AWS::StackName}-AddressFront-API-GW-AccessLogs
+
+  APIGWAccessLogsGroupSubscriptionFilter:
+    Type: AWS::Logs::SubscriptionFilter
+    Condition: IsNotDevelopment
+    Properties:
+      DestinationArn: "arn:aws:logs:eu-west-2:885513274347:destination:csls_cw_logs_destination_prod"
+      FilterPattern: ""
+      LogGroupName: !Ref APIGWAccessLogsGroup
 
 # ECS Autoscaling
 # The number of pods will increase when the configured CPU utilization is breached for more than 3 minutes.
