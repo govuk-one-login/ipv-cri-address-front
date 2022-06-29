@@ -8,6 +8,7 @@ const DynamoDBStore = require("connect-dynamodb")(session);
 
 const commonExpress = require("di-ipv-cri-common-express");
 
+const setHeaders = commonExpress.lib.headers;
 const setScenarioHeaders = commonExpress.lib.scenarioHeaders;
 const setAxiosDefaults = commonExpress.lib.axios;
 
@@ -64,6 +65,9 @@ const { app, router } = setup({
     ),
     "views",
   ],
+  middlewareSetupFn: (app) => {
+    app.use(setHeaders);
+  },
   dev: true,
 });
 
