@@ -13,20 +13,23 @@ Then(/^they (?:should be|have been) redirected as a success$/, function () {
   expect(rpPage.hasSuccessQueryParams()).to.be.true;
 });
 
-Then(/^they (?:should be|have been) redirected as an error$/, function () {
-  const rpPage = new RelyingPartyPage(this.page);
+Then(
+  /^they (?:should be|have been) redirected as (?:a|an)( access_denied)* error$/,
+  function (code) {
+    const rpPage = new RelyingPartyPage(this.page);
 
-  expect(rpPage.isRelyingPartyServer()).to.be.true;
+    expect(rpPage.isRelyingPartyServer()).to.be.true;
 
-  expect(rpPage.hasErrorQueryParams()).to.be.true;
-});
+    expect(rpPage.hasErrorQueryParams(code)).to.be.true;
+  }
+);
 
 Then(/^the error should be (.*)$/, function (error_code) {
   const rpPage = new RelyingPartyPage(this.page);
 
   expect(rpPage.isRelyingPartyServer()).to.be.true;
 
-  expect(rpPage.isError(error_code)).to.be.true;
+  expect(rpPage.isErrorCode(error_code)).to.be.true;
 });
 
 When(/^they return to a previous page$/, async function () {
