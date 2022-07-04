@@ -45,4 +45,10 @@ module.exports = class PlaywrightDevPage {
       searchParams.get("error_description") === "gateway"
     );
   }
+
+  isErrorCode(code) {
+    const { searchParams } = new URL(this.page.url());
+
+    return searchParams.get("error") && searchParams.get("error") === code;
+  }
 };
