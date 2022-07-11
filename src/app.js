@@ -22,6 +22,7 @@ const {
   PORT,
   SESSION_SECRET,
   SESSION_TABLE_NAME,
+  SESSION_TTL,
 } = require("./lib/config");
 
 const { setup } = require("hmpo-app");
@@ -55,6 +56,7 @@ const { app, router } = setup({
   port: PORT,
   logs: loggerConfig,
   session: sessionConfig,
+  maxAge: SESSION_TTL,
   redis: SESSION_TABLE_NAME ? false : commonExpress.lib.redis(),
   helmet: helmetConfig,
   urls: {
