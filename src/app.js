@@ -45,6 +45,7 @@ const dynamoDBSessionStore = new DynamoDBStore({
 
 const sessionConfig = {
   cookieName: "service_session",
+  cookieOptions: { maxAge: SESSION_TTL },
   secret: SESSION_SECRET,
   ...(SESSION_TABLE_NAME && { sessionStore: dynamoDBSessionStore }),
 };
@@ -56,7 +57,6 @@ const { app, router } = setup({
   port: PORT,
   logs: loggerConfig,
   session: sessionConfig,
-  maxAge: SESSION_TTL,
   redis: SESSION_TABLE_NAME ? false : commonExpress.lib.redis(),
   helmet: helmetConfig,
   urls: {
