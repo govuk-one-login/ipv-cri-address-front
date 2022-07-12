@@ -1,7 +1,7 @@
 {% from "hmpo-radios/macro.njk" import hmpoRadios %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 
-<h1 id="header">{{translate("pages.addressProblem.title")}}</h1>
+<h1 id="header" class="govuk-heading-l">{{translate("pages.addressProblem.title")}}</h1>
 {% call hmpoForm(ctx) %}
 
   {{hmpoHtml(translate("pages.addressProblem.content"))}}
