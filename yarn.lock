@@ -776,10 +776,10 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==
 
-aws-sdk@*, aws-sdk@^2.1160.0:
-  version "2.1163.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1163.0.tgz#2c24b82987c6a842d9bec8a0d61a13cb36b26bba"
-  integrity sha512-vSCPTNduqxv5cGe3al/0V6dxPr+hpDRR7B9AADtVp+iHS+HdLCeNZbGhT66VfFjXVXXEfbAuF4ME9fYSc5/mOg==
+aws-sdk@*, aws-sdk@^2.1172.0:
+  version "2.1172.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1172.0.tgz#7b1c976c60570b1a11b7b13cd10d8c31cd5eb67f"
+  integrity sha512-B3NXD1ZLfwj8oDavb3GTUkDvCioWbRrf01nNkPvdTpoMBQCGw4elTuvG7ZQ114v5V2XWMxpu+SKMkcxALHEd6Q==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
