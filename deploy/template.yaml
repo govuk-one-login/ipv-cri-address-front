@@ -560,6 +560,9 @@ Resources:
 # Outputs
 
 Outputs:
+  StackName:
+    Description: "CloudFormation stack name"
+    Value: !Sub "${AWS::StackName}"
   AddressFrontUrl:
     Description: >-
       The API Gateway URL which Address Front can be invoked on.
