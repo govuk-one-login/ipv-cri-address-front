@@ -15,8 +15,16 @@ const {
 class AddressConfirmController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
+      if (err) {
+        return callback(err, locals);
+      }
+
       const currentAddress = req.journeyModel.get("currentAddress");
       const previousAddress = req.journeyModel.get("previousAddress");
+
+      if (!currentAddress) {
+        return callback(new Error("No address found"), locals);
+      }
 
       const currentAddressHtml = generateHTMLofAddress(currentAddress);
       const previousAddressHtml = previousAddress
