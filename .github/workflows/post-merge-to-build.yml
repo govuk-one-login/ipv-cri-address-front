@@ -1,4 +1,4 @@
-name: Docker build, ECR push, template copy to S3 
+name: Docker build, ECR push, template copy to S3
 on:
   push:
     branches:
@@ -21,7 +21,7 @@ jobs:
       - name: Set up AWS creds
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.GH_ACTIONS_ROLE_ARN }}
+          role-to-assume: ${{ secrets.BUILD_GH_ACTIONS_ROLE_ARN }}
           aws-region: eu-west-2
 
       - name: Login to Amazon ECR
@@ -31,7 +31,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          ECR_REPOSITORY: ${{ secrets.BUILD_ECR_REPOSITORY }}
         run: |
           cd ${GITHUB_WORKSPACE} || exit 1
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA .
@@ -43,7 +43,7 @@ jobs:
       - name: Update SAM template with ECR image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          ECR_REPOSITORY: ${{ secrets.BUILD_ECR_REPOSITORY }}
         run: |
           cd ${GITHUB_WORKSPACE}/deploy || exit 1
           sed -i "s|CONTAINER-IMAGE-PLACEHOLDER|$ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA|" template.yaml
