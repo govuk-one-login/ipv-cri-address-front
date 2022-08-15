@@ -37,12 +37,17 @@ module.exports = class PlaywrightDevPage {
     );
   }
 
-  hasErrorQueryParams() {
+  hasErrorQueryParams(code) {
     const { searchParams } = new URL(this.page.url());
-
     return (
       searchParams.get("error") === "server_error" &&
-      searchParams.get("error_description") === "gateway"
+      searchParams.get("error_description") === code
     );
+  }
+
+  isErrorCode(code) {
+    const { searchParams } = new URL(this.page.url());
+
+    return searchParams.get("error") && searchParams.get("error") === code;
   }
 };

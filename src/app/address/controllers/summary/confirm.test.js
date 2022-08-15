@@ -71,6 +71,17 @@ describe("Address confirmation controller", () => {
       expect(next).to.have.been.calledOnce;
       expect(next).to.have.been.calledWith(null, params);
     });
+
+    it("Should call callback with an error when no address is found", async () => {
+      req.journeyModel.set("currentAddress", null);
+      addressConfirm.locals(req, res, next);
+
+      const errMessage = "No address found";
+      const callbackError = next.firstArg;
+      expect(next).to.have.been.calledOnce;
+      expect(callbackError).to.be.instanceOf(Error);
+      expect(callbackError.message).to.equal(errMessage);
+    });
   });
 
   describe("saveValues", () => {
