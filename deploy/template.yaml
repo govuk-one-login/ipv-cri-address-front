@@ -103,21 +103,6 @@ Resources:
       GroupId: !GetAtt ECSSecurityGroup.GroupId
       SourceSecurityGroupId: !GetAtt LoadBalancerSG.GroupId
 
-  RedisSG:
-    Type: 'AWS::EC2::SecurityGroup'
-    Properties:
-      GroupDescription: >-
-        Address Front Redis Security Group
-      SecurityGroupIngress:
-        - Description: Allow inbound on port 6379
-          SourceSecurityGroupId: !GetAtt ECSSecurityGroup.GroupId
-          FromPort: 6379
-          IpProtocol: tcp
-          ToPort: 6379
-      VpcId:
-        Fn::ImportValue:
-          !Sub "${VpcStackName}-VpcId"
-
   AccessLogsBucket:
     Condition: IsNotDevelopment
     Type: AWS::S3::Bucket
@@ -203,46 +188,6 @@ Resources:
       LoadBalancerArn: !Ref LoadBalancer
       Port: 80
       Protocol: HTTP
-
-  SubnetGroup:
-    Type: AWS::ElastiCache::SubnetGroup
-    Properties:
-      Description: SubnetGroup for redis cluster
-      SubnetIds:
-        - Fn::ImportValue:
-            !Sub "${VpcStackName}-PrivateSubnetIdA"
-        - Fn::ImportValue:
-            !Sub "${VpcStackName}-PrivateSubnetIdB"
-      Tags:
-        - Key: Name
-          Value: !Sub "${AWS::StackName}-SubnetGroup"
-        - Key: Product
-          Value: "GOV.UK sign in"
-        - Key: System
-          Value: "Address CRI"
-        - Key: Environment
-          Value: !Sub "${Environment}"
-
-  RedisCache:
-    Type: AWS::ElastiCache::CacheCluster
-    Properties:
-      AutoMinorVersionUpgrade: true
-      CacheNodeType: cache.t2.micro
-      CacheSubnetGroupName: !Ref SubnetGroup
-      Engine: redis
-      EngineVersion: 3.2.10
-      NumCacheNodes: 1
-      Tags:
-        - Key: Name
-          Value: !Sub "${AWS::StackName}-RedisCluster"
-        - Key: Product
-          Value: "GOV.UK sign in"
-        - Key: System
-          Value: "Address CRI"
-        - Key: Environment
-          Value: !Sub "${Environment}"
-      VpcSecurityGroupIds:
-        - !Ref RedisSG
 
   # ECS cluster, service and task definition
   AddressFrontEcsCluster:
@@ -336,8 +281,6 @@ Resources:
               Value: !Sub
                 - "cri-address-front-sessions-${Environment}"
                 - Environment: !Ref Environment
-            - Name: REDIS_SESSION_URL
-              Value: !GetAtt RedisCache.RedisEndpoint.Address
             - Name: GTM_ID
               Value: !If [ IsProduction, "GTM-TT5HDKV", "GTM-TK92W68" ]
             - Name: ANALYTICS_DOMAIN
