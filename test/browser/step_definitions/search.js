@@ -27,3 +27,10 @@ Then("they should see the previous address search page", function () {
   const searchPage = new SearchPage(this.page);
   expect(searchPage.isCurrentPage()).to.be.true;
 });
+
+Then("they should see the search page content in Welsh", async function () {
+  const searchPage = new SearchPage(this.page);
+  expect(await searchPage.getPageTitle()).to.include(
+    "Dewch o hyd i'ch cyfeiriad"
+  );
+});
