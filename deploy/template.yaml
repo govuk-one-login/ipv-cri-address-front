@@ -216,7 +216,7 @@ Resources:
         DeploymentCircuitBreaker:
           Enable: TRUE
           Rollback: TRUE
-      DesiredCount: 1
+      DesiredCount: 2
       EnableECSManagedTags: false
       HealthCheckGracePeriodSeconds: 60
       LaunchType: FARGATE
@@ -294,9 +294,9 @@ Resources:
               awslogs-group : !Ref ECSAccessLogsGroup
               awslogs-region : !Sub ${AWS::Region}
               awslogs-stream-prefix : !Sub address-front-${Environment}
-      Cpu: '256'
+      Cpu: '512'
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
-      Memory: '512'
+      Memory: '1024'
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - FARGATE
