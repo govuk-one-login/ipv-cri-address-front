@@ -1,22 +1,22 @@
 // Steps for any background tasks we need to do pre tests
-const { Given } = require("@cucumber/cucumber");
+const { Given, When } = require("@cucumber/cucumber");
 
-Given("they have Welsh language set", async function () {
-  const cookie = {
-    name: "lang",
-    value: "cy",
-    url: this.page.url(),
-  };
-  await this.context.addCookies([cookie]);
+Given("They start with {string}", async function (lang) {
+  await setLanguageCookie(lang, this.page.url(), this.context);
   await this.page.reload();
 });
 
-Given("they have English language set", async function () {
-  const cookie = {
-    name: "lang",
-    value: "en",
-    url: this.page.url(),
-  };
-  await this.context.addCookies([cookie]);
+When("They set the language to {string}", async function (lang) {
+  await setLanguageCookie(lang, this.page.url(), this.context);
   await this.page.reload();
 });
+
+async function setLanguageCookie(lang, url, context) {
+  const code = lang.toLowerCase() === "welsh" ? "cy" : "en";
+  const cookie = {
+    name: "lang",
+    value: code,
+    url,
+  };
+  await context.addCookies([cookie]);
+}

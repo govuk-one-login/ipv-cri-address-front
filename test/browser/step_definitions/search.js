@@ -34,3 +34,8 @@ Then("they should see the search page content in Welsh", async function () {
     "Dewch o hyd i'ch cyfeiriad"
   );
 });
+
+Then("they should see the search page content in English", async function () {
+  const searchPage = new SearchPage(this.page);
+  expect(await searchPage.getPageTitle()).to.include("Find your address");
+});

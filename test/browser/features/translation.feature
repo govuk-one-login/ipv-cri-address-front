@@ -4,8 +4,17 @@ Feature: Happy Path - changing languages
 
   Background:
     Given Authenticalable Address Amy is using the system
-    And they have Welsh language set
 
+  @skip
   Scenario: Loading the CRI with Welsh translations enabled
-    Given they have started the address journey
+    Given They start with "English"
+    And they have started the address journey
+    When They set the language to "Welsh"
     Then they should see the search page content in Welsh
+
+  @skip
+  Scenario: Loading the CRI with English translations enabled
+    Given They start with "Welsh"
+    And they have started the address journey
+    When They set the language to "English"
+    Then they should see the search page content in English
