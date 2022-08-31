@@ -14,7 +14,7 @@ When("They set the language to {string}", async function (lang) {
 async function setLanguageCookie(lang, url, context) {
   const code = lang.toLowerCase() === "welsh" ? "cy" : "en";
   const cookie = {
-    name: "lang",
+    name: "lng",
     value: code,
     url,
   };
