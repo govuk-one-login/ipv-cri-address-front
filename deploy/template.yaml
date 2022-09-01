@@ -449,8 +449,8 @@ Resources:
     Condition: IsProduction
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     Properties:
-      MaxCapacity: 3
-      MinCapacity: 1
+      MaxCapacity: 4
+      MinCapacity: 2
       ResourceId: !Join
         - '/'
         - - "service"
