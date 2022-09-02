@@ -1,3 +1,76 @@
+address-form:
+  label: "Beth yw eich cyfeiriad?"
 addressSearch:
-  label: Rhowch eich cod post
-  hint: Rhowch god post eich cyfeiriad cartref presennol. Rhaid i hwn fod yn god post y DU, er enghraifft SW1A 2AA.
+  label: "Rhowch eich cod post"
+  hint: "Rhowch god post eich cyfeiriad cartref presennol. Rhaid i hwn fod yn côd post yn y DU, er enghraifft SW1A 2AA."
+  previous:
+    label: "Rhowch eich cod post blaenorol"
+    hint: "Rhaid i hwn fod yn côd post yn y DU, er enghraifft SW1A 2AA."
+  validation:
+    required: "Rhowch eich cod post"
+addressFlatNumber:
+  label: "Flat number"
+  validation:
+    maxlength: "Gwiriwch eich bod wedi rhoi rhif eich fflat yn gywir"
+addressHouseNumber:
+  label: "Rhif tŷ"
+  validation:
+    maxlength: "Gwiriwch eich bod wedi rhoi rhif eich tŷ yn yn gywir"
+addressHouseName:
+  label: "Enw tŷ"
+  validation:
+    maxlength: "Gwiriwch eich bod wedi rhoi enw eich tŷ yn yn gywir"
+addressStreetName:
+  label: "Enw stryd"
+  validation:
+    maxlength: "Gwiriwch eich bod wedi rhoi enw eich stryd yn yn gywir"
+addressLocality:
+  label: "Tref neu ddinas"
+  validation:
+    maxlength: "Gwiriwch eich bod wedi rhoi enw eich tref neu ddinas yn yn gywir"
+addressYearFrom:
+  title: "Pryd wnaethoch chi ddechrau byw yno?"
+  classes: "govuk-input--width-4"
+  label: "Rhowch y flwyddyn y dechreuoch chi fyw yn y cyfeiriad hwn, er enghraifft 2017"
+  validation:
+    default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
+    isPreviousDate: "Rhaid i'r dyddiad y dechreuoch chi fyw yn y cyfeiriad hwn fod yn y gorffennol"
+addressResults:
+  label: "Dewiswch eich cyfeiriad cartref presennol o'r rhestr"
+  validation:
+    required: "Dewiswch gyfeiriad o'r rhestr"
+    addressSelectorValidator: "Ni all eich cyfeiriad blaenorol fod yr un fath â'ch cyfeiriad presennol"
+addressResultsPrevious:
+  label: "Dewiswch eich cyfeiriad blaenorol blaenorol o'r rhestr"
+  validation:
+    required: "Dewiswch gyfeiriad o'r rhestr"
+    addressSelectorValidator: "Ni all eich cyfeiriad blaenorol fod yr un fath â'ch cyfeiriad presennol"
+address-confirm:
+  current: "Cyfeiriad presennol"
+  year-current: "Blwyddyn y dechreuoch chi fyw yn y cyfeiriad hwn"
+  previous: "Cyfeiriad blaenorol"
+  change:
+    change-current-address: 'Newid<span class="govuk-visually-hidden"> eich cyfeiriad presennol</span>'
+    change-current-yearfrom: 'Newid<span class="govuk-visually-hidden"> y flwyddyn y dechreuoch chi fyw yn eich cyfeiriad presennol</span>'
+    change-previous-address: 'Newid<span class="govuk-visually-hidden"> eich cyfeiriad blaenorol</span>'
+addressBreak:
+  legend: "Beth hoffech chi ei wneud?"
+  validation:
+    required: "Mae'n rhaid i chi ddewis opsiwn i barhau"
+  items:
+    continue:
+      label: "Parhau gyda {{values.addressPostcode}} a rhowch weddill eich cyfeiriad"
+    retry:
+      label: "Ceisiwch roi eich cod post i mewn eto"
+isAddressMoreThanThreeMonths:
+  label: "Ydych chi wedi wedi byw yma am fwy na 3 mis?"
+  hint: "Byddwn angen gofyn i chi ble roeddech chi'n byw o'r blaen os ydych chi wedi symud i'r cyfeiriad hwn yn ddiweddar."
+  items:
+    moreThanThreeMonths:
+      label: "Ydw"
+      value: "Ydw"
+    lessThanThreeMonths:
+      label: "Na"
+      value: "Na"
+  validation:
+    confirmationValidation: "Dewiswch ydw os ydych chi wedi byw yn y cyfeiriad hwn am fwy na 3 mis"
