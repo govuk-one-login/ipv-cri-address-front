@@ -1,0 +1,10 @@
+error:
+  title: "Mae rhywbeth wedi mynd o'i le!"
+  content:
+    - "{{ error.message }}"
+    - "{{ error | dump }}"
+    - "{% if showStack %}<pre>{{error.stack | safe}}</pre>{% endif %}"
+pageNotFound:
+  title: "Tudalen heb ei darganfod"
+sessionEnded:
+  title: "Sesiwn wedi dod i ben"
