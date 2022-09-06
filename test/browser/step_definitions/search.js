@@ -31,7 +31,7 @@ Then("they should see the previous address search page", function () {
 Then("they should see the search page content in Welsh", async function () {
   const searchPage = new SearchPage(this.page);
   expect(await searchPage.getPageTitle()).to.include(
-    "Dewch o hyd i'ch cyfeiriad"
+    "Darganfyddwch eich cyfeiriad"
   );
 });
 
