@@ -1,6 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn run lint
+yarn run lint-staged
 
-yarn run check-translation
+git diff --staged --name-only -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline
