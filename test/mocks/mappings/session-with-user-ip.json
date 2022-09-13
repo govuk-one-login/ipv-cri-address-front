@@ -1,0 +1,39 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "address-with-user-ip",
+      "newScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "url": "/__reset/address-with-user-ip"
+      },
+      "response": {
+        "status": 200
+      }
+    },
+    {
+      "scenarioName": "address-with-user-ip",
+      "requiredScenarioState": "Started",
+      "request": {
+        "method": "POST",
+        "urlPath": "/session",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-with-user-ip"
+          },
+          "X-Forwarded-For": {
+            "equalTo": "127.0.0.1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "session_id": "ABADCAFE",
+          "state": "sT@t3",
+          "redirect_uri": "http://example.net/return"
+        }
+      }
+    }
+  ]
+}
