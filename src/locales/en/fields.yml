@@ -9,6 +9,9 @@ addressSearch:
     hint: This must be a UK postcode, for example SW1A 2AA.
   validation:
     required: Enter your postcode
+    postcodeLength: Your postcode should be between 5 and 7 characters
+    alphaNumeric: Your postcode should only include numbers and letters
+    missingNumericOrAlpha: Your postcode should include numbers and letters
 
 addressFlatNumber:
   label: Flat number
