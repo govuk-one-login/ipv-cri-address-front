@@ -1,7 +1,3 @@
-const {
-  generateSearchResultString,
-} = require("../../presenters/addressPresenter");
-
 const BaseController = require("hmpo-form-wizard").Controller;
 
 const {
@@ -41,17 +37,9 @@ class AddressSearchController extends BaseController {
     const addressResults = await axios.get(`${POSTCODE_LOOKUP}/${postcode}`, {
       headers,
     });
-    const addresses = addressResults.data.map((address) => {
-      const textView = generateSearchResultString(address);
-      return { ...address, text: textView, value: textView };
-    });
+    const addresses = addressResults.data;
 
-    const defaultMessage = {
-      text: `${addresses.length} addresses found`,
-      value: "",
-    };
-
-    return [defaultMessage, ...addresses];
+    return addresses;
   }
 }
 
