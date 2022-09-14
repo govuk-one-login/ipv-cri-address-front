@@ -79,6 +79,10 @@ class AddressConfirmController extends BaseController {
         const currentAddress = req.journeyModel.get("currentAddress");
         const previousAddress = req.journeyModel.get("previousAddress");
 
+        if (!currentAddress && !previousAddress) {
+          return callback(new Error("No address found"));
+        }
+
         const addresses = [currentAddress];
 
         if (previousAddress) {
