@@ -103,6 +103,20 @@ describe("Address confirmation controller", () => {
       await addressConfirm.saveValues(req, res, next);
       expect(req.session.test.addPreviousAddresses).to.equal(true);
     });
+
+    it("should return an error when no addresses are found", async () => {
+      req.journeyModel.set("currentAddress", null);
+      req.journeyModel.set("previousAddress", null);
+
+      await addressConfirm.saveValues(req, res, next);
+
+      const errMessage = "No address found";
+      const callbackError = next.firstArg;
+      expect(next).to.have.been.calledOnce;
+      expect(callbackError).to.be.instanceOf(Error);
+      expect(callbackError.message).to.equal(errMessage);
+      expect(next).to.have.been.calledWith();
+    });
   });
 
   describe("isMoreInfoRequired", () => {
