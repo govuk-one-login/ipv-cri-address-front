@@ -69,7 +69,7 @@
     "aws-sdk": "^2.1217.0",
     "axios": "0.27.2",
     "cfenv": "1.2.4",
-    "connect-dynamodb": "^2.0.4",
+    "connect-dynamodb": "^2.0.5",
     "copyfiles": "2.4.1",
     "di-ipv-cri-common-express": "alphagov/di-ipv-cri-common-express.git#v0.0.28",
     "dotenv": "16.0.2",
