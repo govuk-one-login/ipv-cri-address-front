@@ -84,3 +84,6 @@ validation:
   isUkPostcode: "Enter a UK postcode"
   alphaNumericWithSpecialChars: Your {{ label }} should not include any special characters or symbols
   default: You must answer this question
+addressSelect:
+  "addressFoundWithCount_one": "{{ count }} address found"
+  "addressFoundWithCount_other": "{{ count }} addresses found"
