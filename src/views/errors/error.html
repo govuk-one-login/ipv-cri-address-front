@@ -1,3 +1,18 @@
 <!-- Found in common folder -->
 {% extends "unrecoverable-error.njk" %}
 {% set gtmJourney = "address - unrecoverable" %}
+
+{% block mainContent %}
+{{ super() }}
+
+<h1>HError!</h1>
+
+<ul>
+    <li>{{ t('something.addressFoundWithCount', {count: 1}) }}</li>
+    <li>{{ t('something.addressFoundWithCount_one') }}</li>
+    <li>{{ t('something.addressFoundWithCount_one', {count: 1}) }}</li>
+    <li>{{ translate('something.addressFoundWithCount', {count: 1}) }}</li>
+    <li>{{ t('something.addressFoundWithCount', {count: 1}) }}</li>
+    <li>{{ translate('default.something.addressFoundWithCount', {count: 1}) }}</li>
+</ul>
+{% endblock %}}
