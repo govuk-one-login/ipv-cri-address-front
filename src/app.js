@@ -81,6 +81,35 @@ const { app, router } = setup({
   dev: true,
 });
 
+var i18next = require("i18next");
+var i18nextMiddleware = require("i18next-http-middleware");
+var Backend = require("i18next-sync-fs-backend");
+
+var i18nextConfigurationOptions = {
+  debug: true,
+  initImmediate: true,
+  supportedLngs: ["en", "cy"],
+  preload: ["en", "cy"],
+  ns: ["default", "fields", "pages"],
+  defaultNS: "default",
+  backend: {
+    // loadPath: join(__dirname, `${fileLoc}/{{lng}}/{{ns}}.yml`),
+    loadPath: "./src/locales/{{lng}}/{{ns}}.yml",
+  },
+  saveMissingTo: "current",
+};
+
+i18next
+  .use(Backend)
+  .use(i18nextMiddleware.LanguageDetector)
+  .init(i18nextConfigurationOptions);
+
+router.use(
+  i18nextMiddleware.handle(i18next, {
+    ignoreRoutes: ["/public"], // or function(req, res, options, i18next) { /* return true to ignore */ }
+  })
+);
+
 app.get("nunjucks").addGlobal("getContext", function () {
   return {
     keys: Object.keys(this.ctx),
