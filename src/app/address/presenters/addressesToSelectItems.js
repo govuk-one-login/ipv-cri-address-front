@@ -1,8 +1,10 @@
 const { generateSearchResultString } = require("./addressPresenter");
 
-module.exports = ({ addresses }) => {
+module.exports = ({ addresses, translate }) => {
   const defaultMessage = {
-    text: `${addresses.length} addresses found`,
+    text: translate("addressSelect.addressFoundWithCount", {
+      count: addresses.length,
+    }),
     value: "",
   };
 

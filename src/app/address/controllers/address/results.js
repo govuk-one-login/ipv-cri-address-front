@@ -16,7 +16,7 @@ class AddressResultsController extends BaseController {
       locals.addressPostcode = req.sessionModel.get("addressPostcode");
       locals.addresses = presenters.addressesToSelectItems({
         addresses: req.sessionModel.get("searchResults"),
-        translate: req.translate,
+        translate: req.i18n.t,
       });
 
       callback(null, locals);
