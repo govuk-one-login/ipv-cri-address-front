@@ -6,11 +6,12 @@ exclude:
   - "**/*.test.js"
   - "src/**/fields.js"
   - "src/**/steps.js"
+  - "**/.eslintrc.js"
 report-dir: coverage
-statements: 05
-branches: 05
-functions: 05
-lines: 05
+statements: 60
+branches: 60
+functions: 60
+lines: 60
 watermarks:
   statements:
     - 60
