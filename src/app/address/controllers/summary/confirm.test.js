@@ -92,6 +92,7 @@ describe("Address confirmation controller", () => {
       expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
         headers: {
           session_id: sessionId,
+          "session-id": sessionId,
         },
       });
 

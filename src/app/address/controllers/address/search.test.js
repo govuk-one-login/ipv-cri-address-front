@@ -53,6 +53,7 @@ describe("Address Search controller", () => {
         {
           headers: {
             session_id: sessionId,
+            "session-id": sessionId,
           },
         }
       );
@@ -91,6 +92,7 @@ describe("Address Search controller", () => {
         {
           headers: {
             session_id: sessionId,
+            "session-id": sessionId,
           },
         }
       );

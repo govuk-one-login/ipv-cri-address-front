@@ -43,6 +43,12 @@
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-authorization-error"
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
           }
         }
       },
@@ -77,6 +83,12 @@
           "x-scenario-id": {
             "equalTo": "address-authorization-error",
             "absent": false
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
           }
         }
       },
@@ -95,6 +107,12 @@
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-authorization-error"
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
           }
         }
       },
@@ -132,6 +150,12 @@
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-authorization-error"
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
           }
         }
       },
@@ -147,11 +171,14 @@
         "method": "GET",
         "urlPath": "/authorization",
         "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-authorization-error"
+          },
           "session-id": {
             "equalTo": "ABADCAFE"
           },
-          "x-scenario-id": {
-            "equalTo": "address-authorization-error"
+          "session_id": {
+            "equalTo": "ABADCAFE"
           }
         }
       },
