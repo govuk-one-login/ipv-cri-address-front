@@ -9,7 +9,7 @@ const {
 class AddressPrepopulateController extends BaseController {
   async saveValues(req, res, callback) {
     try {
-      await req.axios.get(`${GET_ADDRESSES}`, {
+      const addresses = await req.axios.get(`${GET_ADDRESSES}`, {
         headers: {
           session_id: req.session.tokenId,
           "session-id": req.session.tokenId,
@@ -17,9 +17,17 @@ class AddressPrepopulateController extends BaseController {
       });
 
       super.saveValues(req, res, () => {
+        req.sessionModel.set("requestIsSuccessful", true);
+
+        if (addresses?.data?.result?.addresses?.length) {
+          const address = addresses?.data?.result?.addresses[0];
+          req.sessionModel.set("addressSearch", address.postalCode);
+        }
+
         callback();
       });
     } catch (err) {
+      req.sessionModel.set("requestIsSuccessful", false);
       callback();
     }
   }
