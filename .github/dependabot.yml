@@ -21,5 +21,8 @@ updates:
     target-branch: main
     labels:
     - dependabot
+    ignore:
+      - dependency-name: "node"
+        versions: ["17.x","18.x"]
     commit-message:
       prefix: BAU
