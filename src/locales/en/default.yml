@@ -84,3 +84,4 @@ validation:
   isUkPostcode: "Enter a UK postcode"
   alphaNumericWithSpecialChars: Your {{ label }} should not include any special characters or symbols
   default: You must answer this question
+  houseNameOrHouseNumber: Enter a house name or house number
