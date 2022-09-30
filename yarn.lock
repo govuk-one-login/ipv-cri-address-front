@@ -2399,10 +2399,10 @@ hmpo-config@2.2.1:
     js-yaml "^4.1.0"
     json5 "^2.2.1"
 
-hmpo-form-wizard@12.0.4:
-  version "12.0.4"
-  resolved "https://registry.yarnpkg.com/hmpo-form-wizard/-/hmpo-form-wizard-12.0.4.tgz#4e387d62fbdd79e9dd112cecc18bf5d2ca2fe8c2"
-  integrity sha512-9Mhrn5sSEVneStUVTindeADKtb3EdWaoYNqDoaeK0vwTg7dcVxMx2xmpcnTmGTUxNUNFOFIQWprZF4zAgO0V6g==
+hmpo-form-wizard@12.0.6:
+  version "12.0.6"
+  resolved "https://registry.yarnpkg.com/hmpo-form-wizard/-/hmpo-form-wizard-12.0.6.tgz#b0750d5f719abda0bd0b8d856e9268470bff3b4c"
+  integrity sha512-sjtnoS87wRF0M2c0/KMM6Kf+MBK4q11e2jSIwoVYsF9INDWT6sp7YT+54LQb4CgDLxr7I4mIQ1LcXP5qsQWhNg==
   dependencies:
     body-parser "^1.20.0"
     csrf "^3.1.0"
