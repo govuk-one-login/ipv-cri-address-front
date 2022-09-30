@@ -46,6 +46,10 @@ govuk:
           text: "Hysbysiad preifatrwydd"
         - href: "https://signin.account.gov.uk/contact-us"
           text: "Cymorth"
+  copyright:
+    text: "© Hawlfraint y goron"
+  contentLicence:
+    html: 'Mae’r holl gynnwys ar gael o dan <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence-cymraeg/version/3/" rel="licence">Trwydded Llywodraeth Agored v3.0</a>, oni nodir yn wahanol'
 error:
   unrecoverable:
     title: "Mae'n ddrwg gennym, mae problem"
@@ -65,7 +69,7 @@ links:
     changeAddress:
       - '<a href="/previous/address/edit" id="change-address" data-id="changePreviousAddress" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cyfeiriad blaenorol </span></a>'
     changePostcode:
-      - '<p>Postcode <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/previous/search" data-id="changePostcode" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cod post blaenorol </span></a></p>'
+      - '<p>Cod post <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/previous/search" data-id="changePostcode" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cod post blaenorol </span></a></p>'
     cantFindAddress:
       - '<p><a href="/previous/address" data-id="cantFindAddress" class="govuk-link">Ni allaf ddod o hyd i fy nghyfeiriad ar y rhestr</a></p>'
   helpContact:

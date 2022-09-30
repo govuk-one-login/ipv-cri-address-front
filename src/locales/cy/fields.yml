@@ -2,14 +2,14 @@ address-form:
   label: "Beth yw eich cyfeiriad?"
 addressSearch:
   label: "Rhowch eich cod post"
-  hint: "Rhowch god post eich cyfeiriad cartref presennol. Rhaid i hwn fod yn côd post yn y DU, er enghraifft SW1A 2AA."
+  hint: "Rhowch god post eich cyfeiriad cartref presennol. Rhaid i hwn fod yn cod post yn y DU, er enghraifft SW1A 2AA."
   previous:
     label: "Rhowch eich cod post blaenorol"
-    hint: "Rhaid i hwn fod yn côd post yn y DU, er enghraifft SW1A 2AA."
+    hint: "Rhaid i hwn fod yn cod post yn y DU, er enghraifft SW1A 2AA."
   validation:
     required: "Rhowch eich cod post"
 addressFlatNumber:
-  label: "Flat number"
+  label: "Rif fflat"
   validation:
     maxlength: "Gwiriwch eich bod wedi rhoi rhif eich fflat yn gywir"
 addressHouseNumber:
