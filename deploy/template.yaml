@@ -253,7 +253,7 @@ Resources:
       LogGroupName: !Sub /aws/ecs/${AWS::StackName}-AddressFront-ECS
       RetentionInDays: 14
 
-  ECSAccessLogsGroupSubscriptionFilterOld:
+  ECSAccessLogsGroupSubscriptionFilter:
     Type: AWS::Logs::SubscriptionFilter
     Condition: IsNotDevelopment
     Properties:
@@ -261,7 +261,7 @@ Resources:
       FilterPattern: ""
       LogGroupName: !Ref ECSAccessLogsGroup
 
-  ECSAccessLogsGroupSubscriptionFilter:
+  ECSAccessLogsGroupSubscriptionFilterCSLS:
     Type: AWS::Logs::SubscriptionFilter
     Condition: IsNotDevelopment
     Properties:
@@ -441,7 +441,7 @@ Resources:
     Properties:
       LogGroupName: !Sub /aws/apigateway/${AWS::StackName}-AddressFront-API-GW-AccessLogs
 
-  APIGWAccessLogsGroupSubscriptionFilterOld:
+  APIGWAccessLogsGroupSubscriptionFilter:
     Type: AWS::Logs::SubscriptionFilter
     Condition: IsNotDevelopment
     Properties:
@@ -449,7 +449,7 @@ Resources:
       FilterPattern: ""
       LogGroupName: !Ref APIGWAccessLogsGroup
 
-  APIGWAccessLogsGroupSubscriptionFilter:
+  APIGWAccessLogsGroupSubscriptionFilterCSLS:
     Type: AWS::Logs::SubscriptionFilter
     Condition: IsNotDevelopment
     Properties:
