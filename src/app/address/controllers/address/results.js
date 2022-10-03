@@ -13,6 +13,24 @@ class AddressResultsController extends BaseController {
         callback(err, locals);
       }
 
+      // console.log(Object.keys(req.translate));
+      // console.log(Object.keys(req.i18n?.t));
+
+      req.translate = req.i18n.t;
+
+      console.log(req.translate("validation.required", { label: "LABEL" }));
+      console.log(req.i18n?.language);
+      console.log(req.i18n?.resolvedLanguage);
+      console.log(
+        req.translate("addressSelect.addressFoundWithCount", {
+          namespace: "default",
+          count: 2,
+        })
+      );
+
+      // console.log(Object.keys(req.i18n?.translate));
+      console.log(Object.keys(req.i18n).sort());
+
       locals.addressPostcode = req.sessionModel.get("addressPostcode");
       locals.addresses = presenters.addressesToSelectItems({
         addresses: req.sessionModel.get("searchResults"),

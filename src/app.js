@@ -82,17 +82,27 @@ const { app, router } = setup({
 });
 
 var i18nextConfigurationOptions = {
-  debug: false,
+  debug: true,
   initImmediate: true,
   supportedLngs: ["en", "cy"],
-  fallbackLng: ["en"],
+  // fallbackLng: ["en"],
   preload: ["en", "cy"],
   ns: ["default", "fields", "pages"],
+  nsSeparator: ":",
+  returnEmptyString: false,
   defaultNS: "default",
+  fallbackNS: ["fields", "pages"],
   backend: {
     loadPath: "./src/locales/{{lng}}/{{ns}}.yml",
   },
   saveMissingTo: "current",
+  detection: {
+    order: ["querystring", "cookie"],
+    caches: ["cookie"],
+    cookieMinutes: 160,
+    lookupQuerystring: "lng",
+    lookupCookie: "lng",
+  },
 };
 
 const configureI18next = (config) => {
