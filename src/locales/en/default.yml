@@ -85,5 +85,5 @@ validation:
   alphaNumericWithSpecialChars: Your {{ label }} should not include any special characters or symbols
   default: You must answer this question
 addressSelect:
-  "addressFoundWithCount_one": "{{ count }} address found"
-  "addressFoundWithCount_other": "{{ count }} addresses found"
+  "addressFoundWithCount_one": "{{ count }} address found in English"
+  "addressFoundWithCount_other": "{{ count }} addresses found in English"

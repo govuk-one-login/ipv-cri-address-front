@@ -82,3 +82,6 @@ validation:
   isUkPostcode: "Rhowch god post yn y DU"
   alphaNumericWithSpecialChars: "Ni ddylai eich {{ label }} gynnwys unrhyw nodau neu symbolau arbennig"
   default: "Mae'n rhaid i chi ateb y cwestiwn hwn"
+addressSelect:
+  "addressFoundWithCount_one": "{{ count }} address found but in Welsh"
+  "addressFoundWithCount_other": "{{ count }} addresses found but in Welsh"
