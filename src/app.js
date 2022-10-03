@@ -118,21 +118,4 @@ router.use("^/$", (req, res) => {
   res.render("index");
 });
 
-router.use("/debug", (req, res) => {
-  res.send({
-    xForwardedFor: req?.headers["x-forwarded-for"],
-    connectionRemoteAddress: req?.connection?.remoteAddress,
-    socketRemoteAddress: req?.socket?.remoteAddress,
-    ip: req?.ip,
-    ips: req?.ips,
-    keys: {
-      req: Object.keys(req),
-      connection: Object.keys(req?.connection),
-      socket: Object.keys(req?.socket),
-    },
-    forwarded: req?.headers["forwarded"], // might be this
-    headers: req?.headers, // bulk drop all headers for debugging.
-  });
-});
-
 router.use(commonExpress.lib.errorHandling.redirectAsErrorToCallback);
