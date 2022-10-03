@@ -230,10 +230,10 @@
   dependencies:
     regexp-match-indices "1.0.2"
 
-"@cucumber/cucumber@8.5.3":
-  version "8.5.3"
-  resolved "https://registry.yarnpkg.com/@cucumber/cucumber/-/cucumber-8.5.3.tgz#099f8a05664bbbbaa7e5fd7a3d303d4c9709af2b"
-  integrity sha512-cLyMebI20K57JzOd22DJ3atGYwpxYz0YVCAl/iU9iY04A6uWY/6NoOSl8Vfd73ROjLA6T5ZJpGlfw5VkWJnq4A==
+"@cucumber/cucumber@8.6.0":
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/@cucumber/cucumber/-/cucumber-8.6.0.tgz#a182214b7d5c167f18fb14f4e452bb41fdaa902e"
+  integrity sha512-htkP/MlaYmgDId1Z2+7OQnH9aBd4Ui/Lk6PEmvMvP52ixPSUOv0MrP4/HUSECVXY0TI8GG7Ho03uLf6lieiFvw==
   dependencies:
     "@cspotcode/source-map-support" "^0.8.0"
     "@cucumber/ci-environment" "9.1.0"
@@ -250,6 +250,7 @@
     chalk "^4.1.2"
     cli-table3 "0.6.2"
     commander "^9.0.0"
+    debug "^4.3.4"
     duration "^0.2.2"
     durations "^3.4.2"
     figures "^3.2.0"
