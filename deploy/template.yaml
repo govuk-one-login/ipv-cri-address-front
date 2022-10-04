@@ -280,7 +280,7 @@ Resources:
             - Name: API_BASE_URL
               Value: !Sub
                 - "https://${APIGatewayId}.execute-api.eu-west-2.amazonaws.com/${Environment}"
-                - APIGatewayId: !ImportValue: address-cri-api-v1-PrivateAddressApiGatewayId
+                - APIGatewayId: Fn::ImportValue: address-cri-api-v1-PrivateAddressApiGatewayId
                   Environment: !Ref Environment
             - Name: EXTERNAL_WEBSITE_HOST
               Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
