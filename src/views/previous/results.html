@@ -11,7 +11,7 @@
 
   <h1 id="header" class="govuk-heading-l">{{translate("pages.address-previous-results.title")}}</h1>
 
-  {{hmpoHtml(translate("links.previous.changePostcode"))}}
+  {{hmpoHtml(translate("links.previous.changePostcode", { returnObjects: true }))}}
 
   {% call hmpoForm(ctx) %}
 
@@ -21,7 +21,7 @@
       items: addresses
     }) }}
 
-    {{ hmpoHtml(translate("links.previous.cantFindAddress")) }}
+    {{ hmpoHtml(translate("links.previous.cantFindAddress", { returnObjects: true })) }}
 
     {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.select-address")}) }}
 

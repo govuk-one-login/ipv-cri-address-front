@@ -14,7 +14,7 @@
       <h1 id="header" class="govuk-heading-l">{{translate("pages.address-form.previous.title")}}</h1>
     {% endif %}
 
-  {{hmpoHtml(translate("links.previous.changePostcode"))}}
+  {{hmpoHtml(translate("links.previous.changePostcode", { returnObjects: true }))}}
 
   {% call hmpoForm(ctx) %}
 

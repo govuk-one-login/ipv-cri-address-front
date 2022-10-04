@@ -8,15 +8,15 @@
 
 {% block mainContent %}
 
-  <h1 id="header" class="govuk-heading-l">{{translate("pages:address-results.title")}}</h1>
+  <h1 id="header" class="govuk-heading-l">{{translate("pages.address-results.title")}}</h1>
 
-  {{hmpoHtml(translate("links.changePostcode"))}}
+  {{hmpoHtml(translate("links.changePostcode", { returnObjects: true }))}}
 
   {% call hmpoForm(ctx) %}
 
     {{ hmpoSelect(ctx, {
       id: "addressResults",
-      label: translate("fields:addressResults.label"),
+      label: translate("fields.addressResults.label"),
       hint: "",
       items: addresses
     }) }}

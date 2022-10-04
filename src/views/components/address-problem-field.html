@@ -4,7 +4,7 @@
 <h1 id="header" class="govuk-heading-l">{{translate("pages.addressProblem.title")}}</h1>
 {% call hmpoForm(ctx) %}
 
-  {{hmpoHtml(translate("pages.addressProblem.content"))}}
+  {{hmpoHtml(translate("pages.addressProblem.content", { returnObjects: true }))}}
 
   {{ hmpoRadios(ctx, {
       id: "addressBreak",
@@ -19,6 +19,6 @@
 
   {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 
- {{hmpoHtml(translate("links.helpContact"))}}
+ {{hmpoHtml(translate("links.helpContact", { returnObjects: true }))}}
 
 {% endcall %}
