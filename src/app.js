@@ -83,13 +83,13 @@ const { app, router } = setup({
 
 var i18nextConfigurationOptions = {
   debug: true,
-  initImmediate: true,
+  initImmediate: false,
   supportedLngs: ["en", "cy"],
   // fallbackLng: ["en"],
   preload: ["en", "cy"],
   ns: ["default", "fields", "pages"],
   nsSeparator: ":",
-  returnEmptyString: false,
+  returnEmptyString: true,
   defaultNS: "default",
   fallbackNS: ["fields", "pages"],
   backend: {
@@ -106,6 +106,8 @@ var i18nextConfigurationOptions = {
 };
 
 const configureI18next = (config) => {
+  console.log(">>>>>>> configureI18next");
+
   const i18next = require("i18next");
   const Backend = require("i18next-sync-fs-backend");
   const i18nextMiddleware = require("i18next-http-middleware");
@@ -150,6 +152,24 @@ router.use("/oauth2", commonExpress.routes.oauth2);
 router.use("/previous", require("./app/address/routes/previous"));
 router.use("/", require("./app/address/routes/address"));
 router.use("/summary", require("./app/address/routes/summary"));
+
+router.use("/debug", (req, res, next) => {
+  // return res.sendStatus(200);
+  const data = {
+    "req.translate": req.translate("validation.required", { label: "LABEL" }),
+    "req.i18n.language": req.i18n?.language,
+    "req.i18n.resolvedLanguage": req.i18n?.resolvedLanguage,
+    "req.i18n.t_addressSelect.addressFoundWithCount": req.i18n.t(
+      "addressSelect.addressFoundWithCount",
+      {
+        namespace: "default",
+        count: 1,
+      }
+    ),
+  };
+
+  res.json(data);
+});
 
 router.use("^/$", (req, res) => {
   res.render("index");

@@ -50,7 +50,6 @@ govuk:
     text: "© Crown copyright"
   contentLicence:
     html: 'All content is available under the <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="licence">Open Government Licence v3.0</a>, except where otherwise stated'
-
 error:
   unrecoverable:
     title: Sorry, there is a problem with the service
@@ -60,7 +59,6 @@ error:
     contactMeLink: Contact the GOV.UK account team (opens in a new tab)
     buttonText: Go to the GOV.UK homepage
     buttonLink: https://www.gov.uk/
-
 links:
   changeAddress: <a href="/address/edit" id="change-address" data-id="changeAddress" class="govuk-link">Change<span class="govuk-visually-hidden"> your current address</span></a>
   changeYearFrom: <a href="/address/edit" id="change-address" data-id="changeAddress" class="govuk-link">Change<span class="govuk-visually-hidden"> the year you started living at your current address</span></a>
@@ -85,5 +83,5 @@ validation:
   alphaNumericWithSpecialChars: Your {{ label }} should not include any special characters or symbols
   default: You must answer this question
 addressSelect:
-  "addressFoundWithCount_one": "{{ count }} address found in English"
-  "addressFoundWithCount_other": "{{ count }} addresses found in English"
+  addressFoundWithCount_one: "{{ count }} address found in English"
+  addressFoundWithCount_other: "{{ count }} addresses found in English x2"

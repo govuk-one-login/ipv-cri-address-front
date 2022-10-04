@@ -1,3 +1,5 @@
+const debug = require("debug")("address");
+
 const {
   addressSelectorValidator,
 } = require("../../validators/addressSelectorValidation");
@@ -18,18 +20,38 @@ class AddressResultsController extends BaseController {
 
       req.translate = req.i18n.t;
 
-      console.log(req.translate("validation.required", { label: "LABEL" }));
-      console.log(req.i18n?.language);
-      console.log(req.i18n?.resolvedLanguage);
-      console.log(
-        req.translate("addressSelect.addressFoundWithCount", {
+      debug(req.translate("validation.required", { label: "LABEL" }));
+      debug(`language: ${req.i18n?.language}`);
+      debug(`resolvedLanguage: ${req.i18n?.resolvedLanguage}`);
+      debug(req.i18n.getFixedT("cy"));
+      debug(req.i18n.getFixedT("en")("buttons.next"));
+      debug(req.i18n.getFixedT("cy")("buttons.next"));
+      debug(
+        req.i18n.getFixedT("cy")("addressSelect.addressFoundWithCount_one")
+      );
+      debug(
+        req.i18n.getFixedT("cy")("addressSelect.addressFoundWithCount_other")
+      );
+      debug(
+        req.i18n.t("addressSelect.addressFoundWithCount", {
+          count: 2,
+        })
+      );
+      debug(
+        req.i18n.getFixedT("cy")("addressSelect.addressFoundWithCount", {
+          count: 2,
+        })
+      );
+
+      debug(
+        req.i18n.t("addressSelect.addressFoundWithCount", {
           namespace: "default",
           count: 2,
         })
       );
 
       // console.log(Object.keys(req.i18n?.translate));
-      console.log(Object.keys(req.i18n).sort());
+      debug(Object.keys(req.i18n).sort());
 
       locals.addressPostcode = req.sessionModel.get("addressPostcode");
       locals.addresses = presenters.addressesToSelectItems({
