@@ -2,12 +2,23 @@ const {
   addressSelectorValidator,
 } = require("../../validators/addressSelectorValidation");
 
+const presenters = require("../../../../presenters");
+
 const BaseController = require("hmpo-form-wizard").Controller;
 
 class AddressResultsController extends BaseController {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
+      if (err) {
+        callback(err, locals);
+      }
+
       locals.addressPostcode = req.sessionModel.get("addressPostcode");
+      locals.addresses = presenters.addressesToSelectItems({
+        addresses: req.sessionModel.get("searchResults"),
+        translate: req.translate,
+      });
+
       callback(null, locals);
     });
   }
@@ -38,11 +49,9 @@ class AddressResultsController extends BaseController {
 
         const chosenAddress = this.getAddress(selectedAddress, searchResults);
 
-        delete chosenAddress.value;
-        delete chosenAddress.text;
-
         req.sessionModel.set("checkDetailsHeader", true);
         req.sessionModel.set("address", chosenAddress);
+
         callback();
       } catch (err) {
         callback(err);
@@ -53,7 +62,11 @@ class AddressResultsController extends BaseController {
   getAddress(selectedAddress, searchResults) {
     const chosenAddress = Object.assign(
       {},
-      searchResults.find((address) => address.text === selectedAddress)
+      searchResults.find(
+        (address) =>
+          presenters.addressPresenter.generateSearchResultString(address) ===
+          selectedAddress
+      )
     );
 
     return chosenAddress;
