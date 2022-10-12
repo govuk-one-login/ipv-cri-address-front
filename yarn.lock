@@ -2583,11 +2583,6 @@ inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.1, i
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
 
-inherits@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
-  integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
-
 ini@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ini/-/ini-2.0.0.tgz#e5fd556ecdd5726be978fa1001862eacb0a94bc5"
@@ -3524,12 +3519,10 @@ normalize-url@^6.0.1:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-6.1.0.tgz#40d0885b535deffe3f3147bec877d05fe4c5668a"
   integrity sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==
 
-npm-java-runner@^0.0.17:
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/npm-java-runner/-/npm-java-runner-0.0.17.tgz#29e47326af98cc63f7d1f2eb769ba9ef24ba2cfc"
-  integrity sha512-zEpybWiTXUFfBscMWJ7/99iCH2B6mO7PK4ZhEcMkCyrYOg0wUvY9efdxW8WOt6YWBLr0wk31yl3ZSQT9c2yEgQ==
-  dependencies:
-    path "^0.12.7"
+npm-java-runner@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/npm-java-runner/-/npm-java-runner-1.0.2.tgz#b0b2bcf74a75c94f15c20d371f19c974f0311eeb"
+  integrity sha512-rbf77NAjOm9O1N/IOytA2sabV5uER03fnvNJVwSkQdqwhqsVM4E69Jchg8AdfoYatMY2GR/TmB5KXJY9G8LRYA==
 
 npm-run-all@4.1.5:
   version "4.1.5"
@@ -3815,14 +3808,6 @@ path-type@^4.0.0:
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
-path@^0.12.7:
-  version "0.12.7"
-  resolved "https://registry.yarnpkg.com/path/-/path-0.12.7.tgz#d4dc2a506c4ce2197eb481ebfcd5b36c0140b10f"
-  integrity sha1-1NwqUGxM4hl+tIHr/NWzbAFAsQ8=
-  dependencies:
-    process "^0.11.1"
-    util "^0.10.3"
-
 pathval@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/pathval/-/pathval-1.1.1.tgz#8534e77a77ce7ac5a2512ea21e0fdb8fcf6c3d8d"
@@ -3905,11 +3890,6 @@ process-on-spawn@^1.0.0:
   integrity sha512-1WsPDsUSMmZH5LeMLegqkPDrsGgsWwk1Exipy2hvB0o/F0ASzbpIctSCcZIK1ykJvtTJULEH+20WOFjMvGnCTg==
   dependencies:
     fromentries "^1.2.0"
-
-process@^0.11.1:
-  version "0.11.10"
-  resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
-  integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
 
 progress@^2.0.3:
   version "2.0.3"
@@ -4917,13 +4897,6 @@ util-deprecate@~1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
 
-util@^0.10.3:
-  version "0.10.4"
-  resolved "https://registry.yarnpkg.com/util/-/util-0.10.4.tgz#3aa0125bfe668a4672de58857d3ace27ecb76901"
-  integrity sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==
-  dependencies:
-    inherits "2.0.3"
-
 util@^0.12.4:
   version "0.12.4"
   resolved "https://registry.yarnpkg.com/util/-/util-0.12.4.tgz#66121a31420df8f01ca0c464be15dfa1d1850253"
@@ -5031,12 +5004,12 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-wiremock@2.33.2:
-  version "2.33.2"
-  resolved "https://registry.yarnpkg.com/wiremock/-/wiremock-2.33.2.tgz#1b06f6f0649c668b65fac584b76e3c5aff606bc7"
-  integrity sha512-6nwyIC2VIQXtALr3oc9HA1P2OPcO8VeSY2nIPUzQ1n3Z8xOEgI3v9HE9Jmq77Ufemf5U1MY07BPmJDHu1J3NlQ==
+wiremock@2.34.0:
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/wiremock/-/wiremock-2.34.0.tgz#6fdedb9537298576df6eaf6e64c7acbc8bf14b03"
+  integrity sha512-tm1qqBtm4TCJoT2SK18bl17efMju7Mce0QLKaeabY5bnva+uKpznTKKgsPLjEkurtMzisGEfLBvtFwr/0MBGgw==
   dependencies:
-    npm-java-runner "^0.0.17"
+    npm-java-runner "^1.0.2"
 
 word-wrap@^1.2.3:
   version "1.2.3"
