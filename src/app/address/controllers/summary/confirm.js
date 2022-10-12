@@ -1,6 +1,8 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 
-const { generateHTMLofAddress } = require("../../presenters/addressPresenter");
+const {
+  generateHTMLofAddress,
+} = require("../../../../presenters/addressPresenter");
 
 const {
   confirmationValidation,

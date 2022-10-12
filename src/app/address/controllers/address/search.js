@@ -1,6 +1,6 @@
 const {
   generateSearchResultString,
-} = require("../../presenters/addressPresenter");
+} = require("../../../../presenters/addressPresenter");
 
 const BaseController = require("hmpo-form-wizard").Controller;
 
