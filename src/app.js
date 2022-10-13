@@ -15,6 +15,7 @@ const setAxiosDefaults = commonExpress.lib.axios;
 const { setAPIConfig, setOAuthPaths } = require("./lib/settings");
 const { setGTM } = require("di-ipv-cri-common-express/src/lib/settings");
 const { getGTM } = require("di-ipv-cri-common-express/src/lib/locals");
+const { setI18n } = require("di-ipv-cri-common-express/src/lib/i18next");
 
 const {
   API,
@@ -80,6 +81,8 @@ const { app, router } = setup({
   },
   dev: true,
 });
+
+setI18n({ app });
 
 app.get("nunjucks").addGlobal("getContext", function () {
   return {
