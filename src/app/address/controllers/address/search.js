@@ -36,7 +36,9 @@ class AddressSearchController extends BaseController {
   }
 
   async search(axios, postcode, sessionId) {
-    const headers = sessionId ? { session_id: sessionId } : undefined; // set the header to null should fail the req but pass the browser tests for now.
+    const headers = sessionId
+      ? { session_id: sessionId, "session-id": sessionId }
+      : undefined; // set the header to null should fail the req but pass the browser tests for now.
 
     const addressResults = await axios.get(`${POSTCODE_LOOKUP}/${postcode}`, {
       headers,

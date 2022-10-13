@@ -105,7 +105,9 @@ class AddressConfirmController extends BaseController {
 
   async saveAddressess(axios, addresses, sessionId) {
     // set the headers to undefined will a fail a production level request but pass the browser tests for now.
-    const headers = sessionId ? { session_id: sessionId } : undefined;
+    const headers = sessionId
+      ? { session_id: sessionId, "session-id": sessionId }
+      : undefined;
     const resp = await axios.put(`${SAVE_ADDRESS}`, addresses, {
       headers,
     });
