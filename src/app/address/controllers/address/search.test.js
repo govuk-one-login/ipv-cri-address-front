@@ -57,25 +57,11 @@ describe("Address Search controller", () => {
           },
         }
       );
-      expect(req.session.test.searchResults[0]).to.deep.equal({
-        text: `${testData.apiResponse.data.length} addresses found`,
-        value: "",
-      });
-      expect(req.session.test.addressPostcode).to.equal(testPostcode);
 
-      // test each object matches the expected response in testData
-      req.session.test.searchResults.forEach((searchResult, index) => {
-        // first result should be a summary.
-        if (index === 0) {
-          expect(searchResult.text).to.equal(
-            `${testData.apiResponse.data.length} addresses found`
-          );
-        } else {
-          expect(searchResult).to.deep.equal(
-            testData.formattedAddressed[index - 1]
-          );
-        }
-      });
+      expect(req.session.test.searchResults).to.deep.equal(
+        testData.apiResponse.data
+      );
+
       expect(req.session.test.requestIsSuccessful).to.equal(true);
     });
 
