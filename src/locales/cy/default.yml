@@ -83,3 +83,9 @@ validation:
   alphaNumericWithSpecialChars: "Ni ddylai eich {{ label }} gynnwys unrhyw nodau neu symbolau arbennig"
   default: "Mae'n rhaid i chi ateb y cwestiwn hwn"
   houseNameOrHouseNumber: "Rhowch enw tŷ neu rif tŷ"
+addressSelect:
+  addressFoundWithCount_one: "{{ count }} address found in Welsh"
+  addressFoundWithCount_two: "{{ count }} addresses found in Welsh x2"
+  addressFoundWithCount_few: "{{ count }} addresses found in Welsh x3"
+  addressFoundWithCount_many: "{{ count }} addresses found in Welsh x6"
+  addressFoundWithCount_other: "{{ count }} addresses found in Welsh x42"
