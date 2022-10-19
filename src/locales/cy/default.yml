@@ -84,8 +84,8 @@ validation:
   default: "Mae'n rhaid i chi ateb y cwestiwn hwn"
   houseNameOrHouseNumber: "Rhowch enw tŷ neu rif tŷ"
 addressSelect:
-  addressFoundWithCount_one: "{{ count }} address found in Welsh"
-  addressFoundWithCount_two: "{{ count }} addresses found in Welsh x2"
-  addressFoundWithCount_few: "{{ count }} addresses found in Welsh x3"
-  addressFoundWithCount_many: "{{ count }} addresses found in Welsh x6"
-  addressFoundWithCount_other: "{{ count }} addresses found in Welsh x42"
+  addressFoundWithCount_one: "Darganfyddwyd {{ count }} cyfeiriad"
+  addressFoundWithCount_two: "Darganfyddwyd {{ count }} cyfeiriad"
+  addressFoundWithCount_few: "Darganfyddwyd {{ count }} cyfeiriad"
+  addressFoundWithCount_many: "Darganfyddwyd {{ count }} cyfeiriad"
+  addressFoundWithCount_other: "Darganfyddwyd {{ count }} cyfeiriad"
