@@ -82,7 +82,7 @@ const { app, router } = setup({
   dev: true,
 });
 
-setI18n({ app });
+setI18n({ router });
 
 app.get("nunjucks").addGlobal("getContext", function () {
   return {
