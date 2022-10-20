@@ -66,7 +66,7 @@
     "wait-on": "6.0.1"
   },
   "dependencies": {
-    "aws-sdk": "^2.1217.0",
+    "aws-sdk": "^2.1236.0",
     "axios": "0.27.2",
     "cfenv": "1.2.4",
     "connect-dynamodb": "^2.0.5",
