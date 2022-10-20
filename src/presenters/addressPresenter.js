@@ -3,7 +3,7 @@ module.exports = {
     const { buildingNames, streetNames, localityNames } =
       extractAddressFields(address);
     const fullBuildingName = buildingNames.join(" ");
-    var fullStreetName;
+    let fullStreetName;
     if (streetNames) {
       fullStreetName = streetNames.join(" ");
     }
@@ -20,7 +20,7 @@ module.exports = {
       extractAddressFields(address);
 
     const fullBuildingName = buildingNames.join(" ");
-    var fullStreetName;
+    let fullStreetName;
     if (streetNames) {
       fullStreetName = streetNames.join(" ");
     }
