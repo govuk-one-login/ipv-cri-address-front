@@ -82,7 +82,13 @@ const { app, router } = setup({
   dev: true,
 });
 
-setI18n({ router });
+setI18n({
+  router,
+  config: {
+    secure: true,
+    cookieDomain: APP.ANALYTICS.COOKIE_DOMAIN,
+  },
+});
 
 app.get("nunjucks").addGlobal("getContext", function () {
   return {
