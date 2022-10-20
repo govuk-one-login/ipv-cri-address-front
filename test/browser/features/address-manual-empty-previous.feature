@@ -25,14 +25,6 @@ Feature: Happy Path - confirming manual address details - previous
       And they continue to confirm address
       Then they should see the confirm page
 
-    Scenario: Changing address values and unsuccessfully passing validation when the street is missing
-      Given they are on the address page
-      When they add their flat number "1"
-      And they add their house name "stratford house"
-      And they add their street ""
-      And they add their city "London"
-      And they continue to confirm address
-      Then they should see an error message on the address page "Enter your street name"
 
     Scenario: Changing address values and unsuccessfully passing validation when the town or city is missing
       Given they are on the address page
