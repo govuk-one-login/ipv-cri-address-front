@@ -2,9 +2,9 @@
 
 # di-ipv-cri-address-front
 
-Frontend for address collection Credential Issuer
+Frontend for the Address Credential Issuer.
 
-This is the home for the front end user interface for a credential issuer as a part of the Identity Proofing and Verification (IPV) system within the GDS digital identity platform. Other repositories are used for core services or other credential issuers.
+This is the home for the front end user interface for a credential issuer as a part of the Identity Proofing and Verification (IPV) system within the GDS GOV.UK One Login service. Other repositories are used for core services or other credential issuers.
 
 # Installation
 
@@ -28,18 +28,18 @@ These configuration files are stored as JSON files in the [./test/mocks/mappings
 
 This can be run by using:
 
-`yarn run mock`
+`yarn run mocks`
 
-The frontend can be configure to use this server through changing two environment variables:
+The frontend can be configured to use this server through changing two environment variables:
 
-- `NODE_ENV = development` - this enables a midldeware that passes the `x-scenario-id` header from web requests through to the API.
+- `NODE_ENV = development` - this enables a middleware that passes the `x-scenario-id` header from web requests through to the API.
 - `API_BASE_URL = http://localhost:8010` - this points the frontend to the wiremock instance.
 
 A browser extension that can modify headers can be used to set the value of the header in a web browser. Example - [Mod Header](https://modheader.com)
 
 ## Request properties
 
-In order to support consisten use of headers for API requests. [middleware](./src/lib/axios.js) is applied to add an instance of [axios](https://axios-http.com/) on each reqest onto `req.axios`. This is then reused in any code that uses the API.
+In order to support consistent use of headers for API requests. [middleware](./src/lib/axios.js) is applied to add an instance of [axios](https://axios-http.com/) on each reqest onto `req.axios`. This is then reused in any code that uses the API.
 
 ## Testing Environment Variables
 
@@ -73,7 +73,7 @@ eg:
   Scenario: Address error
   ...
 ```
-This scenario will be configured to send a `scenario-id` header of `address-error` on every web browser request.
+This scenario will be configured to send a `x-scenario-id` header of `address-error` on every web browser request.
 
 
 ## Using live data
@@ -83,7 +83,7 @@ Most scenarios will not be able to run against a live system. These include jour
 These should be able to be run using cucumber-js as below:
 
 ```sh
-./test/brower $ cucumber-js --tags "@live"
+./test/browser $ cucumber-js --tags "@live"
 ```
 
 ## Running browser tests in isolation
