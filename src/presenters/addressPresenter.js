@@ -35,11 +35,11 @@ function extractAddressFields(address) {
   if (address.departmentName) {
     buildingNames.push(address.departmentName);
   }
-  if (address.buildingName) {
-    buildingNames.push(address.buildingName);
-  }
   if (address.subBuildingName) {
     buildingNames.push(address.subBuildingName);
+  }
+  if (address.buildingName) {
+    buildingNames.push(address.buildingName);
   }
   if (address.buildingNumber) {
     buildingNames.push(address.buildingNumber);
