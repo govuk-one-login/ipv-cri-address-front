@@ -5,9 +5,7 @@ module.exports = {
     const fullBuildingName = buildingNames.join(" ");
     const fullStreetName = streetNames.join(" ");
     const fullLocality = localityNames.join(" ");
-    const text = `${fullBuildingName} ${fullStreetName}, ${fullLocality}, ${address.postalCode}`;
-
-    return text;
+    return `${fullBuildingName} ${fullStreetName}, ${fullLocality}, ${address.postalCode}`;
   },
   generateHTMLofAddress: function (address) {
     const { buildingNames, streetNames, localityNames } =
@@ -16,10 +14,7 @@ module.exports = {
     const fullBuildingName = buildingNames.join(" ");
     const fullStreetName = streetNames.join(" ");
     const fullLocality = localityNames.join(" ");
-
-    const text = `${fullBuildingName}<br>${fullStreetName},<br>${fullLocality},<br>${address.postalCode}<br>`;
-
-    return text;
+    return `${fullBuildingName}<br>${fullStreetName},<br>${fullLocality},<br>${address.postalCode}<br>`;
   },
 };
 
