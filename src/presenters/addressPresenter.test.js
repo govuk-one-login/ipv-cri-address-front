@@ -21,7 +21,7 @@ describe("Address Presenter", () => {
           addressLocality: "my town",
           postalCode: "myCode",
         },
-        text: "My company My department Room 5 my building 1 My outer street my inner street, My double dependant town my dependant town my town, myCode",
+        text: "My department My company Room 5 my building 1 My outer street my inner street, My double dependant town my dependant town my town, myCode",
       },
     ];
 
@@ -49,7 +49,7 @@ describe("Address Presenter", () => {
           addressLocality: "my town",
           postalCode: "myCode",
         },
-        text: "My company My department Room 5 my building 1<br>My outer street my inner street,<br>My double dependant town my dependant town my town,<br>myCode<br>",
+        text: "My department My company Room 5 my building 1<br>My outer street my inner street,<br>My double dependant town my dependant town my town,<br>myCode<br>",
       },
     ];
 
