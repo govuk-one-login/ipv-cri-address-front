@@ -76,11 +76,8 @@ describe("address controller", () => {
 
       const savedAddress = req.sessionModel.get("address");
       expect(next).to.have.been.calledOnce;
-      expect(savedAddress.subBuildingName).to.equal(
-        addressToSave.addressFlatNumber
-      );
       expect(savedAddress.buildingNumber).to.equal(
-        addressToSave.addressHouseNumber
+        addressToSave.addressFlatNumber
       );
       expect(savedAddress.streetName).to.equal(addressToSave.addressStreetName);
       expect(savedAddress.addressLocality).to.equal(
@@ -136,11 +133,8 @@ describe("address controller", () => {
       expect(savedAddresses.buildingName).to.equal(
         addressToSave.addressHouseName
       );
-      expect(savedAddresses.subBuildingName).to.equal(
-        addressToSave.addressFlatNumber
-      );
       expect(savedAddresses.buildingNumber).to.equal(
-        addressToSave.addressHouseNumber
+        addressToSave.addressFlatNumber
       );
       expect(savedAddresses.addressLocality).to.equal(
         addressToSave.addressLocality

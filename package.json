@@ -10,7 +10,6 @@
   "scripts": {
     "start": "node src/app.js",
     "start:ci": "NODE_ENV=development API_BASE_URL=http://localhost:8010/ yarn dev",
-    "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8010/ npm-run-all -p -r mocks dev",
     "dev": "nodemon src/app.js",
     "build": "yarn build-sass && yarn build-js && yarn copy-assets",
     "build-sass": "rm -rf dist/public/style.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",

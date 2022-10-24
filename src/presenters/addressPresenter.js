@@ -29,17 +29,17 @@ function extractAddressFields(address) {
   let localityNames = [];
 
   // handle building name
-  if (address.departmentName) {
-    buildingNames.push(address.departmentName);
-  }
   if (address.organisationName) {
     buildingNames.push(address.organisationName);
   }
-  if (address.subBuildingName) {
-    buildingNames.push(address.subBuildingName);
+  if (address.departmentName) {
+    buildingNames.push(address.departmentName);
   }
   if (address.buildingName) {
     buildingNames.push(address.buildingName);
+  }
+  if (address.subBuildingName) {
+    buildingNames.push(address.subBuildingName);
   }
   if (address.buildingNumber) {
     buildingNames.push(address.buildingNumber);
