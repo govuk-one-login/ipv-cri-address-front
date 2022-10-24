@@ -10,18 +10,18 @@ describe("Address Presenter", () => {
       {
         address: {
           organisationName: "My company",
-          departmentName: "My department",
+          departmentName: "My deparment",
           buildingName: "my building",
           subBuildingName: "Room 5",
           buildingNumber: "1",
-          dependentStreetName: "My outer street",
+          dependentStreetName: "My outter street",
           streetName: "my inner street",
           doubleDependentAddressLocality: "My double dependant town",
           dependentAddressLocality: "my dependant town",
           addressLocality: "my town",
           postalCode: "myCode",
         },
-        text: "My department My company Room 5 my building 1 My outer street my inner street, My double dependant town my dependant town my town, myCode",
+        text: "My company My deparment my building Room 5 1 My outter street my inner street, My double dependant town my dependant town my town, myCode",
       },
     ];
 
@@ -38,18 +38,18 @@ describe("Address Presenter", () => {
       {
         address: {
           organisationName: "My company",
-          departmentName: "My department",
+          departmentName: "My deparment",
           buildingName: "my building",
           subBuildingName: "Room 5",
           buildingNumber: "1",
-          dependentStreetName: "My outer street",
+          dependentStreetName: "My outter street",
           streetName: "my inner street",
           doubleDependentAddressLocality: "My double dependant town",
           dependentAddressLocality: "my dependant town",
           addressLocality: "my town",
           postalCode: "myCode",
         },
-        text: "My department My company Room 5 my building 1<br>My outer street my inner street,<br>My double dependant town my dependant town my town,<br>myCode<br>",
+        text: "My company My deparment my building Room 5 1<br>My outter street my inner street,<br>My double dependant town my dependant town my town,<br>myCode<br>",
       },
     ];
 
