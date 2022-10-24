@@ -558,6 +558,29 @@ Resources:
       ComparisonOperator: LessThanThreshold
       TreatMissingData: notBreaching
 
+  Address5XXOnELB:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !ImportValue core-infrastructure-AlarmTopic
+      OKActions: []
+      InsufficientDataActions: []
+      MetricName: HTTPCode_Target_5XX_Count
+      Namespace: AWS/ApplicationELB
+      Statistic: Sum
+      Dimensions:
+        - Name: TargetGroup
+          Value: !Ref LoadBalancerListenerTargetGroupECS
+        - Name: LoadBalancer
+          Value: !Ref LoadBalancer
+      Period: 60
+      EvaluationPeriods: 5
+      DatapointsToAlarm: 5
+      Threshold: 1
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+
 # Outputs
 
 Outputs:
