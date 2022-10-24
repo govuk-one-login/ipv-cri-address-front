@@ -516,6 +516,27 @@ Resources:
         SSEEnabled: true
         SSEType: KMS
 
+  AddressNoTaskCountAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !ImportValue core-infrastructure-AlarmTopic
+      OKActions: []
+      InsufficientDataActions: []
+      MetricName: TaskCount
+      Namespace: ECS/ContainerInsights
+      Statistic: Average
+      Dimensions:
+        - Name: ClusterName
+          Value: !Ref AddressFrontEcsCluster
+      Period: 60
+      EvaluationPeriods: 2
+      DatapointsToAlarm: 2
+      Threshold: 1
+      ComparisonOperator: LessThanThreshold
+      TreatMissingData: notBreaching
+
 # Outputs
 
 Outputs:
