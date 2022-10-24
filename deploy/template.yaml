@@ -537,6 +537,27 @@ Resources:
       ComparisonOperator: LessThanThreshold
       TreatMissingData: notBreaching
 
+  AddressOnlyOneTaskCountAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !ImportValue core-infrastructure-AlarmTopic
+      OKActions: []
+      InsufficientDataActions: []
+      MetricName: TaskCount
+      Namespace: ECS/ContainerInsights
+      Statistic: Average
+      Dimensions:
+        - Name: ClusterName
+          Value: !Ref AddressFrontEcsCluster
+      Period: 300
+      EvaluationPeriods: 3
+      DatapointsToAlarm: 3
+      Threshold: 2
+      ComparisonOperator: LessThanThreshold
+      TreatMissingData: notBreaching
+
 # Outputs
 
 Outputs:
