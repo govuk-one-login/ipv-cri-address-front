@@ -13,7 +13,7 @@ class AddressController extends BaseController {
         address?.postalCode || req.sessionModel.get("addressPostcode");
 
       if (address) {
-        values.addressFlatNumber = address.addressFlatNumber;
+        values.addressFlatNumber = address.subBuildingName;
         values.addressHouseNumber = address.buildingNumber;
         values.addressHouseName = address.buildingName;
         values.addressStreetName = address.streetName;
@@ -88,7 +88,8 @@ class AddressController extends BaseController {
     }
 
     const address = {
-      buildingNumber: addressFlatNumber || addressHouseNumber,
+      subBuildingName: addressFlatNumber,
+      buildingNumber: addressHouseNumber,
       buildingName: addressHouseName,
       streetName: addressStreetName,
       addressLocality,
@@ -127,4 +128,5 @@ class AddressController extends BaseController {
     return hasChanged !== -1;
   }
 }
+
 module.exports = AddressController;
