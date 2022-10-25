@@ -536,7 +536,7 @@ Resources:
       DatapointsToAlarm: 2
       Threshold: 1
       ComparisonOperator: LessThanThreshold
-      TreatMissingData: notBreaching
+      TreatMissingData: breaching
 
   AddressOnlyOneTaskCountAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -558,7 +558,7 @@ Resources:
       DatapointsToAlarm: 3
       Threshold: 2
       ComparisonOperator: LessThanThreshold
-      TreatMissingData: notBreaching
+      TreatMissingData: breaching
 
   Address5XXOnELB:
     Type: AWS::CloudWatch::Alarm
