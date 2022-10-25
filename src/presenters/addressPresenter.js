@@ -3,23 +3,35 @@ module.exports = {
     const { buildingNames, streetNames, localityNames } =
       extractAddressFields(address);
     const fullBuildingName = buildingNames.join(" ");
-    const fullStreetName = streetNames.join(" ");
-    const fullLocality = localityNames.join(" ");
-    const text = `${fullBuildingName} ${fullStreetName}, ${fullLocality}, ${address.postalCode}`;
+    let fullStreetName;
+    if (streetNames) {
+      fullStreetName = streetNames.join(" ");
+    }
 
-    return text;
+    const fullLocality = localityNames.join(" ");
+    if (fullStreetName) {
+      return `${fullBuildingName} ${fullStreetName}, ${fullLocality}, ${address.postalCode}`;
+    } else {
+      return `${fullBuildingName}, ${fullLocality}, ${address.postalCode}`;
+    }
   },
   generateHTMLofAddress: function (address) {
     const { buildingNames, streetNames, localityNames } =
       extractAddressFields(address);
 
     const fullBuildingName = buildingNames.join(" ");
-    const fullStreetName = streetNames.join(" ");
+    let fullStreetName;
+    if (streetNames) {
+      fullStreetName = streetNames.join(" ");
+    }
+
     const fullLocality = localityNames.join(" ");
 
-    const text = `${fullBuildingName}<br>${fullStreetName},<br>${fullLocality},<br>${address.postalCode}<br>`;
-
-    return text;
+    if (fullStreetName) {
+      return `${fullBuildingName}<br>${fullStreetName},<br>${fullLocality},<br>${address.postalCode}<br>`;
+    } else {
+      return `${fullBuildingName},<br>${fullLocality},<br>${address.postalCode}<br>`;
+    }
   },
 };
 
