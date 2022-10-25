@@ -519,6 +519,7 @@ Resources:
   AddressNoTaskCountAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
+      AlarmDescription: !Sub Address ${Environment} frontend no ECS service tasks
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
@@ -540,6 +541,7 @@ Resources:
   AddressOnlyOneTaskCountAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
+      AlarmDescription: !Sub Address ${Environment} frontend below desired ECS service tasks
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
@@ -561,6 +563,7 @@ Resources:
   Address5XXOnELB:
     Type: AWS::CloudWatch::Alarm
     Properties:
+      AlarmDescription: !Sub Address ${Environment} frontend 5XX count
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
