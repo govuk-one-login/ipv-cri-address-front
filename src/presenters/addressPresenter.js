@@ -53,11 +53,11 @@ function extractAddressFields(address) {
   if (address.buildingName) {
     buildingNames.push(address.buildingName);
   }
-  if (address.buildingNumber) {
-    buildingNames.push(address.buildingNumber);
-  }
 
   // street names
+  if (address.buildingNumber) {
+    streetNames.push(address.buildingNumber);
+  }
   if (address.dependentStreetName) {
     streetNames.push(address.dependentStreetName);
   }
