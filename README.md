@@ -14,6 +14,18 @@ Clone this repository and then run
 yarn install
 ```
 
+## Precommit Hooks
+
+Install `pre-commit` from (here)[https://pre-commit.com/]
+
+Run `pre-commit install` to install pre-commit hooks locally.
+
+If you get the error:
+```
+[ERROR] Cowardly refusing to install hooks with `core.hooksPath` set.
+```
+Run `git config --unset-all core.hooksPath` to reset your git hook settings.
+
 ## Environment Variables
 
 - `BASE_URL`: Externally accessible base url of the webserver. Used to generate the callback url as part of credential issuer oauth flows
