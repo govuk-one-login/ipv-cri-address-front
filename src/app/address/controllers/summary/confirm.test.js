@@ -48,23 +48,11 @@ describe("Address confirmation controller", () => {
   describe("locals", () => {
     it("Should format the current address and previous addresses in locals", async () => {
       // factor in the address might have building name or number or both
-      const formattedAddresses = addresses.map((address) => {
-        let buildingNameNumber;
-        if (address.buildingName && address.buildingNumber) {
-          buildingNameNumber = `${address.buildingNumber} ${address.buildingName}`;
-        } else {
-          buildingNameNumber = address.buildingName || address.buildingNumber;
-        }
-
-        return `${buildingNameNumber}<br>${address.streetName},<br>${address.addressLocality},<br>${address.postalCode}<br>`;
-      });
-
-      const currentAddress = formattedAddresses.shift();
-      const previousAddress = formattedAddresses.shift();
       const params = {
-        currentAddressRowValue: currentAddress,
+        currentAddressRowValue:
+          "flat 1<br>1 street1,<br>town1,<br>postcode1<br>",
         validFromRow: String(new Date().getFullYear()),
-        previousAddressRowValue: previousAddress,
+        previousAddressRowValue: "farm2,<br>town2,<br>postcode2<br>",
       };
 
       addressConfirm.locals(req, res, next);

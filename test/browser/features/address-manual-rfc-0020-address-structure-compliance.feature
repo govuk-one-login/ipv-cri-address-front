@@ -18,7 +18,8 @@ Feature: compliance for address structures presented in https://github.com/alpha
     When they add their residency date "current"
     And they continue to confirm address
     Then they should see the confirm page
-    And they should see the address value "FLAT 1 87ZZZ WAY,"
+    And they should see the address value "FLAT 1"
+    And they should see the address value "87 ZZZ WAY,"
     And they should see the address value "WHITEHOUSE MILTON KEYNES,"
     And they should see the address value "ZZ1 1ZZ"
 
@@ -72,8 +73,8 @@ Feature: compliance for address structures presented in https://github.com/alpha
     When they add their residency date "current"
     And they continue to confirm address
     Then they should see the confirm page
-    And they should see the address value "ZZZ GROUP UNIT 2B ZZZ BUSINESS PARK 16"
-    And they should see the address value "ZZZ PARK ZZZ STREET,"
+    And they should see the address value "ZZZ GROUP UNIT 2B ZZZ BUSINESS PARK"
+    And they should see the address value "16 ZZZ PARK ZZZ STREET,"
     And they should see the address value "SOME ZZZ LONG EATON GREAT MISSENDEN,"
     And they should see the address value "ZZ1 1ZZ"
 

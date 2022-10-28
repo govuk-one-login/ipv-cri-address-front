@@ -10,9 +10,9 @@ module.exports = {
 
     const fullLocality = localityNames.join(" ");
     if (fullStreetName) {
-      return `${fullBuildingName} ${fullStreetName}, ${fullLocality}, ${address.postalCode}`;
+      return `${fullBuildingName} ${fullStreetName}, ${fullLocality}, ${address.postalCode}`.trim();
     } else {
-      return `${fullBuildingName}, ${fullLocality}, ${address.postalCode}`;
+      return `${fullBuildingName}, ${fullLocality}, ${address.postalCode}`.trim();
     }
   },
   generateHTMLofAddress: function (address) {
@@ -53,11 +53,11 @@ function extractAddressFields(address) {
   if (address.buildingName) {
     buildingNames.push(address.buildingName);
   }
-  if (address.buildingNumber) {
-    buildingNames.push(address.buildingNumber);
-  }
 
   // street names
+  if (address.buildingNumber) {
+    streetNames.push(address.buildingNumber);
+  }
   if (address.dependentStreetName) {
     streetNames.push(address.dependentStreetName);
   }
