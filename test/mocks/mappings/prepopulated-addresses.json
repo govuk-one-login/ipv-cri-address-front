@@ -1,0 +1,226 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "AddressPrepopulated",
+      "newScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "url": "/__reset/address-prepopulated"
+      },
+      "response": {
+        "status": 200
+      }
+    },
+    {
+      "scenarioName": "AddressPrepopulated",
+      "requiredScenarioState": "Started",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "POST",
+        "urlPath": "/session",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-prepopulated"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "session_id": "ABADCAFE",
+          "state": "sT@t3",
+          "redirect_uri": "http://example.net/return"
+        }
+      }
+    },
+    {
+      "scenarioName": "AddressPrepopulated",
+      "requiredScenarioState": "AddressResponses",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "GET",
+        "url": "/addresses",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-prepopulated"
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": [
+          {
+            "postalCode": "E1 8QS"
+          },
+          {
+            "postalCode": "SW1A 2AA"
+          }
+        ]
+      }
+    },
+    {
+      "scenarioName": "AddressPrepopulated",
+      "requiredScenarioState": "AddressResponses",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "GET",
+        "url": "/postcode-lookup/E1%208QS",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-prepopulated"
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": [
+          {
+            "buildingNumber": "1",
+            "addressLocality": "LONDON",
+            "postalCode": "E1 8QS",
+            "streetName": "WHITECHAPEL HIGH STREET",
+            "uprn": "123"
+          },
+          {
+            "buildingNumber": "10",
+            "addressLocality": "LONDON",
+            "postalCode": "E1 8QS",
+            "streetName": "WHITECHAPEL HIGH STREET",
+            "uprn": "124"
+          }
+        ]
+      }
+    },
+    {
+      "scenarioName": "AddressPrepopulated",
+      "requiredScenarioState": "Started",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "GET",
+        "url": "/postcode-lookup/XXX_XX",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-prepopulated",
+            "absent": false
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
+          }
+        }
+      },
+      "response": {
+        "status": 404,
+        "jsonBody": []
+      }
+    },
+    {
+      "scenarioName": "AddressPrepopulated",
+      "requiredScenarioState": "AddressResponses",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "GET",
+        "url": "/postcode-lookup/PR3VC0DE",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-prepopulated"
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": [
+          {
+            "buildingNumber": "1",
+            "addressLocality": "TESTTOWN",
+            "postcode": "PR3VC0DE",
+            "streetName": "TEST STREET"
+          },
+          {
+            "buildingNumber": "2A",
+            "addressLocality": "TESTTOWN",
+            "postalCode": "PR3VC0DE",
+            "streetName": "TEST STREET"
+          },
+          {
+            "buildingNumber": "3A",
+            "addressLocality": "TESTTOWN",
+            "postalCode": "PR3VC0DE",
+            "streetName": "TEST STREET"
+          }
+        ]
+      }
+    },
+    {
+      "scenarioName": "AddressPrepopulated",
+      "requiredScenarioState": "AddressResponses",
+      "newScenarioState": "AuthCode",
+      "request": {
+        "method": "PUT",
+        "url": "/address",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-prepopulated"
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "jsonBody": {}
+      }
+    },
+    {
+      "scenarioName": "AddressPrepopulated",
+      "requiredScenarioState": "AuthCode",
+      "request": {
+        "method": "GET",
+        "urlPath": "/authorization",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-prepopulated"
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "authorizationCode": {
+            "value": "FACEFEED"
+          }
+        }
+      }
+    }
+  ]
+}
