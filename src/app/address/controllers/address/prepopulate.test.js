@@ -68,6 +68,30 @@ describe("Prepopulate controller", () => {
         expect(prototypeSpy).to.have.been.calledWith(req, res);
       });
 
+      it("should set requestIsSuccessful as true", async () => {
+        await prepopulateController.saveValues(req, res, next);
+
+        expect(req.sessionModel.get("requestIsSuccessful")).to.be.true;
+      });
+
+      describe("with addresses", () => {
+        beforeEach(async () => {
+          req.axios.get = sinon.fake.resolves({
+            data: {
+              result: {
+                addresses: [{ postalCode: "SW11" }],
+              },
+            },
+          });
+
+          await prepopulateController.saveValues(req, res, next);
+        });
+
+        it("should set addressSearch using first postcode in results", () => {
+          expect(req.sessionModel.get("addressSearch")).to.equal("SW11");
+        });
+      });
+
       describe("with empty addresses", () => {
         beforeEach(async () => {
           req.axios.get = sinon.fake.resolves([]);
@@ -94,6 +118,14 @@ describe("Prepopulate controller", () => {
         req.axios.get = sinon.fake.throws(new Error("Error"));
 
         await prepopulateController.saveValues(req, res, next);
+      });
+
+      it("should set requestIsSuccessful as false", () => {
+        expect(req.sessionModel.get("requestIsSuccessful")).to.be.false;
+      });
+
+      it("should not set addressPostcode", () => {
+        expect(req.sessionModel.get("addressSearch")).to.be.undefined;
       });
 
       it("should call callback", () => {
