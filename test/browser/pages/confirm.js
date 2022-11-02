@@ -45,7 +45,7 @@ module.exports = class PlaywrightDevPage {
   }
 
   returnCurrentAddress() {
-    return this.page.textContent(
+    return this.page.innerHTML(
       "#main-content > div > div > dl > div:nth-child(1) > dd.govuk-summary-list__value"
     );
   }
