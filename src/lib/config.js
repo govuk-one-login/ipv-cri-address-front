@@ -8,6 +8,7 @@ module.exports = {
       AUTHORIZATION: "authorization",
       POSTCODE_LOOKUP: "postcode-lookup",
       SAVE_ADDRESS: "address",
+      GET_ADDRESSES: "addresses",
     },
   },
   APP: {
