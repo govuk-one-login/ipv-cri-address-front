@@ -10,7 +10,7 @@ Background:
     Then they should see the results page
     When they have selected Cant find address
 
-    Scenario: Testing flat number on edit
+    Scenario: Testing flat number on edit. Adding flat number and house number
       Given they are on the address page
       When they add their flat number "17"
       And they add their house number "115"
@@ -20,7 +20,7 @@ Background:
       And they continue to confirm address
       Then they should see the address value "17<br>115 Downing Street,<br>"
 
-    Scenario: Testing flat number on edit
+    Scenario: Testing flat number on edit. Adding flat number and house name
       Given they are on the address page
       When they add their flat number "17"
       And they add their house name "house"
@@ -30,7 +30,7 @@ Background:
       And they continue to confirm address
       Then they should see the address value "17 house<br>Downing Street,<br>"
 
-    Scenario: Testing flat number on edit
+    Scenario: Testing flat number on edit. Adding flat number, house name and house number
       Given they are on the address page
       When they add their flat number "17"
       And they add their house name "house"
