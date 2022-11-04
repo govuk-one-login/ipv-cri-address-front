@@ -37,7 +37,7 @@ Feature: compliance for address structures presented in https://github.com/alpha
     When they add their residency date "current"
     And they continue to confirm address
     Then they should see the confirm page
-    And they should see the address value "FLAT 11 BLASHFORDZZZ ROAD,"
+    And they should see the address value "FLAT 11 BLASHFORD<br>ZZZ ROAD"
     And they should see the address value "LONDON,"
     And they should see the address value "ZZ1 1ZZ"
 
