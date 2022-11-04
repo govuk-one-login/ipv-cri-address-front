@@ -16,7 +16,7 @@ yarn install
 
 ## Precommit Hooks
 
-Install `pre-commit` from (here)[https://pre-commit.com/]
+Install `pre-commit` from [here](https://pre-commit.com/)
 
 Run `pre-commit install` to install pre-commit hooks locally.
 
