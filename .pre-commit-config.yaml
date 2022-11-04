@@ -1,0 +1,28 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: "v8.24.0" # Use the sha / tag you want to point at
+    hooks:
+      - id: eslint
+        files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
+        types: [file]
+        args: ["."]
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "v2.7.1"
+    hooks:
+      - id: prettier
+        types_or: ["javascript", "ts", "json"]
+        args: ["src", "test"]
+  - repo: local
+    hooks:
+      - id: mocha
+        name: Run tests
+        language: system
+        entry: npm run test
+        pass_filenames: false
