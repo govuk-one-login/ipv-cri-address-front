@@ -758,6 +758,13 @@ allure-js-commons@2.0.0-beta.19:
     properties "^1.2.1"
     uuid "^8.3.0"
 
+allure-mocha@2.0.0-beta.19:
+  version "2.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/allure-mocha/-/allure-mocha-2.0.0-beta.19.tgz#7dec55898a663619a3330b2d13a3d514d6b6fa41"
+  integrity sha512-6PnZwIuWjG2+6ib0G1lGvVbH+O2291osxqXmMTHShBkPwWnaZSfRZd2HiiKBDjUSOwOVGJDzzq0wtaj+eZIVjw==
+  dependencies:
+    allure-js-commons "2.0.0-beta.19"
+
 ansi-colors@4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/ansi-colors/-/ansi-colors-4.1.1.tgz#cbb9ae256bf750af1eab344f229aa27fe94ba348"
@@ -3487,6 +3494,14 @@ mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
+
+mocha-multi-reporters@1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/mocha-multi-reporters/-/mocha-multi-reporters-1.5.1.tgz#c73486bed5519e1d59c9ce39ac7a9792600e5676"
+  integrity sha512-Yb4QJOaGLIcmB0VY7Wif5AjvLMUFAdV57D2TWEva1Y0kU/3LjKpeRVmlMIfuO1SVbauve459kgtIizADqxMWPg==
+  dependencies:
+    debug "^4.1.1"
+    lodash "^4.17.15"
 
 mocha@10.1.0:
   version "10.1.0"
