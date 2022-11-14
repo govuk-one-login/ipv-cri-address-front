@@ -1,0 +1,73 @@
+{
+  "mappings": [
+    {
+      "scenarioName": "Address Prepopulated Postcode",
+      "newScenarioState": "Started",
+      "request": {
+        "method": "GET",
+        "url": "/__reset/address-prepopulated-postcode"
+      },
+      "response": {
+        "status": 200
+      }
+    },
+    {
+      "scenarioName": "Address Prepopulated Postcode",
+      "requiredScenarioState": "Started",
+      "newScenarioState": "Addresses",
+      "request": {
+        "method": "POST",
+        "urlPath": "/session",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-prepopulated-postcode"
+          }
+        },
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "request": "${json-unit.any-string}",
+              "client_id": "${json-unit.any-string}"
+            },
+            "ignoreArrayOrder": true
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "session_id": "ABADCAFE",
+          "state": "sT@t3",
+          "redirect_uri": "http://example.net/return"
+        }
+      }
+    },
+    {
+      "scenarioName": "Address Prepopulated Postcode",
+      "requiredScenarioState": "Addresses",
+      "request": {
+        "method": "GET",
+        "urlPath": "/addresses",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-prepopulated-postcode"
+          },
+          "session-id": {
+            "equalTo": "ABADCAFE"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": [
+          {
+            "postalCode": "E1 8QS"
+          }
+        ]
+      }
+    }
+  ]
+}
