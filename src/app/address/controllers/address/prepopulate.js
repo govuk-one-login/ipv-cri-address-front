@@ -9,12 +9,14 @@ const {
 class AddressPrepopulateController extends BaseController {
   async saveValues(req, res, callback) {
     try {
-      await req.axios.get(`${GET_ADDRESSES}`, {
+      const prepopulatedAddresses = await req.axios.get(`${GET_ADDRESSES}`, {
         headers: {
           session_id: req.session.tokenId,
           "session-id": req.session.tokenId,
         },
       });
+
+      console.log(prepopulatedAddresses.data);
 
       super.saveValues(req, res, () => {
         callback();
