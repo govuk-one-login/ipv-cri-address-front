@@ -3,3 +3,4 @@ coverage
 src/views/**/*.html
 src/assets/javascripts/**
 src/assets/scss/**
+.yarn/**
