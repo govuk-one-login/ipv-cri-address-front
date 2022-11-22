@@ -29,4 +29,8 @@ module.exports = class PlaywrightDevPage {
   getErrorSummary() {
     return this.page.textContent(".govuk-error-summary");
   }
+
+  async getPostcode() {
+    return this.page.inputValue("#addressSearch");
+  }
 };

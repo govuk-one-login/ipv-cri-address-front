@@ -13,6 +13,8 @@ class AddressResultsController extends BaseController {
         callback(err, locals);
       }
 
+      console.log(req.sessionModel.get("addressPostcode"));
+
       locals.addressPostcode = req.sessionModel.get("addressPostcode");
       locals.addresses = presenters.addressesToSelectItems({
         addresses: req.sessionModel.get("searchResults"),

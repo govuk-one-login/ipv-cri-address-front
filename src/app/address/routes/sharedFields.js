@@ -14,12 +14,12 @@ module.exports = {
   addressSearch: {
     type: "text",
     autocomplete: "postal-code",
-    formatter: [
-      {
-        type: "removeSpaces",
-        fn: (val) => val.replace(/\s+/g, ""),
-      },
-    ],
+    // formatter: [
+    //   {
+    //     type: "removeSpaces",
+    //     fn: (val) => val.replace(/\s+/g, ""),
+    //   },
+    // ],
     validate: [
       {
         type: "required",
@@ -28,14 +28,14 @@ module.exports = {
         type: "postcodeLength",
         fn: postcodeLength,
       },
-      {
-        type: "alphaNumeric",
-        fn: alphaNumeric,
-      },
-      {
-        type: "missingNumericOrAlpha",
-        fn: missingAlphaOrNumeric,
-      },
+      // {
+      //   type: "alphaNumeric",
+      //   fn: alphaNumeric,
+      // },
+      // {
+      //   type: "missingNumericOrAlpha",
+      //   fn: missingAlphaOrNumeric,
+      // },
       {
         type: "isUkPostcode",
         fn: isUkPostcode,
