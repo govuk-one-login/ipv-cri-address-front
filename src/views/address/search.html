@@ -12,6 +12,14 @@
   <h1 id="header" class="govuk-heading-l">{{translate("pages.addressSearch.title")}} </h1>
   {% call hmpoForm(ctx) %}
 
+{% if prepopulatedPostcode %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{{ govukInsetText({
+  text: translate("pages.addressSearch.drivingLicence")
+}) }}
+{% endif %}
+
     {{ hmpoText(ctx, {
       id: "addressSearch",
       label: {
