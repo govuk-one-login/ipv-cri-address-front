@@ -15,6 +15,7 @@ done:
 
 addressSearch:
   title: Find your address
+  drivingLicence: We found the following postcode on your driving licence.
 
 address-previous-search:
   title: Find your previous address
