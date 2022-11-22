@@ -12,6 +12,10 @@ module.exports = class PlaywrightDevPage {
     return await this.page.textContent("#header");
   }
 
+  async getPostcode() {
+    return this.page.inputValue("#addressSearch");
+  }
+
   async searchPostcode(postcode = "TE5T1NG") {
     await this.page.fill(".govuk-input", postcode);
     await this.page.click("#continue");
@@ -28,5 +32,9 @@ module.exports = class PlaywrightDevPage {
 
   getErrorSummary() {
     return this.page.textContent(".govuk-error-summary");
+  }
+
+  async drivingLicenceCalloutIsVisible() {
+    return this.page.locator(".govuk-inset-text").isVisible();
   }
 };
