@@ -16,9 +16,15 @@ class AddressPrepopulateController extends BaseController {
         },
       });
 
-      console.log(prepopulatedAddresses.data);
+      if (prepopulatedAddresses?.data?.length > 0) {
+        req.session.prepopulatedPostcode = true;
+        req.sessionModel.set(
+          "addressSearch",
+          prepopulatedAddresses.data[0].postalCode
+        );
+      }
 
-      super.saveValues(req, res, () => {
+      return super.saveValues(req, res, () => {
         callback();
       });
     } catch (err) {
