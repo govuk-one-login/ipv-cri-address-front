@@ -40,16 +40,17 @@ describe("Address Search controller", () => {
   });
 
   describe("saveValues", () => {
-    it("Should call api with a postcode and save results to session", async () => {
-      const testPostcode = "myPostcode";
-      req.axios.get = sinon.fake.returns(testData.apiResponse);
+    let testPostcode;
+
+    it("Should call api with a postcode", async () => {
+      testPostcode = "myPostcode";
+
       req.body["addressSearch"] = testPostcode;
 
       await addressSearch.saveValues(req, res, next);
 
-      expect(next).to.have.been.calledOnce;
       expect(req.axios.get).to.have.been.calledWith(
-        `${POSTCODE_LOOKUP}/${testPostcode}`,
+        `${POSTCODE_LOOKUP}/myPostcode`,
         {
           headers: {
             session_id: sessionId,
@@ -57,33 +58,71 @@ describe("Address Search controller", () => {
           },
         }
       );
-
-      expect(req.session.test.searchResults).to.deep.equal(
-        testData.apiResponse.data
-      );
-
-      expect(req.session.test.requestIsSuccessful).to.equal(true);
     });
 
-    it("Should not throw an error when api throws error", async () => {
-      const testPostcode = "myPostcode";
-      req.axios.get = sinon.fake.rejects();
-      req.body["addressSearch"] = testPostcode;
+    describe("on api success", () => {
+      let prototypeSpy;
+      let testPostcode;
 
-      await addressSearch.saveValues(req, res, next);
+      beforeEach(() => {
+        prototypeSpy = sinon.stub(BaseController.prototype, "saveValues");
+        BaseController.prototype.saveValues.callThrough();
+      });
 
-      expect(next).to.have.been.calledOnce;
-      expect(req.axios.get).to.have.been.calledWith(
-        `${POSTCODE_LOOKUP}/${testPostcode}`,
-        {
-          headers: {
-            session_id: sessionId,
-            "session-id": sessionId,
-          },
-        }
-      );
-      expect(req.session.test.addressPostcode).to.equal(testPostcode);
-      expect(req.session.test.requestIsSuccessful).to.equal(false);
+      beforeEach(async () => {
+        req.axios.get = sinon.fake.returns(testData.apiResponse);
+
+        testPostcode = "myPostcode";
+        req.body["addressSearch"] = testPostcode;
+
+        await addressSearch.saveValues(req, res, next);
+      });
+
+      afterEach(() => {
+        prototypeSpy.restore();
+      });
+
+      it("should set requestIsSuccessful to be true", () => {
+        expect(req.sessionModel.get("requestIsSuccessful")).to.be.true;
+      });
+      it("should set searchResults", () => {
+        expect(req.sessionModel.get("searchResults")).to.equal(
+          testData.apiResponse.data
+        );
+      });
+      it("should set addressPostcode", () => {
+        expect(req.sessionModel.get("addressPostcode")).to.equal(testPostcode);
+      });
+
+      it("should call callback", () => {
+        expect(next).to.have.been.calledOnce;
+      });
+    });
+
+    describe("on api error", () => {
+      beforeEach(async () => {
+        req.axios.get = sinon.fake.rejects(new Error("Error!"));
+
+        testPostcode = "myPostcode";
+        req.body["addressSearch"] = testPostcode;
+
+        await addressSearch.saveValues(req, res, next);
+      });
+      it("should set requestIsSuccessful to be false", () => {
+        expect(req.sessionModel.get("requestIsSuccessful")).to.be.false;
+      });
+      it("should set searchResults", () => {
+        expect(req.sessionModel.get("searchResults")).to.equal(undefined);
+      });
+      it("should set checkDetailsHeader", () => {
+        expect(req.sessionModel.get("checkDetailsHeader")).to.equal(false);
+      });
+      it("should set addressPostcode", () => {
+        expect(req.sessionModel.get("addressPostcode")).to.equal(testPostcode);
+      });
+      it("should call callback without an error", () => {
+        expect(next).to.have.been.calledOnceWithExactly();
+      });
     });
   });
 });
