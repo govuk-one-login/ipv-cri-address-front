@@ -8,6 +8,8 @@ const {
 
 class AddressPrepopulateController extends BaseController {
   async saveValues(req, res, callback) {
+    req.session.prepopulatedPostcode = false;
+
     try {
       const prepopulatedAddresses = await req.axios.get(`${GET_ADDRESSES}`, {
         headers: {
