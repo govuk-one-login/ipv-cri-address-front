@@ -55,3 +55,9 @@ Then(
     expect(text).to.include(value);
   }
 );
+
+When("they choose to go back", async function () {
+  const resultsPage = new ResultsPage(this.page);
+
+  return resultsPage.back();
+});

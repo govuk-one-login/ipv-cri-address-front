@@ -42,4 +42,8 @@ module.exports = class PlaywrightDevPage {
   async continue() {
     await this.page.click("#continue");
   }
+
+  async back() {
+    await this.page.click(".govuk-back-link");
+  }
 };
