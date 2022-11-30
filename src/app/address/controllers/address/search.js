@@ -7,8 +7,18 @@ const {
 } = require("../../../../lib/config");
 
 class AddressSearchController extends BaseController {
+  locals(req, res) {
+    res.locals.prepopulatedPostcode = req.session.prepopulatedPostcode;
+
+    return super.locals(req, res);
+  }
+
   async saveValues(req, res, callback) {
+    req.session.prepopulatedPostcode = false;
+
     const addressPostcode = req.body["addressSearch"];
+
+    req.sessionModel.set("addressSearch", addressPostcode);
 
     try {
       const addressPostcode = req.body["addressSearch"];

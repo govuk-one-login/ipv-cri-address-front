@@ -39,3 +39,31 @@ Then("they should see the search page content in English", async function () {
   const searchPage = new SearchPage(this.page);
   expect(await searchPage.getPageTitle()).to.include("Find your address");
 });
+
+Then(
+  "they should see the search postcode prefilled with {string}",
+  async function (value) {
+    const searchPage = new SearchPage(this.page);
+    const input = await searchPage.getPostcode();
+
+    expect(input).to.equal(value);
+  }
+);
+
+Then("they should not see the search postcode prefilled", async function () {
+  const searchPage = new SearchPage(this.page);
+  const input = await searchPage.getPostcode();
+
+  expect(input).to.equal("");
+});
+
+Then(
+  /^the driving licence callout should (not ){0,1}be visible$/,
+  async function (visibleAsString) {
+    const visible = visibleAsString !== "not ";
+
+    const searchPage = new SearchPage(this.page);
+
+    expect(await searchPage.drivingLicenceCalloutIsVisible()).to.equal(visible);
+  }
+);

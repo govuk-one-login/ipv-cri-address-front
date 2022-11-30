@@ -8,15 +8,25 @@ const {
 
 class AddressPrepopulateController extends BaseController {
   async saveValues(req, res, callback) {
+    req.session.prepopulatedPostcode = false;
+
     try {
-      await req.axios.get(`${GET_ADDRESSES}`, {
+      const prepopulatedAddresses = await req.axios.get(`${GET_ADDRESSES}`, {
         headers: {
           session_id: req.session.tokenId,
           "session-id": req.session.tokenId,
         },
       });
 
-      super.saveValues(req, res, () => {
+      if (prepopulatedAddresses?.data?.length > 0) {
+        req.session.prepopulatedPostcode = true;
+        req.sessionModel.set(
+          "addressSearch",
+          prepopulatedAddresses.data[0].postalCode
+        );
+      }
+
+      return super.saveValues(req, res, () => {
         callback();
       });
     } catch (err) {

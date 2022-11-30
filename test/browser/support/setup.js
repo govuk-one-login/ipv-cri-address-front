@@ -44,7 +44,16 @@ Before(async function ({ pickle } = {}) {
 
   this.SCENARIO_ID_HEADER = header;
 
-  await axios.get(`${process.env.API_BASE_URL}/__reset/${header}`);
+  try {
+    await axios.get(`${process.env.API_BASE_URL}/__reset/${header}`);
+  } catch (e) {
+    /* eslint-disable no-console */
+    console.log("Error resetting mock");
+    console.log(`${process.env.API_BASE_URL}/__reset/${header}`);
+    console.log(e.message);
+    /* eslint-enable no-console */
+    throw e;
+  }
 });
 
 // Create a new test context and page per scenario
