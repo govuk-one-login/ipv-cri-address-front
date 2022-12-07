@@ -12,6 +12,9 @@ on:
 
 jobs:
   run-tests:
+    permissions:
+      contents: write
+      packages: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
