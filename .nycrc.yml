@@ -6,7 +6,7 @@ exclude:
   - "**/*.test.js"
   - "src/**/fields.js"
   - "src/**/steps.js"
-report-dir: coverage
+report-dir: reports/coverage
 statements: 05
 branches: 05
 functions: 05

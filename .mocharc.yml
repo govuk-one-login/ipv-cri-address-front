@@ -5,3 +5,6 @@ ignore:
   - 'node_modules/**'
 file:
   - './test/utils/mocha-helpers'
+reporter: "mocha-multi-reporters"
+reporter-option: "configFile=reporterConfig.json"
+
