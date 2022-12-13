@@ -275,7 +275,7 @@
     verror "^1.10.0"
     yup "^0.32.11"
 
-"@cucumber/cucumber@^8.3.1":
+"@cucumber/cucumber@^8.8.0":
   version "8.9.0"
   resolved "https://registry.yarnpkg.com/@cucumber/cucumber/-/cucumber-8.9.0.tgz#394ed87093af33fbb235bee1970a3368bbb2ffc5"
   integrity sha512-kU44RHVbS6fNLrEVQAzTtTMP6pDh0gMzB+QXULNymqGGhXDpnk+6PEH88+YG0TsjjPSYYNwOc3mhN/zvQ28yAg==
@@ -355,7 +355,7 @@
   dependencies:
     "@cucumber/messages" "^19.0.0"
 
-"@cucumber/gherkin@24.1.0", "@cucumber/gherkin@^24.0.0", "@cucumber/gherkin@^24.1.0":
+"@cucumber/gherkin@24.1.0", "@cucumber/gherkin@^24.1.0":
   version "24.1.0"
   resolved "https://registry.yarnpkg.com/@cucumber/gherkin/-/gherkin-24.1.0.tgz#ca2dcbe11f5f7d7f30fd073280550bd6eca2363c"
   integrity sha512-B48XrUod4y3SoXe6mv12q7U1zThUNSK3yHSm/hBJCJZ6RJUJhFk3FVMN/83qOEbsYZe6iG9v+4L1Myf8/q8C6g==
@@ -377,7 +377,7 @@
   resolved "https://registry.yarnpkg.com/@cucumber/message-streams/-/message-streams-4.0.1.tgz#a5339d3504594bb2edb5732aaae94dddb24d0970"
   integrity sha512-Kxap9uP5jD8tHUZVjTWgzxemi/0uOsbGjd4LBOSxcJoOCRbESFwemUzilJuzNTB8pcTQUh8D5oudUyxfkJOKmA==
 
-"@cucumber/messages@19.1.2", "@cucumber/messages@^19.0.0":
+"@cucumber/messages@19.1.2":
   version "19.1.2"
   resolved "https://registry.yarnpkg.com/@cucumber/messages/-/messages-19.1.2.tgz#cc846c191b124deb352dd1992bd49a82f30b0add"
   integrity sha512-vhWkNmQco+7tk/DWqpN0/R9KTNvsKsXVfZ7IsJs+dEeWmTuRztklHq8lJalwMSQBl71+2/KqGHzOO4BMTC9wIQ==
@@ -387,7 +387,7 @@
     reflect-metadata "0.1.13"
     uuid "8.3.2"
 
-"@cucumber/messages@20.0.0":
+"@cucumber/messages@20.0.0", "@cucumber/messages@^20.0.0":
   version "20.0.0"
   resolved "https://registry.yarnpkg.com/@cucumber/messages/-/messages-20.0.0.tgz#494d30bd2880b04dcb3a958f8c0ec5638b7b3596"
   integrity sha512-JFrFwuhxsbig0afaViNhuzoQyC+GQzlI7m+rX+lSiDGV13K3sJzMmHjkbCiNOgoRlKAMwIGR9TRMH0xj9/My0w==
@@ -397,7 +397,7 @@
     reflect-metadata "0.1.13"
     uuid "9.0.0"
 
-"@cucumber/messages@^19.1.2", "@cucumber/messages@^19.1.4":
+"@cucumber/messages@^19.0.0", "@cucumber/messages@^19.1.4":
   version "19.1.4"
   resolved "https://registry.yarnpkg.com/@cucumber/messages/-/messages-19.1.4.tgz#5cefc47cac3004c0bc38d42933042ec248bb747c"
   integrity sha512-Pksl0pnDz2l1+L5Ug85NlG6LWrrklN9qkMxN5Mv+1XZ3T6u580dnE6mVaxjJRdcOq4tR17Pc0RqIDZMyVY1FlA==
@@ -737,22 +737,31 @@ ajv@^6.10.0, ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-allure-cucumberjs@2.0.0-beta.19:
-  version "2.0.0-beta.19"
-  resolved "https://registry.yarnpkg.com/allure-cucumberjs/-/allure-cucumberjs-2.0.0-beta.19.tgz#b0b2a2385a9e450acd6c8d194a8f6424e2fdf472"
-  integrity sha512-vHngUdhRPS94r0Bf9LgfRbIhvHnbnLzgIXzsGt9elqOkdxZckWVHT5w9MF6LJ5Zngksx0lr2elM+IOa4vXhi7w==
+allure-cucumberjs@2.0.0-beta.20:
+  version "2.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/allure-cucumberjs/-/allure-cucumberjs-2.0.0-beta.20.tgz#42e1783b2a7d318113d319374f912b7087de6d62"
+  integrity sha512-mcwvk0+gCNzmSdbOZsmprB9MAp9y5AbnH15Zwu/5RFUjqTol9AssRXuFZdc3Y4ZSk2nO/r9LgKIWrWvO2KZbZg==
   dependencies:
-    "@cucumber/cucumber" "^8.3.1"
-    "@cucumber/gherkin" "^24.0.0"
+    "@cucumber/cucumber" "^8.8.0"
+    "@cucumber/gherkin" "^24.1.0"
     "@cucumber/gherkin-streams" "^5.0.1"
     "@cucumber/gherkin-utils" "^8.0.0"
-    "@cucumber/messages" "^19.1.2"
-    allure-js-commons "2.0.0-beta.19"
+    "@cucumber/messages" "^20.0.0"
+    allure-js-commons "2.0.0-beta.20"
 
 allure-js-commons@2.0.0-beta.19:
   version "2.0.0-beta.19"
   resolved "https://registry.yarnpkg.com/allure-js-commons/-/allure-js-commons-2.0.0-beta.19.tgz#381850c3c6ad985304d50b2b011d9a30771d283a"
   integrity sha512-sgt7TnU7s8QIzEOmLFO0T5ih4W2YbLrcsL1ElO7WN/dPzIww4G1BBJQDK98VCS+cG5qIljBYRuJ+rtzKWgtM8A==
+  dependencies:
+    mkdirp "^1.0.4"
+    properties "^1.2.1"
+    uuid "^8.3.0"
+
+allure-js-commons@2.0.0-beta.20:
+  version "2.0.0-beta.20"
+  resolved "https://registry.yarnpkg.com/allure-js-commons/-/allure-js-commons-2.0.0-beta.20.tgz#8d13f909e3cec76e514551bdc700ed2cda1fb29e"
+  integrity sha512-ZUSa75s1LEhoIOTgNJhB463t+GURPKkB92HNqSWvFImxU0SojdT7JbgaQ4Ku+qhY5VFMsWmZJt6TAYo5t7ZR4A==
   dependencies:
     mkdirp "^1.0.4"
     properties "^1.2.1"
