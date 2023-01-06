@@ -35,5 +35,5 @@ address-form:
     check-details:
       title: "Gwiriwch eich cyfeiriad blaenorol"
 addressProblem:
-  title: "Mae problem"
-  content: "Ni allwn ddod o hyd i unrhyw gyfeiriadau gyda'r cod post <b>{{values.addressPostcode}}</b>."
+  title: "Mae’n ddrwg gennym, mae problem"
+  content: "Ni allwn ddod o hyd i unrhyw gyfeiriadau gyda’r cod post <b>{{values.addressPostcode}}</b>."
