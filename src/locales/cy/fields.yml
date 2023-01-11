@@ -56,10 +56,10 @@ address-confirm:
 addressBreak:
   legend: "Beth hoffech chi ei wneud?"
   validation:
-    required: "Mae'n rhaid i chi ddewis opsiwn i barhau"
+    required: "Mae’n rhaid i chi ddewis opsiwn i barhau"
   items:
     continue:
-      label: "Parhau gyda {{values.addressPostcode}} a rhowch weddill eich cyfeiriad"
+      label: "Defnyddiwch <b>{{values.addressPostcode}}</b> a rhowch weddill eich cyfeiriad"
     retry:
       label: "Ceisiwch roi eich cod post i mewn eto"
 isAddressMoreThanThreeMonths:
