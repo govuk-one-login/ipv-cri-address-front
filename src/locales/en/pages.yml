@@ -45,5 +45,5 @@ address-form:
       title: Check your previous address
 
 addressProblem:
-  title: There is a problem
+  title: Sorry, there is a problem
   content: We cannot find any addresses with the postcode <b>{{values.addressPostcode}}</b>.

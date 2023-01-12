@@ -70,7 +70,7 @@ addressBreak:
     required: You must choose an option to continue
   items:
     continue:
-      label: Continue with {{values.addressPostcode}} and enter the rest of your address
+      label: Use <b>{{values.addressPostcode}}</b> and enter the rest of your address
     retry:
       label: Try entering your postcode again
 
