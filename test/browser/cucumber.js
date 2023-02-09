@@ -10,7 +10,6 @@ module.exports = {
       "progress-bar",
       "json:reports/cucumber-report.json",
       "html:reports/cucumber-report.html",
-      "./test/browser/allure-reporter.js",
     ],
   },
 };
