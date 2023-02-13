@@ -479,7 +479,6 @@ Resources:
           PredefinedMetricType: ECSServiceAverageCPUUtilization
         TargetValue: 70.0
 
-
   AddressFrontSessionsTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -568,8 +567,6 @@ Resources:
       ComparisonOperator: GreaterThanThreshold
       TreatMissingData: notBreaching
 
-# Outputs
-
 Outputs:
   StackName:
     Description: "CloudFormation stack name"
@@ -583,3 +580,8 @@ Outputs:
     Export:
       Name: !Sub "${AWS::StackName}-AddressFrontGatewayId"
     Value: !Ref ApiGwHttpEndpoint
+  AddressLoadBalancerArn:
+    Description: The Fargate Front End Load Balancer ARN
+    Export:
+      Name: !Sub "${AWS::StackName}-LoadBalancer"
+    Value: !Ref LoadBalancer
