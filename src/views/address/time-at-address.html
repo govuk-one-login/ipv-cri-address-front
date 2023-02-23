@@ -2,25 +2,21 @@
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 
-{% set hmpoPageKey = "address-form" %}
+{% set hmpoPageKey = "time-at-address" %}
 {% set hmpoPageContent = "address-form" %}
 {% set gtmJourney = "address - middle" %}
-
-{% set hmpoPageKey = "address-form" %}
 
 {% block mainContent %}
 
   {% if values.checkDetailsHeader === true %}
     <h1 id="header" class="govuk-heading-l">{{translate("pages.address-form.check-details.title")}}</h1>
   {% else %}
-     <h1 id="header" class="govuk-heading-l">{{translate("pages.address-form.title")}}</h1>
+     <h1 id="header" class="govuk-heading-l">{{translate("pages.time-at-address.title")}}</h1>
   {% endif %}
-
-  {{hmpoHtml(translate("links.changePostcode"))}}
 
   {% call hmpoForm(ctx) %}
 
-    {% include "../components/address-input-fields.html" %}
+    {% include "../components/address-year-from-field.html" %}
 
     {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 

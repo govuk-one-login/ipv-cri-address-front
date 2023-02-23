@@ -1,11 +1,9 @@
 {% from "hmpo-text/macro.njk" import hmpoText %}
 
-<h4>{{translate("fields.addressYearFrom.title")}}</h4>
-
 {{ hmpoText(ctx,{
   id: "addressYearFrom",
   name: "addressYearFrom",
-  label: { text: translate("fields.addressYearFrom.label")},
+  label: { text: translate("fields.addressYearFrom.title")},
   classes: "govuk-input--width-4",
-  hint: ""
+  hint: translate("fields.addressYearFrom.hint")
 }) }}
