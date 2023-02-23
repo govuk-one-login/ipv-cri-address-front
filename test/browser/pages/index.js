@@ -8,4 +8,5 @@ module.exports = {
   IPVCorePage: require("./ipv-core"),
   RelyingPartyPage: require("./relying-party"),
   ProblemPage: require("./problem"),
+  TimeAtAddressPage: require("./time-at-address"),
 };
