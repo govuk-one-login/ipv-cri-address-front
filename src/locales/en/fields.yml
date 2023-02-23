@@ -36,9 +36,9 @@ addressLocality:
     maxlength: Check you've entered your town or city correctly
 
 addressYearFrom:
-  title: When did you start living here?
+  title: When did you start living at your current home address??
   classes: govuk-input--width-4
-  label: Enter the year you started living at this address, for example 2017
+  hint: Enter the year you started living at this address, for example 2017
   validation:
     default: Enter the year using only 4 digits
     isPreviousDate: The date you started living at this address must be in the past

@@ -29,9 +29,9 @@ addressLocality:
   validation:
     maxlength: "Gwiriwch eich bod wedi rhoi enw eich tref neu ddinas yn yn gywir"
 addressYearFrom:
-  title: "Pryd wnaethoch chi ddechrau byw yno?"
+  title: "Pryd wnaethoch ddechrau byw yn eich cyfeiriad cartref presennol?"
   classes: "govuk-input--width-4"
-  label: "Rhowch y flwyddyn y dechreuoch chi fyw yn y cyfeiriad hwn, er enghraifft 2017"
+  hint: "Rhowch y flwyddyn y dechreuoch chi fyw yn y cyfeiriad hwn, er enghraifft 2017"
   validation:
     default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
     isPreviousDate: "Rhaid i'r dyddiad y dechreuoch chi fyw yn y cyfeiriad hwn fod yn y gorffennol"
