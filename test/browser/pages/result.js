@@ -4,7 +4,7 @@ module.exports = class PlaywrightDevPage {
    */
   constructor(page) {
     this.page = page;
-    this.paths = ["/results", "/previous/results"];
+    this.paths = ["/current/results", "/previous/results"];
   }
 
   isCurrentPage() {

@@ -120,7 +120,7 @@ router.use(setAxiosDefaults);
 router.use("/oauth2", commonExpress.routes.oauth2);
 
 router.use("/previous", require("./app/address/routes/previous"));
-router.use("/", require("./app/address/routes/address"));
+router.use("/current", require("./app/address/routes/address"));
 router.use("/summary", require("./app/address/routes/summary"));
 
 router.use("^/$", (req, res) => {

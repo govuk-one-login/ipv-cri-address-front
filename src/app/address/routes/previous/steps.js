@@ -17,9 +17,9 @@ module.exports = {
         field: "requestIsSuccessful",
         op: "===",
         value: true,
-        next: "/previous/results",
+        next: "results",
       },
-      "/previous/problem",
+      "problem",
     ],
   },
   "/problem": {
@@ -28,21 +28,21 @@ module.exports = {
       {
         field: "addressBreak",
         value: "continue",
-        next: "/previous/address",
+        next: "address",
       },
-      "/previous/search",
+      "search",
     ],
   },
   "/results": {
     controller: results,
     fields: ["addressResults"],
-    next: "/previous/address",
+    next: "address",
   },
   "/address": {
     controller: address,
     editable: true,
     continueOnEdit: true,
-    prereqs: ["/search"],
+    prereqs: ["search"],
     fields: [
       "addressFlatNumber",
       "addressHouseNumber",
