@@ -15,6 +15,7 @@ router.use(
     name: "address",
     journeyName: "addressCRI",
     templatePath: "address",
+    editBackStep: "/summary/confirm",
   })
 );
 
