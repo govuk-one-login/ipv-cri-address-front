@@ -30,7 +30,20 @@ jobs:
       - name: Run test and write coverage
         run: yarn test:coverage
       - name: Run browser tests
+        id: browserTests
         run: npm run test:browser:ci
+      - name: Notify Slack with errors
+        if: failure() && steps.browserTests.outcome == 'failure'
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: |
+            {
+              "message": "❌ Browser tests failed",
+              "repository": "${{ github.repository}}",
+              "branch": "${{ github.ref }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Run sonarcloud scan
         if: ${{ github.actor != 'dependabot[bot]' }}
         uses: sonarsource/sonarcloud-github-action@master
