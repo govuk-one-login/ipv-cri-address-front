@@ -51,7 +51,7 @@ jobs:
         id: test-report
         if: always()
         with:
-          test_results: reports/
+          test_results: reports
           gh_pages: gh-pages
           results_history: results-history
 
