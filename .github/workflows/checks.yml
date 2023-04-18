@@ -37,3 +37,29 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # obtained from https://sonarcloud.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get test results history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Cucumber HTML Report action
+        uses: PavanMudigonda/html-reporter-github-pages@v1.0
+        id: test-report
+        if: always()
+        with:
+          test_results: reports
+          gh_pages: gh-pages
+          results_history: results-history
+
+      - name: Publish Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3.8.0
+        with:
+          github_token: ${{ secrets.RH_GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: results-history
+          keep_files: true
