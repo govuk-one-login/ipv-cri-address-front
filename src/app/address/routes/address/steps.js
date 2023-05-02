@@ -55,8 +55,11 @@ module.exports = {
       "addressHouseName",
       "addressStreetName",
       "addressLocality",
-      "addressYearFrom",
     ],
+    next: "time-at-address",
+  },
+  "/time-at-address": {
+    fields: ["addressYearFrom"],
     next: "/summary/confirm",
   },
 };
