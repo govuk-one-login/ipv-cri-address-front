@@ -11,7 +11,7 @@ Feature: Error handling
     And they have selected an address ""
     Then they should see the address page
     Given they are on the address page
-    When they add their residency date "2000"
+    When they add their residency date "previous"
     And they continue to confirm address
 
   @mock-api:address-authorization-error

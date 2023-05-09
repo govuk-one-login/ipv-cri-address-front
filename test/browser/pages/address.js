@@ -54,6 +54,8 @@ module.exports = class PlaywrightDevPage {
       value = new Date().getFullYear();
     } else if (value === "future") {
       value = new Date().getFullYear() + 1;
+    } else if (value === "previous") {
+      value = new Date().getFullYear() - 2;
     }
     await this.page.fill("#addressYearFrom", `${value}`);
   }

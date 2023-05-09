@@ -12,20 +12,20 @@ Feature: Happy Path - confirming address details
 
     Scenario: Adding an year date that should show the previous address modal
       Given they are on the address page
-      When they add their residency date "2023"
+      When they add their residency date "current"
       And they continue to confirm address
       Then they should see the confirm page
       And they should see the previous address modal
 
     Scenario: Adding an year date that shouldnt show the previous address modal
       Given they are on the address page
-      When they add their residency date "2000"
+      When they add their residency date "previous"
       And they continue to confirm address
       Then they should see the confirm page
 
     Scenario: Not selecting a radio button should show a validation message
       Given they are on the address page
-      When they add their residency date "2023"
+      When they add their residency date "current"
       And they continue to confirm address
       Then they should see the confirm page
       And they should see the previous address modal
@@ -34,7 +34,7 @@ Feature: Happy Path - confirming address details
 
     Scenario: Selecting less than 3 months residence should move the user to the previous address journey
       Given they are on the address page
-      When they add their residency date "2023"
+      When they add their residency date "current"
       And they continue to confirm address
       Then they should see the confirm page
       And they should see the previous address modal
@@ -61,10 +61,10 @@ Feature: Happy Path - confirming address details
       Then they should see the confirm page
       When they click change year from
       Then they should see the address page
-      When they add their residency date "2010"
+      When they add their residency date "previous"
       And they continue to confirm address
       Then they should see the confirm page
-      And they should see the year value "2010"
+      And they should see the year value "previous"
 
 
 
