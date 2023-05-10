@@ -50,18 +50,23 @@ module.exports = class PlaywrightDevPage {
   }
 
   async addYearFrom(value) {
-    if (value === "current") {
-      value = new Date().getFullYear();
-    } else if (value === "future") {
-      value = new Date().getFullYear() + 1;
-    } else if (value === "previous") {
-      value = new Date().getFullYear() - 2;
-    }
+    value = this.getYear(value);
     await this.page.fill("#addressYearFrom", `${value}`);
   }
 
   getHouseNumber() {
     return this.page.inputValue("#addressHouseNumber");
+  }
+
+  getYear(year) {
+    if (year === "current") {
+      this.value = new Date().getFullYear();
+    } else if (year === "future") {
+      this.value = new Date().getFullYear() + 1;
+    } else if (year === "previous") {
+      this.value = new Date().getFullYear() - 2;
+    }
+    return this.value;
   }
 
   getFlatNumber() {

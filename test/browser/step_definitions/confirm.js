@@ -1,5 +1,6 @@
 const { Then, When } = require("@cucumber/cucumber");
 const { ConfirmPage } = require("../pages");
+const { AddressPage } = require("../pages");
 const { expect } = require("chai");
 
 Then(/they should be able to confirm the address$/, async function () {
@@ -50,7 +51,9 @@ Then("they should see the address value {string}", async function (value) {
 Then("they should see the year value {string}", async function (value) {
   const confirmPage = new ConfirmPage(this.page);
   const text = await confirmPage.returnYearFromValue();
-  expect(text).to.include(value);
+  const addressPage = new AddressPage(this.page);
+  const year = await addressPage.getYear(value);
+  expect(text).to.include(year);
 });
 
 Then("they should see the previous address modal", async function () {

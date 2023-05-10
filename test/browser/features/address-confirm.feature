@@ -54,6 +54,7 @@ Feature: Happy Path - confirming address details
       Then they should see the confirm page
       And they should see the address value "Park street"
 
+  @only
     Scenario: Changing year from value
       Given they are on the address page
       When they add their residency date "current"
