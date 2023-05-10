@@ -37,5 +37,3 @@ Feature: Happy Path - confirming preselected address details and date invalidati
       When they add their residency date "future"
       And they continue to confirm address
       Then they should see an error message on the address page "address must be in the past"
-
-

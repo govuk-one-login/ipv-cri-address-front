@@ -50,8 +50,12 @@ module.exports = class PlaywrightDevPage {
   }
 
   async addYearFrom(value) {
-    value = this.getYear(value);
-    await this.page.fill("#addressYearFrom", `${value}`);
+    if (value === "") {
+      await this.page.fill("#addressYearFrom", value);
+    } else {
+      value = this.getYear(value);
+      await this.page.fill("#addressYearFrom", `${value}`);
+    }
   }
 
   getHouseNumber() {
