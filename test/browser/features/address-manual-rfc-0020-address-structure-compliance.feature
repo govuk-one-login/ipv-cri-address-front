@@ -15,7 +15,7 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they should see house number prefilled with "87"
     And they should see street prefilled with "ZZZ WAY"
     And they should see town or city prefilled with "MILTON KEYNES"
-    When they add their residency date "current"
+    When they add their residency date with a "recent" move year
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "FLAT 1"
@@ -34,7 +34,7 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they should see house name prefilled with "BLASHFORD"
     And they should see street prefilled with "ZZZ ROAD"
     And they should see town or city prefilled with "LONDON"
-    When they add their residency date "current"
+    When they add their residency date with a "recent" move year
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "FLAT 11 BLASHFORD<br>ZZZ ROAD"
@@ -51,7 +51,7 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they should see house name prefilled with "ZZZ MARINA"
     And they should see street prefilled with "ZZZ ROAD"
     And they should see town or city prefilled with "NOTTINGHAM"
-    When they add their residency date "current"
+    When they add their residency date with a "recent" move year
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "ZZZ MARINA"
@@ -70,7 +70,7 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they should see house name prefilled with "ZZZ BUSINESS PARK"
     And they should see street prefilled with "ZZZ STREET"
     And they should see town or city prefilled with "GREAT MISSENDEN"
-    When they add their residency date "current"
+    When they add their residency date with a "recent" move year
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "ZZZ GROUP UNIT 2B ZZZ BUSINESS PARK"
@@ -88,7 +88,7 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they should see house name prefilled with "R103"
     And they should see street prefilled with "CREEK ROAD"
     And they should see town or city prefilled with "ZZZ ISLAND"
-    When they add their residency date "current"
+    When they add their residency date with a "recent" move year
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "R103"
@@ -106,7 +106,7 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they should see house name prefilled with ""
     And they should see street prefilled with "ZZZ CRESCENT"
     And they should see town or city prefilled with "FRASERBURGH"
-    When they add their residency date "current"
+    When they add their residency date with a "recent" move year
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "13"
@@ -124,11 +124,10 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they should see house name prefilled with ""
     And they should see street prefilled with "ZZZ WALK"
     And they should see town or city prefilled with "MIDDLESBROUGH"
-    When they add their residency date "current"
+    When they add their residency date with a "recent" move year
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "3"
     And they should see the address value "ZZZ WALK,"
     And they should see the address value "MIDDLESBROUGH,"
     And they should see the address value "ZZ1 1ZZ"
-

@@ -7,7 +7,7 @@ Feature: Happy Path - previous
       And they have started the address journey
       And they searched for their postcode "E1 8QS"
       Then they have selected an address "10 WHITECHAPEL HIGH STREET, LONDON, E1 8QS"
-      When they add their residency date "current"
+      When they add their residency date with a "recent" move year
       And they continue to confirm address
       And they select the less than three months radio button
       And they confirm their details
@@ -68,4 +68,3 @@ Feature: Happy Path - previous
       Given they searched for their postcode "WD6 @JX"
       Then they should see the search page
       And they should see an error message on the search page "only include numbers and letters"
-

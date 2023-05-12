@@ -12,20 +12,20 @@ Feature: Happy Path - confirming address details
 
     Scenario: Adding an year date that should show the previous address modal
       Given they are on the address page
-      When they add their residency date "current"
+      When they add their residency date with a "recent" move year
       And they continue to confirm address
       Then they should see the confirm page
-      And they should see the previous address modal
 
-    Scenario: Adding an year date that shouldnt show the previous address modal
+    Scenario: Adding an year date that should not show the previous address modal
       Given they are on the address page
-      When they add their residency date "previous"
+      When they add their residency date with a "older" move year
       And they continue to confirm address
       Then they should see the confirm page
+      And they should not see the previous address modal
 
     Scenario: Not selecting a radio button should show a validation message
       Given they are on the address page
-      When they add their residency date "current"
+      When they add their residency date with a "recent" move year
       And they continue to confirm address
       Then they should see the confirm page
       And they should see the previous address modal
@@ -34,7 +34,7 @@ Feature: Happy Path - confirming address details
 
     Scenario: Selecting less than 3 months residence should move the user to the previous address journey
       Given they are on the address page
-      When they add their residency date "current"
+      When they add their residency date with a "recent" move year
       And they continue to confirm address
       Then they should see the confirm page
       And they should see the previous address modal
@@ -44,7 +44,7 @@ Feature: Happy Path - confirming address details
 
     Scenario: Changing an address
       Given they are on the address page
-      When they add their residency date "current"
+      When they add their residency date with a "recent" move year
       And they continue to confirm address
       Then they should see the confirm page
       When they click change current address
@@ -56,12 +56,12 @@ Feature: Happy Path - confirming address details
 
     Scenario: Changing year from value
       Given they are on the address page
-      When they add their residency date "current"
+      When they add their residency date with a "recent" move year
       And they continue to confirm address
       Then they should see the confirm page
       When they click change year from
       Then they should see the address page
-      When they add their residency date "previous"
+      When they add their residency date with a "older" move year
       And they continue to confirm address
       Then they should see the confirm page
-      And they should see the year value "previous"
+      And they should see the year value "older"

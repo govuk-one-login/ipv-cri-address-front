@@ -16,7 +16,7 @@ Feature: Happy Path - confirming manual address details
       And they add their house name "stratford house"
       And they add their street "Park street"
       And they add their city "London"
-      And they add their residency date "previous"
+      And they add their residency date with a "older" move year
       And they continue to confirm address
       Then they should see the confirm page
 
@@ -26,7 +26,7 @@ Feature: Happy Path - confirming manual address details
       When they add their flat number "1"
       And they add their house name "stratford house"
       And they add their street "Park street"
-      And they add their residency date "previous"
+      And they add their residency date with a "older" move year
       And they continue to confirm address
       Then they should see an error message on the address page "Enter your town or city"
 
@@ -34,6 +34,6 @@ Feature: Happy Path - confirming manual address details
       Given they are on the address page
       When they add their street "Park street"
       And they add their city "London"
-      And they add their residency date "previous"
+      And they add their residency date with a "older" move year
       And they continue to confirm address
       Then they should see an error message on the address page "Enter a house name or house number"

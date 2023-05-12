@@ -16,7 +16,7 @@ Background:
       And they add their house number "115"
       And they add their street "Downing Street"
       And they add their city "London"
-      And they add their residency date "previous"
+      And they add their residency date with a "older" move year
       And they continue to confirm address
       Then they should see the address value "17<br>115 Downing Street,<br>"
 
@@ -26,7 +26,7 @@ Background:
       And they add their house name "house"
       And they add their street "Downing Street"
       And they add their city "London"
-      And they add their residency date "previous"
+      And they add their residency date with a "older" move year
       And they continue to confirm address
       Then they should see the address value "17 house<br>Downing Street,<br>"
 
@@ -37,6 +37,6 @@ Background:
       And they add their house number "115"
       And they add their street "Downing Street"
       And they add their city "London"
-      And they add their residency date "previous"
+      And they add their residency date with a "older" move year
       And they continue to confirm address
       Then they should see the address value "17 house<br>115 Downing Street,<br>"

@@ -62,6 +62,12 @@ Then("they should see the previous address modal", async function () {
   expect(radioLegendTitle).to.include("more than 3 months");
 });
 
+Then("they should not see the previous address modal", async function () {
+  const confirmPage = new ConfirmPage(this.page);
+  const presence = await confirmPage.isAddressRadioButtonPresent();
+  expect(presence).equal(false);
+});
+
 Then("they should see an error message {string}", async function (value) {
   const confirmPage = new ConfirmPage(this.page);
   const text = await confirmPage.getErrorSummary();
