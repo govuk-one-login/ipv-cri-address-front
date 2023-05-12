@@ -791,10 +791,10 @@ available-typed-arrays@^1.0.5:
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
 
-aws-sdk@*, aws-sdk@^2.1217.0:
-  version "2.1217.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1217.0.tgz#2493e121a2b63508a40333d19664ac189fbdc631"
-  integrity sha512-Mem3YD+vevt0qNg1aKB+7jdM2UMRIW2b3L5YDHzCctukndh91Y0rpy+EypPo4GXhQv5lfP+H9h+Csh/dvOQJiw==
+aws-sdk@*, aws-sdk@^2.1377.0:
+  version "2.1377.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1377.0.tgz#85f3590c8a8c0a600268e921aea8a289f7804e87"
+  integrity sha512-59T3v/o40fk2I2zpgh2E0Z/BBK5awBQUva7VLjLHo9rsMvTM58mgya667hYTua00rHC1A3GJSCNORUhXvhomYQ==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
@@ -805,7 +805,7 @@ aws-sdk@*, aws-sdk@^2.1217.0:
     url "0.10.3"
     util "^0.12.4"
     uuid "8.0.0"
-    xml2js "0.4.19"
+    xml2js "0.5.0"
 
 axios@0.27.2:
   version "0.27.2"
@@ -5046,18 +5046,18 @@ write-file-atomic@^3.0.0:
     signal-exit "^3.0.2"
     typedarray-to-buffer "^3.1.5"
 
-xml2js@0.4.19:
-  version "0.4.19"
-  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.19.tgz#686c20f213209e94abf0d1bcf1efaa291c7827a7"
-  integrity sha512-esZnJZJOiJR9wWKMyuvSE1y6Dq5LCuJanqhxslH2bxM6duahNZ+HMpCLhBQGZkbX6xRf8x1Y2eJlgt2q3qo49Q==
+xml2js@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.5.0.tgz#d9440631fbb2ed800203fad106f2724f62c493b7"
+  integrity sha512-drPFnkQJik/O+uPKpqSgr22mpuFHqKdbS835iAQrUC73L2F5WkboIRd63ai/2Yg6I1jzifPFKH2NTK+cfglkIA==
   dependencies:
     sax ">=0.6.0"
-    xmlbuilder "~9.0.1"
+    xmlbuilder "~11.0.0"
 
-xmlbuilder@~9.0.1:
-  version "9.0.7"
-  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
-  integrity sha512-7YXTQc3P2l9+0rjaUbLwMKRhtmwg1M1eDf6nag7urC7pIPYLD9W/jmzQ4ptRSUbodw5S0jfoGTflLemQibSpeQ==
+xmlbuilder@~11.0.0:
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-11.0.1.tgz#be9bae1c8a046e76b31127726347d0ad7002beb3"
+  integrity sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==
 
 xtend@~4.0.1:
   version "4.0.2"
