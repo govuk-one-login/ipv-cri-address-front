@@ -11,12 +11,11 @@ Feature: Error handling
     And they have selected an address ""
     Then they should see the address page
     Given they are on the address page
-    When they add their residency date "2000"
+    When they add their residency date with a "older" move year
     And they continue to confirm address
     And they should see the confirm page
     When they confirm their details
     Then they should be redirected as a success
-
 
   @mock-api:address-success
   Scenario: Back button history

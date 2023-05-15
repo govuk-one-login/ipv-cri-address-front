@@ -7,7 +7,7 @@ Feature: Happy Path - confirming preselected address details and date invalidati
     And they have started the address journey
     And they searched for their postcode "E1 8QS"
     Then they have selected an address ""
-    When they add their residency date "2023"
+    When they add their residency date with a "recent" move year
     And they continue to confirm address
     And they select the less than three months radio button
     And they confirm their details
@@ -24,5 +24,3 @@ Feature: Happy Path - confirming preselected address details and date invalidati
       And they should see town or city prefilled with "LONDON"
       When they continue to confirm address
       Then they should see the confirm page
-
-

@@ -35,6 +35,10 @@ module.exports = class PlaywrightDevPage {
     );
   }
 
+  isAddressRadioButtonPresent() {
+    return this.page.locator("#isAddressMoreThanThreeMonths").isVisible();
+  }
+
   async selectYesRadioButton() {
     await this.page.locator("#isAddressMoreThanThreeMonths").click();
   }

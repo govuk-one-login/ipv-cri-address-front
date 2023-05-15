@@ -77,10 +77,13 @@ Then(
   }
 );
 
-When("they add their residency date {string}", async function (date) {
-  const addressPage = new AddressPage(this.page);
-  await addressPage.addYearFrom(date);
-});
+When(
+  "they add their residency date with a {string} move year",
+  async function (date) {
+    const addressPage = new AddressPage(this.page);
+    await addressPage.addYearFrom(date);
+  }
+);
 
 When("they add their street {string}", async function (value) {
   const addressPage = new AddressPage(this.page);
