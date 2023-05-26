@@ -6,7 +6,7 @@ const { expect } = require("chai");
 Given(/^([A-Za-z ])+ is using the system$/, async function (name) {
   this.user = this.allUsers[name];
 
-  const rpPage = new RelyingPartyPage(this.page);
+  const rpPage = new RelyingPartyPage(this.page, this.TESTING_CLIENT_ID);
 
   await rpPage.goto();
 });

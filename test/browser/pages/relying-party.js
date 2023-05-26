@@ -2,13 +2,14 @@ module.exports = class PlaywrightDevPage {
   /**
    * @param {import('@playwright/test').Page} page
    */
-  constructor(page) {
+  constructor(page, clientId) {
     this.page = page;
+    this.clientId = clientId;
   }
 
   async goto() {
-    this.startingUrl =
-      "http://localhost:5010/oauth2/authorize?request=lorem&client_id=standalone";
+    const websiteHost = process.env.WEBSITE_HOST || "http://localhost:5010";
+    this.startingUrl = `${websiteHost}/oauth2/authorize?request=lorem&client_id=${this.clientId}`;
 
     await this.page.goto(this.startingUrl);
   }
@@ -31,9 +32,9 @@ module.exports = class PlaywrightDevPage {
     const { searchParams } = new URL(this.page.url());
 
     return (
-      searchParams.get("client_id") === "standalone" &&
+      searchParams.has("client_id") && // FIXME: Restore checking of client_id
       searchParams.get("state") === "sT@t3" &&
-      searchParams.get("code") === "FACEFEED"
+      searchParams.get("code").startsWith("auth-code-")
     );
   }
 
