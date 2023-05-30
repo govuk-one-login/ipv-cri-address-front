@@ -1,0 +1,125 @@
+plugin: openapi
+specFile: ./private-api.yaml
+
+validation:
+  request: log
+
+resources:
+
+  - path: "/postcode-lookup/:postcode"
+    method: GET
+    pathParams:
+      postcode: E1 8QS
+    response:
+      statusCode: 200
+      file: postcode-lookup_e18qs.json
+
+  - path: "/postcode-lookup/:postcode"
+    method: GET
+    pathParams:
+      postcode: SW1A 1AA
+    response:
+      statusCode: 404
+      file: postcode-lookup_sw1a1aa.json
+
+  - path: "/postcode-lookup/:postcode"
+    method: GET
+    pathParams:
+      postcode: ZZ1 1ZZ
+    response:
+      statusCode: 200
+      file: postcode-lookup_zz11zz.json
+
+  - path: "/postcode-lookup/:postcode"
+    method: GET
+    response:
+      statusCode: 404
+
+  - path: "/addresses"
+    method: GET
+    requestHeaders:
+      session-id: address-prepopulated-postcode
+    response:
+      statusCode: 200
+      file: addresses_e18qs.json
+
+  - path: "/addresses"
+    method: GET
+    response:
+      statusCode: 404
+
+  - method: PUT
+    path: /address
+    response:
+      statusCode: 201
+      content: "{}"
+
+  - method: POST
+    path: /session
+    requestBody:
+      jsonPath: $.client_id
+      value: "address-prepopulated-postcode"
+    response:
+      statusCode: 201
+      template: true
+      content: '{"session_id": "address-prepopulated-postcode", "state": "sT@t3", "redirect_uri": "http://example.net/return"}'
+
+  - method: POST
+    path: /session
+    requestBody:
+      jsonPath: $.client_id
+      value: "address-success"
+    response:
+      statusCode: 201
+      template: true
+      content: '{"session_id": "address-success", "state": "sT@t3", "redirect_uri": "http://example.net/return"}'
+
+  - method: POST
+    path: /session
+    requestBody:
+      jsonPath: $.client_id
+      value: "address-authorization-error"
+    response:
+      statusCode: 201
+      template: true
+      content: '{"session_id": "address-authorization-error", "state": "sT@t3", "redirect_uri": "http://example.net/return"}'
+
+  - method: POST
+    path: /session
+    requestBody:
+      jsonPath: $.client_id
+      value: "test-session-400"
+    response:
+      statusCode: 400
+      template: true
+      content: "{}"
+
+  - method: POST
+    path: /session
+    requestBody:
+      jsonPath: $.client_id
+      value: "test-session-500"
+    response:
+      statusCode: 500
+      template: true
+      content: "{}"
+
+  - method: GET
+    path: /authorization
+    requestHeaders:
+      session-id: "address-authorization-error"
+    response:
+      statusCode: 500
+      content: '{"redirect_uri": "http://example.net", "oauth_error": {"error_description": "gateway", "error": "server_error"}}'
+
+  - method: GET
+    path: /authorization
+    requestHeaders:
+      session-id: "address-success"
+    response:
+      template: true
+      statusCode: 200
+      content: '{"authorizationCode": {"value":"auth-code-${random.uuid()}"}, "state":"sT@t3","redirect_uri":"http://example.net/return"}'
+
+
+
