@@ -1,0 +1,16 @@
+[
+  {
+    "buildingNumber": "1",
+    "addressLocality": "LONDON",
+    "postalCode": "E1 8QS",
+    "streetName": "WHITECHAPEL HIGH STREET",
+    "uprn": "123"
+  },
+  {
+    "buildingNumber": "10",
+    "addressLocality": "LONDON",
+    "postalCode": "E1 8QS",
+    "streetName": "WHITECHAPEL HIGH STREET",
+    "uprn": "124"
+  }
+]
