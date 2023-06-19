@@ -36,6 +36,8 @@ Conditions:
     - !Equals [ !Ref Environment, integration ]
     - !Equals [ !Ref Environment, production ]
   IsProduction: !Equals [ !Ref Environment, production ]
+
+  # This is for performance testing as build and production should be identical
   IsProductionOrBuild: !Or
     - !Equals [ !Ref Environment, dev ]
     - !Equals [ !Ref Environment, staging ]
