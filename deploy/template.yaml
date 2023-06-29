@@ -36,6 +36,9 @@ Conditions:
     - !Equals [ !Ref Environment, integration ]
     - !Equals [ !Ref Environment, production ]
   IsProduction: !Equals [ !Ref Environment, production ]
+  IsPerformance: !Or
+    - !Equals [ !Ref Environment, build ]
+    - !Equals [ !Ref Environment, production ]
   UsePermissionsBoundary:
     Fn::Not:
       - Fn::Equals:
@@ -446,7 +449,7 @@ Resources:
 # Scaling down will occur after 15 minutes of 90% utilization of the configured CPU utilization.
 
   ECSAutoScalingTarget:
-    Condition: IsProduction
+    Condition: IsPerformance
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     Properties:
       MaxCapacity: 4
@@ -461,7 +464,7 @@ Resources:
       ServiceNamespace: ecs
 
   ECSAutoScalingPolicy:
-    Condition: IsProduction
+    Condition: IsPerformance
     DependsOn: ECSAutoScalingTarget
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
