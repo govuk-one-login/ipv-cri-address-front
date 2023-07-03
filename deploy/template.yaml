@@ -36,6 +36,12 @@ Conditions:
     - !Equals [ !Ref Environment, integration ]
     - !Equals [ !Ref Environment, production ]
   IsProduction: !Equals [ !Ref Environment, production ]
+
+  # This is for performance testing as build and production should be identical
+  IsProductionOrBuild: !Or
+    - !Equals [ !Ref Environment, dev ]
+    - !Equals [ !Ref Environment, staging ]
+    - !Equals [ !Ref Environment, integration ]
   UsePermissionsBoundary:
     Fn::Not:
       - Fn::Equals:
@@ -379,23 +385,23 @@ Resources:
         - !Ref AWS::NoValue
 
   ApiGwHttpEndpoint:
-      Type: 'AWS::ApiGatewayV2::Api'
-      Properties:
-          Name: !Sub address-front-${Environment}
-          ProtocolType: HTTP
+    Type: 'AWS::ApiGatewayV2::Api'
+    Properties:
+      Name: !Sub address-front-${Environment}
+      ProtocolType: HTTP
 
   ApiGwHttpEndpointIntegration:
-      Type: 'AWS::ApiGatewayV2::Integration'
-      Properties:
-        ApiId: !Ref ApiGwHttpEndpoint
-        IntegrationType: HTTP_PROXY
-        ConnectionId:
-          Fn::ImportValue:
-            !Sub "${VpcStackName}-VpcLinkId"
-        ConnectionType: VPC_LINK
-        IntegrationMethod: ANY
-        IntegrationUri: !Ref LoadBalancerListener
-        PayloadFormatVersion: '1.0'
+    Type: 'AWS::ApiGatewayV2::Integration'
+    Properties:
+      ApiId: !Ref ApiGwHttpEndpoint
+      IntegrationType: HTTP_PROXY
+      ConnectionId:
+        Fn::ImportValue:
+          !Sub "${VpcStackName}-VpcLinkId"
+      ConnectionType: VPC_LINK
+      IntegrationMethod: ANY
+      IntegrationUri: !Ref LoadBalancerListener
+      PayloadFormatVersion: '1.0'
 
   APIGWRoute:
     Type: 'AWS::ApiGatewayV2::Route'
@@ -441,12 +447,12 @@ Resources:
       FilterPattern: ""
       LogGroupName: !Ref APIGWAccessLogsGroup
 
-# ECS Autoscaling
-# The number of pods will increase when the configured CPU utilization is breached for more than 3 minutes.
-# Scaling down will occur after 15 minutes of 90% utilization of the configured CPU utilization.
+  # ECS Autoscaling
+  # The number of pods will increase when the configured CPU utilization is breached for more than 3 minutes.
+  # Scaling down will occur after 15 minutes of 90% utilization of the configured CPU utilization.
 
   ECSAutoScalingTarget:
-    Condition: IsProduction
+    Condition: IsProductionOrBuild
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     Properties:
       MaxCapacity: 4
@@ -461,7 +467,7 @@ Resources:
       ServiceNamespace: ecs
 
   ECSAutoScalingPolicy:
-    Condition: IsProduction
+    Condition: IsProductionOrBuild
     DependsOn: ECSAutoScalingTarget
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
