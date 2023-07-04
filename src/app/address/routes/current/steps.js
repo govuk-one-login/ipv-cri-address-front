@@ -34,9 +34,9 @@ module.exports = {
       {
         field: "addressBreak",
         value: "continue",
-        next: "/address",
+        next: "address",
       },
-      "/search",
+      "search",
     ],
   },
   "/results": {
@@ -48,7 +48,7 @@ module.exports = {
     controller: address,
     editable: true,
     continueOnEdit: true,
-    prereqs: ["/search"],
+    prereqs: ["search"],
     fields: [
       "addressFlatNumber",
       "addressHouseNumber",

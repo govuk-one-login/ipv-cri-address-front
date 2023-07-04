@@ -60,11 +60,11 @@ error:
     buttonText: "Ewch i hafan GOV.UK"
     buttonLink: "https://www.gov.uk/"
 links:
-  changeAddress: '<a href="/address/edit" id="change-address" data-id="changeAddress" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cyfeiriad presennol</span></a>'
-  changeYearFrom: '<a href="/address/edit" id="change-address" data-id="changeAddress" class="govuk-link">Newid<span class="govuk-visually-hidden"> y flwyddyn y dechreuoch chi fyw yn eich cyfeiriad presennol</span></a>'
-  changePostcode: '<p>Cod post <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search" data-id="changePostcode" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cod post presennol</span></a></p>'
+  changeAddress: '<a href="/current/address/edit" id="change-address" data-id="changeAddress" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cyfeiriad presennol</span></a>'
+  changeYearFrom: '<a href="/current/address/edit" id="change-address" data-id="changeAddress" class="govuk-link">Newid<span class="govuk-visually-hidden"> y flwyddyn y dechreuoch chi fyw yn eich cyfeiriad presennol</span></a>'
+  changePostcode: '<p>Cod post <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/current/search" data-id="changePostcode" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cod post presennol</span></a></p>'
   cantFindAddress:
-    - '<p><a href="/address" data-id="cantFindAddress" class="govuk-link">Ni allaf ddod o hyd i fy nghyfeiriad ar y rhestr</a></p>'
+    - '<p><a href="/current/address" data-id="cantFindAddress" class="govuk-link">Ni allaf ddod o hyd i fy nghyfeiriad ar y rhestr</a></p>'
   previous:
     changeAddress:
       - '<a href="/previous/address/edit" id="change-address" data-id="changePreviousAddress" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cyfeiriad blaenorol </span></a>'

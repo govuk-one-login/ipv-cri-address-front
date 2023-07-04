@@ -5,7 +5,7 @@ module.exports = class PlaywrightDevPage {
   constructor(page) {
     this.page = page;
     this.url = "http://localhost:5010/search";
-    this.paths = ["/search", "/previous/search"];
+    this.paths = ["/current/search", "/previous/search"];
   }
 
   async getPageTitle() {

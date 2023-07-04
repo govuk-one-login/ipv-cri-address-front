@@ -14,7 +14,8 @@ router.use(
   require("hmpo-form-wizard")(steps, allFields, {
     name: "address",
     journeyName: "addressCRI",
-    templatePath: "address",
+    templatePath: "current",
+    editBackStep: "/summary/confirm",
   })
 );
 

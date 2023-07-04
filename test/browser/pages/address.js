@@ -5,8 +5,8 @@ module.exports = class PlaywrightDevPage {
   constructor(page) {
     this.page = page;
     this.paths = [
-      "/address",
-      "/address/edit",
+      "/current/address",
+      "/current/address/edit",
       "/previous/address",
       "/previous/address/edit",
     ];
