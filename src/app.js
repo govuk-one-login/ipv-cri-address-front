@@ -82,19 +82,14 @@ const { app, router } = setup({
   dev: true,
 });
 
+app.set("view engine", "njk");
+
 setI18n({
   router,
   config: {
     secure: true,
     cookieDomain: APP.ANALYTICS.COOKIE_DOMAIN,
   },
-});
-
-app.get("nunjucks").addGlobal("getContext", function () {
-  return {
-    keys: Object.keys(this.ctx),
-    ctx: this.ctx.ctx,
-  };
 });
 
 setAPIConfig({
