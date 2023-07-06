@@ -2,13 +2,13 @@ address-form:
   label: What is your address?
 
 addressSearch:
-  label: Enter your postcode
+  label: Postcode
   hint: Enter the postcode of your current home address. This must be a UK postcode, for example SW1A 2AA.
   previous:
     label: Enter your previous postcode
     hint: This must be a UK postcode, for example SW1A 2AA.
   validation:
-    required: Enter your postcode
+    required: Postcode
 
 addressFlatNumber:
   label: Flat number
