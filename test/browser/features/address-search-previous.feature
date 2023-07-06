@@ -57,7 +57,7 @@ Feature: Happy Path - previous
     Scenario: Previous address - Searching and unsuccessfully passing validation when postcode is not entered
       Given they searched for their postcode ""
       Then they should see the search page
-      And they should see an error message on the search page "Postcode"
+      And they should see an error message on the search page "Enter your postcode"
 
     Scenario: Previous address - Searching and unsuccessfully passing validation when postcode is a non uk postcode
       Given they searched for their postcode "M1E1P5"
