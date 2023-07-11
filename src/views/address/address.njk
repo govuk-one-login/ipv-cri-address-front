@@ -20,8 +20,8 @@
 
   {% call hmpoForm(ctx) %}
 
-    {% include "../components/address-input-fields.html" %}
-    {% include "../components/address-year-from-field.html" %}
+    {% include "../components/address-input-fields.njk" %}
+    {% include "../components/address-year-from-field.njk" %}
 
     {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 

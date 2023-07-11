@@ -1,12 +1,11 @@
 {% extends "base-form.njk" %}
 {% set hmpoPageKey = "addressProblem" %}
-{% set gtmJourney = "address - prev - middle" %}
-
+{% set gtmJourney = "address - middle" %}
 
 {% set backLink = false %}
 
 {% block mainContent %}
 
-  {% include "../components/address-problem-field.html" %}
+  {% include "../components/address-problem-field.njk" %}
 
 {% endblock %}
