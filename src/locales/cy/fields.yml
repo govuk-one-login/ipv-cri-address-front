@@ -8,6 +8,9 @@ addressSearch:
     hint: "Rhaid i hwn fod yn cod post yn y DU, er enghraifft SW1A 2AA."
   validation:
     required: "Rhowch eich cod post"
+    missingNumericOrAlpha: "Dylai eich cod post gynnwys rhifau a llythrennau"
+    postcodeLength: "Dylai eich cod post fod rhwng 5 a 7 nod"
+    alphaNumeric: "Dylai eich cod post gynnwys rhifau a llythrennau yn unig"
 addressFlatNumber:
   label: "Rif fflat"
   validation:
