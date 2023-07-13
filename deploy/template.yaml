@@ -39,9 +39,8 @@ Conditions:
 
   # This is for performance testing as build and production should be identical
   IsProductionOrBuild: !Or
-    - !Equals [ !Ref Environment, dev ]
-    - !Equals [ !Ref Environment, staging ]
-    - !Equals [ !Ref Environment, integration ]
+    - !Equals [ !Ref Environment, production ]
+    - !Equals [ !Ref Environment, build ]
   UsePermissionsBoundary:
     Fn::Not:
       - Fn::Equals:
