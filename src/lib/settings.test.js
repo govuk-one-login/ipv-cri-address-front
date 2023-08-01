@@ -15,7 +15,7 @@ describe("settings", () => {
 
       expect(app.set).to.have.been.calledWith(
         "API.BASE_URL",
-        "http://example.com"
+        "http://example.com",
       );
     });
 
@@ -24,7 +24,7 @@ describe("settings", () => {
 
       expect(app.set).to.have.been.calledWith(
         "API.PATHS.SESSION",
-        "/api/session"
+        "/api/session",
       );
     });
 
@@ -33,7 +33,7 @@ describe("settings", () => {
 
       expect(app.set).to.have.been.calledWith(
         "API.PATHS.AUTHORIZATION",
-        "/api/auth"
+        "/api/auth",
       );
     });
   });
@@ -44,7 +44,7 @@ describe("settings", () => {
 
       expect(app.set).to.have.been.calledWith(
         "APP.PATHS.ENTRYPOINT",
-        "/website/subpath"
+        "/website/subpath",
       );
     });
   });

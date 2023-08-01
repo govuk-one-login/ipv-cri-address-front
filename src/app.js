@@ -72,7 +72,7 @@ const { app, router } = setup({
   views: [
     path.resolve(
       path.dirname(require.resolve("di-ipv-cri-common-express")),
-      "components"
+      "components",
     ),
     "views",
   ],

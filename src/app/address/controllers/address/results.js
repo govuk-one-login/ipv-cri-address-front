@@ -65,8 +65,8 @@ class AddressResultsController extends BaseController {
       searchResults.find(
         (address) =>
           presenters.addressPresenter.generateSearchResultString(address) ===
-          selectedAddress
-      )
+          selectedAddress,
+      ),
     );
 
     return chosenAddress;

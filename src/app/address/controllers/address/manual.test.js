@@ -55,7 +55,7 @@ describe("address controller", () => {
           addressLocality: generatedAddress[0].addressLocality,
           addressYearFrom: Number(generatedAddress[0].validFrom),
           addressHouseName: generatedAddress[0].buildingName,
-        })
+        }),
       );
     });
   });
@@ -77,17 +77,17 @@ describe("address controller", () => {
       const savedAddress = req.sessionModel.get("address");
       expect(next).to.have.been.calledOnce;
       expect(savedAddress.subBuildingName).to.equal(
-        addressToSave.addressFlatNumber
+        addressToSave.addressFlatNumber,
       );
       expect(savedAddress.buildingNumber).to.equal(
-        addressToSave.addressHouseNumber
+        addressToSave.addressHouseNumber,
       );
       expect(savedAddress.streetName).to.equal(addressToSave.addressStreetName);
       expect(savedAddress.addressLocality).to.equal(
-        addressToSave.addressLocality
+        addressToSave.addressLocality,
       );
       expect(savedAddress.buildingName).to.equal(
-        addressToSave.addressHouseName
+        addressToSave.addressHouseName,
       );
     });
 
@@ -106,11 +106,11 @@ describe("address controller", () => {
       const savedAddress = req.sessionModel.get("address");
       expect(next).to.have.been.calledOnce;
       expect(savedAddress.buildingNumber).to.equal(
-        addressToSave.addressHouseNumber
+        addressToSave.addressHouseNumber,
       );
       expect(savedAddress.streetName).to.equal(addressToSave.addressStreetName);
       expect(savedAddress.addressLocality).to.equal(
-        addressToSave.addressLocality
+        addressToSave.addressLocality,
       );
     });
 
@@ -134,19 +134,19 @@ describe("address controller", () => {
 
       expect(next).to.have.been.calledOnce;
       expect(savedAddresses.buildingName).to.equal(
-        addressToSave.addressHouseName
+        addressToSave.addressHouseName,
       );
       expect(savedAddresses.subBuildingName).to.equal(
-        addressToSave.addressFlatNumber
+        addressToSave.addressFlatNumber,
       );
       expect(savedAddresses.buildingNumber).to.equal(
-        addressToSave.addressHouseNumber
+        addressToSave.addressHouseNumber,
       );
       expect(savedAddresses.addressLocality).to.equal(
-        addressToSave.addressLocality
+        addressToSave.addressLocality,
       );
       expect(savedAddresses.addressStreetName).to.equal(
-        addressToSave.streetName
+        addressToSave.streetName,
       );
     });
 

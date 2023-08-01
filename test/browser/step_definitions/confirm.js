@@ -34,7 +34,7 @@ Then(
     } else {
       await confirmPage.selectNoRadioButton();
     }
-  }
+  },
 );
 
 Then("they should see the confirm page", function () {

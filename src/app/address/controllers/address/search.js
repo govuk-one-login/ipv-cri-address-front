@@ -25,7 +25,7 @@ class AddressSearchController extends BaseController {
       const searchResults = await this.search(
         req.axios,
         addressPostcode,
-        req.session.tokenId
+        req.session.tokenId,
       );
       super.saveValues(req, res, () => {
         req.sessionModel.set("requestIsSuccessful", true);

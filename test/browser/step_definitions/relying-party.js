@@ -25,7 +25,7 @@ Then(
     expect(rpPage.isRelyingPartyServer()).to.be.true;
 
     expect(rpPage.hasErrorQueryParams(err)).to.be.true;
-  }
+  },
 );
 
 Then(/^they should be redirected as a success$/, function () {

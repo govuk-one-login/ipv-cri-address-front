@@ -22,7 +22,7 @@ class AddressPrepopulateController extends BaseController {
         req.session.prepopulatedPostcode = true;
         req.sessionModel.set(
           "addressSearch",
-          prepopulatedAddresses.data[0].postalCode
+          prepopulatedAddresses.data[0].postalCode,
         );
       }
 

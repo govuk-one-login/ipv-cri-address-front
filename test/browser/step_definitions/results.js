@@ -53,5 +53,5 @@ Then(
     const resultsPage = new ResultsPage(this.page);
     const text = await resultsPage.getErrorSummary();
     expect(text).to.include(value);
-  }
+  },
 );

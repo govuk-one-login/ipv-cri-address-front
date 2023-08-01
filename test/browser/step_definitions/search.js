@@ -18,7 +18,7 @@ Then(
     const searchPage = new SearchPage(this.page);
     const error = await searchPage.getErrorSummary();
     expect(error).to.contain(value);
-  }
+  },
 );
 
 // Previous specific
@@ -31,7 +31,7 @@ Then("they should see the previous address search page", function () {
 Then("they should see the search page content in Welsh", async function () {
   const searchPage = new SearchPage(this.page);
   expect(await searchPage.getPageTitle()).to.include(
-    "Darganfyddwch eich cyfeiriad"
+    "Darganfyddwch eich cyfeiriad",
   );
 });
 
@@ -47,7 +47,7 @@ Then(
     const input = await searchPage.getPostcode();
 
     expect(input).to.equal(value);
-  }
+  },
 );
 
 Then("they should not see the search postcode prefilled", async function () {
@@ -65,5 +65,5 @@ Then(
     const searchPage = new SearchPage(this.page);
 
     expect(await searchPage.drivingLicenceCalloutIsVisible()).to.equal(visible);
-  }
+  },
 );

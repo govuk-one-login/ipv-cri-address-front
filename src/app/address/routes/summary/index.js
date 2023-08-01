@@ -9,7 +9,7 @@ router.use(
     name: "summary",
     journeyName: "addressCRI",
     templatePath: "summary",
-  })
+  }),
 );
 
 module.exports = router;

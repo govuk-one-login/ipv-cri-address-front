@@ -128,7 +128,7 @@ class AddressConfirmController extends BaseController {
 
     const threeMonthsAgo = new Date(
       checkDate.getFullYear(),
-      checkDate.getMonth() - 3
+      checkDate.getMonth() - 3,
     );
 
     // If 3monthsAgo is still 2022 and yearFrom = 2021.

@@ -32,7 +32,7 @@ Then(
     const addressPage = new AddressPage(this.page);
     const input = await addressPage.getPostcode();
     expect(input).to.equal(value);
-  }
+  },
 );
 
 Then(
@@ -41,7 +41,7 @@ Then(
     const addressPage = new AddressPage(this.page);
     const input = await addressPage.getFlatNumber();
     expect(input).to.equal(value);
-  }
+  },
 );
 
 Then(
@@ -50,7 +50,7 @@ Then(
     const addressPage = new AddressPage(this.page);
     const input = await addressPage.getHouseNumber();
     expect(input).to.equal(value);
-  }
+  },
 );
 
 Then(
@@ -59,7 +59,7 @@ Then(
     const addressPage = new AddressPage(this.page);
     const input = await addressPage.getHouseName();
     expect(input).to.equal(value);
-  }
+  },
 );
 
 Then("they should see street prefilled with {string}", async function (value) {
@@ -74,7 +74,7 @@ Then(
     const addressPage = new AddressPage(this.page);
     const input = await addressPage.getTownOrCity();
     expect(input).to.equal(value);
-  }
+  },
 );
 
 When(
@@ -82,7 +82,7 @@ When(
   async function (date) {
     const addressPage = new AddressPage(this.page);
     await addressPage.addYearFrom(date);
-  }
+  },
 );
 
 When("they add their street {string}", async function (value) {
@@ -121,5 +121,5 @@ Then(
     const addressPage = new AddressPage(this.page);
     const error = await addressPage.getErrorSummary();
     expect(error).to.contain(value);
-  }
+  },
 );

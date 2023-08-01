@@ -56,7 +56,7 @@ describe("Address Search controller", () => {
             session_id: sessionId,
             "session-id": sessionId,
           },
-        }
+        },
       );
     });
 
@@ -87,7 +87,7 @@ describe("Address Search controller", () => {
       });
       it("should set searchResults", () => {
         expect(req.sessionModel.get("searchResults")).to.equal(
-          testData.apiResponse.data
+          testData.apiResponse.data,
         );
       });
       it("should set addressPostcode", () => {

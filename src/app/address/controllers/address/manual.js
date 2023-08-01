@@ -78,7 +78,7 @@ class AddressController extends BaseController {
       addressLocality,
       addressYearFrom,
     } = undefined,
-    chosenAddress
+    chosenAddress,
   ) {
     // only want year from for current address
     let yearFrom = null;

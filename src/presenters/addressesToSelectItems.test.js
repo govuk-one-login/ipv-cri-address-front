@@ -25,7 +25,7 @@ describe("Addresses to SelectItems Presenter", () => {
 
     expect(translate).to.have.been.calledWith(
       "addressSelect.addressFoundWithCount",
-      { count: 0 }
+      { count: 0 },
     );
   });
 
@@ -36,7 +36,7 @@ describe("Addresses to SelectItems Presenter", () => {
 
     expect(translate).to.have.been.calledWith(
       "addressSelect.addressFoundWithCount",
-      { count: 1 }
+      { count: 1 },
     );
   });
 

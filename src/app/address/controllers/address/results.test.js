@@ -71,7 +71,7 @@ describe("Address result controller", () => {
 
       expect(next).to.have.been.calledWith(
         null,
-        sinon.match({ addressPostcode: "E1 8QS" })
+        sinon.match({ addressPostcode: "E1 8QS" }),
       );
     });
 
@@ -84,7 +84,7 @@ describe("Address result controller", () => {
 
       expect(next).to.have.been.calledWith(
         null,
-        sinon.match({ addresses: [{ text: "nn addresses found", value: "" }] })
+        sinon.match({ addresses: [{ text: "nn addresses found", value: "" }] }),
       );
     });
     context("with error on callback", () => {
@@ -125,17 +125,17 @@ describe("Address result controller", () => {
 
       expect(next).to.have.been.calledOnce;
       expect(req.session.test.address.buildingNumber).to.equal(
-        expectedResponse.buildingNumber
+        expectedResponse.buildingNumber,
       );
 
       expect(req.session.test.address.streetName).to.equal(
-        expectedResponse.streetName
+        expectedResponse.streetName,
       );
       expect(req.session.test.address.postCode).to.equal(
-        expectedResponse.postCode
+        expectedResponse.postCode,
       );
       expect(req.session.test.address.postTown).to.equal(
-        expectedResponse.postTown
+        expectedResponse.postTown,
       );
     });
   });

@@ -152,7 +152,7 @@ describe("Address confirmation controller", () => {
       const todayMessage = data.fakeToday.toISOString().split("T")[0];
       it(`should return ${data.expect} when today is ${todayMessage} and yearFrom is ${data.yearFrom} which means residency ${data.message}`, () => {
         expect(
-          addressConfirm.isMoreInfoRequired(data.yearFrom, data.fakeToday)
+          addressConfirm.isMoreInfoRequired(data.yearFrom, data.fakeToday),
         ).to.equal(data.expect);
       });
     });

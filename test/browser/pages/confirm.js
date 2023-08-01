@@ -31,7 +31,7 @@ module.exports = class PlaywrightDevPage {
 
   async returnRadioLegend() {
     return this.page.textContent(
-      "#isAddressMoreThanThreeMonths-fieldset > legend"
+      "#isAddressMoreThanThreeMonths-fieldset > legend",
     );
   }
 
@@ -50,19 +50,19 @@ module.exports = class PlaywrightDevPage {
 
   returnCurrentAddress() {
     return this.page.innerHTML(
-      "#main-content > div > div > dl > div:nth-child(1) > dd.govuk-summary-list__value"
+      "#main-content > div > div > dl > div:nth-child(1) > dd.govuk-summary-list__value",
     );
   }
 
   returnYearFromValue() {
     return this.page.textContent(
-      "#main-content > div > div > dl > div:nth-child(2) > dd.govuk-summary-list__value"
+      "#main-content > div > div > dl > div:nth-child(2) > dd.govuk-summary-list__value",
     );
   }
 
   returnPreviousAddressValue() {
     return this.page.textContent(
-      "#main-content > div > div > dl > div:nth-child(3) > dd.govuk-summary-list__value"
+      "#main-content > div > div > dl > div:nth-child(3) > dd.govuk-summary-list__value",
     );
   }
 

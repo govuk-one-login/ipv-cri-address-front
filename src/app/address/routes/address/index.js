@@ -15,7 +15,7 @@ router.use(
     name: "address",
     journeyName: "addressCRI",
     templatePath: "address",
-  })
+  }),
 );
 
 module.exports = router;

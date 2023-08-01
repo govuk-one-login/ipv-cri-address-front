@@ -5,14 +5,14 @@ describe("Address confrimation validator", () => {
     it("should pass when previous address has been added", () => {
       const isPreviousJourney = true;
       expect(confirmationValidation("testInput", isPreviousJourney)).to.equal(
-        true
+        true,
       );
     });
 
     it("should pass when value is passed and not in previous address journey", () => {
       const isPreviousJourney = false;
       expect(confirmationValidation("testInput", isPreviousJourney)).to.equal(
-        true
+        true,
       );
     });
 
