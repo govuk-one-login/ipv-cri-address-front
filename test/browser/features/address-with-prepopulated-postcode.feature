@@ -8,7 +8,7 @@ Feature: Prepopulated Address
     And the driving licence callout should be visible
 
 
-  @mock-api:address-prepopulated-postcode @only
+  @mock-api:address-prepopulated-postcode
   Scenario: Showing prepopulated postcode
     Given Prepopulated Patrick is using the system
     And they have started the address journey

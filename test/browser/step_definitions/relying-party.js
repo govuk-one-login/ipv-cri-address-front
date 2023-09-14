@@ -5,8 +5,13 @@ const { expect } = require("chai");
 
 Given(/^([A-Za-z ])+ is using the system$/, async function (name) {
   this.user = this.allUsers[name];
+  const rpConfig = { url: "http://localhost" };
 
-  const rpPage = new RelyingPartyPage(this.page);
+  if (process.env.STARTING_URL) {
+    rpConfig.url = process.env.STARTING_URL;
+  }
+
+  const rpPage = new RelyingPartyPage(this.page, rpConfig);
 
   await rpPage.goto();
 });

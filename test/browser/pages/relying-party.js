@@ -2,14 +2,12 @@ module.exports = class PlaywrightDevPage {
   /**
    * @param {import('@playwright/test').Page} page
    */
-  constructor(page) {
+  constructor(page, rpConfig) {
+    this.startingUrl = rpConfig.url;
     this.page = page;
   }
 
   async goto() {
-    this.startingUrl =
-      "http://localhost:5010/oauth2/authorize?request=lorem&client_id=standalone";
-
     await this.page.goto(this.startingUrl);
   }
 

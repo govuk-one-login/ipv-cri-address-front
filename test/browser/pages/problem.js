@@ -17,7 +17,8 @@ module.exports = class PlaywrightDevPage {
   }
 
   async chooseGoBackToSearch() {
-    await this.page.check("#addressBreak-retry");
+    await this.page.click(".govuk-back-link");
+    // await this.page.check("#addressBreak-retry");
   }
 
   async continue() {
