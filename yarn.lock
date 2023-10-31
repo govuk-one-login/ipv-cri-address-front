@@ -368,10 +368,10 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
-"@govuk-one-login/di-ipv-cri-common-express@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-3.1.0.tgz#837fc2d242132741d2c3c0beb1f0bb49a3475792"
-  integrity sha512-UShIIHgpsf2PVQyCSBLpT5eSRGd07rtbeoV7GMsFmWB2bp9FrA6t4D26MJgcQHdasor0L/ek6qj7picbb1HcFw==
+"@govuk-one-login/di-ipv-cri-common-express@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-3.2.0.tgz#09538fff721c05f53b1dcd66974b4adc5e7f9516"
+  integrity sha512-KA21wGLQ7JvMGabvkfbCl92fvVPHf9rpqg7UmjE/gP+EcCpuGSm7BpGxCLtYMvqeGBENNkNLNxyece0eLLaEaQ==
   dependencies:
     hmpo-logger "6.1.1"
     i18next "23.5.1"
