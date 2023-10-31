@@ -16,8 +16,8 @@
     "build-sass": "rm -rf dist/public/style.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
     "copy-assets": "mkdir -p dist && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts",
     "build-js": "yarn build-js:application && yarn build-js:cookies && yarn build-js:all",
-    "build-js:application": "mkdir -p dist/public/javascripts; uglifyjs src/assets/javascripts/application.js  node_modules/di-ipv-cri-common-express/src/assets/javascript/application.js --beautify -o dist/public/javascripts/application.js",
-    "build-js:cookies": "mkdir -p dist/public/javascripts; uglifyjs node_modules/di-ipv-cri-common-express/src/assets/javascript/cookies.js --beautify -o dist/public/javascripts/cookies.js",
+    "build-js:application": "mkdir -p dist/public/javascripts; uglifyjs src/assets/javascripts/application.js  node_modules/@govuk-one-login/di-ipv-cri-common-express/src/assets/javascript/application.js --beautify -o dist/public/javascripts/application.js",
+    "build-js:cookies": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/di-ipv-cri-common-express/src/assets/javascript/cookies.js --beautify -o dist/public/javascripts/cookies.js",
     "build-js:all": "mkdir -p dist/public/javascripts; uglifyjs node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js --beautify -o dist/public/javascripts/all.js",
     "minfiy-build-js": "uglifyjs src/assets/javascript/application.js -o src/assets/javascript/application.js -c -m && uglifyjs src/assets/javascript/cookies.js -o src/assets/javascript/cookies.js -c -m",
     "lint": "prettier --check src test && eslint .",
@@ -29,7 +29,7 @@
     "test:browser:ci": "npm-run-all -p -r start:ci mocks test:browser",
     "test:browser:only": "wait-on tcp:127.0.0.1:8010 tcp:127.0.0.1:5010 && API_BASE_URL=http://127.0.0.1:8010 MOCK_API=true cucumber-js --config test/browser/cucumber.js --tags \"@only and not @skip\"",
     "test:browser:ci:only": "npm-run-all -p -r start:ci mocks test:browser:only",
-    "check-translation": "node node_modules/di-ipv-cri-common-express/scripts/checkTranslations.js"
+    "check-translation": "node node_modules/@govuk-one-login/di-ipv-cri-common-express/scripts/checkTranslations.js '../../../../src/locales'"
   },
   "repository": {
     "type": "git",
@@ -66,12 +66,12 @@
     "wait-on": "7.0.1"
   },
   "dependencies": {
+    "@govuk-one-login/di-ipv-cri-common-express": "3.1.0",
     "aws-sdk": "^2.1393.0",
     "axios": "0.27.2",
     "cfenv": "1.2.4",
     "connect-dynamodb": "^2.0.5",
     "copyfiles": "2.4.1",
-    "di-ipv-cri-common-express": "alphagov/di-ipv-cri-common-express.git#v0.0.36",
     "dotenv": "16.0.3",
     "express": "4.18.2",
     "express-async-errors": "3.1.1",

@@ -20,10 +20,10 @@ govuk:
       buttonRejectText: "Gwrthod cwcis dadansoddi"
       linkViewCookiesText: "Gweld cwcis"
       cookieBannerHideLink: "Cuddio'r neges yma"
-      cookeBannerAccept:
+      cookieBannerAccept:
         paragraph1: "Rydych wedi derbyn cwcis ychwanegol. Gallwch "
         paragraph2: " unrhyw bryd."
-      cookeBannerReject:
+      cookieBannerReject:
         paragraph1: "Rydych wedi gwrthod cwcis ychwanegol. Gallwch "
         paragraph2: " unrhyw bryd."
       changeCookiePreferencesLink: "newid eich gosodiadau cwcis"
