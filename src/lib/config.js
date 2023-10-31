@@ -21,6 +21,7 @@ module.exports = {
       COOKIE_DOMAIN: process.env.ANALYTICS_DOMAIN || "localhost",
     },
   },
+  LOG_LEVEL: process.env.LOG_LEVEL || "request",
   PORT: process.env.PORT || 5010,
   SESSION_SECRET: process.env.SESSION_SECRET,
   SESSION_TABLE_NAME: process.env.SESSION_TABLE_NAME,
