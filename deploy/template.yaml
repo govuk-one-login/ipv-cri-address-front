@@ -41,6 +41,10 @@ Conditions:
   IsProductionOrBuild: !Or
     - !Equals [ !Ref Environment, production ]
     - !Equals [ !Ref Environment, build ]
+  IsBuildOrDev: !Or
+    - !Equals [ !Ref Environment, build ]
+    - !Equals [ !Ref Environment, dev ]
+
   UsePermissionsBoundary:
     Fn::Not:
       - Fn::Equals:
@@ -290,6 +294,8 @@ Resources:
               Value: !If [ IsProduction, "GTM-TT5HDKV", "GTM-TK92W68" ]
             - Name: ANALYTICS_DOMAIN
               Value: !If [ IsProduction, "account.gov.uk", !Sub "${Environment}.account.gov.uk" ]
+            - Name: LOG_LEVEL
+              Value: !If [ IsBuildOrDev, "info", "request" ]
           PortMappings:
             - ContainerPort: 8080
               Protocol: tcp

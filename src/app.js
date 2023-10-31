@@ -26,6 +26,7 @@ const {
 const {
   API,
   APP,
+  LOG_LEVEL,
   PORT,
   SESSION_SECRET,
   SESSION_TABLE_NAME,
@@ -37,6 +38,8 @@ const { setup } = require("hmpo-app");
 const loggerConfig = {
   console: true,
   consoleJSON: true,
+  consoleLevel: LOG_LEVEL,
+  appLevel: LOG_LEVEL,
   app: false,
 };
 
