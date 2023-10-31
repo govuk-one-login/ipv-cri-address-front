@@ -32,7 +32,7 @@ govuk:
     cookieLinkText: "Darganfyddwch fwy am gwcis"
   phaseBanner:
     tag: "beta"
-    content: 'Mae hwn yn wasanaeth newydd – bydd eich <a href="https://signin.account.gov.uk/contact-us" class="govuk-link" rel="noopener" target="_blank">adborth (agor mewn tab newydd)</a> yn ein helpu i''w wella.'
+    content: 'Mae hwn yn wasanaeth newydd – bydd eich <a href="https://home.account.gov.uk/contact-gov-uk-one-login" class="govuk-link" rel="noopener" target="_blank">adborth (agor mewn tab newydd)</a> yn ein helpu i''w wella.'
   footerNavItems:
     meta:
       items:
@@ -44,7 +44,7 @@ govuk:
           text: "Telerau ac amodau"
         - href: "https://signin.account.gov.uk/privacy-notice"
           text: "Hysbysiad preifatrwydd"
-        - href: "https://signin.account.gov.uk/contact-us"
+        - href: "https://home.account.gov.uk/contact-gov-uk-one-login"
           text: "Cymorth"
   copyright:
     text: "© Hawlfraint y goron"
@@ -73,7 +73,7 @@ links:
     cantFindAddress:
       - '<p><a href="/previous/address" data-id="cantFindAddress" class="govuk-link">Ni allaf ddod o hyd i fy nghyfeiriad ar y rhestr</a></p>'
   helpContact:
-    - '<p><a href="https://signin.account.gov.uk/contact-us?supportType=PUBLIC" target="_blank" class="govuk-link">Cysylltwch â’r tîm GOV.UK One Login (agor mewn tab newydd)</a></p>'
+    - '<p><a href="https://home.account.gov.uk/contact-gov-uk-one-login" target="_blank" class="govuk-link">Cysylltwch â’r tîm GOV.UK One Login (agor mewn tab newydd)</a></p>'
 validation:
   required: "Rhowch eich {{label}}"
   postcodeLength: "Dylai eich {{label}} fod rhwng 5 a 7 nod"
