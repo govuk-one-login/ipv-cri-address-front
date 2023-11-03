@@ -2265,7 +2265,7 @@ glob@7.2.0, glob@^7.0.5, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^10.3.10:
+glob@^10.2.2, glob@^10.3.10:
   version "10.3.10"
   resolved "https://registry.yarnpkg.com/glob/-/glob-10.3.10.tgz#0351ebb809fd187fe421ab96af83d3a70715df4b"
   integrity sha512-fa46+tv1Ak0UPK1TOy/pZrIybNNt4HCv7SDzwyfiOZkvZLEbjsZkJBPtDHVshZjbecAoAGSC20MjLDG/qr679g==
@@ -2470,17 +2470,17 @@ hmpo-form-wizard@12.0.6:
     moment "^2.29.3"
     underscore "^1.13.4"
 
-hmpo-i18n@5.0.2:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/hmpo-i18n/-/hmpo-i18n-5.0.2.tgz#b8ff94c072af4deb3795aa3f5af487aacdec443f"
-  integrity sha512-F8RrS5V/Y3YWIeQtqw/Ld4cYVNZXZInsokQPJ9YjRG+3NYYd50CRpvau6FjIKqDXKO2KexKnn9mSvu5ZMyDDlg==
+hmpo-i18n@6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/hmpo-i18n/-/hmpo-i18n-6.0.1.tgz#8931e90c9925fa9c1a12e854b198783755d0262f"
+  integrity sha512-/5TiJUzjwvQfHJB3Mhmad2/TQZJvwJgeKrnUYHbvq+4Abn32ZfgoN+MYCpgZaUWh63AWbSXw0kXhtew2tKb4pw==
   dependencies:
     async "^3.2.4"
     callsites "^3.1.0"
     chokidar "^3.5.3"
     deep-clone-merge "^1.5.4"
     findup "^0.1.5"
-    glob "^8.0.3"
+    glob "^10.2.2"
     js-yaml "^4.1.0"
     lodash "^4.17.21"
 
