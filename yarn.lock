@@ -1044,7 +1044,7 @@ bytes@3.0.0:
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
   integrity sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg=
 
-bytes@3.1.2:
+bytes@3.1.2, bytes@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.1.2.tgz#8b0beeb98605adf1b128fa4386403c009e0221a5"
   integrity sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==
@@ -1514,10 +1514,10 @@ decompress-response@^6.0.0:
   dependencies:
     mimic-response "^3.1.0"
 
-deep-clone-merge@^1.5.4:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/deep-clone-merge/-/deep-clone-merge-1.5.4.tgz#d2ecb85bc1bf8bb9313dd118c6674f690ae94677"
-  integrity sha512-Gb/b8aAFUeX/ZkQwfpYlzVXaUOnHj0jPmh8uwF0eBGhAuFMZA1IxeuSzLGG4B1lzrp0SZsd3UhL6zvhDY7l6ZQ==
+deep-clone-merge@^1.5.4, deep-clone-merge@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/deep-clone-merge/-/deep-clone-merge-1.5.5.tgz#1bb2f4df74c52c90223572a869d60e8525ee0dc4"
+  integrity sha512-ldHDqbpMP5VTZ/QrIQ6ikzYy4fWh8WPIfqEwetN/4Pxq/xPnWlnESGN41oam5DEwI+acHznEm1bp5Rn4bp4c0w==
 
 deep-eql@^3.0.1:
   version "3.0.1"
@@ -2436,14 +2436,17 @@ hmpo-app@2.4.0:
     underscore "^1.13.4"
     uuid "^8.3.2"
 
-hmpo-components@5.5.2:
-  version "5.5.2"
-  resolved "https://registry.yarnpkg.com/hmpo-components/-/hmpo-components-5.5.2.tgz#8835260992e1da2ed4e199b15482f303ab7cd9c8"
-  integrity sha512-czwG9p/aCL3msQg2nTAnhVKwGYX21138UvYCL5+8xYOAOfZ0kbXLL9+uH3uTRNCOWmqLzZqP+LvdQ0qfE7bwHg==
+hmpo-components@6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/hmpo-components/-/hmpo-components-6.4.0.tgz#67d94981e4cead715f9a6a814d891dd872b54281"
+  integrity sha512-iJqkD3qV8UY6SzJMAocRj3zgZv4MHCpMdHmxjmVOsVZZrwkfADy6RPEhKPm86WH79gEQ3gyYLhhpG1CHX4XNtw==
   dependencies:
-    deep-clone-merge "^1.5.4"
-    moment "^2.29.3"
-    underscore "^1.13.4"
+    bytes "^3.1.2"
+    deep-clone-merge "^1.5.5"
+    moment "^2.29.4"
+    underscore "^1.13.6"
+  optionalDependencies:
+    fsevents "~2.3.2"
 
 hmpo-config@2.2.1:
   version "2.2.1"
@@ -3476,10 +3479,10 @@ module-not-found-error@^1.0.1:
   resolved "https://registry.yarnpkg.com/module-not-found-error/-/module-not-found-error-1.0.1.tgz#cf8b4ff4f29640674d6cdd02b0e3bc523c2bbdc0"
   integrity sha1-z4tP9PKWQGdNbN0CsOO8UjwrvcA=
 
-moment@^2.29.3:
-  version "2.29.3"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
-  integrity sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
+moment@^2.29.3, moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 ms@2.0.0:
   version "2.0.0"
@@ -4984,10 +4987,10 @@ underscore@1.12.x:
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.12.1.tgz#7bb8cc9b3d397e201cf8553336d262544ead829e"
   integrity sha512-hEQt0+ZLDVUMhebKxL4x1BTtDY7bavVofhZ9KZ4aI26X9SRaE+Y3m83XUL1UP2jn8ynjndwCCpEHdUG+9pP1Tw==
 
-underscore@^1.13.4:
-  version "1.13.4"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.4.tgz#7886b46bbdf07f768e0052f1828e1dcab40c0dee"
-  integrity sha512-BQFnUDuAQ4Yf/cYY5LNrK9NCJFKriaRbD9uR1fTeXnBeoa97W0i41qkZfGO9pSo8I5KzjAcSY2XYtdf0oKd7KQ==
+underscore@^1.13.4, underscore@^1.13.6:
+  version "1.13.6"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.6.tgz#04786a1f589dc6c09f761fc5f45b89e935136441"
+  integrity sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
