@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: "2010-09-09" 
 
 Transform:
   - AWS::Serverless-2016-10-31
@@ -52,6 +52,17 @@ Conditions:
           - "none"
 
 Mappings:
+  EnvironmentConfiguration:
+    dev:
+      dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+    build:
+      dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+    staging:
+      dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+    integration:
+      dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+    production:
+      dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables 
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
     eu-west-2:
@@ -296,6 +307,22 @@ Resources:
               Value: !If [ IsProduction, "account.gov.uk", !Sub "${Environment}.account.gov.uk" ]
             - Name: LOG_LEVEL
               Value: !If [ IsBuildOrDev, "info", "request" ]
+        Secrets:
+            - Name: DT_TENANT
+              ValueFrom: !Join
+                - ''
+                - - !FindInMap [ EnvironmentConfiguration, !Ref AWS::AccountId, dynatraceSecretArn ]
+                  - ':DT_TENANT::'
+            - Name: DT_TENANTTOKEN
+              ValueFrom: !Join
+                - ''
+                - - !FindInMap [ EnvironmentConfiguration, !Ref AWS::AccountId, dynatraceSecretArn ]
+                  - ':DT_TENANTTOKEN::'
+            - Name: DT_CONNECTION_POINT
+              ValueFrom: !Join
+              - ''
+              - - !FindInMap [ EnvironmentConfiguration, !Ref AWS::AccountId, dynatraceSecretArn ]
+                - ':DT_CONNECTION_POINT::'
           PortMappings:
             - ContainerPort: 8080
               Protocol: tcp
@@ -351,6 +378,26 @@ Resources:
                 Resource:
                   - !GetAtt "ECSAccessLogsGroup.Arn"
                   - !Sub "${ECSAccessLogsGroup.Arn}:*"
+        - PolicyName: DynatraceGetSecrets
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "secretsmanager:GetSecretValue" #pragma: allowlist secret
+                Resource:
+                  - "arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables"
+                  - "arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables"
+              - Effect: Allow
+                Action:
+                  - "secretsmanager:ListSecrets" #pragma: allowlist secret
+                Resource:
+                  - "arn:aws:secretsmanager:eu-west-2:216552277552:secret:*"
+              - Effect: Allow
+                Action:
+                  - "kms:Decrypt"
+                Resource:
+                  - "arn:aws:kms:eu-west-2:216552277552:key/*"
       PermissionsBoundary: !If
         - UsePermissionsBoundary
         - !Ref PermissionsBoundary
@@ -384,6 +431,26 @@ Resources:
                   - "dynamodb:PutItem"
                 Resource:
                   - !GetAtt AddressFrontSessionsTable.Arn
+      - PolicyName: DynatraceGetSecrets
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "secretsmanager:GetSecretValue" #pragma: allowlist secret
+                Resource:
+                  - "arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables"
+                  - "arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables"
+              - Effect: Allow
+                Action:
+                  - "secretsmanager:ListSecrets" #pragma: allowlist secret
+                Resource:
+                  - "arn:aws:secretsmanager:eu-west-2:216552277552:secret:*"
+              - Effect: Allow
+                Action:
+                  - "kms:Decrypt"
+                Resource:
+                  - "arn:aws:kms:eu-west-2:216552277552:key/*"
       PermissionsBoundary: !If
         - UsePermissionsBoundary
         - !Ref PermissionsBoundary
