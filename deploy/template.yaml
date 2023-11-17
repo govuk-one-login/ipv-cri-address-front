@@ -332,9 +332,9 @@ Resources:
               awslogs-group : !Ref ECSAccessLogsGroup
               awslogs-region : !Sub ${AWS::Region}
               awslogs-stream-prefix : !Sub address-front-${Environment}
-      Cpu: '512'
+      Cpu: '1024'
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
-      Memory: '1024'
+      Memory: '2048'
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - FARGATE
