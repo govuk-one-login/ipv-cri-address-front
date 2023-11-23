@@ -606,6 +606,52 @@ Resources:
           - MetricIntervalLowerBound: 35
             ScalingAdjustment: 500
 
+  StepScaleOutAlarm:
+    DependsOn: ECSAutoScalingTarget
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !Ref StepScaleOutPolicy
+      AlarmDescription: "AddressFrontClusterOver60PercentCPU"
+      ComparisonOperator: "GreaterThanThreshold"
+      DatapointsToAlarm: "2"
+      Dimensions:
+        - Name: ClusterName
+          Value: !Ref AddressFrontEcsCluster
+        - Name: ServiceName
+          Value: !GetAtt AddressFrontEcsService.Name
+      Unit: "Percent"
+      EvaluationPeriods: "2"
+      MetricName: "CPUUtilization"
+      Namespace: "AWS/ECS"
+      Statistic: "Average"
+      Period: "60"
+      Threshold: "60"
+
+  StepScaleInAlarm:
+    DependsOn: ECSAutoScalingTarget
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !Ref StepScaleInPolicy
+      AlarmDescription: "AddressFrontClusterUnder60PercentCPU"
+      ComparisonOperator: "LessThanThreshold"
+      DatapointsToAlarm: "5"
+      Dimensions:
+        - Name: ClusterName
+          Value: !Ref AddressFrontEcsCluster
+        - Name: ServiceName
+          Value: !GetAtt AddressFrontEcsService.Name
+      Unit: "Percent"
+      EvaluationPeriods: "5"
+      MetricName: "CPUUtilization"
+      Namespace: "AWS/ECS"
+      Statistic: "Average"
+      Period: "60"
+      Threshold: "60"
+
   AddressFrontSessionsTable:
     Type: AWS::DynamoDB::Table
     Properties:
