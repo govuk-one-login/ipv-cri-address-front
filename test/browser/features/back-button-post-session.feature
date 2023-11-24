@@ -1,4 +1,4 @@
-@mock-errors @mock-api:address-success
+@mock-errors @mock-api:success
 Feature: Error handling
 
   API Errors in middle of journey
@@ -17,7 +17,7 @@ Feature: Error handling
     When they confirm their details
     Then they should be redirected as a success
 
-  @mock-api:address-success
+  @mock-api:success
   Scenario: Back button history
     Given they have been redirected as a success
     When they return to a previous page

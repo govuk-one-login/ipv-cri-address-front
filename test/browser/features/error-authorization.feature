@@ -1,4 +1,4 @@
-@mock-errors @mock-api:address-authorization-error
+@mock-errors @mock-api:authorization-error
 Feature: Error handling
 
   API Errors in middle of journey
@@ -14,7 +14,7 @@ Feature: Error handling
     When they add their residency date with a "older" move year
     And they continue to confirm address
 
-  @mock-api:address-authorization-error
+  @mock-api:authorization-error @wip
   Scenario: Error redirection
     Given they should see the confirm page
     When they confirm their details

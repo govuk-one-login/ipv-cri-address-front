@@ -1,4 +1,4 @@
-@mock-api:address-success @success
+@mock-api:success @success
 Feature: compliance for address structures presented in https://github.com/alphagov/digital-identity-architecture/blob/main/rfc/0020-address-structure.md#4-examples-of-json
 
   Background:

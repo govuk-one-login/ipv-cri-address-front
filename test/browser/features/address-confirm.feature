@@ -1,4 +1,4 @@
-@mock-api:address-success @success
+@mock-api:success @success
 Feature: Happy Path - confirming address details
   Confirming address details
 
