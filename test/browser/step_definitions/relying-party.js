@@ -24,6 +24,8 @@ Then(
 
     expect(rpPage.isRelyingPartyServer()).to.be.true;
 
+    console.log(err);
+    console.log(this.page.url());
     expect(rpPage.hasErrorQueryParams(err)).to.be.true;
   }
 );

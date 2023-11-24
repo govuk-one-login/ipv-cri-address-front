@@ -49,6 +49,9 @@ resources:
 
   - method: PUT
     path: /address
+    requestBody:
+      jsonPath: $
+      operator: Exists
     response:
       statusCode: 201
       content: "{}"
@@ -57,37 +60,53 @@ resources:
     path: /session
     requestBody:
       jsonPath: $.client_id
-      value: "address-prepopulated-postcode"
+      value: "prepopulated-postcode"
     response:
       statusCode: 201
       template: true
-      content: '{"session_id": "address-prepopulated-postcode", "state": "sT@t3", "redirect_uri": "http://example.net/return"}'
+
+      content: |
+        {
+          "session_id": "prepopulated-postcode",
+          "state": "sT@t3",
+          "redirect_uri": "${system.server.url}/system/status"
+        }
 
   - method: POST
     path: /session
     requestBody:
       jsonPath: $.client_id
-      value: "address-success"
+      value: "success"
     response:
       statusCode: 201
       template: true
-      content: '{"session_id": "address-success", "state": "sT@t3", "redirect_uri": "http://example.net/return"}'
+      content: |
+        {
+          "session_id": "success",
+          "state": "sT@t3",
+          "redirect_uri": "${system.server.url}/system/status"
+        }
 
   - method: POST
     path: /session
     requestBody:
       jsonPath: $.client_id
-      value: "address-authorization-error"
+      value: "authorization-error"
     response:
       statusCode: 201
       template: true
-      content: '{"session_id": "address-authorization-error", "state": "sT@t3", "redirect_uri": "http://example.net/return"}'
+      content: |
+        {
+          "session_id": "address-authorization-error",
+          "state": "sT@t3",
+          "redirect_uri": "${system.server.url}/system/status"
+        }
 
   - method: POST
     path: /session
     requestBody:
       jsonPath: $.client_id
-      value: "test-session-400"
+      value: "session-400"
     response:
       statusCode: 400
       template: true
@@ -97,7 +116,7 @@ resources:
     path: /session
     requestBody:
       jsonPath: $.client_id
-      value: "test-session-500"
+      value: "session-500"
     response:
       statusCode: 500
       template: true
@@ -106,16 +125,32 @@ resources:
   - method: GET
     path: /authorization
     requestHeaders:
-      session-id: "address-authorization-error"
+      session-id: "authorization-error"
     response:
       statusCode: 500
-      content: '{"redirect_uri": "http://example.net", "oauth_error": {"error_description": "gateway", "error": "server_error"}}'
+      template: true
+      content: |
+        {
+          "redirect_uri": "${system.server.url}/system/status",
+          "oauth_error": {
+            "error_description": "gateway",
+            "error": "server_error"
+            }
+          }
+        }
 
   - method: GET
     path: /authorization
     requestHeaders:
-      session-id: "address-success"
+      session-id: "success"
     response:
       template: true
       statusCode: 200
-      content: '{"authorizationCode": {"value":"auth-code-${random.uuid()}"}, "state":"sT@t3","redirect_uri":"http://example.net/return"}'
+      content: |
+        {
+          "authorizationCode": {
+            "value":"auth-code-${random.uuid()}"
+          },
+          "state": "sT@t3",
+          "redirect_uri": "${system.server.url}/system/status"
+        }

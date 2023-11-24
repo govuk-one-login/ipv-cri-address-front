@@ -1,4 +1,4 @@
-@mock-api:address-success @success
+@mock-api:success @success
 Feature: Confirming flat number is displayed correctly after manual entry
 
     Feature Description: User is asked to enter their address manually if the system does not recognise their postcode. User enters their address including Flat Number manually.

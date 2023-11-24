@@ -1,4 +1,4 @@
-@mock-api:address-success @success
+@mock-api:success @success
 Feature: Happy Path - previous
   Viewing the Address lookup successfully
 

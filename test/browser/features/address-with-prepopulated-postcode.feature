@@ -1,6 +1,6 @@
 Feature: Prepopulated Address
 
-  @mock-api:address-prepopulated-postcode
+  @mock-api:prepopulated-postcode
   Scenario: Showing prepopulated postcode
     Given Prepopulated Patrick is using the system
     When they have started the address journey
@@ -8,7 +8,7 @@ Feature: Prepopulated Address
     And the driving licence callout should be visible
 
 
-  @mock-api:address-prepopulated-postcode @only
+  @mock-api:prepopulated-postcode @only
   Scenario: Showing prepopulated postcode
     Given Prepopulated Patrick is using the system
     And they have started the address journey
@@ -17,7 +17,7 @@ Feature: Prepopulated Address
     Then they should see the search postcode prefilled with "SW1A 1AA"
     And the driving licence callout should not be visible
 #
-  @mock-api:address-success
+  @mock-api:success
   Scenario: Showing non-prepopulated postcode
     Given Unpopulated Una is using the system
     When they have started the address journey

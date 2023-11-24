@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const {
   Before,
   BeforeAll,
@@ -6,6 +8,7 @@ const {
   setDefaultTimeout,
 } = require("@cucumber/cucumber");
 const { chromium } = require("playwright");
+const axios = require("axios");
 
 // FIXME This is large due to cold starts
 setDefaultTimeout(30 * 1000);
@@ -26,8 +29,8 @@ AfterAll(async function () {
   await global.browser.close();
 });
 
-// Add scenario header
 Before(async function ({ pickle } = {}) {
+  // Only if MOCK_API do we use the @mock-api -> client_id mapping
   if (!(process.env.MOCK_API === "true")) {
     return;
   }
