@@ -560,6 +560,7 @@ Resources:
         ScaleOutCooldown: 60
 
   StepScaleInPolicy:
+    Condition: IsProductionOrBuild
     DependsOn: ECSAutoScalingTarget
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
@@ -580,6 +581,7 @@ Resources:
             ScalingAdjustment: -50
 
   StepScaleOutPolicy:
+    Condition: IsProductionOrBuild
     DependsOn: ECSAutoScalingTarget
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
@@ -607,6 +609,7 @@ Resources:
             ScalingAdjustment: 500
 
   StepScaleOutAlarm:
+    Condition: IsProductionOrBuild
     DependsOn: ECSAutoScalingTarget
     Type: AWS::CloudWatch::Alarm
     Properties:
@@ -630,6 +633,7 @@ Resources:
       Threshold: "60"
 
   StepScaleInAlarm:
+    Condition: IsProductionOrBuild
     DependsOn: ECSAutoScalingTarget
     Type: AWS::CloudWatch::Alarm
     Properties:
