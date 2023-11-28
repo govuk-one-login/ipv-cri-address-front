@@ -187,6 +187,9 @@ Resources:
       HealthCheckEnabled: TRUE
       HealthCheckProtocol: HTTP
       HealthCheckPath: /healthcheck
+      HealthCheckTimeoutSeconds: 2
+      HealthCheckIntervalSeconds: 5
+      HealthyThresholdCount: 2
       Matcher:
         HttpCode: 200
       Port: 80
@@ -197,7 +200,7 @@ Resources:
           !Sub "${VpcStackName}-VpcId"
       TargetGroupAttributes:
         - Key: deregistration_delay.timeout_seconds
-          Value: 60
+          Value: 30
 
   LoadBalancerListener:
     Type: 'AWS::ElasticLoadBalancingV2::Listener'
