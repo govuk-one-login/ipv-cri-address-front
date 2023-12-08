@@ -1,5 +1,7 @@
 require("dotenv").config();
 
+const GA4_CONTAINER_ID = "GTM-KD86CMZ";
+
 module.exports = {
   API: {
     BASE_URL: process.env.API_BASE_URL || "http://localhost:5007/",
@@ -17,7 +19,8 @@ module.exports = {
       ADDRESS: "/",
     },
     ANALYTICS: {
-      ID: process.env.GTM_ID,
+      // ID: process.env.GTM_ID,
+      ID: GA4_CONTAINER_ID,
       COOKIE_DOMAIN: process.env.ANALYTICS_DOMAIN || "localhost",
     },
   },

@@ -33,5 +33,29 @@
     {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.find-address")}) }}
 
   {% endcall %}
+{% endblock %}
 
+{% block bodyEnd %}
+  {% block scripts %}
+    <script type="text/javascript" src="/public/javascripts/cookies.js"></script>
+    <script type="text/javascript" src="/public/javascripts/all.js"></script>
+    <script type="text/javascript" src="/public/javascripts/application.js"></script>
+    <script type="text/javascript" src="/public/analytics.js"></script>
+    <script {% if cspNonce %} nonce='{{ cspNonce }}{%  endif %}'>
+      window.DI.appInit({ga4ContainerId: "{{gtmId}}"})
+      window
+      .DI
+      .analyticsGa4
+      .pageViewTracker
+      .trackOnPageLoad({
+        statusCode: '{{ statusCode }}', // Access status code
+        englishPageTitle: '{{ englishPageTitle }}',
+        taxonomy_level1: '{{ taxonomyLevel1 }}', // Access taxonomy level 1
+        taxonomy_level2: '{{ taxonomyLevel2 }}', // Access taxonomy level 2
+        content_id: '{{contentId}}',
+        logged_in_status: false,
+        dynamic: false,
+      });
+    </script>
+  {% endblock %}
 {% endblock %}
