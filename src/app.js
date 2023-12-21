@@ -63,7 +63,7 @@ const { app, router } = setup({
   urls: {
     public: "/public",
   },
-  publicDirs: ["../dist/public", "../node_modules/one-login-ga4/lib"],
+  publicDirs: ["../dist/public"],
   translation: {
     allowedLangs: ["en", "cy"],
     fallbackLang: ["en"],

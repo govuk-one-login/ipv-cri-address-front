@@ -5,26 +5,25 @@
   "main": "src/server.js",
   "engines": {
     "node": "18.x",
-    "yarn": "1.22.x"
+    "npm run": "1.22.x"
   },
   "scripts": {
     "start": "node src/app.js",
-    "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ yarn dev",
+    "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ npm run dev",
     "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8010/ npm-run-all -p -r mocks dev",
     "dev": "nodemon src/app.js",
-    "build": "yarn build-sass && yarn build-js && yarn copy-assets",
+    "build": "npm run build-sass && npm run build-js && npm run copy-assets",
     "build-sass": "rm -rf dist/public/style.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
     "copy-assets": "mkdir -p dist && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts",
-    "build-js": "yarn build-js:application && yarn build-js:cookies && yarn build-js:all",
-    "build-js:application": "mkdir -p dist/public/javascripts; uglifyjs src/assets/javascripts/application.js  node_modules/di-ipv-cri-common-express/src/assets/javascript/application.js --beautify -o dist/public/javascripts/application.js",
-    "build-js:cookies": "mkdir -p dist/public/javascripts; uglifyjs node_modules/di-ipv-cri-common-express/src/assets/javascript/cookies.js --beautify -o dist/public/javascripts/cookies.js",
+    "build-js": "npm run build-js:all && npm run build-js:analytics",
+    "build-js:analytics": "cp node_modules/di-ipv-cri-common-express/src/assets/javascript/analytics.js dist/public/javascripts",
     "build-js:all": "mkdir -p dist/public/javascripts; uglifyjs node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js --beautify -o dist/public/javascripts/all.js",
     "minfiy-build-js": "uglifyjs src/assets/javascript/application.js -o src/assets/javascript/application.js -c -m && uglifyjs src/assets/javascript/cookies.js -o src/assets/javascript/cookies.js -c -m",
     "lint": "prettier --check src test && eslint .",
     "test": "mocha",
-    "test:coverage": "nyc --reporter=lcov --reporter=text-summary yarn test",
+    "test:coverage": "nyc --reporter=lcov --reporter=text-summary npm run test",
     "test:watch": "mocha --watch",
-    "mocks": "yarn run wiremock --port 8010 --root-dir test/mocks",
+    "mocks": "npm run run wiremock --port 8010 --root-dir test/mocks",
     "mocks:imposter": "imposter up test/imposter --port 8010",
     "test:browser": "wait-on tcp:127.0.0.1:8010 tcp:127.0.0.1:5010 && API_BASE_URL=http://127.0.0.1:8010 MOCK_API=true cucumber-js --config test/browser/cucumber.js --tags \"not @skip\"",
     "test:browser:ci": "npm-run-all -p -r start:ci mocks test:browser",
@@ -42,7 +41,7 @@
     "url": "https://github.com/alphagov/di-ipv-cri-address-front/issues"
   },
   "homepage": "https://github.com/alphagov/di-ipv-cri-address-front#readme",
-  "packageManager": "yarn@2.4.3",
+  "packageManager": "npm run@2.4.3",
   "devDependencies": {
     "@cucumber/cucumber": "8.6.0",
     "chai": "4.3.6",
@@ -63,7 +62,7 @@
     "sass": "1.54.9",
     "sinon": "14.0.1",
     "sinon-chai": "3.7.0",
-    "uglify-js": "3.17.3",
+    "uglify-js": "^3.17.3",
     "wait-on": "6.0.1"
   },
   "dependencies": {
@@ -87,6 +86,7 @@
     "jsonwebtoken": "8.5.1",
     "nunjucks": "3.2.3",
     "one-login-ga4": "^0.0.21",
+    "uglifyjs": "^2.4.11",
     "wiremock": "2.34.0"
   }
 }

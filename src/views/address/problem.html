@@ -7,5 +7,21 @@
 {% block mainContent %}
 
   {% include "../components/address-problem-field.html" %}
-
+  <script {% if cspNonce %} nonce="{{ cspNonce }}"{%  endif %}>
+    window.addEventListener('load', function () {
+      window
+      .DI
+      .analyticsGa4
+      .pageViewTracker
+      .trackOnPageLoad({
+        statusCode: '{{statusCode}}', // Access status code
+        englishPageTitle: '{{translate("pages.addressProblem.title")}}',
+        taxonomy_level1: 'CRI', // Access taxonomy level 1
+        taxonomy_level2: 'problem', // Access taxonomy level 2
+        content_id: '002',
+        logged_in_status: true,
+        dynamic: false,
+      });
+    });
+  </script>
 {% endblock %}

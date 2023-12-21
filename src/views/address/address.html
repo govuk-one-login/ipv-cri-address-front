@@ -26,5 +26,21 @@
     {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
-
+  <script {% if cspNonce %} nonce="{{ cspNonce }}"{%  endif %}>
+    window.addEventListener('load', function () {
+      window
+      .DI
+      .analyticsGa4
+      .pageViewTracker
+      .trackOnPageLoad({
+        statusCode: '{{statusCode}}', // Access status code
+        englishPageTitle: '{{translate("pages.address-form.check-details.title")}}',
+        taxonomy_level1: 'CRI', // Access taxonomy level 1
+        taxonomy_level2: 'Check details', // Access taxonomy level 2
+        content_id: '004',
+        logged_in_status: true,
+        dynamic: false,
+      });
+    });
+  </script>
 {% endblock %}
