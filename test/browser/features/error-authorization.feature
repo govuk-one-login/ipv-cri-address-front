@@ -19,5 +19,3 @@ Feature: Error handling
     Given they should see the confirm page
     When they confirm their details
     Then they should be redirected as an error with a description "gateway"
-
-

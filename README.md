@@ -21,9 +21,11 @@ Install `pre-commit` from [here](https://pre-commit.com/)
 Run `pre-commit install` to install pre-commit hooks locally.
 
 If you get the error:
+
 ```
 [ERROR] Cowardly refusing to install hooks with `core.hooksPath` set.
 ```
+
 Run `git config --unset-all core.hooksPath` to reset your git hook settings.
 
 ## Environment Variables
@@ -58,7 +60,7 @@ In order to support consistent use of headers for API requests. [middleware](./s
 #### Running against a deployed system
 
 | Variable                | Value                                              | Comment                                                                                                    |
-|-------------------------|----------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| ----------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | CREDENTIAL_ISSUER_LABEL | Address CRI Dev                                    | There might be many different buttons on the credential issuer page, this allows selection of a single one |
 | CORE_STUB_URL           | https://di-ipv-core-stub.london.cloudapps.digital/ | Initial host to start the web journey on. Will be either Core or a Core stub.                              |
 | MOCK_API                | false                                              | Should the automatic mocking be used                                                                       |
@@ -74,6 +76,7 @@ They can be run using:
 ```sh
 ./test/brower $ cucumber-js
 ```
+
 ## Using mocked scenario data
 
 Any cucumber feature or scenario with a tag prefixed with `@mock-api:`
@@ -85,8 +88,8 @@ eg:
   Scenario: Address error
   ...
 ```
-This scenario will be configured to send a `x-scenario-id` header of `address-error` on every web browser request.
 
+This scenario will be configured to send a `x-scenario-id` header of `address-error` on every web browser request.
 
 ## Using live data
 
@@ -103,6 +106,7 @@ These should be able to be run using cucumber-js as below:
 You can run browser tests in isolation by decorating the scenario with a `@only` tag and then running `yarn run test:browser:ci:only`.
 
 eg:
+
 ```
   @only
   Scenario: Address error
