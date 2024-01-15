@@ -1,10 +1,9 @@
 fail-zero: false
 spec:
-  - '**/*.test.js'
+  - "**/*.test.js"
 ignore:
-  - 'node_modules/**'
+  - "node_modules/**"
 file:
-  - './test/utils/mocha-helpers'
+  - "./test/utils/mocha-helpers"
 reporter: "mocha-multi-reporters"
 reporter-option: "configFile=reporterConfig.json"
-

@@ -31,19 +31,19 @@ Parameters:
 
 Conditions:
   IsNotDevelopment: !Or
-    - !Equals [ !Ref Environment, build ]
-    - !Equals [ !Ref Environment, staging ]
-    - !Equals [ !Ref Environment, integration ]
-    - !Equals [ !Ref Environment, production ]
-  IsProduction: !Equals [ !Ref Environment, production ]
+    - !Equals [!Ref Environment, build]
+    - !Equals [!Ref Environment, staging]
+    - !Equals [!Ref Environment, integration]
+    - !Equals [!Ref Environment, production]
+  IsProduction: !Equals [!Ref Environment, production]
 
   # This is for performance testing as build and production should be identical
   IsProductionOrBuild: !Or
-    - !Equals [ !Ref Environment, production ]
-    - !Equals [ !Ref Environment, build ]
+    - !Equals [!Ref Environment, production]
+    - !Equals [!Ref Environment, build]
   IsBuildOrDev: !Or
-    - !Equals [ !Ref Environment, build ]
-    - !Equals [ !Ref Environment, dev ]
+    - !Equals [!Ref Environment, build]
+    - !Equals [!Ref Environment, dev]
 
   UsePermissionsBoundary:
     Fn::Not:
@@ -71,7 +71,7 @@ Mappings:
 Resources:
   # Security Groups for the ECS service and load balancer
   LoadBalancerSG:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
     Properties:
       GroupDescription: >-
         Address Front LoadBalancer Security Group
@@ -82,11 +82,10 @@ Resources:
           IpProtocol: tcp
           ToPort: 80
       VpcId:
-        Fn::ImportValue:
-          !Sub "${VpcStackName}-VpcId"
+        Fn::ImportValue: !Sub "${VpcStackName}-VpcId"
 
   LoadBalancerSGEgressToECSSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroupEgress'
+    Type: "AWS::EC2::SecurityGroupEgress"
     Properties:
       GroupId: !GetAtt LoadBalancerSG.GroupId
       IpProtocol: tcp
@@ -98,7 +97,7 @@ Resources:
       ToPort: 8080
 
   ECSSecurityGroup:
-    Type: 'AWS::EC2::SecurityGroup'
+    Type: "AWS::EC2::SecurityGroup"
     Properties:
       GroupDescription: >-
         Address Front ECS Security Group permitting outbound
@@ -106,13 +105,12 @@ Resources:
       SecurityGroupEgress:
         - CidrIp: 0.0.0.0/0
           Description: Allow all outbound traffic by default
-          IpProtocol: '-1'
+          IpProtocol: "-1"
       VpcId:
-        Fn::ImportValue:
-          !Sub "${VpcStackName}-VpcId"
+        Fn::ImportValue: !Sub "${VpcStackName}-VpcId"
 
   ECSSecurityGroupIngressFromLoadBalancer:
-    Type: 'AWS::EC2::SecurityGroupIngress'
+    Type: "AWS::EC2::SecurityGroupIngress"
     Properties:
       IpProtocol: tcp
       Description: >-
@@ -152,7 +150,12 @@ Resources:
             Principal:
               AWS: !Sub
                 - "arn:aws:iam::${ElbAccountId}:root"
-                - ElbAccountId: !FindInMap [ ElasticLoadBalancerAccountIds, !Ref AWS::Region, AccountId ]
+                - ElbAccountId:
+                    !FindInMap [
+                      ElasticLoadBalancerAccountIds,
+                      !Ref AWS::Region,
+                      AccountId,
+                    ]
             Action:
               - s3:PutObject
             Resource:
@@ -160,16 +163,14 @@ Resources:
 
   # Private Application Load Balancer
   LoadBalancer:
-    Type: 'AWS::ElasticLoadBalancingV2::LoadBalancer'
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
     Properties:
       Scheme: internal
       SecurityGroups:
         - !GetAtt LoadBalancerSG.GroupId
       Subnets:
-        - Fn::ImportValue:
-            !Sub "${VpcStackName}-PrivateSubnetIdA"
-        - Fn::ImportValue:
-            !Sub "${VpcStackName}-PrivateSubnetIdB"
+        - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
+        - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
       Type: application
       LoadBalancerAttributes: !If
         - IsNotDevelopment
@@ -182,7 +183,7 @@ Resources:
         - !Ref AWS::NoValue
 
   LoadBalancerListenerTargetGroupECS:
-    Type: 'AWS::ElasticLoadBalancingV2::TargetGroup'
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
     Properties:
       HealthCheckEnabled: TRUE
       HealthCheckProtocol: HTTP
@@ -196,14 +197,13 @@ Resources:
       Protocol: HTTP
       TargetType: ip
       VpcId:
-        Fn::ImportValue:
-          !Sub "${VpcStackName}-VpcId"
+        Fn::ImportValue: !Sub "${VpcStackName}-VpcId"
       TargetGroupAttributes:
         - Key: deregistration_delay.timeout_seconds
           Value: 30
 
   LoadBalancerListener:
-    Type: 'AWS::ElasticLoadBalancingV2::Listener'
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
     Properties:
       DefaultActions:
         - TargetGroupArn: !Ref LoadBalancerListenerTargetGroupECS
@@ -214,7 +214,7 @@ Resources:
 
   # ECS cluster, service and task definition
   AddressFrontEcsCluster:
-    Type: 'AWS::ECS::Cluster'
+    Type: "AWS::ECS::Cluster"
     Properties:
       ClusterSettings:
         - Name: containerInsights
@@ -230,7 +230,7 @@ Resources:
           Value: !Sub "${Environment}"
 
   AddressFrontEcsService:
-    Type: 'AWS::ECS::Service'
+    Type: "AWS::ECS::Service"
     Properties:
       Cluster: !Ref AddressFrontEcsCluster
       DeploymentConfiguration:
@@ -253,10 +253,8 @@ Resources:
           SecurityGroups:
             - !GetAtt ECSSecurityGroup.GroupId
           Subnets:
-            - Fn::ImportValue:
-                !Sub "${VpcStackName}-PrivateSubnetIdA"
-            - Fn::ImportValue:
-                !Sub "${VpcStackName}-PrivateSubnetIdB"
+            - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
+            - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
       TaskDefinition: !Ref ECSServiceTaskDefinition
       Tags:
         - Key: Name
@@ -285,7 +283,7 @@ Resources:
       LogGroupName: !Ref ECSAccessLogsGroup
 
   ECSServiceTaskDefinition:
-    Type: 'AWS::ECS::TaskDefinition'
+    Type: "AWS::ECS::TaskDefinition"
     Properties:
       ContainerDefinitions:
         - Essential: true
@@ -305,39 +303,56 @@ Resources:
                 - "cri-address-front-sessions-${Environment}"
                 - Environment: !Ref Environment
             - Name: GTM_ID
-              Value: !If [ IsProduction, "GTM-TT5HDKV", "GTM-TK92W68" ]
+              Value: !If [IsProduction, "GTM-TT5HDKV", "GTM-TK92W68"]
             - Name: ANALYTICS_DOMAIN
-              Value: !If [ IsProduction, "account.gov.uk", !Sub "${Environment}.account.gov.uk" ]
+              Value:
+                !If [
+                  IsProduction,
+                  "account.gov.uk",
+                  !Sub "${Environment}.account.gov.uk",
+                ]
             - Name: LOG_LEVEL
-              Value: !If [ IsBuildOrDev, "info", "request" ]
+              Value: !If [IsBuildOrDev, "info", "request"]
           Secrets:
             - Name: DT_TENANT
               ValueFrom: !Join
-                - ''
-                - - !FindInMap [ EnvironmentConfiguration, !Ref Environment, dynatraceSecretArn ]
-                  - ':DT_TENANT::'
+                - ""
+                - - !FindInMap [
+                      EnvironmentConfiguration,
+                      !Ref Environment,
+                      dynatraceSecretArn,
+                    ]
+                  - ":DT_TENANT::"
             - Name: DT_TENANTTOKEN
               ValueFrom: !Join
-                - ''
-                - - !FindInMap [ EnvironmentConfiguration, !Ref Environment, dynatraceSecretArn ]
-                  - ':DT_TENANTTOKEN::'
+                - ""
+                - - !FindInMap [
+                      EnvironmentConfiguration,
+                      !Ref Environment,
+                      dynatraceSecretArn,
+                    ]
+                  - ":DT_TENANTTOKEN::"
             - Name: DT_CONNECTION_POINT
               ValueFrom: !Join
-              - ''
-              - - !FindInMap [ EnvironmentConfiguration, !Ref Environment, dynatraceSecretArn ]
-                - ':DT_CONNECTION_POINT::'
+                - ""
+                - - !FindInMap [
+                      EnvironmentConfiguration,
+                      !Ref Environment,
+                      dynatraceSecretArn,
+                    ]
+                  - ":DT_CONNECTION_POINT::"
           PortMappings:
             - ContainerPort: 8080
               Protocol: tcp
           LogConfiguration:
             LogDriver: awslogs
             Options:
-              awslogs-group : !Ref ECSAccessLogsGroup
-              awslogs-region : !Sub ${AWS::Region}
-              awslogs-stream-prefix : !Sub address-front-${Environment}
-      Cpu: '1024'
+              awslogs-group: !Ref ECSAccessLogsGroup
+              awslogs-region: !Sub ${AWS::Region}
+              awslogs-stream-prefix: !Sub address-front-${Environment}
+      Cpu: "1024"
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
-      Memory: '2048'
+      Memory: "2048"
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - FARGATE
@@ -353,11 +368,11 @@ Resources:
           Value: !Sub "${Environment}"
 
   ECSTaskExecutionRole:
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
         Statement:
-          - Action: 'sts:AssumeRole'
+          - Action: "sts:AssumeRole"
             Effect: Allow
             Principal:
               Service: ecs-tasks.amazonaws.com
@@ -373,7 +388,7 @@ Resources:
                   - "ecr:GetDownloadUrlForLayer"
                   - "ecr:GetAuthorizationToken"
                 Resource:
-                  - '*'
+                  - "*"
               - Effect: Allow
                 Action:
                   - "logs:CreateLogStream"
@@ -407,11 +422,11 @@ Resources:
         - !Ref AWS::NoValue
 
   ECSTaskRole:
-    Type: 'AWS::IAM::Role'
+    Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
         Statement:
-          - Action: 'sts:AssumeRole'
+          - Action: "sts:AssumeRole"
             Effect: Allow
             Principal:
               Service: ecs-tasks.amazonaws.com
@@ -460,36 +475,35 @@ Resources:
         - !Ref AWS::NoValue
 
   ApiGwHttpEndpoint:
-    Type: 'AWS::ApiGatewayV2::Api'
+    Type: "AWS::ApiGatewayV2::Api"
     Properties:
       Name: !Sub address-front-${Environment}
       ProtocolType: HTTP
 
   ApiGwHttpEndpointIntegration:
-    Type: 'AWS::ApiGatewayV2::Integration'
+    Type: "AWS::ApiGatewayV2::Integration"
     Properties:
       ApiId: !Ref ApiGwHttpEndpoint
       IntegrationType: HTTP_PROXY
       ConnectionId:
-        Fn::ImportValue:
-          !Sub "${VpcStackName}-VpcLinkId"
+        Fn::ImportValue: !Sub "${VpcStackName}-VpcLinkId"
       ConnectionType: VPC_LINK
       IntegrationMethod: ANY
       IntegrationUri: !Ref LoadBalancerListener
-      PayloadFormatVersion: '1.0'
+      PayloadFormatVersion: "1.0"
 
   APIGWRoute:
-    Type: 'AWS::ApiGatewayV2::Route'
+    Type: "AWS::ApiGatewayV2::Route"
     Properties:
       ApiId: !Ref ApiGwHttpEndpoint
-      RouteKey: 'ANY /{proxy+}'
+      RouteKey: "ANY /{proxy+}"
       Target: !Join
         - /
         - - integrations
           - !Ref ApiGwHttpEndpointIntegration
 
   APIStageDefault:
-    Type: 'AWS::ApiGatewayV2::Stage'
+    Type: "AWS::ApiGatewayV2::Stage"
     Properties:
       ApiId: !Ref ApiGwHttpEndpoint
       StageName: $default
@@ -533,9 +547,9 @@ Resources:
       MaxCapacity: 60
       MinCapacity: 2
       ResourceId: !Join
-        - '/'
+        - "/"
         - - "service"
-          - !Ref   AddressFrontEcsCluster
+          - !Ref AddressFrontEcsCluster
           - !GetAtt AddressFrontEcsService.Name
       RoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
       ScalableDimension: ecs:service:DesiredCount
@@ -549,9 +563,9 @@ Resources:
       PolicyName: ECSAutoScalingPolicy
       PolicyType: TargetTrackingScaling
       ResourceId: !Join
-        - '/'
+        - "/"
         - - "service"
-          - !Ref   AddressFrontEcsCluster
+          - !Ref AddressFrontEcsCluster
           - !GetAtt AddressFrontEcsService.Name
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
@@ -570,7 +584,7 @@ Resources:
       PolicyName: StepScalingInPolicy
       PolicyType: StepScaling
       ResourceId: !Join
-        - '/'
+        - "/"
         - - "service"
           - !Ref AddressFrontEcsCluster
           - !GetAtt AddressFrontEcsService.Name
@@ -591,7 +605,7 @@ Resources:
       PolicyName: StepScalingOutPolicy
       PolicyType: StepScaling
       ResourceId: !Join
-        - '/'
+        - "/"
         - - "service"
           - !Ref AddressFrontEcsCluster
           - !GetAtt AddressFrontEcsService.Name
@@ -754,7 +768,7 @@ Outputs:
   AddressFrontUrl:
     Description: >-
       The API Gateway URL which Address Front can be invoked on.
-    Value: !GetAtt  ApiGwHttpEndpoint.ApiEndpoint
+    Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
   AddressFrontGatewayId:
     Description: Address Front API Gateway ID
     Export:
