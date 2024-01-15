@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     node: true,
     es6: true,
@@ -10,8 +11,14 @@ module.exports = {
     expect: true,
     setupDefaultMocks: true,
   },
-  root: true,
-  extends: ["eslint:recommended", "prettier"],
+  extends: ["prettier", "eslint:recommended", "plugin:prettier/recommended"],
+  ignorePatterns: [
+    "wallaby.conf.js",
+    "node_modules",
+    "coverage",
+    ".aws-sam",
+    "dist",
+  ],
   rules: {
     "no-console": 2,
     "padding-line-between-statements": [
