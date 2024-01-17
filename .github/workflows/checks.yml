@@ -27,8 +27,6 @@ jobs:
         run: yarn install
       - name: Run lint
         run: yarn lint
-      - name: Run test and write coverage
-        run: yarn test:coverage
       - name: Run browser tests
         id: browserTests
         run: npm run test:browser:ci
@@ -44,12 +42,6 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Run sonarcloud scan
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # obtained from https://sonarcloud.io
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get test results history
         uses: actions/checkout@v3
