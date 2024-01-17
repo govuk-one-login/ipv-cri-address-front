@@ -1,0 +1,48 @@
+name: Unit tests
+
+on:
+  workflow_call:
+    inputs:
+      coverage-report: { type: boolean, required: false, default: false }
+      coverage-artifact: { type: string, required: false, default: coverage }
+    outputs:
+      coverage-artifact:
+        value: ${{ inputs.coverage-artifact }}
+
+concurrency:
+  group: unit-tests-${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+permissions: {}
+
+jobs:
+  run-tests:
+    name: Unit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run tests
+        run: yarn run test:coverage
+
+      - name: Archive coverage results
+        if: ${{ inputs.coverage-report }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.coverage-artifact }}
+          retention-days: 3
+          path: reports/coverage/lcov.info

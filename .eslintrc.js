@@ -15,7 +15,7 @@ module.exports = {
   ignorePatterns: [
     "wallaby.conf.js",
     "node_modules",
-    "coverage",
+    "reports",
     ".aws-sam",
     "dist",
   ],
