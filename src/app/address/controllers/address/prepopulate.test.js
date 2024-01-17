@@ -17,6 +17,7 @@ describe("Prepopulate controller", () => {
   let prepopulateController;
 
   beforeEach(() => {
+    prepopulateController = new PrepopulateController({ route: "/test" });
     sandbox = sinon.createSandbox();
     const setup = setupDefaultMocks();
 
@@ -28,10 +29,6 @@ describe("Prepopulate controller", () => {
 
   afterEach(() => {
     sandbox.restore();
-  });
-
-  beforeEach(() => {
-    prepopulateController = new PrepopulateController({ route: "/test" });
   });
 
   it("should be an instance of BaseController", () => {
