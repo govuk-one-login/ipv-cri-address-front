@@ -1,0 +1,25 @@
+name: Browser tests
+
+on: workflow_call
+
+concurrency:
+  group: browser-tests-${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+permissions: {}
+
+jobs:
+  run-tests:
+    name: Browser
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        uses: govuk-one-login/github-actions/env/run-script@145049ebd9a33e57da9a852847c4ee2c8970ea51
+        with:
+          node-version: 18.x
+          package-manager: yarn
+          script: yarn run test:browser:ci

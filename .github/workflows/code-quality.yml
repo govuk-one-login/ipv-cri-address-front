@@ -1,0 +1,35 @@
+name: Code quality
+
+on: workflow_call
+permissions: {}
+
+concurrency:
+  group: code-quality-${{ github.workflow }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  pre-commit:
+    name: pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run pre-commit
+        uses: govuk-one-login/github-actions/code-quality/run-pre-commit@145049ebd9a33e57da9a852847c4ee2c8970ea51
+        with:
+          install-dependencies: true
+          package-manager: yarn
+          all-files: true
+
+  translation-checks:
+    name: i18n
+    runs-on: ubuntu-latest
+    steps:
+      - name: Translation checks
+        uses: govuk-one-login/github-actions/env/run-script@145049ebd9a33e57da9a852847c4ee2c8970ea51
+        with:
+          node-version: 18.x
+          package-manager: yarn
+          script: yarn run check-translation

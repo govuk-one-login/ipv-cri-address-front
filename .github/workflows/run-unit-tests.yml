@@ -24,20 +24,12 @@ jobs:
     name: Unit
     runs-on: ubuntu-latest
     steps:
-      - name: Pull repository
-        uses: actions/checkout@v4
-
-      - name: Install Node
-        uses: actions/setup-node@v3
+      - name: Run tests
+        uses: govuk-one-login/github-actions/env/run-script@145049ebd9a33e57da9a852847c4ee2c8970ea51
         with:
           node-version: 18.x
-          cache: yarn
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Run tests
-        run: yarn run test:coverage
+          package-manager: yarn
+          script: yarn run test:coverage
 
       - name: Archive coverage results
         if: ${{ inputs.coverage-report }}
