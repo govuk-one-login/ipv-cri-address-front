@@ -15,30 +15,28 @@ let res;
 let next;
 let sandbox;
 let addresses = [];
+let addressConfirm;
 const sessionId = "session-id-123";
 
-beforeEach(() => {
-  sandbox = sinon.createSandbox();
-  const setup = setupDefaultMocks();
-  req = setup.req;
-  res = setup.res;
-  next = setup.next;
-  req.session.tokenId = sessionId;
-  req.session.authParams = {};
-});
-
-afterEach(() => {
-  sandbox.restore();
-});
-
 describe("Address confirmation controller", () => {
-  let addressConfirm;
-
   beforeEach(() => {
+    sandbox = sinon.createSandbox();
+    const setup = setupDefaultMocks();
+
+    req = setup.req;
+    res = setup.res;
+    next = setup.next;
+    req.session.tokenId = sessionId;
+    req.session.authParams = {};
+
     addresses = addressFactory(2);
     req.journeyModel.set("currentAddress", addresses[0]);
     req.journeyModel.set("previousAddress", addresses[1]);
     addressConfirm = new AddressConfirmController({ route: "/test" });
+  });
+
+  afterEach(() => {
+    sandbox.restore();
   });
 
   it("should be an instance of BaseController", () => {

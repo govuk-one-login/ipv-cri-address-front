@@ -49,7 +49,7 @@ describe("Address validator", () => {
       results.forEach((val) => expect(val).to.equal(true));
     });
 
-    it("should pass with valid dates", () => {
+    it("should fail with invalid dates", () => {
       const results = invalidFutureYears.map(isPreviousYear);
       results.forEach((val) => expect(val).to.equal(false));
     });

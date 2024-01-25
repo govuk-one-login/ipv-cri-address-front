@@ -13,26 +13,23 @@ let req;
 let res;
 let next;
 let sandbox;
+let addressSearch;
 const sessionId = "session-id-123";
 
-beforeEach(() => {
-  sandbox = sinon.createSandbox();
-  const setup = setupDefaultMocks();
-  req = setup.req;
-  res = setup.res;
-  next = setup.next;
-  req.session.tokenId = sessionId;
-});
-
-afterEach(() => {
-  sandbox.restore();
-});
-
-describe("Address Search controller", () => {
-  let addressSearch;
-
+describe("Address Search controller", function () {
   beforeEach(() => {
     addressSearch = new AddressSearchController({ route: "/test" });
+    sandbox = sinon.createSandbox();
+    const setup = setupDefaultMocks();
+
+    req = setup.req;
+    res = setup.res;
+    next = setup.next;
+    req.session.tokenId = sessionId;
+  });
+
+  afterEach(() => {
+    sandbox.restore();
   });
 
   it("should be an instance of BaseController", () => {
@@ -64,12 +61,10 @@ describe("Address Search controller", () => {
       let prototypeSpy;
       let testPostcode;
 
-      beforeEach(() => {
+      beforeEach(async () => {
         prototypeSpy = sinon.stub(BaseController.prototype, "saveValues");
         BaseController.prototype.saveValues.callThrough();
-      });
 
-      beforeEach(async () => {
         req.axios.get = sinon.fake.returns(testData.apiResponse);
 
         testPostcode = "myPostcode";

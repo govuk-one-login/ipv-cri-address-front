@@ -26,4 +26,15 @@ module.exports = {
       { blankLine: "any", prev: "*", next: "*" },
     ],
   },
+  overrides: [
+    {
+      files: "src/**/*.test.js",
+      plugins: ["mocha"],
+      extends: ["plugin:mocha/recommended"],
+      rules: {
+        "mocha/no-mocha-arrows": 0,
+        "mocha/no-setup-in-describe": 0,
+      },
+    },
+  ],
 };

@@ -19,7 +19,7 @@ describe("settings", () => {
       );
     });
 
-    it("should set 'API.PATHS.AUTHORIZE", () => {
+    it("should set 'API.PATHS.SESSION", () => {
       setAPIConfig({ app, sessionPath: "/api/session" });
 
       expect(app.set).to.have.been.calledWith(
@@ -28,7 +28,7 @@ describe("settings", () => {
       );
     });
 
-    it("should set 'API.PATHS.AUTHORIZE", () => {
+    it("should set 'API.PATHS.AUTHORIZATION", () => {
       setAPIConfig({ app, authorizationPath: "/api/auth" });
 
       expect(app.set).to.have.been.calledWith(
