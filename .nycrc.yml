@@ -5,6 +5,8 @@ exclude:
   - src/assets/**
   - src/app/**/*fields.js
   - src/app/**/steps.js
+  - src/app/**/index.js
+  - src/app.js
 report-dir: reports/coverage
 statements: 05
 branches: 05
