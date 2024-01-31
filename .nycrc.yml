@@ -3,7 +3,7 @@ check-coverage: true
 include: [src/**/*.js]
 exclude:
   - src/assets/**
-  - src/app/**/*fields.js
+  - src/app/**/*[Ff]ields.js
   - src/app/**/steps.js
   - src/app/**/index.js
   - src/app.js
