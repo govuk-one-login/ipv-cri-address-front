@@ -14,14 +14,14 @@ functions: 05
 lines: 05
 watermarks:
   statements:
-    - 60
+    - 80
     - 90
   branches:
     - 80
     - 90
   functions:
-    - 60
+    - 80
     - 90
   lines:
-    - 60
+    - 80
     - 90
