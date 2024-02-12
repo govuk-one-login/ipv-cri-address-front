@@ -302,7 +302,7 @@ Resources:
               Value: !Sub
                 - "cri-address-front-sessions-${Environment}"
                 - Environment: !Ref Environment
-            - Name: GTM_ID
+            - Name: UA_CONTAINER_ID
               Value: !If [IsProduction, "GTM-TT5HDKV", "GTM-TK92W68"]
             - Name: ANALYTICS_DOMAIN
               Value:
