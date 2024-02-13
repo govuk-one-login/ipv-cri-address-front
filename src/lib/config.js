@@ -17,8 +17,10 @@ module.exports = {
       ADDRESS: "/",
     },
     ANALYTICS: {
-      ID: process.env.GTM_ID,
       COOKIE_DOMAIN: process.env.ANALYTICS_DOMAIN || "localhost",
+      UA_CONTAINER_ID: process.env.UA_CONTAINER_ID,
+      GA4_ENABLED: process.env.GA4_ENABLED || "false",
+      GA4_CONTAINER_ID: process.env.GA4_CONTAINER_ID,
     },
   },
   LOG_LEVEL: process.env.LOG_LEVEL || "request",
