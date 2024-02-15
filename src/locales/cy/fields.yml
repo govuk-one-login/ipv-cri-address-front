@@ -63,8 +63,12 @@ addressBreak:
   items:
     continue:
       label: "Defnyddiwch <b>{{values.addressPostcode}}</b> a rhowch weddill eich cyfeiriad"
+      hint: ""
+      reveal: ""
     retry:
       label: "Ceisiwch roi eich cod post i mewn eto"
+      hint: ""
+      reveal: ""
 isAddressMoreThanThreeMonths:
   label: "Ydych chi wedi wedi byw yma am fwy na 3 mis?"
   hint: "Byddwn angen gofyn i chi ble roeddech chi'n byw o'r blaen os ydych chi wedi symud i'r cyfeiriad hwn yn ddiweddar."
@@ -72,8 +76,12 @@ isAddressMoreThanThreeMonths:
     moreThanThreeMonths:
       label: "Ydw"
       value: "Ydw"
+      hint: ""
+      reveal: ""
     lessThanThreeMonths:
       label: "Na"
       value: "Na"
+      hint: ""
+      reveal: ""
   validation:
     confirmationValidation: "Dewiswch ydw os ydych chi wedi byw yn y cyfeiriad hwn am fwy na 3 mis"

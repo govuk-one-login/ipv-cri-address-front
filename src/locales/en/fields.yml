@@ -74,8 +74,12 @@ addressBreak:
   items:
     continue:
       label: Use <b>{{values.addressPostcode}}</b> and enter the rest of your address
+      hint: ""
+      reveal: ""
     retry:
       label: Try entering your postcode again
+      hint: ""
+      reveal: ""
 
 isAddressMoreThanThreeMonths:
   label: Have you lived here for more than 3 months?
@@ -84,8 +88,12 @@ isAddressMoreThanThreeMonths:
     moreThanThreeMonths:
       label: "Yes"
       value: "Yes"
+      hint: ""
+      reveal: ""
     lessThanThreeMonths:
       label: "No"
       value: "No"
+      hint: ""
+      reveal: ""
   validation:
     confirmationValidation: Select yes if you've lived at this address for more than 3 months
