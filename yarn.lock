@@ -365,10 +365,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.56.0.tgz#ef20350fec605a7f7035a01764731b2de0f3782b"
   integrity sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==
 
-"@govuk-one-login/di-ipv-cri-common-express@5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-5.0.0.tgz#7c2ecf3061b26e7ca4debc860e4a0bb5929741a9"
-  integrity sha512-OYfU6g4TQ374wGIDIEMDhe1z9Y60nbMvTsuRxQRtqdr0uxOqLuwuBEXZopbe6DFctHwzU2IS+Fgmgl8i5WJRxA==
+"@govuk-one-login/di-ipv-cri-common-express@5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-5.1.0.tgz#37fe7c0bfd93c32bb9e4e673b274df6be820193f"
+  integrity sha512-13Rvmuj6yZnhAUybzyz6U6aqk9ieA2A9DG/Uo+Edn/SD7MfqCjMykpLIMaz9vhXjVVLo4Y7R5yEhzvf8KmB6NQ==
   dependencies:
     hmpo-logger "7.0.1"
     i18next "23.6.0"
@@ -2341,10 +2341,10 @@ got@<12:
     p-cancelable "^2.0.0"
     responselike "^2.0.0"
 
-govuk-frontend@4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.7.0.tgz#69950b6c2e69f435ffe9aa60d8dee232dac977de"
-  integrity sha512-0OsdCusF5qvLWwKziU8zqxiC0nq6WP0ZQuw51ymZ/1V0tO71oIKMlSLN2S9bm8RcEGSoidPt2A34gKxePrLjvg==
+govuk-frontend@4.8.0:
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-4.8.0.tgz#df4e56c762e93aae74fed214bb6be08e13783772"
+  integrity sha512-NOmPJxL8IYq1HSNHYKx9XY2LLTxuwb+IFASiGQO4sgJ8K7AG66SlSeqARrcetevV8zOf+i1z+MbJJ2O7//OxAw==
 
 graceful-fs@^4.1.15, graceful-fs@^4.1.2:
   version "4.2.11"
