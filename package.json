@@ -30,7 +30,7 @@
     "check-translation": "node node_modules/@govuk-one-login/di-ipv-cri-common-express/scripts/checkTranslations.js '../../../../src/locales'"
   },
   "dependencies": {
-    "@govuk-one-login/di-ipv-cri-common-express": "5.0.0",
+    "@govuk-one-login/di-ipv-cri-common-express": "5.1.0",
     "aws-sdk": "^2.1393.0",
     "axios": "0.27.2",
     "cfenv": "1.2.4",
@@ -40,7 +40,7 @@
     "express": "4.18.2",
     "express-async-errors": "3.1.1",
     "express-session": "^1.17.3",
-    "govuk-frontend": "4.7.0",
+    "govuk-frontend": "4.8.0",
     "hmpo-app": "3.0.1",
     "hmpo-components": "6.4.0",
     "hmpo-config": "2.2.1",
