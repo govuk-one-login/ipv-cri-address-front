@@ -14,7 +14,7 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: "0"
 
@@ -35,36 +35,16 @@ jobs:
           username: khw46367
           password: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
 
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.BUILD_ECR_REPOSITORY }}
-        run: |
-          cd ${GITHUB_WORKSPACE} || exit 1
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA
-
       - name: SAM Validate
         run: sam validate --region ${{ env.AWS_REGION }} -t deploy/template.yaml
 
-      - name: Update SAM template with ECR image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.BUILD_ECR_REPOSITORY }}
-        run: |
-          cd ${GITHUB_WORKSPACE}/deploy || exit 1
-          sed -i "s|CONTAINER-IMAGE-PLACEHOLDER|$ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_SHA|" template.yaml
-
-      - name: Create template.yaml and sha zip file and upload to artifacts S3
-        run: |
-          cd ${GITHUB_WORKSPACE}/deploy || exit 1
-          sam build -t template.yaml
-          mv .aws-sam/build/template.yaml cf-template.yaml
-          zip template.zip cf-template.yaml
-
-      - name: Upload CloudFormation artifacts to S3
-        env:
-          ARTIFACT_BUCKET: ${{ secrets.BUILD_ARTIFACT_BUCKET }}
-        run: |
-          cd ${GITHUB_WORKSPACE}/deploy || exit 1
-          aws s3 cp template.zip "s3://$ARTIFACT_BUCKET/template.zip" --metadata "repository=$GITHUB_REPOSITORY,commitsha=$GITHUB_SHA"
+      - name: Deploy SAM app to ECR
+        uses: govuk-one-login/devplatform-upload-action-ecr@1.2.0
+        with:
+          artifact-bucket-name: ${{ secrets.BUILD_ARTIFACT_BUCKET }}
+          container-sign-kms-key-arn: ${{ secrets.BUILD_CONTAINER_SIGN_KMS_KEY }}
+          working-directory: .
+          docker-build-path: .
+          template-file: deploy/template.yaml
+          role-to-assume-arn: ${{ secrets.BUILD_GH_ACTIONS_ROLE_ARN }}
+          ecr-repo-name: ${{ secrets.BUILD_ECR_REPOSITORY }}
