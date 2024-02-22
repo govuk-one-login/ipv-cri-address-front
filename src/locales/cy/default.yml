@@ -15,7 +15,7 @@ govuk:
       title: "Cwcis ar GOV.UK One Login"
       heading: "Cwcis ar GOV.UK One Login"
       paragraph1: "Rydym yn defnyddio rhai cwcis hanfodol i wneud i'r gwasanaeth hwn weithio."
-      paragraph2: "Hoffem hefyd ddefnyddio cwcis dadansoddi er mwyn i ni allu deall sut rydych yn defnyddio'r gwasanaeth a gwneud gwelliannau."
+      paragraph2: "Hoffem osod cwcis ychwanegol er mwyn i ni allu cofio eich gosodiadau, deall sut rydych yn defnyddio'r gwasanaeth a gwneud gwelliannau."
       buttonAcceptText: "Derbyn cwcis dadansoddi"
       buttonRejectText: "Gwrthod cwcis dadansoddi"
       linkViewCookiesText: "Gweld cwcis"
