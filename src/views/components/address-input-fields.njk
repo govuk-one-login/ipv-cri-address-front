@@ -30,7 +30,8 @@
   name: "addressStreetName",
   label: { text: translate("fields.addressStreetName.label") },
   classes: "govuk-input--width-20",
-  hint: ""
+  hint: "",
+  autocomplete:"address-line1"
 }) }}
 
 {{ hmpoText(ctx, {
@@ -38,5 +39,6 @@
   name: "addressLocality",
   label: { text: translate("fields.addressLocality.label") },
   classes: "govuk-input--width-20",
-  hint: ""
+  hint: "",
+  autocomplete:"address-line2"
 }) }}
