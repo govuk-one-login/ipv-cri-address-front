@@ -28,3 +28,26 @@
   {% endcall %}
 
 {% endblock %}
+
+{% block scripts %}
+
+{{ super() }}
+<script {% if cspNonce %} nonce="{{ cspNonce }}"{% endif %}>
+  window.addEventListener('load', function () {
+      window
+          .DI
+          .analyticsGa4
+          .pageViewTracker
+          .trackOnPageLoad({
+              statusCode: '200', // Access status code
+              englishPageTitle: '{{translate("pages.address-form.title")}}',
+              taxonomy_level1: 'web cri', // Access taxonomy level 1
+              taxonomy_level2: 'address', // Access taxonomy level 2
+              content_id: '003169c0-f24a-4640-935f-b6e19d04d4a8',
+              logged_in_status: true,
+              dynamic: false
+          });
+  });
+  </script>
+
+{% endblock %}
