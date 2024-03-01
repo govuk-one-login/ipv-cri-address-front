@@ -56,7 +56,7 @@ const sessionConfig = {
   ...(SESSION_TABLE_NAME && { sessionStore: dynamoDBSessionStore }),
 };
 
-const helmetConfig = require("@govuk-one-login/di-ipv-cri-common-express/src/lib/helmet");
+const helmetConfig = commonExpress.lib.helmet;
 
 const { app, router } = setup({
   config: { APP_ROOT: __dirname },
