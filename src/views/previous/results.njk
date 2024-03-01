@@ -29,3 +29,23 @@
   {% endcall %}
 
 {% endblock %}
+{% block scripts %}
+{{ super() }}
+<script {% if cspNonce %} nonce="{{ cspNonce }}"{% endif %}>
+  window.addEventListener('load', function () {
+      window
+          .DI
+          .analyticsGa4
+          .pageViewTracker
+          .trackOnPageLoad({
+              statusCode: '200', // Access status code
+              englishPageTitle: '{{translate("pages.address-previous-results.title")}}',
+              taxonomy_level1: 'web cri', // Access taxonomy level 1
+              taxonomy_level2: 'address', // Access taxonomy level 2
+              content_id: '06f6fd28-448d-4207-a012-0ef7aa2fef67',
+              logged_in_status: true,
+              dynamic: false
+          });
+  });
+  </script>
+{% endblock %}
