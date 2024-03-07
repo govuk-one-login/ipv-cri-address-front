@@ -10,7 +10,7 @@
     "build-sass": "rm -rf dist/public/style.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
     "copy-assets": "mkdir -p dist && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts",
     "build-js": "yarn build-js:analytics && yarn build-js:all",
-    "build-js:analytics": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/one-login-analytics/lib/analytics.js node_modules/@govuk-one-login/di-ipv-cri-common-express/src/assets/javascript/analytics/ua/legacy/cookies.js --beautify -o dist/public/javascripts/analytics.js",
+    "build-js:analytics": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/one-login-analytics/lib/analytics.js node_modules/@govuk-one-login/di-ipv-cri-common-express/src/assets/javascript/analytics/ua/init.js --beautify -o dist/public/javascripts/analytics.js",
     "build-js:cookies": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/di-ipv-cri-common-express/src/assets/javascript/analytics/cookies.js --beautify -o dist/public/javascripts/cookies.js",
     "build-js:all": "mkdir -p dist/public/javascripts; uglifyjs node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js --beautify -o dist/public/javascripts/all.js",
     "minfiy-build-js": "uglifyjs src/assets/javascript/application.js -o src/assets/javascript/application.js -c -m && uglifyjs src/assets/javascript/cookies.js -o src/assets/javascript/cookies.js -c -m",
