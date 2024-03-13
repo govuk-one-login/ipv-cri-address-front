@@ -1,4 +1,5 @@
 {% extends "base-form.njk" %}
+{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 {% set hmpoPageKey = "addressProblem" %}
 {% set gtmJourney = "address - prev - middle" %}
 
@@ -8,28 +9,15 @@
 {% block mainContent %}
 
   {% include "../components/address-problem-field.njk" %}
-
-{% endblock %}
-
-{% block scripts %}
-
-{{ super() }}
-<script {% if cspNonce %} nonce="{{ cspNonce }}"{% endif %}>
-  window.addEventListener('load', function () {
-      window
-          .DI
-          .analyticsGa4
-          .pageViewTracker
-          .trackOnPageLoad({
-              statusCode: '200', // Access status code
-              englishPageTitle: '{{translate("pages.addressProblem.title")}}',
-              taxonomy_level1: 'web cri', // Access taxonomy level 1
-              taxonomy_level2: 'address', // Access taxonomy level 2
-              content_id: 'undefined',
-              logged_in_status: true,
-              dynamic: false
-          });
-  });
-  </script>
+  {{ ga4OnPageLoad({
+    nonce: scriptNonce,
+    statusCode: '200',
+    englishPageTitle: 'pages.addressProblem.title' | translate,
+    taxonomyLevel1: 'web cri',
+    taxonomyLevel2: 'address',
+    contentId: 'undefined',
+    loggedInStatus: true,
+    dynamic: false
+  }) }}
 
 {% endblock %}

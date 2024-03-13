@@ -3,6 +3,7 @@
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "hmpo-radios/macro.njk" import hmpoRadios %}
+{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
 {% set hmpoPageKey = "address-confirm" %}
 {% set gtmJourney = "address - end" %}
@@ -156,27 +157,14 @@
   {% endcall %}
 
   <br>
-{% endblock %}
-
-{% block scripts %}
-
-{{ super() }}
-<script {% if cspNonce %} nonce="{{ cspNonce }}"{% endif %}>
-  window.addEventListener('load', function () {
-      window
-          .DI
-          .analyticsGa4
-          .pageViewTracker
-          .trackOnPageLoad({
-              statusCode: '200', // Access status code
-              englishPageTitle: '{{translate("pages.address-confirm.title")}}',
-              taxonomy_level1: 'web cri', // Access taxonomy level 1
-              taxonomy_level2: 'address', // Access taxonomy level 2
-              content_id: 'b5e5b9eb-3310-4254-ae84-3fa8a7740372',
-              logged_in_status: true,
-              dynamic: false
-          });
-  });
-  </script>
-
+  {{ ga4OnPageLoad({
+    nonce: scriptNonce,
+    statusCode: '200',
+    englishPageTitle: 'pages.address-confirm.title' | translate,
+    taxonomy_level1: 'web cri',
+    taxonomy_level2: 'address',
+    content_id: 'b5e5b9eb-3310-4254-ae84-3fa8a7740372',
+    logged_in_status: true,
+    dynamic: false
+  }) }}
 {% endblock %}
