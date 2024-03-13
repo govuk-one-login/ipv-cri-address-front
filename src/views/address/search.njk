@@ -6,6 +6,7 @@
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-text/macro.njk" import hmpoText %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
+{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
 {% block mainContent %}
 
@@ -34,28 +35,15 @@
 
   {% endcall %}
 
-
-{% endblock %}
-
-{% block scripts %}
-
-{{ super() }}
-<script {% if cspNonce %} nonce="{{ cspNonce }}"{% endif %}>
-  window.addEventListener('load', function () {
-      window
-          .DI
-          .analyticsGa4
-          .pageViewTracker
-          .trackOnPageLoad({
-              statusCode: '200', // Access status code
-              englishPageTitle: '{{translate("pages.addressSearch.title")}}',
-              taxonomy_level1: 'web cri', // Access taxonomy level 1
-              taxonomy_level2: 'address', // Access taxonomy level 2
-              content_id: 'd29ae122-986d-4730-8dac-8798b79f7aba',
-              logged_in_status: true,
-              dynamic: false
-          });
-  });
-  </script>
+  {{ ga4OnPageLoad({
+    nonce: scriptNonce,
+    statusCode: '200',
+    englishPageTitle: 'pages.addressSearch.title' | translate,
+    taxonomyLevel1: 'web cri',
+    taxonomyLevel2: 'address',
+    contentId: 'd29ae122-986d-4730-8dac-8798b79f7aba',
+    loggedInStatus: true,
+    dynamic: false
+  }) }}
 
 {% endblock %}
