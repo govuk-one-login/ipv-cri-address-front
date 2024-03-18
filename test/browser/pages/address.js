@@ -6,9 +6,9 @@ module.exports = class PlaywrightDevPage {
     this.page = page;
     this.paths = [
       "/address",
-      "/address/edit?edit=true",
+      "/address/edit",
       "/previous/address",
-      "/previous/address/edit?edit=true",
+      "/previous/address/edit",
     ];
   }
 
