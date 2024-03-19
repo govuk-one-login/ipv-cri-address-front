@@ -30,7 +30,8 @@
     "check-translation": "node node_modules/@govuk-one-login/di-ipv-cri-common-express/scripts/checkTranslations.js '../../../../src/locales'"
   },
   "dependencies": {
-    "@govuk-one-login/di-ipv-cri-common-express": "5.1.0",
+    "@govuk-one-login/di-ipv-cri-common-express": "6.1.0",
+    "@govuk-one-login/one-login-analytics": "0.0.9",
     "aws-sdk": "^2.1393.0",
     "axios": "0.27.2",
     "cfenv": "1.2.4",
