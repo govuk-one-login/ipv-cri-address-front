@@ -34,7 +34,11 @@ govuk:
     tag: beta
     content: This is a new service – your <a href="https://home.account.gov.uk/contact-gov-uk-one-login" class="govuk-link" rel="noopener" target="_blank">feedback (opens in new tab)</a> will help us to improve it.
   languageToggle:
-    ariaLabel: Choose Language
+    ariaLabel: Dewis iaith
+    englishLanguage: English
+    englishVisuallyHidden: Change to English
+    welshLanguage: Cymraeg
+    welshVisuallyHidden: Newid yr iaith ir Gymraeg
   footerNavItems:
     meta:
       items:
