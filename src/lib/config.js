@@ -22,7 +22,7 @@ module.exports = {
       GA4_ENABLED: process.env.GA4_ENABLED || "false",
       GA4_CONTAINER_ID: process.env.GA4_CONTAINER_ID,
     },
-    LANGUAGE_TOGGLE_ENABLED: process.env.LANGUAGE_TOGGLE_ENABLED || false,
+    LANGUAGE_TOGGLE_ENABLED: process.env.LANGUAGE_TOGGLE_ENABLED || 0,
   },
   LOG_LEVEL: process.env.LOG_LEVEL || "request",
   PORT: process.env.PORT || 5010,
