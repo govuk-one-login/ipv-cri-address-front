@@ -33,6 +33,9 @@ Run `git config --unset-all core.hooksPath` to reset your git hook settings.
 
 - `BASE_URL`: Externally accessible base url of the webserver. Used to generate the callback url as part of credential issuer oauth flows
 - `PORT` - Default port to run webserver on. (Default to `5010`)
+- `LANGUAGE_TOGGLE_ENABLED` - Controls the language toggle feature.
+  - `0`: Disables the feature.
+  - `1`: Enables the feature.
 
 # Testing
 
