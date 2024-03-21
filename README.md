@@ -33,6 +33,11 @@ Run `git config --unset-all core.hooksPath` to reset your git hook settings.
 
 - `BASE_URL`: Externally accessible base url of the webserver. Used to generate the callback url as part of credential issuer oauth flows
 - `PORT` - Default port to run webserver on. (Default to `5010`)
+- `GA4_DISABLED` - Feature flag to disable GA4, defaulted to `false`
+- `UA_DISABLED` - Feature flag to disable UA, defaulted to `true`
+- `UA_CONTAINER_ID` - Container ID for Universal Analytics, required for UA to work correctly. Default value is `GTM-TK92W68`
+- `GA4_CONTAINER_ID` - Container ID for GA4, required for analytics to work correctly. Default value is `GTM-KD86CMZ`
+- `ANALYTICS_COOKIE_DOMAIN` - Cookie domain to persist values throughout the different sections of the OneLogin journey. Default value is `localhost`
 
 # Testing
 
