@@ -1,6 +1,7 @@
 {% extends "base-form.njk" %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
 {% set hmpoPageKey = "address-form-previous" %}
 {% set hmpoPageContent = "address-form-previous" %}
@@ -23,5 +24,14 @@
     {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
-
+  {{ ga4OnPageLoad({
+      nonce: scriptNonce,
+      statusCode: "200",
+      englishPageTitle: "pages.address-form.previous.title" | translate,
+      taxonomyLevel1: "web cri",
+      taxonomyLevel2: "address",
+      contentId: "003169c0-f24a-4640-935f-b6e19d04d4a8",
+      loggedInStatus: false,
+      dynamic: false
+    }) }}
 {% endblock %}

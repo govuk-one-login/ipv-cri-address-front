@@ -3,6 +3,7 @@
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "hmpo-radios/macro.njk" import hmpoRadios %}
+{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
 {% set hmpoPageKey = "address-confirm" %}
 {% set gtmJourney = "address - end" %}
@@ -29,7 +30,7 @@
           actions: {
             items: [
               {
-                href: "/address/edit",
+                href: "/address/edit?edit=true",
                 html: translate("fields.address-confirm.change.change-current-address"),
                 attributes: {
                   "data-id": "yearFromChange"
@@ -48,7 +49,7 @@
           actions: {
             items: [
               {
-                href: "/address/edit",
+                href: "/address/edit?edit=true",
                 html: translate("fields.address-confirm.change.change-current-yearfrom"),
                 attributes: {
                   "data-id": "yearFromChange"
@@ -67,7 +68,7 @@
           actions: {
             items: [
               {
-                href: "/previous/address/edit",
+                href: "/previous/address/edit?edit=true",
                 html: translate("fields.address-confirm.change.change-previous-address"),
                 attributes: {
                   "data-id": "previousAddressChange"
@@ -93,7 +94,7 @@
           actions: {
             items: [
               {
-                href: "/address/edit",
+                href: "/address/edit?edit=true",
                 html: translate("fields.address-confirm.change.change-current-address"),
                 attributes: {
                   "data-id": "currentAddressChange"
@@ -112,7 +113,7 @@
           actions: {
             items: [
               {
-                href: "/address/edit",
+                href: "/address/edit?edit=true",
                 html: translate("fields.address-confirm.change.change-current-yearfrom"),
                 attributes: {
                   "data-id": "yearFromChange"
@@ -156,4 +157,14 @@
   {% endcall %}
 
   <br>
+  {{ ga4OnPageLoad({
+    nonce: scriptNonce,
+    statusCode: '200',
+    englishPageTitle: 'pages.address-confirm.title' | translate,
+    taxonomy_level1: 'web cri',
+    taxonomy_level2: 'address',
+    content_id: 'b5e5b9eb-3310-4254-ae84-3fa8a7740372',
+    logged_in_status: true,
+    dynamic: false
+  }) }}
 {% endblock %}
