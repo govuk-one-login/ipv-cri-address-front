@@ -304,7 +304,7 @@ Resources:
                 - Environment: !Ref Environment
             - Name: UA_CONTAINER_ID
               Value: !If [IsProduction, "GTM-TT5HDKV", "GTM-TK92W68"]
-            - Name: ANALYTICS_DOMAIN
+            - Name: ANALYTICS_COOKIE_DOMAIN
               Value:
                 !If [
                   IsProduction,

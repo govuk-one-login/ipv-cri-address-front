@@ -27,7 +27,7 @@ jobs:
       - name: Run tests
         uses: govuk-one-login/github-actions/env/run-script@145049ebd9a33e57da9a852847c4ee2c8970ea51
         with:
-          node-version: 18.x
+          node-version: 20.x
           package-manager: yarn
           script: yarn run test:coverage
 
