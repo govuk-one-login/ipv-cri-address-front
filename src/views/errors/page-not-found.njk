@@ -1,3 +1,15 @@
 {% extends "base-form.njk" %}
 {% set hmpoPageKey = "errors.pageNotFound" %}
 {% set gtmJourney = "address - not found" %}
+{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
+
+{{ ga4OnPageLoad({
+  nonce: scriptNonce,
+  statusCode: '404',
+  englishPageTitle: 'pageNotFound.title' | translate,
+  taxonomyLevel1: 'web cri',
+  taxonomyLevel2: 'page-not-found',
+  contentId: 'undefined',
+  loggedInStatus: true,
+  dynamic: false
+}) }}
