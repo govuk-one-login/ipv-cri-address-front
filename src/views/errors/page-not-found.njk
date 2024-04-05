@@ -4,7 +4,7 @@
 {% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
 {{ ga4OnPageLoad({
-  nonce: scriptNonce,
+  nonce: cspNonce,
   statusCode: '404',
   englishPageTitle: 'pageNotFound.title' | translate,
   taxonomyLevel1: 'web cri',

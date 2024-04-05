@@ -27,7 +27,7 @@
   {% endcall %}
 
   {{ ga4OnPageLoad({
-    nonce: scriptNonce,
+    nonce: cspNonce,
     statusCode: '200',
     englishPageTitle: 'pages.address-previous-search.title' | translate,
     taxonomyLevel1: 'web cri',
