@@ -382,7 +382,7 @@
   resolved "https://registry.yarnpkg.com/@govuk-one-login/one-login-analytics/-/one-login-analytics-0.0.10.tgz#96debe6f5a31223aa9d7cf126db167d79586aefb"
   integrity sha512-gVzpad29eb4dAWi4THXO0AZcwCf7XOsR6Ot6SSO1PZFp+MfiNAL7w2A9V9i7PvzIKlZwJ+jMq7S32Kb4LJ5mJA==
 
-"@govuk-one-login/one-login-language-toggle@^2.0.0":
+"@govuk-one-login/one-login-language-toggle@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@govuk-one-login/one-login-language-toggle/-/one-login-language-toggle-2.0.0.tgz#75f7b7831afd0b13fc40305b3c6a4b24e48f73e4"
   integrity sha512-2+XO0qFOLJFFnRLCBFQF6lSb/XsPMR8uw74Jtj27kTVfaoNUXMTSHu3t/Ojm6aQmKXmTp79+73dGPp5xWpBrUQ==
