@@ -100,7 +100,10 @@ setI18n({
   },
 });
 
-setLanguageToggle({ app, showLanguageToggle: APP.LANGUAGE_TOGGLE_ENABLED });
+// Common express relies on 0/1 strings
+const showLanguageToggle = APP.LANGUAGE_TOGGLE_ENABLED == "true" ? "1" : "0";
+setLanguageToggle({ app, showLanguageToggle: showLanguageToggle });
+
 setAPIConfig({
   app,
   baseUrl: API.BASE_URL,

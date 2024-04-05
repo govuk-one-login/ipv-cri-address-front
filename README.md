@@ -38,9 +38,8 @@ Run `git config --unset-all core.hooksPath` to reset your git hook settings.
 - `UA_CONTAINER_ID` - Container ID for Universal Analytics, required for UA to work correctly. Default value is `GTM-TK92W68`
 - `GA4_CONTAINER_ID` - Container ID for GA4, required for analytics to work correctly. Default value is `GTM-KD86CMZ`
 - `ANALYTICS_COOKIE_DOMAIN` - Cookie domain to persist values throughout the different sections of the OneLogin journey. Default value is `localhost`
-- `LANGUAGE_TOGGLE_ENABLED` - Controls the language toggle feature.
-  - `false`: Disables the feature.
-  - `true`: Enables the feature.
+- `LANGUAGE_TOGGLE_ENABLED` -  Feature flag to enable Language Toggle, defaulted to `false`
+
 
 # Testing
 
