@@ -10,7 +10,7 @@
 
   {% include "../components/address-problem-field.njk" %}
   {{ ga4OnPageLoad({
-    nonce: scriptNonce,
+    nonce: cspNonce,
     statusCode: '200',
     englishPageTitle: 'pages.addressProblem.title' | translate,
     taxonomyLevel1: 'web cri',
