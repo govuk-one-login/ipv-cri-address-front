@@ -3,7 +3,7 @@
   "description": "User interface for the Identity Proofing and Verification (IPV) system within the GDS digital identity platform, GOV.UK Sign In.",
   "scripts": {
     "start": "node src/app.js",
-    "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ yarn dev",
+    "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ LANGUAGE_TOGGLE_DISABLED=false yarn dev",
     "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8010/ npm-run-all -p -r mocks dev",
     "dev": "nodemon src/app.js",
     "build": "yarn build-sass && yarn build-js && yarn copy-assets",
@@ -21,7 +21,7 @@
     "test:coverage": "nyc --reporter=lcov --reporter=text-summary yarn test",
     "test:watch": "mocha --watch",
     "mocks": "yarn run wiremock --port 8010 --root-dir test/mocks",
-    "test:browser": "wait-on tcp:127.0.0.1:8010 tcp:127.0.0.1:5010 && API_BASE_URL=http://127.0.0.1:8010 MOCK_API=true cucumber-js --config test/browser/cucumber.js --tags \"not @skip\"",
+    "test:browser": "wait-on tcp:127.0.0.1:8010 tcp:127.0.0.1:5010 && API_BASE_URL=http://127.0.0.1:8010 MOCK_API=true cucumber-js --config test/browser/cucumber.js --tags @lang \"not @skip\"",
     "test:browser:ci": "npm-run-all -p -r start:ci mocks test:browser",
     "test:browser:only": "wait-on tcp:127.0.0.1:8010 tcp:127.0.0.1:5010 && API_BASE_URL=http://127.0.0.1:8010 MOCK_API=true cucumber-js --config test/browser/cucumber.js --tags \"@only and not @skip\"",
     "test:browser:ci:only": "npm-run-all -p -r start:ci mocks test:browser:only",
