@@ -37,4 +37,10 @@ module.exports = class PlaywrightDevPage {
   async drivingLicenceCalloutIsVisible() {
     return this.page.locator(".govuk-inset-text").isVisible();
   }
+
+  async toggleLanguage(code) {
+    await this.page.click(
+      `[data-journey-click="link - click:lang-select:${code}"]`
+    );
+  }
 };
