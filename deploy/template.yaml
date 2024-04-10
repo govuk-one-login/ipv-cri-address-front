@@ -311,6 +311,8 @@ Resources:
                   "account.gov.uk",
                   !Sub "${Environment}.account.gov.uk",
                 ]
+            - Name: LANGUAGE_TOGGLE_DISABLED
+              Value: true
             - Name: LOG_LEVEL
               Value: !If [IsBuildOrDev, "info", "request"]
           Secrets:

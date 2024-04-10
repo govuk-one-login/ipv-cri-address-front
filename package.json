@@ -3,11 +3,11 @@
   "description": "User interface for the Identity Proofing and Verification (IPV) system within the GDS digital identity platform, GOV.UK Sign In.",
   "scripts": {
     "start": "node src/app.js",
-    "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ yarn dev",
+    "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ LANGUAGE_TOGGLE_DISABLED=false yarn dev",
     "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8010/ npm-run-all -p -r mocks dev",
     "dev": "nodemon src/app.js",
     "build": "yarn build-sass && yarn build-js && yarn copy-assets",
-    "build-sass": "rm -rf dist/public/style.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
+    "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
     "copy-assets": "mkdir -p dist && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts",
     "build-js": "yarn build-js:analytics && yarn build-js:all",
     "build-js:analytics": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/one-login-analytics/lib/analytics.js node_modules/@govuk-one-login/di-ipv-cri-common-express/src/assets/javascript/analytics/ua/init.js --beautify -o dist/public/javascripts/analytics.js",
@@ -30,6 +30,7 @@
   "dependencies": {
     "@govuk-one-login/di-ipv-cri-common-express": "6.2.1",
     "@govuk-one-login/one-login-analytics": "0.0.10",
+    "@govuk-one-login/one-login-language-toggle": "2.0.0",
     "aws-sdk": "^2.1393.0",
     "axios": "0.27.2",
     "cfenv": "1.2.4",

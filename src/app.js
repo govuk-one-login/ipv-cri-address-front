@@ -13,8 +13,8 @@ const setScenarioHeaders = commonExpress.lib.scenarioHeaders;
 const setAxiosDefaults = commonExpress.lib.axios;
 
 const { setAPIConfig, setOAuthPaths } = require("./lib/settings");
-const { setGTM } = commonExpress.lib.settings;
-const { getGTM } = commonExpress.lib.locals;
+const { setGTM, setLanguageToggle } = commonExpress.lib.settings;
+const { getGTM, getLanguageToggle } = commonExpress.lib.locals;
 const {
   setI18n,
 } = require("@govuk-one-login/di-ipv-cri-common-express/src/lib/i18next");
@@ -81,6 +81,7 @@ const { app, router } = setup({
       ),
       "components"
     ),
+    path.resolve("node_modules/@govuk-one-login/"),
     "views",
   ],
   middlewareSetupFn: (app) => {
@@ -98,6 +99,10 @@ setI18n({
     cookieDomain: APP.GTM.ANALYTICS_COOKIE_DOMAIN,
   },
 });
+
+// Common express relies on 0/1 strings
+const showLanguageToggle = APP.LANGUAGE_TOGGLE_DISABLED === "true" ? "0" : "1";
+setLanguageToggle({ app, showLanguageToggle: showLanguageToggle });
 
 setAPIConfig({
   app,
@@ -118,6 +123,7 @@ setGTM({
 });
 
 router.use(getGTM);
+router.use(getLanguageToggle);
 
 router.use(setScenarioHeaders);
 router.use(setAxiosDefaults);
