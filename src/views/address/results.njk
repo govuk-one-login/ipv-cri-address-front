@@ -13,7 +13,7 @@
 
   {{hmpoHtml(translate("links.changePostcode"))}}
 
-  {% call hmpoForm(ctx) %}
+  {% call hmpoForm(ctx, {autocomplete:'on'}) %}
 
     {{ hmpoSelect(ctx, {
       id: "addressResults",

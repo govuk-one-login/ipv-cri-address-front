@@ -11,7 +11,7 @@
 {% block mainContent %}
 
   <h1 id="header" class="govuk-heading-l">{{translate("pages.addressSearch.title")}} </h1>
-  {% call hmpoForm(ctx) %}
+  {% call hmpoForm(ctx, {autocomplete:'on'}) %}
 
 {% if prepopulatedPostcode %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
@@ -28,7 +28,8 @@
         classes: "govuk-label govuk-label--m"
       },
       classes: "govuk-!-width-one-half",
-      hint:  translate("fields.addressSearch.hint")
+      hint:  translate("fields.addressSearch.hint"),
+      autocomplete: "postal-code"
     }) }}
 
     {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.find-address")}) }}

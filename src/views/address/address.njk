@@ -11,15 +11,15 @@
 
 {% block mainContent %}
 
-  {% if values.checkDetailsHeader === true %}
-    <h1 id="header" class="govuk-heading-l">{{translate("pages.address-form.check-details.title")}}</h1>
+   {% if values.checkDetailsHeader === true %}
+   <h1 id="header" class="govuk-heading-l">{{translate("pages.address-form.check-details.title")}}</h1>
   {% else %}
-     <h1 id="header" class="govuk-heading-l">{{translate("pages.address-form.title")}}</h1>
+    <h1 id="header" class="govuk-heading-l">{{translate("pages.address-form.title")}}</h1>
   {% endif %}
 
   {{hmpoHtml(translate("links.changePostcode"))}}
 
-  {% call hmpoForm(ctx) %}
+  {% call hmpoForm(ctx, {autocomplete:'on'}) %}
 
     {% include "../components/address-input-fields.njk" %}
     {% include "../components/address-year-from-field.njk" %}
