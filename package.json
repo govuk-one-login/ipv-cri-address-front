@@ -32,7 +32,7 @@
     "@govuk-one-login/frontend-analytics": "1.0.3",
     "@govuk-one-login/one-login-language-toggle": "2.0.0",
     "aws-sdk": "^2.1393.0",
-    "axios": "0.27.2",
+    "axios": "1.6.8",
     "cfenv": "1.2.4",
     "connect-dynamodb": "^2.0.5",
     "copyfiles": "2.4.1",
