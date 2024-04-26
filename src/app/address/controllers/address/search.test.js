@@ -52,6 +52,7 @@ describe("Address Search controller", function () {
           headers: {
             session_id: sessionId,
             "session-id": sessionId,
+            "txma-audit-encoded": "dummy-txma-header",
           },
         }
       );

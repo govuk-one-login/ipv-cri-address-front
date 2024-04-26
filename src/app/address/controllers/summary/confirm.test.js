@@ -79,6 +79,7 @@ describe("Address confirmation controller", () => {
         headers: {
           session_id: sessionId,
           "session-id": sessionId,
+          "txma-audit-encoded": "dummy-txma-header",
         },
       });
 

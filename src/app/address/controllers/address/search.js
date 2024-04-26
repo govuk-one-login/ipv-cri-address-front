@@ -2,9 +2,13 @@ const BaseController = require("hmpo-form-wizard").Controller;
 
 const {
   API: {
+    BASE_URL,
     PATHS: { POSTCODE_LOOKUP },
   },
 } = require("../../../../lib/config");
+const {
+  createPersonalDataHeaders,
+} = require("@govuk-one-login/frontend-passthrough-headers");
 
 class AddressSearchController extends BaseController {
   locals(req, res) {
@@ -23,7 +27,7 @@ class AddressSearchController extends BaseController {
     try {
       const addressPostcode = req.body["addressSearch"];
       const searchResults = await this.search(
-        req.axios,
+        req,
         addressPostcode,
         req.session.tokenId
       );
@@ -41,14 +45,22 @@ class AddressSearchController extends BaseController {
     }
   }
 
-  async search(axios, postcode, sessionId) {
+  async search(req, postcode, sessionId) {
+    const defaultHeaders = createPersonalDataHeaders(
+      `${BASE_URL}/${POSTCODE_LOOKUP}`,
+      req
+    );
+
     const headers = sessionId
-      ? { session_id: sessionId, "session-id": sessionId }
+      ? { session_id: sessionId, "session-id": sessionId, ...defaultHeaders }
       : undefined; // set the header to null should fail the req but pass the browser tests for now.
 
-    const addressResults = await axios.get(`${POSTCODE_LOOKUP}/${postcode}`, {
-      headers,
-    });
+    const addressResults = await req.axios.get(
+      `${POSTCODE_LOOKUP}/${postcode}`,
+      {
+        headers,
+      }
+    );
     const addresses = addressResults.data;
 
     return addresses;

@@ -22,6 +22,7 @@ global.setupDefaultMocks = () => {
       },
       values: {},
     },
+    headers: { "txma-audit-encoded": "dummy-txma-header" },
     axios: {
       get: sinon.fake(),
       post: sinon.fake(),
