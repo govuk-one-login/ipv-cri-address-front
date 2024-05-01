@@ -55,14 +55,24 @@ Mappings:
   EnvironmentConfiguration:
     dev:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      ga4Disabled: "false"
+      uaDisabled: "false"
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      ga4Disabled: "false"
+      uaDisabled: "false"
     staging:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      ga4Disabled: "false"
+      uaDisabled: "false"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      ga4Disabled: "true"
+      uaDisabled: "false"
     production:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables
+      ga4Disabled: "true"
+      uaDisabled: "false"
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
     eu-west-2:
@@ -304,6 +314,22 @@ Resources:
                 - Environment: !Ref Environment
             - Name: UA_CONTAINER_ID
               Value: !If [IsProduction, "GTM-TT5HDKV", "GTM-TK92W68"]
+            - Name: GA4_CONTAINER_ID
+              Value: !If [IsProduction, "GTM-K4PBJH3", "GTM-KD86CMZ"]
+            - Name: GA4_DISABLED
+              Value:
+                !FindInMap [
+                  EnvironmentConfiguration,
+                  !Ref "Environment",
+                  ga4Disabled,
+                ]
+            - Name: UA_DISABLED
+              Value:
+                !FindInMap [
+                  EnvironmentConfiguration,
+                  !Ref "Environment",
+                  uaDisabled,
+                ]
             - Name: ANALYTICS_COOKIE_DOMAIN
               Value:
                 !If [
