@@ -382,10 +382,10 @@
   resolved "https://registry.yarnpkg.com/@govuk-one-login/frontend-analytics/-/frontend-analytics-1.0.3.tgz#32da13a67f8804b96a648d53f21adf1b00ca3691"
   integrity sha512-V0vH3OS5rz2Oj8IkOmKkl34FYA3liV8FaJzYVhVBn/hVjZD0cOaGhinunkdcgei2R9JJXiiU0JlEKDxPoYNdRQ==
 
-"@govuk-one-login/frontend-passthrough-headers@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@govuk-one-login/frontend-passthrough-headers/-/frontend-passthrough-headers-0.0.2.tgz#32370abf8ed9442954c57a49f13aede1d1465a3d"
-  integrity sha512-al1AZ6TBSuZjoG6Z/2p/4sSQ6umOhF8B3nZa65Dhyq0tXCDgQ6bfT4Wqe44gRH1IlMXLE8xW2wOH/Mok8rKcfw==
+"@govuk-one-login/frontend-passthrough-headers@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@govuk-one-login/frontend-passthrough-headers/-/frontend-passthrough-headers-1.0.0.tgz#c9d433f6f1d60d93e13f828a52e551a96f5106e1"
+  integrity sha512-Tg8bh40F9cQHi13WpuwskI5wT0kgdgnl9l6I6kxKmlIWxL07tVbfS3MxDGVTXUttQfhnJvKKEem2hJr8LLA/dw==
   dependencies:
     forwarded-parse "^2.1.2"
     pino "^8.20.0"
