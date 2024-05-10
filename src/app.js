@@ -19,6 +19,8 @@ const {
   setI18n,
 } = require("@govuk-one-login/di-ipv-cri-common-express/src/lib/i18next");
 
+const addLanguageParam = require("@govuk-one-login/frontend-language-toggle/build/cjs/language-param-setter.cjs");
+
 const {
   API,
   APP,
@@ -103,6 +105,7 @@ setI18n({
 // Common express relies on 0/1 strings
 const showLanguageToggle = APP.LANGUAGE_TOGGLE_DISABLED === "true" ? "0" : "1";
 setLanguageToggle({ app, showLanguageToggle: showLanguageToggle });
+app.get("nunjucks").addGlobal("addLanguageParam", addLanguageParam);
 
 setAPIConfig({
   app,
