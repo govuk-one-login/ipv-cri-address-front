@@ -32,7 +32,7 @@
     "@govuk-one-login/frontend-analytics": "1.0.3",
     "@govuk-one-login/one-login-language-toggle": "2.0.0",
     "aws-sdk": "^2.1393.0",
-    "axios": "0.27.2",
+    "axios": "1.6.8",
     "cfenv": "1.2.4",
     "connect-dynamodb": "^2.0.5",
     "copyfiles": "2.4.1",
@@ -73,7 +73,7 @@
     "sinon": "17.0.1",
     "sinon-chai": "3.7.0",
     "uglify-js": "3.17.3",
-    "wait-on": "7.0.1"
+    "wait-on": "7.2.0"
   },
   "resolutions": {
     "strip-ansi": "^6.0.1",
