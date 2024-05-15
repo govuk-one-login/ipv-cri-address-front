@@ -4,11 +4,7 @@ const addressFactory = require("../../../../../test/utils/addressFactory");
 const { expect } = require("chai");
 
 const testData = require("../../../../../test/data/testData");
-const {
-  API: {
-    PATHS: { SAVE_ADDRESS },
-  },
-} = require("../../../../lib/config");
+const { API } = require("../../../../lib/config");
 
 let req;
 let res;
@@ -28,6 +24,11 @@ describe("Address confirmation controller", () => {
     next = setup.next;
     req.session.tokenId = sessionId;
     req.session.authParams = {};
+
+    req.headers = {
+      "txma-audit-encoded": "dummy-txma-header",
+      "x-forwarded-for": "198.51.100.10:46532",
+    };
 
     addresses = addressFactory(2);
     req.journeyModel.set("currentAddress", addresses[0]);
@@ -74,13 +75,21 @@ describe("Address confirmation controller", () => {
     it("Should put address to address api and redirect back to callback", async () => {
       req.axios.put = sinon.fake.resolves(testData.addressApiResponse);
 
+      const headers = {
+        "session-id": sessionId,
+        session_id: sessionId,
+        "txma-audit-encoded": "dummy-txma-header",
+        "x-forwarded-for": "127.0.0.1",
+      };
+
       await addressConfirm.saveValues(req, res, next);
-      expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
-        headers: {
-          session_id: sessionId,
-          "session-id": sessionId,
-        },
-      });
+      expect(req.axios.put).to.have.been.calledWith(
+        API.PATHS.SAVE_ADDRESS,
+        addresses,
+        {
+          headers,
+        }
+      );
 
       expect(next).to.have.been.calledWith();
     });

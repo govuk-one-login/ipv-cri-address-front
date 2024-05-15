@@ -1,11 +1,7 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 const PrepopulateController = require("./prepopulate");
 
-const {
-  API: {
-    PATHS: { GET_ADDRESSES },
-  },
-} = require("../../../../lib/config");
+const { API } = require("../../../../lib/config");
 
 let req;
 let res;
@@ -25,6 +21,11 @@ describe("Prepopulate controller", () => {
     res = setup.res;
     next = setup.next;
     req.session.tokenId = sessionId;
+
+    req.headers = {
+      "txma-audit-encoded": "dummy-txma-header",
+      "x-forwarded-for": "198.51.100.10:46532",
+    };
   });
 
   afterEach(() => {
@@ -39,11 +40,15 @@ describe("Prepopulate controller", () => {
     it("should retrieve addresses", async () => {
       await prepopulateController.saveValues(req, res, next);
 
-      expect(req.axios.get).to.have.been.calledWith(GET_ADDRESSES, {
-        headers: {
-          session_id: sessionId,
-          "session-id": sessionId,
-        },
+      const headers = {
+        "session-id": sessionId,
+        session_id: sessionId,
+        "txma-audit-encoded": "dummy-txma-header",
+        "x-forwarded-for": "127.0.0.1",
+      };
+
+      expect(req.axios.get).to.have.been.calledWith(API.PATHS.GET_ADDRESSES, {
+        headers,
       });
     });
 
