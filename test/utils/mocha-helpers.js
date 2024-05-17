@@ -30,6 +30,10 @@ global.setupDefaultMocks = () => {
     session: {
       "hmpo-wizard-previous": {},
     },
+    headers: {
+      "txma-audit-encoded": "dummy-txma-header",
+      "x-forwarded-for": "198.51.100.10:46532",
+    },
   });
 
   req.journeyModel = new JourneyModel(null, {

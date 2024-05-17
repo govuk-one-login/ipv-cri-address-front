@@ -3,7 +3,11 @@ const AddressSearchController = require("./search");
 
 const testData = require("../../../../../test/data/testData");
 
-const { API } = require("../../../../lib/config");
+const {
+  API: {
+    PATHS: { POSTCODE_LOOKUP },
+  },
+} = require("../../../../lib/config");
 
 let req;
 let res;
@@ -22,11 +26,6 @@ describe("Address Search controller", function () {
     res = setup.res;
     next = setup.next;
     req.session.tokenId = sessionId;
-
-    req.headers = {
-      "txma-audit-encoded": "dummy-txma-header",
-      "x-forwarded-for": "198.51.100.10:46532",
-    };
   });
 
   afterEach(() => {
@@ -54,7 +53,7 @@ describe("Address Search controller", function () {
         "x-forwarded-for": "127.0.0.1",
       };
       expect(req.axios.get).to.have.been.calledWith(
-        `${API.PATHS.POSTCODE_LOOKUP}/myPostcode`,
+        `${POSTCODE_LOOKUP}/myPostcode`,
         {
           headers,
         }
