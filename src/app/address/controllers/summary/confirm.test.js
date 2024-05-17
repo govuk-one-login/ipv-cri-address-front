@@ -74,12 +74,16 @@ describe("Address confirmation controller", () => {
     it("Should put address to address api and redirect back to callback", async () => {
       req.axios.put = sinon.fake.resolves(testData.addressApiResponse);
 
+      const headers = {
+        "session-id": sessionId,
+        session_id: sessionId,
+        "txma-audit-encoded": "dummy-txma-header",
+        "x-forwarded-for": "127.0.0.1",
+      };
+
       await addressConfirm.saveValues(req, res, next);
       expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
-        headers: {
-          session_id: sessionId,
-          "session-id": sessionId,
-        },
+        headers,
       });
 
       expect(next).to.have.been.calledWith();

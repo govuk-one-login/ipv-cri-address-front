@@ -46,13 +46,16 @@ describe("Address Search controller", function () {
 
       await addressSearch.saveValues(req, res, next);
 
+      const headers = {
+        "session-id": sessionId,
+        session_id: sessionId,
+        "txma-audit-encoded": "dummy-txma-header",
+        "x-forwarded-for": "127.0.0.1",
+      };
       expect(req.axios.get).to.have.been.calledWith(
         `${POSTCODE_LOOKUP}/myPostcode`,
         {
-          headers: {
-            session_id: sessionId,
-            "session-id": sessionId,
-          },
+          headers,
         }
       );
     });

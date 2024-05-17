@@ -8,11 +8,10 @@ const {
   confirmationValidation,
 } = require("../../validators/confirmationValidator");
 
+const { API } = require("../../../../lib/config");
 const {
-  API: {
-    PATHS: { SAVE_ADDRESS },
-  },
-} = require("../../../../lib/config");
+  createPersonalDataHeaders,
+} = require("@govuk-one-login/frontend-passthrough-headers");
 
 class AddressConfirmController extends BaseController {
   locals(req, res, callback) {
@@ -91,7 +90,7 @@ class AddressConfirmController extends BaseController {
           addresses.push(previousAddress);
         }
 
-        await this.saveAddressess(req.axios, addresses, req.session.tokenId);
+        await this.saveAddressess(req, addresses);
 
         super.saveValues(req, res, () => {
           // if we're into save values we're finished with gathering addresses
@@ -105,12 +104,22 @@ class AddressConfirmController extends BaseController {
     }
   }
 
-  async saveAddressess(axios, addresses, sessionId) {
+  async saveAddressess(req, addresses) {
     // set the headers to undefined will a fail a production level request but pass the browser tests for now.
-    const headers = sessionId
-      ? { session_id: sessionId, "session-id": sessionId }
-      : undefined;
-    const resp = await axios.put(`${SAVE_ADDRESS}`, addresses, {
+    const headers = req.session.tokenId
+      ? {
+          session_id: req.session.tokenId,
+          "session-id": req.session.tokenId,
+          ...createPersonalDataHeaders(
+            `${API.BASE_URL}/${API.PATHS.SAVE_ADDRESS}`,
+            req
+          ),
+        }
+      : createPersonalDataHeaders(
+          `${API.BASE_URL}${API.PATHS.SAVE_ADDRESS}`,
+          req
+        );
+    const resp = await req.axios.put(`${API.PATHS.SAVE_ADDRESS}`, addresses, {
       headers,
     });
 

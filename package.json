@@ -28,9 +28,10 @@
     "check-translation": "node node_modules/@govuk-one-login/di-ipv-cri-common-express/scripts/checkTranslations.js '../../../../src/locales'"
   },
   "dependencies": {
-    "@govuk-one-login/di-ipv-cri-common-express": "6.3.0",
+    "@govuk-one-login/di-ipv-cri-common-express": "6.4.0",
     "@govuk-one-login/frontend-analytics": "1.0.3",
     "@govuk-one-login/frontend-language-toggle": "1.1.0",
+    "@govuk-one-login/frontend-passthrough-headers": "1.0.0",
     "aws-sdk": "^2.1393.0",
     "axios": "0.27.2",
     "cfenv": "1.2.4",

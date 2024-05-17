@@ -1,10 +1,9 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 
+const { API } = require("../../../../lib/config");
 const {
-  API: {
-    PATHS: { POSTCODE_LOOKUP },
-  },
-} = require("../../../../lib/config");
+  createPersonalDataHeaders,
+} = require("@govuk-one-login/frontend-passthrough-headers");
 
 class AddressSearchController extends BaseController {
   locals(req, res) {
@@ -22,11 +21,7 @@ class AddressSearchController extends BaseController {
 
     try {
       const addressPostcode = req.body["addressSearch"];
-      const searchResults = await this.search(
-        req.axios,
-        addressPostcode,
-        req.session.tokenId
-      );
+      const searchResults = await this.search(req, addressPostcode);
       super.saveValues(req, res, () => {
         req.sessionModel.set("requestIsSuccessful", true);
         req.sessionModel.set("searchResults", searchResults);
@@ -41,14 +36,27 @@ class AddressSearchController extends BaseController {
     }
   }
 
-  async search(axios, postcode, sessionId) {
-    const headers = sessionId
-      ? { session_id: sessionId, "session-id": sessionId }
-      : undefined; // set the header to null should fail the req but pass the browser tests for now.
+  async search(req, postcode) {
+    const headers = req.session.tokenId
+      ? {
+          session_id: req.session.tokenId,
+          "session-id": req.session.tokenId,
+          ...createPersonalDataHeaders(
+            `${API.BASE_URL}${API.PATHS.POSTCODE_LOOKUP}/${postcode}`,
+            req
+          ),
+        }
+      : createPersonalDataHeaders(
+          `${API.BASE_URL}${API.PATHS.POSTCODE_LOOKUP}/${postcode}`,
+          req
+        ); // set the header to null should fail the req but pass the browser tests for now.
 
-    const addressResults = await axios.get(`${POSTCODE_LOOKUP}/${postcode}`, {
-      headers,
-    });
+    const addressResults = await req.axios.get(
+      `${API.PATHS.POSTCODE_LOOKUP}/${postcode}`,
+      {
+        headers,
+      }
+    );
     const addresses = addressResults.data;
 
     return addresses;
