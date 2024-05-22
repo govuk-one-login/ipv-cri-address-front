@@ -343,7 +343,7 @@ Resources:
             - Name: LANGUAGE_TOGGLE_DISABLED
               Value: !If [IsProductionOrIntegration, true, false]
             - Name: LOG_LEVEL
-              Value: !If [IsBuildOrDev, "info", "request"]
+              Value: !If [IsBuildOrDev, "info", "warn"]
           Secrets:
             - Name: DT_TENANT
               ValueFrom: !Join
