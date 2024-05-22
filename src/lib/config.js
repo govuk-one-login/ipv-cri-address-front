@@ -2,13 +2,13 @@ require("dotenv").config();
 
 module.exports = {
   API: {
-    BASE_URL: process.env.API_BASE_URL || "http://localhost:5007/",
+    BASE_URL: process.env.API_BASE_URL || "http://localhost:5007",
     PATHS: {
-      SESSION: "session",
-      AUTHORIZATION: "authorization",
-      POSTCODE_LOOKUP: "postcode-lookup",
-      SAVE_ADDRESS: "address",
-      GET_ADDRESSES: "addresses",
+      SESSION: "/session",
+      AUTHORIZATION: "/authorization",
+      POSTCODE_LOOKUP: "/postcode-lookup",
+      SAVE_ADDRESS: "/address",
+      GET_ADDRESSES: "/addresses",
     },
   },
   APP: {
