@@ -111,7 +111,7 @@ class AddressConfirmController extends BaseController {
           session_id: req.session.tokenId,
           "session-id": req.session.tokenId,
           ...createPersonalDataHeaders(
-            `${API.BASE_URL}/${API.PATHS.SAVE_ADDRESS}`,
+            `${API.BASE_URL}${API.PATHS.SAVE_ADDRESS}`,
             req
           ),
         }
