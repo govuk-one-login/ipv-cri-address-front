@@ -178,6 +178,7 @@ Resources:
   LoadBalancer:
     Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
     Properties:
+      Name: !Sub "${AWS::StackName}-LB-${Environment}"
       Scheme: internal
       SecurityGroups:
         - !GetAtt LoadBalancerSG.GroupId
