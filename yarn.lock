@@ -365,10 +365,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.56.0.tgz#ef20350fec605a7f7035a01764731b2de0f3782b"
   integrity sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==
 
-"@govuk-one-login/di-ipv-cri-common-express@6.4.0":
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-6.4.0.tgz#fbd7546720a5740bba8a258655769e45d71fcba1"
-  integrity sha512-Row+gMKBnFMIND1RyukOxU6tz258I5QfS1I/5cXaqDaF2oShCAb/zhEijaK8LjATgWODMSHQ/fhzvwudg5+0Zw==
+"@govuk-one-login/di-ipv-cri-common-express@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-6.4.1.tgz#9bf24aa948cf952d87fcc118669d2d986566a073"
+  integrity sha512-GEiQp49aZcOZ3xGxKyahlleZ2o8ce4exD/o1HOZ+8tTnCl85ju4VuMVUYFvvgHrKgztbZ2klQ5dSWpvnAFTfHg==
   dependencies:
     hmpo-logger "7.0.1"
     i18next "23.8.1"
