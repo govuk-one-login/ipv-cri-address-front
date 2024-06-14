@@ -48,8 +48,8 @@ Conditions:
   EnableCloudFront: !Or
     - !Equals [!Ref Environment, dev]
     - !Equals [!Ref Environment, build]
-  # - !Equals [ !Ref Environment, staging ]
-  # - !Equals [ !Ref Environment, integration ]
+    - !Equals [!Ref Environment, staging]
+    - !Equals [!Ref Environment, integration]
 
   UsePermissionsBoundary:
     Fn::Not:
