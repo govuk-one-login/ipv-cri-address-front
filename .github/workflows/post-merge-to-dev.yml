@@ -17,6 +17,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: "0"
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up AWS creds
         uses: aws-actions/configure-aws-credentials@v2
@@ -45,6 +47,7 @@ jobs:
           container-sign-kms-key-arn: ${{ secrets.DEV_CONTAINER_SIGN_KMS_KEY }}
           working-directory: .
           docker-build-path: .
+          dockerfile: dev.Dockerfile
           template-file: deploy/template.yaml
           role-to-assume-arn: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN }}
           ecr-repo-name: ${{ secrets.DEV_ECR_REPOSITORY }}
