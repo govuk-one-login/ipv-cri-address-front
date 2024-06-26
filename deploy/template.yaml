@@ -75,11 +75,11 @@ Mappings:
       uaDisabled: "false"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
-      ga4Disabled: "true"
+      ga4Disabled: "false"
       uaDisabled: "false"
     production:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables
-      ga4Disabled: "true"
+      ga4Disabled: "false"
       uaDisabled: "false"
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
