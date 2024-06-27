@@ -72,7 +72,7 @@ Mappings:
     staging:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       ga4Disabled: "false"
-      uaDisabled: "false"
+      uaDisabled: "true"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       ga4Disabled: "false"
