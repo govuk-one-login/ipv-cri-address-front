@@ -377,10 +377,10 @@
     lodash.differencewith "4.5.0"
     lodash.frompairs "4.0.1"
 
-"@govuk-one-login/frontend-analytics@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@govuk-one-login/frontend-analytics/-/frontend-analytics-2.0.0.tgz#a6d309dc99b53fb0d4c9840d0c5833cc3ed79151"
-  integrity sha512-xwvvtWoyn9IjgQEMmtV/bUNq7o8VfI7g5yogHKHIaBqdZYHiCXa+qG0wv1RxTaJsHBIOCMId8+rexY22B6fkPA==
+"@govuk-one-login/frontend-analytics@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@govuk-one-login/frontend-analytics/-/frontend-analytics-2.0.1.tgz#ff843241de1d1475407f719fb3f0f7180fc62dc1"
+  integrity sha512-8xAsQrRomVYxedFOQ8JDVdYx1JReJevSjU5EDZlcS/x3PhpCxm9DHjEqyOIvTo34zkFFoI4f2um6YkdD9IRQAg==
   dependencies:
     copy-webpack-plugin "^12.0.2"
 
