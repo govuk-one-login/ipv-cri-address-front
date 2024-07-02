@@ -22,7 +22,7 @@ jobs:
         uses: docker/setup-qemu-action@v3
 
       - name: Set up AWS creds
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN }}
           aws-region: eu-west-2
