@@ -3,7 +3,7 @@ require("express-async-errors");
 
 const path = require("path");
 const session = require("express-session");
-const AWS = require("aws-sdk");
+const { DynamoDB } = require("@aws-sdk/client-dynamodb");
 const DynamoDBStore = require("connect-dynamodb")(session);
 
 const commonExpress = require("@govuk-one-login/di-ipv-cri-common-express");
@@ -41,10 +41,9 @@ const loggerConfig = {
   app: false,
 };
 
-AWS.config.update({
+const dynamodb = new DynamoDB({
   region: "eu-west-2",
 });
-const dynamodb = new AWS.DynamoDB();
 
 const dynamoDBSessionStore = new DynamoDBStore({
   client: dynamodb,
