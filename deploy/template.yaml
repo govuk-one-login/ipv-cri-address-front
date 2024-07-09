@@ -45,12 +45,6 @@ Conditions:
     - !Equals [!Ref Environment, build]
     - !Equals [!Ref Environment, dev]
 
-  EnableCloudFront: !Or
-    - !Equals [!Ref Environment, dev]
-    - !Equals [!Ref Environment, build]
-    - !Equals [!Ref Environment, staging]
-    - !Equals [!Ref Environment, integration]
-
   EnableSpotArmInstance: !Equals [!Ref Environment, dev]
 
   UsePermissionsBoundary:
@@ -181,7 +175,6 @@ Resources:
 
   CloudFrontWAFv2ACLAssociation:
     Type: AWS::WAFv2::WebACLAssociation
-    Condition: EnableCloudFront
     Properties:
       ResourceArn: !Ref LoadBalancer
       WebACLArn: !ImportValue cfront-origin-distrib-CloakingOriginWebACLArn
