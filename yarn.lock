@@ -6159,10 +6159,10 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-uglify-js@3.17.3:
-  version "3.17.3"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.17.3.tgz#f0feedf019c4510f164099e8d7e72ff2d7304377"
-  integrity sha512-JmMFDME3iufZnBpyKL+uS78LRiC+mK55zWfM5f/pWBJfpOttXAqYfdDGRukYhJuyRinvPVAtUhvy7rlDybNtFg==
+uglify-js@3.18.0:
+  version "3.18.0"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.18.0.tgz#73b576a7e8fda63d2831e293aeead73e0a270deb"
+  integrity sha512-SyVVbcNBCk0dzr9XL/R/ySrmYf0s372K6/hFklzgcp2lBFyXtw4I7BOdDjlLhE1aVqaI/SHWXWmYdlZxuyF38A==
 
 uid-safe@2.1.5, uid-safe@~2.1.5:
   version "2.1.5"
