@@ -61,8 +61,11 @@ Conditions:
     - !Equals [!Ref PermissionsBoundary, "none"]
   UseCodeSigning: !Not
     - !Equals [!Ref CodeSigningConfigArn, "none"]
-  UseCanaryDeployment: !Not
-    - !Equals [!Ref DeploymentStrategy, "None"]
+  UseCanaryDeployment:
+    # - !Equals [!Ref DeploymentStrategy, "None"]
+    !Or # TODO: Replace with Prod and Integration when tests in Dev complete
+    - !Equals [!Ref Environment, dev]
+    - !Equals [!Ref Environment, dev]
 
 Mappings:
   EnvironmentConfiguration:
@@ -284,7 +287,7 @@ Resources:
     Type: "AWS::ECS::Service"
     Properties:
       Cluster: !Ref AddressFrontEcsCluster
-      DeploymentConfiguration:  !If
+      DeploymentConfiguration: !If
         - UseCanaryDeployment
         - !Ref AWS::NoValue
         - MaximumPercent: 200
@@ -319,10 +322,8 @@ Resources:
           Subnets:
             - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
             - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
-      TaskDefinition: !If
-        - UseCanaryDeployment
-        - !Ref AWS::NoValue
-        - !Ref ECSServiceTaskDefinition
+      TaskDefinition:
+        !Ref ECSServiceTaskDefinition
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-ECS"
@@ -563,6 +564,7 @@ Resources:
 
   ECSCanaryDeploymentStack:
     Type: AWS::CloudFormation::Stack
+    Condition: UseCanaryDeployment
     Properties:
       TemplateURL: https://template-storage-templatebucket-1upzyw6v9cs42.s3.eu-west-2.amazonaws.com/ecs-canary-deployment/template.yaml?versionId=5RRU1nfKQD_d08FKttr8W7pzrAsqQiUM
       Parameters:
