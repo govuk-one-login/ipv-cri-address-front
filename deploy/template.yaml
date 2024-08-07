@@ -61,11 +61,12 @@ Conditions:
     - !Equals [!Ref PermissionsBoundary, "none"]
   UseCodeSigning: !Not
     - !Equals [!Ref CodeSigningConfigArn, "none"]
-  UseCanaryDeployment:
-    # - !Equals [!Ref DeploymentStrategy, "None"]
-    !Or # TODO: Replace with Prod and Integration when tests in Dev complete
-    - !Equals [!Ref Environment, dev]
-    - !Equals [!Ref Environment, dev]
+  UseCanaryDeployment: !And
+    - !Not [!Equals [!Ref DeploymentStrategy, "None"]]
+    - !Or
+      - !Equals [!Ref Environment, dev]
+      - !Equals [!Ref Environment, build]
+      - !Equals [!Ref Environment, staging]
 
 Mappings:
   EnvironmentConfiguration:
@@ -322,8 +323,10 @@ Resources:
           Subnets:
             - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
             - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
-      TaskDefinition:
-        !Ref ECSServiceTaskDefinition
+      TaskDefinition: !If
+        - UseCanaryDeployment
+        - !Ref AWS::NoValue
+        - !Ref ECSServiceTaskDefinition
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-ECS"
