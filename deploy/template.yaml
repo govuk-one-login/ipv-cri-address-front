@@ -29,6 +29,16 @@ Parameters:
     Type: String
     Default: "none"
 
+  CodeSigningConfigArn:
+    Type: String
+    Description: >
+      The ARN of the Code Signing Config to use, provided by the deployment pipeline
+    Default: "none"
+  DeploymentStrategy:
+    Description: "Predefined deployment configuration for ECS application"
+    Type: String
+    Default: "None"
+
 Conditions:
   IsNotDevelopment: !Or
     - !Equals [!Ref Environment, build]
@@ -47,11 +57,12 @@ Conditions:
 
   EnableSpotArmInstance: !Equals [!Ref Environment, dev]
 
-  UsePermissionsBoundary:
-    Fn::Not:
-      - Fn::Equals:
-          - !Ref PermissionsBoundary
-          - "none"
+  UsePermissionsBoundary: !Not
+    - !Equals [!Ref PermissionsBoundary, "none"]
+  UseCodeSigning: !Not
+    - !Equals [!Ref CodeSigningConfigArn, "none"]
+  UseCanaryDeployment: !Not
+    - !Equals [!Ref DeploymentStrategy, "None"]
 
 Mappings:
   EnvironmentConfiguration:
@@ -220,6 +231,26 @@ Resources:
         - Key: deregistration_delay.timeout_seconds
           Value: 30
 
+  LoadBalancerListenerGreenTargetGroupECS:
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    Properties:
+      HealthCheckEnabled: TRUE
+      HealthCheckProtocol: HTTP
+      HealthCheckPath: /healthcheck
+      HealthCheckTimeoutSeconds: 2
+      HealthCheckIntervalSeconds: 5
+      HealthyThresholdCount: 2
+      Matcher:
+        HttpCode: 200
+      Port: 80
+      Protocol: HTTP
+      TargetType: ip
+      VpcId:
+        Fn::ImportValue: !Sub "${VpcStackName}-VpcId"
+      TargetGroupAttributes:
+        - Key: deregistration_delay.timeout_seconds
+          Value: 30
+
   LoadBalancerListener:
     Type: "AWS::ElasticLoadBalancingV2::Listener"
     Properties:
@@ -253,12 +284,25 @@ Resources:
     Type: "AWS::ECS::Service"
     Properties:
       Cluster: !Ref AddressFrontEcsCluster
-      DeploymentConfiguration:
-        MaximumPercent: 200
-        MinimumHealthyPercent: 50
-        DeploymentCircuitBreaker:
-          Enable: !If [EnableSpotArmInstance, FALSE, TRUE]
-          Rollback: !If [EnableSpotArmInstance, FALSE, TRUE]
+      DeploymentConfiguration: !If
+        - UseCanaryDeployment
+        - !Ref AWS::NoValue
+        - MaximumPercent: 200
+          MinimumHealthyPercent: 50
+          DeploymentCircuitBreaker:
+            Enable: !If [EnableSpotArmInstance, FALSE, TRUE]
+            Rollback: !If [EnableSpotArmInstance, FALSE, TRUE]
+      DeploymentController:
+        Type: !If
+          - UseCanaryDeployment
+          - CODE_DEPLOY
+          - ECS
+      # DeploymentConfiguration:
+      #   MaximumPercent: 200
+      #   MinimumHealthyPercent: 50
+      #   DeploymentCircuitBreaker:
+      #     Enable: !If [EnableSpotArmInstance, FALSE, TRUE]
+      #     Rollback: !If [EnableSpotArmInstance, FALSE, TRUE]
       DesiredCount: 2
       EnableECSManagedTags: false
       HealthCheckGracePeriodSeconds: 60
@@ -275,7 +319,8 @@ Resources:
           Subnets:
             - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
             - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
-      TaskDefinition: !Ref ECSServiceTaskDefinition
+      TaskDefinition:
+        !Ref ECSServiceTaskDefinition
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-ECS"
@@ -513,6 +558,39 @@ Resources:
         - UsePermissionsBoundary
         - !Ref PermissionsBoundary
         - !Ref AWS::NoValue
+
+  ECSCanaryDeploymentStack:
+    Type: AWS::CloudFormation::Stack
+    Condition: UseCanaryDeployment
+    Properties:
+      TemplateURL: https://template-storage-templatebucket-1upzyw6v9cs42.s3.eu-west-2.amazonaws.com/ecs-canary-deployment/template.yaml?versionId=5RRU1nfKQD_d08FKttr8W7pzrAsqQiUM
+      Parameters:
+        VpcId: !Sub ${VpcStackName}-VpcId
+        PermissionsBoundary:
+          Fn::ImportValue: !Sub "${AWS::StackName}-ECSCanaryPermissionsBoundaryArn"
+        CodeSigningConfigArn: !If
+          - UseCodeSigning
+          - !Ref CodeSigningConfigArn
+          - !Ref AWS::NoValue
+        ECSClusterName: !Ref AddressFrontEcsCluster
+        ECSServiceName: !GetAtt AddressFrontEcsService.Name
+        TargetGroupName: !GetAtt LoadBalancerListenerTargetGroupECS.TargetGroupName
+        GreenTargetGroupName: !GetAtt LoadBalancerListenerGreenTargetGroupECS.TargetGroupName
+        LoadBalancerListenerARN: !Ref LoadBalancerListener
+        ECSServiceTaskDefinition: !Ref ECSServiceTaskDefinition
+        DeploymentStrategy: !Ref DeploymentStrategy
+        ContainerName: "app"
+        ContainerPort: 8080
+        # Optional parameters
+        Subnets: !Join
+          - ","
+          - - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
+            - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
+        SecurityGroups: !GetAtt ECSSecurityGroup.GroupId
+        CloudWatchAlarms: !Sub
+          - "${MyAlarmOneVar},${MyAlarmTwoVar}"
+          - MyAlarmOneVar: !Ref Address5XXOnELB
+            MyAlarmTwoVar: !Ref FrontTargetGroup5xxPercentErrors
 
   ApiGwHttpEndpoint:
     Type: "AWS::ApiGatewayV2::Api"
@@ -800,6 +878,47 @@ Resources:
       Threshold: 1
       ComparisonOperator: GreaterThanThreshold
       TreatMissingData: notBreaching
+
+  FrontTargetGroup5xxPercentErrors:
+    Type: AWS::CloudWatch::Alarm
+    # Condition: UseCanaryDeployment
+    Properties:
+      AlarmName: FrontTargetGroup5xxPercentAlarm
+      AlarmDescription: >
+        The number of HTTP 5XX server error codes that originate from the
+        target group is greater than 5% of all traffic.
+      EvaluationPeriods: 2
+      DatapointsToAlarm: 2
+      Threshold: 5
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+      Metrics:
+        - Id: e1
+          Label: ErrorPercent
+          ReturnData: true
+          Expression: (m1/m2)*100
+        - Id: m1
+          ReturnData: false
+          MetricStat:
+            Metric:
+              Namespace: AWS/ApplicationELB
+              MetricName: HTTPCode_Target_5XX_Count
+              Dimensions:
+                - Name: LoadBalancer
+                  Value: !GetAtt LoadBalancer.LoadBalancerFullName
+            Period: 60
+            Stat: Sum
+        - Id: m2
+          ReturnData: false
+          MetricStat:
+            Metric:
+              Namespace: AWS/ApplicationELB
+              MetricName: RequestCount
+              Dimensions:
+                - Name: LoadBalancer
+                  Value: !GetAtt LoadBalancer.LoadBalancerFullName
+            Period: 60
+            Stat: Sum
 
 Outputs:
   StackName:
