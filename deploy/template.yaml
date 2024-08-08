@@ -297,30 +297,30 @@ Resources:
           - UseCanaryDeployment
           - CODE_DEPLOY
           - ECS
-      # DeploymentConfiguration:
-      #   MaximumPercent: 200
-      #   MinimumHealthyPercent: 50
-      #   DeploymentCircuitBreaker:
-      #     Enable: !If [EnableSpotArmInstance, FALSE, TRUE]
-      #     Rollback: !If [EnableSpotArmInstance, FALSE, TRUE]
       DesiredCount: 2
       EnableECSManagedTags: false
       HealthCheckGracePeriodSeconds: 60
       LaunchType: FARGATE
-      LoadBalancers:
-        - ContainerName: app
-          ContainerPort: 8080
-          TargetGroupArn: !Ref LoadBalancerListenerTargetGroupECS
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: DISABLED
-          SecurityGroups:
-            - !GetAtt ECSSecurityGroup.GroupId
-          Subnets:
-            - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
-            - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
-      TaskDefinition:
-        !Ref ECSServiceTaskDefinition
+      LoadBalancers: !If
+        - UseCanaryDeployment
+        - !Ref AWS::NoValue
+        - - ContainerName: app
+            ContainerPort: 8080
+            TargetGroupArn: !Ref LoadBalancerListenerTargetGroupECS
+      NetworkConfiguration: !If
+        - UseCanaryDeployment
+        - !Ref AWS::NoValue
+        - AwsvpcConfiguration:
+            AssignPublicIp: DISABLED
+            SecurityGroups:
+              - !GetAtt ECSSecurityGroup.GroupId
+            Subnets:
+              - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
+              - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
+      TaskDefinition: !If
+        - UseCanaryDeployment
+        - !Ref AWS::NoValue
+        - !Ref ECSServiceTaskDefinition
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-ECS"
