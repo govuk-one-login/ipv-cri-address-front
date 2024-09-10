@@ -1,0 +1,39 @@
+{% extends "base-form.njk" %}
+{% block mainContent %}
+<h1 class="govuk-heading-l">test</h1>
+<select name="addressCountry" class="govuk-select" id="address-country">
+{% if not countryCode %}
+  <option disabled value="" selected>Pick a country or territory</option>
+{% endif %}
+{% for country in countries %}
+  {# <option value="{{ country[1].split(':')[1] }}"{% if country[1].split(':')[1] ===  countryCode %} selected="selected"{% endif %}>{{ country[0] }}</option> #}
+{% endfor %}
+</select>
+
+<script id="govuk-script-analytics" nonce="{{ cspNonce }}" type="text/javascript"> 
+console.log("1!")
+  document.addEventListener('DOMContentLoaded', function() {
+  console.log("2!")
+    const initialiseAddressCountryAutocomplete = () => {
+      var autocompleteScript = document.createElement('script')
+      console.log("3")
+      autocompleteScript.onload = function () {
+        openregisterLocationPicker({
+          selectElement: document.getElementById('address-country'),
+          url: '/public/location-autocomplete-graph.json',
+          autoselect: true,
+          displayMenu: 'overlay'
+        })
+        console.log("4")
+        document.getElementById('address-country').setAttribute('autocomplete', 'country-disabled-autocomplete')
+      }
+      console.log("5")
+      autocompleteScript.setAttribute('type', 'text/javascript')
+      autocompleteScript.setAttribute('src', '/public/location-autocomplete.min.js')
+      document.getElementsByTagName('head')[0].appendChild(autocompleteScript)
+      console.log("6")
+    }
+    initialiseAddressCountryAutocomplete()
+  })
+</script>
+{% endblock %}

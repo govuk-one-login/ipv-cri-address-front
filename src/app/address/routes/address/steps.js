@@ -2,6 +2,7 @@ const address = require("../../controllers/address/manual");
 const prepopulate = require("../../controllers/address/prepopulate");
 const search = require("../../controllers/address/search");
 const results = require("../../controllers/address/results");
+const country = require("../../controllers/address/country-picker")
 
 module.exports = {
   "/": {
@@ -9,6 +10,11 @@ module.exports = {
     entryPoint: true,
     skip: true,
     next: "prepopulate",
+  },
+  "/country-picker": {
+    controller: country,
+    resetJourney: true,
+    entryPoint: true,
   },
   "/prepopulate": {
     controller: prepopulate,
