@@ -10,6 +10,8 @@
 {% endfor %}
 </select>
 
+
+
 <script id="govuk-script-analytics" nonce="{{ cspNonce }}" type="text/javascript"> 
 console.log("1!")
   document.addEventListener('DOMContentLoaded', function() {
@@ -36,4 +38,6 @@ console.log("1!")
     initialiseAddressCountryAutocomplete()
   })
 </script>
+
+{{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 {% endblock %}

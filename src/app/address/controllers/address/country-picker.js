@@ -11,5 +11,11 @@ class CountryController extends BaseController {
           callback(null, locals);
       });
     }
+    saveValues(req, res, callback) {
+      const countrySelected = req.body.country;
+      req.session.country = countrySelected
+      console.log("COUNTRIIIIES", countrySelected)
+      super.saveValues(req, res, callback);
+    }
   }
 module.exports = CountryController;
