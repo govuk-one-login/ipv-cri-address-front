@@ -1,17 +1,20 @@
+
 {% extends "base-form.njk" %}
+{% from "hmpo-select/macro.njk" import hmpoSelect %}
 {% block mainContent %}
 <h1 class="govuk-heading-l">test</h1>
-<select name="addressCountry" class="govuk-select" id="address-country">
-{% if not countryCode %}
-  <option disabled value="" selected>Pick a country or territory</option>
-{% endif %}
-{% for country in countries %}
-  {# <option value="{{ country[1].split(':')[1] }}"{% if country[1].split(':')[1] ===  countryCode %} selected="selected"{% endif %}>{{ country[0] }}</option> #}
-{% endfor %}
-</select>
+  {% call hmpoForm(ctx, {autocomplete:'on'}) %}
 
+ {{ hmpoSelect(ctx, {
+      id: "addressCountry",
+      label: "Select your country or territory",
+      hint: "",
+      items: countries
+    }) }}
 
+{{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 
+  {% endcall %}
 <script id="govuk-script-analytics" nonce="{{ cspNonce }}" type="text/javascript"> 
 console.log("1!")
   document.addEventListener('DOMContentLoaded', function() {
@@ -21,13 +24,13 @@ console.log("1!")
       console.log("3")
       autocompleteScript.onload = function () {
         openregisterLocationPicker({
-          selectElement: document.getElementById('address-country'),
+          selectElement: document.getElementById('addressCountry'),
           url: '/public/location-autocomplete-graph.json',
           autoselect: true,
           displayMenu: 'overlay'
         })
         console.log("4")
-        document.getElementById('address-country').setAttribute('autocomplete', 'country-disabled-autocomplete')
+        document.getElementById('addressCountry').setAttribute('autocomplete', 'country-disabled-autocomplete')
       }
       console.log("5")
       autocompleteScript.setAttribute('type', 'text/javascript')
@@ -39,5 +42,4 @@ console.log("1!")
   })
 </script>
 
-{{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 {% endblock %}

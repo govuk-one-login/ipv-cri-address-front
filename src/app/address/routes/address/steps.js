@@ -13,6 +13,7 @@ module.exports = {
   },
   "/country-picker": {
     controller: country,
+    fields: ["addressCountry"],
     next: "prepopulate",
     resetJourney: true,
     entryPoint: true,
