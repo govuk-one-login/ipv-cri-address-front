@@ -59,6 +59,10 @@ const sessionConfig = {
 
 const helmetConfig = require("@govuk-one-login/di-ipv-cri-common-express/src/lib/helmet");
 
+const {
+  frontendVitalSignsInitFromApp,
+} = require("@govuk-one-login/frontend-vital-signs");
+
 const { app, router } = setup({
   config: { APP_ROOT: __dirname },
   port: PORT,
@@ -86,6 +90,25 @@ const { app, router } = setup({
     "views",
   ],
   middlewareSetupFn: (app) => {
+    frontendVitalSignsInitFromApp(app, {
+      interval: 60000,
+      logLevel: "info",
+      metrics: [
+        "requestsPerSecond",
+        "avgResponseTime",
+        "maxConcurrentConnections",
+        "eventLoopDelay",
+        "eventLoopUtilization",
+      ],
+      staticPaths: [
+        /^\/assets\/.*/,
+        "/ga4-assets",
+        "/javascript",
+        "/javascripts",
+        "/images",
+        "/stylesheets",
+      ],
+    });
     app.use(setHeaders);
   },
   dev: true,
