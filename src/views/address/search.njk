@@ -33,6 +33,7 @@
     }) }}
 
     {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.find-address")}) }}
+    {%- include "../components/continue-submit-spinner.njk" -%}
 
   {% endcall %}
 

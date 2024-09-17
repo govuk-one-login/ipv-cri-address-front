@@ -8,7 +8,7 @@
     "dev": "nodemon src/app.js",
     "build": "yarn build-sass && yarn build-js && yarn copy-assets",
     "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
-    "copy-assets": "mkdir -p dist && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts",
+    "copy-assets": "mkdir -p dist && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts && copyfiles -u 3 src/assets/images/** dist/public/images",
     "build-js": "yarn build-js:analytics && yarn build-js:all",
     "build-js:analytics": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/frontend-analytics/lib/analytics.js node_modules/@govuk-one-login/di-ipv-cri-common-express/src/assets/javascript/analytics/ua/init.js --beautify -o dist/public/javascripts/analytics.js",
     "build-js:all": "mkdir -p dist/public/javascripts; uglifyjs node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js --beautify -o dist/public/javascripts/all.js",

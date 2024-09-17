@@ -1,0 +1,84 @@
+$spinner-icon-size: 24px;
+$spinner-icon-path: "/public/images/mini-button-spinner.svg";
+$spinner-animation-duration: 0.75s;
+
+// Create variables that are in local scope for the design system version of the button
+// https://github.com/alphagov/govuk-frontend/blob/main/src/govuk/components/button/_index.scss
+
+$govuk-button-colour: $govuk-button-background-colour;
+$govuk-button-hover-colour: govuk-shade($govuk-button-colour, 20%);
+$govuk-button-shadow-colour: govuk-shade($govuk-button-colour, 60%);
+
+#continue.button--spinner {
+  text-align: center;
+  padding-left: calc($spinner-icon-size * 2);
+  padding-right: calc($spinner-icon-size * 2);
+  @include govuk-media-query($from: tablet) {
+    text-align: left;
+    padding-right: 1rem;
+    padding-left: calc($spinner-icon-size * 2);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 8px;
+    height: $spinner-icon-size;
+    width: $spinner-icon-size;
+    margin-right: calc($spinner-icon-size / 6);
+    background-image: url($spinner-icon-path);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: $spinner-icon-size $spinner-icon-size;
+    animation-name: spin;
+    animation-duration: $spinner-animation-duration;
+    animation-iteration-count: infinite;
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion) {
+    padding-left: 1rem;
+    &::before {
+      display: none;
+    }
+  }
+
+  &:hover {
+    background-color: $govuk-button-hover-colour;
+    border-color: $govuk-button-hover-colour;
+    color: $govuk-button-text-colour;
+  }
+
+  &:focus {
+    background-color: $govuk-button-hover-colour;
+    border-color: $govuk-button-hover-colour;
+    color: $govuk-button-text-colour;
+  }
+
+  &:active {
+    background-color: $govuk-button-hover-colour;
+    border-color: $govuk-button-hover-colour;
+    color: $govuk-button-text-colour;
+  }
+
+  &:focus:not(:active):not(:hover) {
+    background-color: $govuk-button-hover-colour;
+    border-color: $govuk-button-hover-colour;
+    color: $govuk-button-text-colour;
+  }
+
+  &[disabled],
+  &[disabled]:hover {
+    background-color: $govuk-button-hover-colour;
+    box-shadow: 0 2px 0 $govuk-button-shadow-colour;
+  }
+}
