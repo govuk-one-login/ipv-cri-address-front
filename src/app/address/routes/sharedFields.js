@@ -143,4 +143,12 @@ module.exports = {
       },
     ],
   },
+  addressCountry: {
+    type: "text",
+    validate: [
+      {
+        type: "required",
+      },
+    ],
+  },
 };
