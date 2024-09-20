@@ -1,21 +1,23 @@
 <script nonce="{{ cspNonce }}">
+  (function () {
     var formSubmitted = false;
-    submitSpinner()
     function delayDisableButton(button) {
-      button.className += ' button--spinner'
-      setTimeout(function() {
-            button.setAttribute('disabled', true)
-        }, 200);
+      button.className += ' button--spinner';
+      setTimeout(function () {
+        button.setAttribute('disabled', true);
+      }, 200);
     }
     function submitSpinner() {
-      var select = document.getElementById('continue')
+      var select = document.getElementById('continue');
       select.addEventListener('click', function (event) {
         if (formSubmitted) {
-          event.preventDefault()
+          event.preventDefault();
         } else {
           formSubmitted = true;
           delayDisableButton(event.target);
         }
-      })
+      });
     }
+    submitSpinner();
+  })();
 </script>
