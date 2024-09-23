@@ -150,10 +150,13 @@
 
     {{ hmpoSubmit(ctx, {
         text: translate("pages.address-confirm.buttons.next"),
+        id: "continue",
         attributes: {
         "data-id": "next"
       }
     }) }}
+    {%- include "../components/continue-submit-spinner.njk" -%}
+
   {% endcall %}
 
   <br>
@@ -167,4 +170,5 @@
     loggedInStatus: true,
     dynamic: false
   }) }}
+
 {% endblock %}
