@@ -1,4 +1,5 @@
 const BaseController = require("hmpo-form-wizard").Controller;
+const logger = require("hmpo-logger").get();
 
 const {
   API: {
@@ -29,7 +30,8 @@ class AddressPrepopulateController extends BaseController {
       return super.saveValues(req, res, () => {
         callback();
       });
-    } catch (err) {
+    } catch (error) {
+      logger.warn("Error pre-populating address", error);
       callback();
     }
   }
