@@ -54,7 +54,7 @@
     "wiremock": "3.8.0"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "10.0.1",
+    "@cucumber/cucumber": "11.0.1",
     "chai": "4.4.1",
     "chai-as-promised": "7.1.1",
     "eslint": "8.56.0",
