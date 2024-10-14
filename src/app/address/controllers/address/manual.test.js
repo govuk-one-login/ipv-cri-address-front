@@ -55,7 +55,6 @@ describe("address controller", () => {
           addressLocality: generatedAddress[0].addressLocality,
           addressYearFrom: Number(generatedAddress[0].validFrom),
           addressHouseName: generatedAddress[0].buildingName,
-          addressCountry: generatedAddress[0].country,
         })
       );
     });
@@ -91,7 +90,9 @@ describe("address controller", () => {
       expect(savedAddress.buildingName).to.equal(
         addressToSave.addressHouseName
       );
-      expect(savedAddress.country).to.equal(addressToSave.addressCountry);
+      expect(savedAddress.addressCountry).to.equal(
+        addressToSave.addressCountry
+      );
     });
 
     it("should save the address into the session - house example", async () => {
@@ -116,7 +117,9 @@ describe("address controller", () => {
       expect(savedAddress.addressLocality).to.equal(
         addressToSave.addressLocality
       );
-      expect(savedAddress.country).to.equal(addressToSave.addressCountry);
+      expect(savedAddress.addressCountry).to.equal(
+        addressToSave.addressCountry
+      );
     });
 
     it("should overwrite the current address when current address already exists", async () => {
@@ -154,7 +157,9 @@ describe("address controller", () => {
       expect(savedAddresses.addressStreetName).to.equal(
         addressToSave.streetName
       );
-      expect(savedAddresses.addressCountry).to.equal(addressToSave.country);
+      expect(savedAddresses.addressCountry).to.equal(
+        addressToSave.addressCountry
+      );
     });
 
     it("should delete the UPRN when overwriting the saved address", async () => {

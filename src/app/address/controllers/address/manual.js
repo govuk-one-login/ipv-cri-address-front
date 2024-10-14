@@ -18,7 +18,6 @@ class AddressController extends BaseController {
         values.addressHouseName = address.buildingName;
         values.addressStreetName = address.streetName;
         values.addressLocality = address.addressLocality;
-        values.addressCountry = address.country;
 
         const yearFrom = address.validFrom
           ? new Date(address.validFrom).getFullYear()
@@ -78,7 +77,6 @@ class AddressController extends BaseController {
       addressStreetName,
       addressLocality,
       addressYearFrom,
-      addressCountry,
     } = undefined,
     chosenAddress
   ) {
@@ -95,7 +93,7 @@ class AddressController extends BaseController {
       buildingName: addressHouseName,
       streetName: addressStreetName,
       addressLocality,
-      country: addressCountry,
+      addressCountry: "GB",
       validFrom: yearFrom,
     };
 
