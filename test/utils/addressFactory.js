@@ -6,6 +6,7 @@ function addressFactory(quantity) {
       streetName: "street1",
       addressLocality: "town1",
       postalCode: "postcode1",
+      country: "GB",
       validFrom: String(new Date().getFullYear()),
     },
     {

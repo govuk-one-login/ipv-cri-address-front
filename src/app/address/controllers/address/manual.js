@@ -18,6 +18,7 @@ class AddressController extends BaseController {
         values.addressHouseName = address.buildingName;
         values.addressStreetName = address.streetName;
         values.addressLocality = address.addressLocality;
+        values.addressCountry = address.country;
 
         const yearFrom = address.validFrom
           ? new Date(address.validFrom).getFullYear()
@@ -77,6 +78,7 @@ class AddressController extends BaseController {
       addressStreetName,
       addressLocality,
       addressYearFrom,
+      addressCountry,
     } = undefined,
     chosenAddress
   ) {
@@ -93,12 +95,13 @@ class AddressController extends BaseController {
       buildingName: addressHouseName,
       streetName: addressStreetName,
       addressLocality,
+      country: addressCountry,
       validFrom: yearFrom,
     };
 
     const isChanged = this.checkForChanges(address, chosenAddress);
 
-    // any changed fields will be overwriten by 'address'
+    // any changed fields will be overwritten by 'address'
     // Retains all special fields (sub building name, UPRN etc)
     const updatedAddress = {
       ...chosenAddress,
