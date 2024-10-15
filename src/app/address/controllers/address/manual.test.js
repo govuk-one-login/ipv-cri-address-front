@@ -67,6 +67,7 @@ describe("address controller", () => {
         addressHouseName: "My buildng name",
         addressStreetName: "street road",
         addressLocality: "small town",
+        addressCountry: "GB",
         addressYearFrom: "2022",
       };
 
@@ -89,6 +90,9 @@ describe("address controller", () => {
       expect(savedAddress.buildingName).to.equal(
         addressToSave.addressHouseName
       );
+      expect(savedAddress.addressCountry).to.equal(
+        addressToSave.addressCountry
+      );
     });
 
     it("should save the address into the session - house example", async () => {
@@ -96,6 +100,7 @@ describe("address controller", () => {
         addressHouseNumber: "10a",
         addressStreetName: "street road",
         addressLocality: "small town",
+        addressCountry: "GB",
         addressYearFrom: "2022",
       };
 
@@ -112,6 +117,9 @@ describe("address controller", () => {
       expect(savedAddress.addressLocality).to.equal(
         addressToSave.addressLocality
       );
+      expect(savedAddress.addressCountry).to.equal(
+        addressToSave.addressCountry
+      );
     });
 
     it("should overwrite the current address when current address already exists", async () => {
@@ -120,6 +128,7 @@ describe("address controller", () => {
         addressHouseName: "My building",
         addressStreetName: "avenue",
         addressLocality: "large town",
+        addressCountry: "GB",
         addressYearFrom: "2022",
       };
 
@@ -148,6 +157,9 @@ describe("address controller", () => {
       expect(savedAddresses.addressStreetName).to.equal(
         addressToSave.streetName
       );
+      expect(savedAddresses.addressCountry).to.equal(
+        addressToSave.addressCountry
+      );
     });
 
     it("should delete the UPRN when overwriting the saved address", async () => {
@@ -156,6 +168,7 @@ describe("address controller", () => {
         addressHouseName: "My building",
         addressStreetName: "avenue",
         addressLocality: "large town",
+        addressCountry: "GB",
         addressYearFrom: "2022",
       };
 

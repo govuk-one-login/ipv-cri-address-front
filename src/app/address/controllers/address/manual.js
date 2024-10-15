@@ -93,12 +93,13 @@ class AddressController extends BaseController {
       buildingName: addressHouseName,
       streetName: addressStreetName,
       addressLocality,
+      addressCountry: "GB",
       validFrom: yearFrom,
     };
 
     const isChanged = this.checkForChanges(address, chosenAddress);
 
-    // any changed fields will be overwriten by 'address'
+    // any changed fields will be overwritten by 'address'
     // Retains all special fields (sub building name, UPRN etc)
     const updatedAddress = {
       ...chosenAddress,
