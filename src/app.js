@@ -143,7 +143,7 @@ setGTM({
   analyticsCookieDomain: APP.GTM.ANALYTICS_COOKIE_DOMAIN,
   uaDisabled: APP.GTM.UA_DISABLED,
   uaContainerId: APP.GTM.UA_CONTAINER_ID,
-  ga4Disabled: APP.GTM.GA4_DISABLED,
+  ga4Enabled: APP.GTM.GA4_ENABLED,
   ga4ContainerId: APP.GTM.GA4_CONTAINER_ID,
 });
 
