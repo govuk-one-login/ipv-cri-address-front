@@ -145,6 +145,12 @@ setGTM({
   uaContainerId: APP.GTM.UA_CONTAINER_ID,
   ga4Enabled: APP.GTM.GA4_ENABLED,
   ga4ContainerId: APP.GTM.GA4_CONTAINER_ID,
+  ga4PageViewEnabled: true,
+  ga4FormResponseEnabled: true,
+  ga4FormErrorEnabled: true,
+  ga4FormChangeEnabled: true,
+  ga4NavigationEnabled: true,
+  ga4SelectContentEnabled: true,
 });
 
 router.use(getGTM);
