@@ -1,5 +1,5 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-
+const logger = require("hmpo-logger").get();
 const { API } = require("../../../../lib/config");
 const {
   createPersonalDataHeaders,
@@ -28,7 +28,9 @@ class AddressSearchController extends BaseController {
         req.sessionModel.set("addressPostcode", addressPostcode);
         callback();
       });
-    } catch (err) {
+    } catch (error) {
+      logger.warn("Error searching for address", error);
+
       req.sessionModel.set("requestIsSuccessful", false);
       req.sessionModel.set("checkDetailsHeader", false);
       req.sessionModel.set("addressPostcode", addressPostcode);

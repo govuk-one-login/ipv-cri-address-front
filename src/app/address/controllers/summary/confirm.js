@@ -1,5 +1,5 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-
+const logger = require("hmpo-logger").get();
 const {
   generateHTMLofAddress,
 } = require("../../../../presenters/addressPresenter");
@@ -99,8 +99,10 @@ class AddressConfirmController extends BaseController {
           callback();
         });
       }
-    } catch (err) {
-      callback(err);
+    } catch (error) {
+      logger.warn("Error submitting address", error);
+
+      callback(error);
     }
   }
 
