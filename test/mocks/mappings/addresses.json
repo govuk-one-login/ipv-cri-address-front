@@ -51,8 +51,7 @@
             "uprn": "000",
             "buildingName": "EAST ZZZ",
             "addressLocality": "BEAMINSTER",
-            "postalCode": "ZZ1 1ZZ",
-            "addressCountry": "GB"
+            "postalCode": "ZZ1 1ZZ"
           },
           {
             "uprn": "111",
@@ -61,8 +60,7 @@
             "streetName": "ZZZ WAY",
             "dependentAddressLocality": "WHITEHOUSE",
             "addressLocality": "MILTON KEYNES",
-            "postalCode": "ZZ1 1ZZ",
-            "addressCountry": "GB"
+            "postalCode": "ZZ1 1ZZ"
           },
           {
             "subBuildingName": "FLAT 11",
@@ -77,8 +75,7 @@
             "streetName": "ZZZ ROAD",
             "dependentAddressLocality": "LONG ZZZ",
             "addressLocality": "NOTTINGHAM",
-            "postalCode": "ZZ1 1ZZ",
-            "addressCountry": "GB"
+            "postalCode": "ZZ1 1ZZ"
           },
           {
             "uprn": "333",
@@ -91,8 +88,7 @@
             "doubleDependentAddressLocality": "SOME ZZZ",
             "dependentAddressLocality": "LONG EATON",
             "addressLocality": "GREAT MISSENDEN",
-            "postalCode": "ZZ1 1ZZ",
-            "addressCountry": "GB"
+            "postalCode": "ZZ1 1ZZ"
           },
           {
             "buildingName": "R103",
@@ -100,8 +96,7 @@
             "streetName": "CREEK ROAD",
             "doubleDependentAddressLocality": "",
             "addressLocality": "ZZZ ISLAND",
-            "postalCode": "ZZ1 1ZZ",
-            "addressCountry": "GB"
+            "postalCode": "ZZ1 1ZZ"
           },
           {
             "uprn": "444",
@@ -109,16 +104,14 @@
             "streetName": "ZZZ CRESCENT",
             "dependentAddressLocality": "NEW PITSLIGO",
             "addressLocality": "FRASERBURGH",
-            "postalCode": "ZZ1 1ZZ",
-            "addressCountry": "GB"
+            "postalCode": "ZZ1 1ZZ"
           },
           {
             "uprn": "555",
             "buildingNumber": "3",
             "streetName": "ZZZ WALK",
             "addressLocality": "MIDDLESBROUGH",
-            "postalCode": "ZZ1 1ZZ",
-            "addressCountry": "GB"
+            "postalCode": "ZZ1 1ZZ"
           }
         ]
       }
