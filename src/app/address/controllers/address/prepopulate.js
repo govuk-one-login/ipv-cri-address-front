@@ -12,6 +12,11 @@ class AddressPrepopulateController extends BaseController {
     req.session.prepopulatedPostcode = false;
 
     try {
+      if (!req.session.tokenId) {
+        logger.warn("No session ID, not attempting pre-population");
+        return callback();
+      }
+
       const prepopulatedAddresses = await req.axios.get(`${GET_ADDRESSES}`, {
         headers: {
           session_id: req.session.tokenId,

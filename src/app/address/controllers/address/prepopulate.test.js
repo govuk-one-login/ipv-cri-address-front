@@ -47,6 +47,16 @@ describe("Prepopulate controller", () => {
       });
     });
 
+    it("should not retrieve addresses if there is no session", async () => {
+      await prepopulateController.saveValues(
+        { ...req, session: {} },
+        res,
+        next
+      );
+
+      expect(req.axios.get).to.have.callCount(0);
+    });
+
     context("on success", () => {
       let prototypeSpy;
 
