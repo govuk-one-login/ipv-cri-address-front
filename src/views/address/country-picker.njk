@@ -7,6 +7,31 @@
 
   <h1 id="header" class="govuk-heading-l">{{translate("pages.countryPicker.title")}} </h1>
 
+  <select id="country-picker">
+    <option value="fr">France</option>
+    <option value="de">Germany</option>
+    <option value="gb">United Kingdom</option>
+  </select>
 
+  <script id="govuk-script-analytics" nonce="{{ cspNonce }}" type="text/javascript"> 
+    document.addEventListener('DOMContentLoaded', function() {
 
+      const initialiseAddressCountryAutocomplete = () => {
+        var autocompleteScript = document.createElement('script')
+
+        autocompleteScript.onload = function () {
+          accessibleAutocomplete.enhanceSelectElement({
+            selectElement: document.querySelector('#country-picker'),
+            showAllValues: true,
+            dropdownArrow: () => ''
+          })
+        }
+
+        autocompleteScript.setAttribute('type', 'text/javascript')
+        autocompleteScript.setAttribute('src', '/public/javascripts/accessible-autocomplete.min.js')
+        document.getElementsByTagName('head')[0].appendChild(autocompleteScript)
+      }
+      initialiseAddressCountryAutocomplete()
+    })
+</script>
 {% endblock %}

@@ -26,6 +26,8 @@ module.exports = {
   "/country-picker": {
     controller: countryPicker,
     // TODO
+    entryPoint: true,
+    // TODO
     next: "international",
   },
   "/search": {
