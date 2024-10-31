@@ -17,19 +17,21 @@ class AddressPrepopulateController extends BaseController {
         return callback();
       }
 
-      const prepopulatedAddresses = await req.axios.get(`${GET_ADDRESSES}`, {
+      const { data } = await req.axios.get(`${GET_ADDRESSES}`, {
         headers: {
           session_id: req.session.tokenId,
+          // TODO surely this can be removed?
           "session-id": req.session.tokenId,
         },
       });
 
-      if (prepopulatedAddresses?.data?.addresses?.length > 0) {
+      if (data?.context) {
+        req.sessionModel.set("context", data.context);
+      }
+
+      if (data?.addresses?.length > 0) {
         req.session.prepopulatedPostcode = true;
-        req.sessionModel.set(
-          "addressSearch",
-          prepopulatedAddresses.data.addresses[0].postalCode
-        );
+        req.sessionModel.set("addressSearch", data.addresses[0].postalCode);
       }
 
       return super.saveValues(req, res, () => {
