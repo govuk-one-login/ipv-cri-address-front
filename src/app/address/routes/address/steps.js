@@ -2,6 +2,7 @@ const address = require("../../controllers/address/manual");
 const prepopulate = require("../../controllers/address/prepopulate");
 const search = require("../../controllers/address/search");
 const results = require("../../controllers/address/results");
+const countryPicker = require("../../controllers/address/countryPicker");
 
 module.exports = {
   "/": {
@@ -12,8 +13,20 @@ module.exports = {
   },
   "/prepopulate": {
     controller: prepopulate,
-    next: "search",
     skip: true,
+    next: [
+      {
+        field: "context",
+        value: "international_user",
+        next: "country-picker",
+      },
+      "search",
+    ],
+  },
+  "/country-picker": {
+    controller: countryPicker,
+    // TODO
+    next: "international",
   },
   "/search": {
     controller: search,
