@@ -26,7 +26,7 @@ Feature: Happy Path - changing languages
     Then they should see the search page content in Welsh
     Then the page's language property should be "Welsh"
 
-  Scenario: Welsh to Englishh with the language toggle
+  Scenario: Welsh to English with the language toggle
     Given They start with "Welsh"
     Then they should see the search page content in Welsh
     When they set the language to "English" using the toggle

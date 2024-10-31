@@ -39,7 +39,7 @@
       "newScenarioState": "AddressResponses",
       "request": {
         "method": "GET",
-        "url": "/addresses",
+        "url": "/addresses/v2",
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-prepopulated"
@@ -54,14 +54,44 @@
       },
       "response": {
         "status": 200,
-        "jsonBody": [
-          {
-            "postalCode": "E1 8QS"
-          },
-          {
-            "postalCode": "SW1A 2AA"
-          }
-        ]
+        "jsonBody": {
+          "addresses": [
+            {
+              "addressCountry": null,
+              "departmentName": null,
+              "uprn": null,
+              "postalCode": "E1 8QS",
+              "validFrom": "2021-01-01",
+              "subBuildingName": null,
+              "buildingName": "A",
+              "organisationName": null,
+              "streetName": "DALE ROAD",
+              "dependentStreetName" :null,
+              "buildingNumber": "10",
+              "validUntil": null,
+              "addressLocality": "ROTHERHAM",
+              "dependentAddressLocality" :null,
+              "doubleDependentAddressLocality":null
+            },
+            {
+              "addressCountry": null,
+              "departmentName": null,
+              "uprn": null,
+              "postalCode": "SW1A 2AA",
+              "validFrom": "2021-01-01",
+              "subBuildingName": null,
+              "buildingName": "A",
+              "organisationName": null,
+              "streetName": "DALE ROAD",
+              "dependentStreetName" :null,
+              "buildingNumber": "10",
+              "validUntil": null,
+              "addressLocality": "ROTHERHAM",
+              "dependentAddressLocality" :null,
+              "doubleDependentAddressLocality":null
+            }
+          ]
+        }
       }
     },
     {

@@ -24,11 +24,11 @@ class AddressPrepopulateController extends BaseController {
         },
       });
 
-      if (prepopulatedAddresses?.data?.length > 0) {
+      if (prepopulatedAddresses?.data?.addresses?.length > 0) {
         req.session.prepopulatedPostcode = true;
         req.sessionModel.set(
           "addressSearch",
-          prepopulatedAddresses.data[0].postalCode
+          prepopulatedAddresses.data.addresses[0].postalCode
         );
       }
 

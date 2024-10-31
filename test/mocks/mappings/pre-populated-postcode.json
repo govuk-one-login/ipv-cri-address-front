@@ -47,7 +47,7 @@
       "requiredScenarioState": "Addresses",
       "request": {
         "method": "GET",
-        "urlPath": "/addresses",
+        "urlPath": "/addresses/v2",
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-prepopulated-postcode"
@@ -62,11 +62,25 @@
       },
       "response": {
         "status": 200,
-        "jsonBody": [
-          {
-            "postalCode": "E1 8QS"
-          }
-        ]
+        "jsonBody": {
+          "addresses": [{
+            "addressCountry": null,
+            "departmentName": null,
+            "uprn": null,
+            "postalCode": "E1 8QS",
+            "validFrom": "2021-01-01",
+            "subBuildingName": null,
+            "buildingName": "A",
+            "organisationName": null,
+            "streetName": "DALE ROAD",
+            "dependentStreetName" :null,
+            "buildingNumber": "10",
+            "validUntil": null,
+            "addressLocality": "ROTHERHAM",
+            "dependentAddressLocality" :null,
+            "doubleDependentAddressLocality":null
+          }]
+        }
       }
     }
   ]
