@@ -3,15 +3,23 @@
 {% set hmpoPageContent = "countryPicker" %}
 {% set gtmJourney = "address - middle" %}
 
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-select/macro.njk" import hmpoSelect %}
+
 {% block mainContent %}
 
   <h1 id="header" class="govuk-heading-l">{{translate("pages.countryPicker.title")}} </h1>
 
-  <select id="country-picker">
-    <option value="fr">France</option>
-    <option value="de">Germany</option>
-    <option value="gb">United Kingdom</option>
-  </select>
+  {% call hmpoForm(ctx) %}
+
+    {{ hmpoSelect(ctx, {
+        id: "countryPicker"
+    }) }}
+
+    {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
+
+  {% endcall %}
+
 
   <script id="govuk-script-analytics" nonce="{{ cspNonce }}" type="text/javascript"> 
     document.addEventListener('DOMContentLoaded', function() {
@@ -21,7 +29,7 @@
 
         autocompleteScript.onload = function () {
           accessibleAutocomplete.enhanceSelectElement({
-            selectElement: document.querySelector('#country-picker'),
+            selectElement: document.querySelector('#countryPicker'),
             showAllValues: true,
             dropdownArrow: () => ''
           })
