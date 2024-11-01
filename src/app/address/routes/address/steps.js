@@ -26,9 +26,9 @@ module.exports = {
   "/country-picker": {
     controller: countryPicker,
     fields: ["countryPicker"],
-    // TODO
+    // TODO this should be removed
     entryPoint: true,
-    // TODO
+    // TODO this needs to be confirmed
     next: "international",
   },
   "/search": {
