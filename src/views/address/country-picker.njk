@@ -8,13 +8,18 @@
 
 {% block mainContent %}
 
-  <h1 id="header" class="govuk-heading-l">{{translate("pages.countryPicker.title")}} </h1>
+  <h1 id="header" class="govuk-heading-l">
+    <label for="countryPicker">
+      {{translate("pages.countryPicker.title")}}
+    </label>
+  </h1>
 
   {% call hmpoForm(ctx) %}
 
     <select name="countryPicker" id="countryPicker">
+      <option value=""></option>
       {% for country in countries %}
-          <option value="{{ country.value }}">{{ translate(country.key) }}</option>
+        <option value="{{ country.value }}">{{ translate(country.key) }}</option>
       {% endfor %}
     </select>
 
@@ -43,5 +48,5 @@
       }
       initialiseAddressCountryAutocomplete()
     })
-</script>
+  </script>
 {% endblock %}
