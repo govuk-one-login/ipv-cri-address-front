@@ -4,6 +4,7 @@
 {% set gtmJourney = "address - middle" %}
 
 {% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-select/macro.njk" import hmpoSelect %}
 {% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
 {% block mainContent %}
@@ -16,12 +17,17 @@
 
   {% call hmpoForm(ctx) %}
 
-    <select name="countryPicker" id="countryPicker">
+    {{ hmpoSelect(ctx, {
+      id: "countryPicker",
+      items: countries
+    }) }}
+
+    {# <select name="countryPicker" id="countryPicker">
       <option value=""></option>
       {% for country in countries %}
         <option value="{{ country.value }}">{{ translate(country.key) }}</option>
       {% endfor %}
-    </select>
+    </select> #}
 
     {{ hmpoSubmit(ctx, { id: "continue", text: translate("buttons.next"), classes: "govuk-!-margin-top-6" }) }}
 

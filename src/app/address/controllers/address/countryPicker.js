@@ -10,6 +10,14 @@ class CountryPickerController extends BaseController {
       callback(null, locals);
     });
   }
+
+  async saveValues(req, res, callback) {
+    super.saveValues(req, res, () => {
+      console.log("🍏", req.sessionModel.get("countryPicker"));
+
+      callback();
+    });
+  }
 }
 
 module.exports = CountryPickerController;
