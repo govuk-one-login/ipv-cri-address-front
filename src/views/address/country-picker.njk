@@ -4,6 +4,7 @@
 {% set gtmJourney = "address - middle" %}
 
 {% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
 {% block mainContent %}
 
@@ -26,6 +27,16 @@
 
   {% endcall %}
 
+  {{ ga4OnPageLoad({
+    nonce: cspNonce,
+    statusCode: '200',
+    englishPageTitle: 'pages.addrescountryPickersSearch.title' | translate,
+    taxonomyLevel1: 'web cri',
+    taxonomyLevel2: 'address',
+    contentId: 'd29ae122-986d-4730-8dac-8798b79f7aba',
+    loggedInStatus: true,
+    dynamic: false
+  }) }}
 
   <script id="govuk-script-analytics" nonce="{{ cspNonce }}" type="text/javascript"> 
     document.addEventListener('DOMContentLoaded', function() {
