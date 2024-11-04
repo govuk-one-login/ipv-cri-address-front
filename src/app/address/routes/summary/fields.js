@@ -11,9 +11,9 @@ module.exports = {
     journeyKey: "addresses",
     default: [],
   },
-  isAddressMoreThanThreeMonths: {
+  hasPreviousUKAddressWithinThreeMonths: {
     type: "radios",
-    items: ["moreThanThreeMonths", "lessThanThreeMonths"],
+    items: ["yes", "no"],
     validate: [], // custom validator in addressConfirm.js
   },
 };

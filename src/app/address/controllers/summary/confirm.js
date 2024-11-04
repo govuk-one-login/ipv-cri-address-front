@@ -59,7 +59,7 @@ class AddressConfirmController extends BaseController {
 
     // if we need more info and a previou address does not exist, add validation
     if (isMoreInfoRequired && !previousAddress) {
-      formFields.isAddressMoreThanThreeMonths?.validate.push({
+      formFields.hasPreviousUKAddressWithinThreeMonths?.validate.push({
         fn: confirmationValidation,
         arguments: [],
       });
@@ -70,9 +70,9 @@ class AddressConfirmController extends BaseController {
 
   async saveValues(req, res, callback) {
     try {
-      const isAddressMoreThanThreeMonths =
-        req.form.values.isAddressMoreThanThreeMonths;
-      if (isAddressMoreThanThreeMonths === "lessThanThreeMonths") {
+      const hasPreviousUKAddressWithinThreeMonths =
+        req.form.values.hasPreviousUKAddressWithinThreeMonths;
+      if (hasPreviousUKAddressWithinThreeMonths === "yes") {
         // reset variables specific to current address journey
         req.sessionModel.set("addPreviousAddresses", true);
         callback();

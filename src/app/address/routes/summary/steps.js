@@ -6,7 +6,7 @@ module.exports = {
     entryPoint: true,
     fields: [
       "addPrevious",
-      "isAddressMoreThanThreeMonths",
+      "hasPreviousUKAddressWithinThreeMonths",
       "currentAddress",
       "previousAddress",
     ],

@@ -25,22 +25,24 @@ module.exports = class PlaywrightDevPage {
 
   async selectNoRadioButton() {
     await this.page
-      .locator("#isAddressMoreThanThreeMonths-lessThanThreeMonths")
+      .locator("#hasPreviousUKAddressWithinThreeMonths-no")
       .click();
   }
 
   async returnRadioLegend() {
     return this.page.textContent(
-      "#isAddressMoreThanThreeMonths-fieldset > legend"
+      "#hasPreviousUKAddressWithinThreeMonths-fieldset > legend"
     );
   }
 
   isAddressRadioButtonPresent() {
-    return this.page.locator("#isAddressMoreThanThreeMonths").isVisible();
+    return this.page
+      .locator("#hasPreviousUKAddressWithinThreeMonths")
+      .isVisible();
   }
 
   async selectYesRadioButton() {
-    await this.page.locator("#isAddressMoreThanThreeMonths").click();
+    await this.page.locator("#hasPreviousUKAddressWithinThreeMonths").click();
   }
 
   isCurrentPage() {

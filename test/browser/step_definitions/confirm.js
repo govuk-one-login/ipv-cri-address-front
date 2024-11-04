@@ -30,9 +30,9 @@ Then(
   async function (value) {
     const confirmPage = new ConfirmPage(this.page);
     if (value === ">3") {
-      await confirmPage.selectYesRadioButton();
-    } else {
       await confirmPage.selectNoRadioButton();
+    } else {
+      await confirmPage.selectYesRadioButton();
     }
   }
 );
@@ -59,7 +59,7 @@ Then("they should see the year value {string}", async function (value) {
 Then("they should see the previous address modal", async function () {
   const confirmPage = new ConfirmPage(this.page);
   const radioLegendTitle = await confirmPage.returnRadioLegend();
-  expect(radioLegendTitle).to.include("more than 3 months");
+  expect(radioLegendTitle).to.include("in the past 3 months");
 });
 
 Then("they should not see the previous address modal", async function () {
@@ -89,7 +89,10 @@ When("they confirm their details", async function () {
   await confirmPage.confirmDetails();
 });
 
-When("they select the less than three months radio button", async function () {
-  const confirmPage = new ConfirmPage(this.page);
-  await confirmPage.selectNoRadioButton();
-});
+When(
+  "they select the previous UK address within three months radio button",
+  async function () {
+    const confirmPage = new ConfirmPage(this.page);
+    await confirmPage.selectYesRadioButton();
+  }
+);

@@ -9,7 +9,7 @@ Feature: Happy Path - confirming preselected address details and date invalidati
     Then they have selected an address ""
     When they add their residency date with a "recent" move year
     And they continue to confirm address
-    And they select the less than three months radio button
+    And they select the previous UK address within three months radio button
     And they confirm their details
     And they searched for their postcode "E1 8QS"
     Then they should see the results page

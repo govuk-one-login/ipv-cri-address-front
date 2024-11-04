@@ -9,7 +9,7 @@ Feature: Happy Path - previous
       Then they have selected an address "10 WHITECHAPEL HIGH STREET, LONDON, E1 8QS"
       When they add their residency date with a "recent" move year
       And they continue to confirm address
-      And they select the less than three months radio button
+      And they select the previous UK address within three months radio button
       And they confirm their details
 
     Scenario: Previous address - Searching and successfully returning a postcode and saving a single address

@@ -30,7 +30,7 @@ Feature: Happy Path - confirming address details
       Then they should see the confirm page
       And they should see the previous address modal
       When they confirm their details
-      Then they should see an error message "more than 3 months"
+      Then they should see an error message "Select yes if you’ve lived at another UK address in the past three months."
 
     Scenario: Selecting less than 3 months residence should move the user to the previous address journey
       Given they are on the address page
@@ -38,7 +38,7 @@ Feature: Happy Path - confirming address details
       And they continue to confirm address
       Then they should see the confirm page
       And they should see the previous address modal
-      When they select the less than three months radio button
+      When they select the previous UK address within three months radio button
       And they confirm their details
       Then they should see the previous address search page
 
