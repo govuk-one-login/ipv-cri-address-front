@@ -64,12 +64,12 @@
               "buildingName": "A",
               "organisationName": null,
               "streetName": "DALE ROAD",
-              "dependentStreetName" :null,
+              "dependentStreetName": null,
               "buildingNumber": "10",
               "validUntil": null,
               "addressLocality": "ROTHERHAM",
-              "dependentAddressLocality" :null,
-              "doubleDependentAddressLocality":null
+              "dependentAddressLocality": null,
+              "doubleDependentAddressLocality": null
             }
           ]
         }
