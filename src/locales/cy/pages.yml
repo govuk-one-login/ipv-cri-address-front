@@ -2,22 +2,33 @@ index:
   title: "di-ipv-cri-address-front"
   content:
     - "Sample page for credential issuer"
+
 error:
   unrecoverable:
     title: "Mae'n ddrwg gennym, mae problem"
+
 address:
   title: "Cyfeiriad"
+
 done:
   title: "Wedi'i wneud"
+
+country:
+  title: What country do you live in?
+
 addressSearch:
   title: "Darganfyddwch eich cyfeiriad"
   drivingLicence: "Rydym wedi dod o hyd i'r cod post canlynol ar eich trwydded yrru."
+
 address-previous-search:
   title: "Darganfyddwch eich cyfeiriad blaenorol"
+
 address-results:
   title: "Dewiswch eich cyfeiriad"
+
 address-previous-results:
   title: "Dewiswch eich cyfeiriad blaenorol"
+
 address-confirm:
   title: "Cadarnhewch eich manylion"
   warning:
@@ -26,6 +37,7 @@ address-confirm:
   previous: "Cyfeiriad blaenorol"
   buttons:
     next: "Rwy'n cadarnhau bod fy manylion yn gywir"
+
 address-form:
   title: "Rhowch eich cyfeiriad"
   check-details:
@@ -34,6 +46,7 @@ address-form:
     title: "Rhowch eich cyfeiriad blaenorol"
     check-details:
       title: "Gwiriwch eich cyfeiriad blaenorol"
+
 addressProblem:
   title: "Mae’n ddrwg gennym, mae problem"
   content: "Ni allwn ddod o hyd i unrhyw gyfeiriadau gyda’r cod post <b>{{values.addressPostcode}}</b>."
