@@ -17,12 +17,12 @@ module.exports = {
       {
         field: "context",
         value: "international_user",
-        next: "country",
+        next: "what-country",
       },
       "search",
     ],
   },
-  "/country": {
+  "/what-country": {
     fields: ["country"],
     next: "enter-non-UK-address",
   },
