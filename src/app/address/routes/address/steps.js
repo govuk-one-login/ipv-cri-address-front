@@ -2,7 +2,6 @@ const address = require("../../controllers/address/manual");
 const prepopulate = require("../../controllers/address/prepopulate");
 const search = require("../../controllers/address/search");
 const results = require("../../controllers/address/results");
-const country = require("../../controllers/address/country");
 
 module.exports = {
   "/": {
@@ -24,12 +23,10 @@ module.exports = {
     ],
   },
   "/country": {
-    controller: country,
     fields: ["country"],
     // TODO this should be removed
     entryPoint: true,
-    // TODO this needs to be confirmed
-    next: "international",
+    next: "enter-non-UK-address",
   },
   "/search": {
     controller: search,
