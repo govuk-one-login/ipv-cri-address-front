@@ -24,8 +24,6 @@ module.exports = {
   },
   "/country": {
     fields: ["country"],
-    // TODO this should be removed
-    entryPoint: true,
     next: "enter-non-UK-address",
   },
   "/search": {

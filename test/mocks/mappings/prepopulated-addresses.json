@@ -44,9 +44,6 @@
           "x-scenario-id": {
             "equalTo": "address-prepopulated"
           },
-          "session-id": {
-            "equalTo": "ABADCAFE"
-          },
           "session_id": {
             "equalTo": "ABADCAFE"
           }

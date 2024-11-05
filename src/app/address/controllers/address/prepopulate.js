@@ -20,8 +20,6 @@ class AddressPrepopulateController extends BaseController {
       const { data } = await req.axios.get(`${GET_ADDRESSES}`, {
         headers: {
           session_id: req.session.tokenId,
-          // TODO surely this can be removed?
-          "session-id": req.session.tokenId,
         },
       });
 
