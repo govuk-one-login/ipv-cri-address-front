@@ -81,19 +81,19 @@ addressBreak:
       hint: ""
       reveal: ""
 
-isAddressMoreThanThreeMonths:
-  label: Have you lived here for more than 3 months?
-  hint: We'll need to ask you where you lived before if you've recently moved to this address.
+hasPreviousUKAddressWithinThreeMonths:
+  label: Have you lived at another UK address in the past 3 months?
+  hint: We may need to ask for your previous address.
   items:
-    moreThanThreeMonths:
+    yes:
       label: "Yes"
       value: "Yes"
       hint: ""
       reveal: ""
-    lessThanThreeMonths:
+    no:
       label: "No"
       value: "No"
       hint: ""
       reveal: ""
   validation:
-    confirmationValidation: Select yes if you've lived at this address for more than 3 months
+    confirmationValidation: Select yes if you’ve lived at another UK address in the past three months.

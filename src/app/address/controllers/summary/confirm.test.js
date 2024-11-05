@@ -89,8 +89,8 @@ describe("Address confirmation controller", () => {
       expect(next).to.have.been.calledWith();
     });
 
-    it("Should reset journey wide variables and enter previous journey when more information is required", async () => {
-      req.form.values.isAddressMoreThanThreeMonths = "lessThanThreeMonths";
+    it("Should reset journey wide variables and enter previous journey when user has previous UK address within 3 months", async () => {
+      req.form.values.hasPreviousUKAddressWithinThreeMonths = "yes";
       await addressConfirm.saveValues(req, res, next);
       expect(req.session.test.addPreviousAddresses).to.equal(true);
     });

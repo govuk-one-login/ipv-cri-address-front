@@ -69,19 +69,19 @@ addressBreak:
       label: "Ceisiwch roi eich cod post i mewn eto"
       hint: ""
       reveal: ""
-isAddressMoreThanThreeMonths:
-  label: "Ydych chi wedi wedi byw yma am fwy na 3 mis?"
-  hint: "Byddwn angen gofyn i chi ble roeddech chi'n byw o'r blaen os ydych chi wedi symud i'r cyfeiriad hwn yn ddiweddar."
+hasPreviousUKAddressWithinThreeMonths:
+  label: "Ydych chi wedi byw mewn cyfeiriad arall yn y DU yn ystod y 3 blynedd diwethaf?"
+  hint: "Efallai y byddwn yn gofyn i chi am eich cyfeiriad blaenorol."
   items:
-    moreThanThreeMonths:
+    yes:
       label: "Ydw"
       value: "Ydw"
       hint: ""
       reveal: ""
-    lessThanThreeMonths:
+    no:
       label: "Na"
       value: "Na"
       hint: ""
       reveal: ""
   validation:
-    confirmationValidation: "Dewiswch ydw os ydych chi wedi byw yn y cyfeiriad hwn am fwy na 3 mis"
+    confirmationValidation: "Dewiswch ydw os ydych chi wedi byw mewn cyfeiriad arall yn y DU yn ystod y 3 blynedd diwethaf"
