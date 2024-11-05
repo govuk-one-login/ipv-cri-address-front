@@ -2,7 +2,7 @@ const address = require("../../controllers/address/manual");
 const prepopulate = require("../../controllers/address/prepopulate");
 const search = require("../../controllers/address/search");
 const results = require("../../controllers/address/results");
-const countryPicker = require("../../controllers/address/countryPicker");
+const country = require("../../controllers/address/country");
 
 module.exports = {
   "/": {
@@ -18,14 +18,14 @@ module.exports = {
       {
         field: "context",
         value: "international_user",
-        next: "country-picker",
+        next: "country",
       },
       "search",
     ],
   },
-  "/country-picker": {
-    controller: countryPicker,
-    fields: ["countryPicker"],
+  "/country": {
+    controller: country,
+    fields: ["country"],
     // TODO this should be removed
     entryPoint: true,
     // TODO this needs to be confirmed

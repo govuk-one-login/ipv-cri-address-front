@@ -13,7 +13,7 @@ address:
 done:
   title: Done
 
-countryPicker:
+country:
   title: What country do you live in?
 
 addressSearch:

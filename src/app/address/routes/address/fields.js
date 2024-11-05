@@ -2,7 +2,7 @@ module.exports = {
   address: {
     journeyKey: "currentAddress",
   },
-  countryPicker: {
+  country: {
     validate: [
       "required",
       { type: "equal", fn: (value) => !value.match(/Select/) },
