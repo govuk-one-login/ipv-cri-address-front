@@ -9,16 +9,17 @@
 
 {% block mainContent %}
 
-  <h1 id="header" class="govuk-heading-l">
-    <label for="countryPicker">
-      {{translate("pages.countryPicker.title")}}
-    </label>
-  </h1>
-
   {% call hmpoForm(ctx) %}
+    <h1 id="header" class="govuk-heading-l">
+      <label for="countryPicker">
+        {{translate("pages.countryPicker.title")}}
+      </label>
+    </h1>
 
     {{ hmpoSelect(ctx, {
       id: "countryPicker",
+      label: "",
+      hint: "",
       items: countries
     }) }}
 

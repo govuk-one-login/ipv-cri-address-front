@@ -1,5 +1,8 @@
 [
   {
+    "key": "fields.countryPicker.placeholder"
+  },
+  {
     "value": "AF",
     "key": "countries.AF"
   },

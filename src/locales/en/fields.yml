@@ -99,6 +99,7 @@ hasPreviousUKAddressWithinThreeMonths:
     confirmationValidation: Select yes if you’ve lived at another UK address in the past three months.
 
 countryPicker:
+  placeholder: ""
   validation:
     required: Select the country you live in
 
