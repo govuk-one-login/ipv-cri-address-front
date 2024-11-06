@@ -84,7 +84,7 @@
         "url": "/address",
         "headers": {
           "x-scenario-id": {
-            "equalTo": "address-prepopulated"
+            "equalTo": "international-address"
           },
           "session-id": {
             "equalTo": "ABADCAFE"
