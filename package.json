@@ -48,7 +48,7 @@
     "hmpo-config": "2.2.1",
     "hmpo-form-wizard": "13.0.0",
     "hmpo-i18n": "6.0.1",
-    "hmpo-logger": "7.0.1",
+    "hmpo-logger": "8.0.0",
     "nunjucks": "3.2.4",
     "wiremock": "3.8.0"
   },
