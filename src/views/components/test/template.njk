@@ -65,45 +65,75 @@
     {{- govukAttributes(individualInput.attributes) }}>
 {%- endmacro -%}
 
-<div class="govuk-form-group {%- if params.errorMessage %} govuk-form-group--error{% endif %} {%- if params.formGroup.classes %} {{ params.formGroup.classes }}{% endif %}"
+<div class="govuk-form-group {%- if params.errorMessage %} govuk-form-group--error{% endif %}"
   {{- govukAttributes(params.formGroup.attributes) }}
 >
 
-{% for individualInput in params.inputs %}
   {{ govukLabel({
-    html: individualInput.label.html,
-    text: individualInput.label.text,
-    classes: individualInput.label.classes,
-    isPageHeading: individualInput.label.isPageHeading,
-    attributes: individualInput.label.attributes,
-    for: individualInput.id
-  }) | trim | indent(2) }}
-  {% if individualInput.hint %}
-    {% set hintId = individualInput.id + '-hint' %}
-    {% set describedBy = describedBy + ' ' + hintId if describedBy else hintId %}
-    {{ govukHint({
-      id: hintId,
-      classes: individualInput.hint.classes,
-      attributes: individualInput.hint.attributes,
-      html: individualInput.hint.html,
-      text: individualInput.hint.text
-    }) | trim | indent(2) }}
-  {% endif %}
-  {% if individualInput.errorMessage %}
-    {% set errorId = individualInput.id + '-error' %}
+    html: params.label.html,
+    text: params.label.text,
+    classes: params.label.classes,
+    isPageHeading: params.label.isPageHeading,
+    attributes: params.label.attributes
+  }) }}
+
+  {{ govukHint({
+    id: hintId,
+    classes: params.hint.classes,
+    attributes: params.hint.attributes,
+    html: params.hint.html,
+    text: params.hint.text
+  }) }}
+
+  {% if params.errorMessage %}
+    {% set errorId = params.id + '-error' %}
     {% set describedBy = describedBy + ' ' + errorId if describedBy else errorId %}
     {{ govukErrorMessage({
       id: errorId,
-      classes: individualInput.errorMessage.classes,
-      attributes: individualInput.errorMessage.attributes,
-      html: individualInput.errorMessage.html,
-      text: individualInput.errorMessage.text,
-      visuallyHiddenText: individualInput.errorMessage.visuallyHiddenText
+      classes: params.errorMessage.classes,
+      attributes: params.errorMessage.attributes,
+      html: params.errorMessage.html,
+      text: params.errorMessage.text,
+      visuallyHiddenText: params.errorMessage.visuallyHiddenText
     }) | trim | indent(2) }}
   {% endif %}
 
-  {{ _inputElement(individualInput) }}
-{% endfor %}
+  <div class="{%- if params.wrapper.classes %} {{ params.wrapper.classes }}{% endif %}">
+  {% for individualInput in params.inputs %}
+    {{ govukLabel({
+      html: individualInput.label.html,
+      text: individualInput.label.text,
+      classes: individualInput.label.classes,
+      isPageHeading: individualInput.label.isPageHeading,
+      attributes: individualInput.label.attributes,
+      for: individualInput.id
+    }) | trim | indent(2) }}
+    {% if individualInput.hint %}
+      {% set hintId = individualInput.id + '-hint' %}
+      {% set describedBy = describedBy + ' ' + hintId if describedBy else hintId %}
+      {{ govukHint({
+        id: hintId,
+        classes: individualInput.hint.classes,
+        attributes: individualInput.hint.attributes,
+        html: individualInput.hint.html,
+        text: individualInput.hint.text
+      }) | trim | indent(2) }}
+    {% endif %}
+    {% if individualInput.errorMessage %}
+      {% set errorId = individualInput.id + '-error' %}
+      {% set describedBy = describedBy + ' ' + errorId if describedBy else errorId %}
+      {{ govukErrorMessage({
+        id: errorId,
+        classes: individualInput.errorMessage.classes,
+        attributes: individualInput.errorMessage.attributes,
+        html: individualInput.errorMessage.html,
+        text: individualInput.errorMessage.text,
+        visuallyHiddenText: individualInput.errorMessage.visuallyHiddenText
+      }) | trim | indent(2) }}
+    {% endif %}
 
+    {{ _inputElement(individualInput) }}
+  {% endfor %}
 
+  </div>
 </div>
