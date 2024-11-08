@@ -1,5 +1,8 @@
 
 {% from "hmpo-text/macro.njk" import hmpoText %}
+{%- from "govuk/components/hint/macro.njk" import govukHint %}
+{%- from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "./test/macro.njk" import inputTest %}
 
 {{ hmpoText(ctx, {
   id: "addressFlatNumber",
@@ -9,21 +12,55 @@
   hint: ""
 }) }}
 
-{{ hmpoText(ctx, {
-  id: "addressHouseNumber",
-  name: "addressHouseNumber",
-  label: { text: translate("fields.addressHouseNumber.label") },
-  classes: "govuk-input--width-5",
-  hint: ""
-}) }}
 
-{{ hmpoText(ctx, {
-  id: "addressHouseName",
-  name: "addressHouseName",
-  label: { text: translate("fields.addressHouseName.label") },
-  classes: "govuk-input--width-20",
-  hint: ""
-}) }}
+{{ govukLabel({
+  text: "Building address"
+}) | trim | indent(2) }}
+
+{{ govukHint({
+  text: "Fill in at least 1 field in this section"
+}) | trim | indent(2) }}
+
+<div class="govuk-inset-text">
+  {# {{ hmpoText(ctx, {
+    id: "addressHouseNumber",
+    name: "addressHouseNumber",
+    label: { text: translate("fields.addressHouseNumber.label") },
+    classes: "govuk-input--width-5",
+    hint: ""
+  }) }}
+
+  {{ hmpoText(ctx, {
+    id: "addressHouseName",
+    name: "addressHouseName",
+    label: { text: translate("fields.addressHouseName.label") },
+    classes: "govuk-input--width-20",
+    hint: ""
+  }) }} #}
+
+  {%- set args = {
+    inputs: [
+      {
+        id: "addressHouseNumber",
+        name: "addressHouseNumber",
+        label: { text: translate("fields.addressHouseNumber.label") },
+        value: "some value",
+        classes: "govuk-input--width-5 govuk-!-static-margin-bottom-6",
+        errorMessage: "error message"
+      },
+      {
+        id: "addressHouseName",
+        name: "addressHouseName",
+        label: { text: translate("fields.addressHouseName.label") },
+        value: "some value",
+        classes: "govuk-input--width-20",
+        errorMessage: "error message"
+      }
+    ]
+  } %}
+
+  {{ inputTest(args) }}
+</div>
 
 {{ hmpoText(ctx,{
   id: "addressStreetName",

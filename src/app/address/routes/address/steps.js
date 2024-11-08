@@ -58,9 +58,11 @@ module.exports = {
   "/address": {
     controller: address,
     editable: true,
+    entryPoint: true,
     continueOnEdit: true,
     prereqs: ["/search"],
     fields: [
+      // "testingFieldset",
       "addressFlatNumber",
       "addressHouseNumber",
       "addressHouseName",

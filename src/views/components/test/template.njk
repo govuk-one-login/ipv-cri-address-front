@@ -1,0 +1,109 @@
+{% from "./attributes.njk" import govukAttributes %}
+
+{%- from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{%- from "govuk/components/hint/macro.njk" import govukHint %}
+{%- from "govuk/components/label/macro.njk" import govukLabel %}
+
+{#- a record of other elements that we need to associate with the input using
+  aria-describedby – for example hints or error messages -#}
+{% set describedBy = individualInput.describedBy if individualInput.describedBy else undefined -%}
+
+{%- macro _inputElement(individualInput) -%}
+  {#- Set classes for this component #}
+  {%- set classNames = "govuk-input" -%}
+
+  {%- if individualInput.classes %}
+    {% set classNames = classNames + " " + individualInput.classes %}
+  {% endif %}
+
+  {%- if individualInput.errorMessage %}
+    {% set classNames = classNames + " govuk-input--error" %}
+  {% endif %}
+
+  <input
+    {{- govukAttributes({
+      class: classNames,
+      id: individualInput.id,
+      name: individualInput.name,
+      type: individualInput.type | default("text", true),
+      spellcheck: {
+        value: individualInput.spellcheck | string
+          if [true, false].includes(individualInput.spellcheck)
+          else false,
+        optional: true
+      },
+      value: {
+        value: individualInput.value,
+        optional: true
+      },
+      disabled: {
+        value: individualInput.disabled,
+        optional: true
+      },
+      "aria-describedby": {
+        value: describedBy,
+        optional: true
+      },
+      autocomplete: {
+        value: individualInput.autocomplete,
+        optional: true
+      },
+      autocapitalize: {
+        value: individualInput.autocapitalize,
+        optional: true
+      },
+      pattern: {
+        value: individualInput.pattern,
+        optional: true
+      },
+      inputmode: {
+        value: individualInput.inputmode,
+        optional: true
+      }
+    }) -}}
+
+    {{- govukAttributes(individualInput.attributes) }}>
+{%- endmacro -%}
+
+<div class="govuk-form-group {%- if params.errorMessage %} govuk-form-group--error{% endif %} {%- if params.formGroup.classes %} {{ params.formGroup.classes }}{% endif %}"
+  {{- govukAttributes(params.formGroup.attributes) }}
+>
+
+{% for individualInput in params.inputs %}
+  {{ govukLabel({
+    html: individualInput.label.html,
+    text: individualInput.label.text,
+    classes: individualInput.label.classes,
+    isPageHeading: individualInput.label.isPageHeading,
+    attributes: individualInput.label.attributes,
+    for: individualInput.id
+  }) | trim | indent(2) }}
+  {% if individualInput.hint %}
+    {% set hintId = individualInput.id + '-hint' %}
+    {% set describedBy = describedBy + ' ' + hintId if describedBy else hintId %}
+    {{ govukHint({
+      id: hintId,
+      classes: individualInput.hint.classes,
+      attributes: individualInput.hint.attributes,
+      html: individualInput.hint.html,
+      text: individualInput.hint.text
+    }) | trim | indent(2) }}
+  {% endif %}
+  {% if individualInput.errorMessage %}
+    {% set errorId = individualInput.id + '-error' %}
+    {% set describedBy = describedBy + ' ' + errorId if describedBy else errorId %}
+    {{ govukErrorMessage({
+      id: errorId,
+      classes: individualInput.errorMessage.classes,
+      attributes: individualInput.errorMessage.attributes,
+      html: individualInput.errorMessage.html,
+      text: individualInput.errorMessage.text,
+      visuallyHiddenText: individualInput.errorMessage.visuallyHiddenText
+    }) | trim | indent(2) }}
+  {% endif %}
+
+  {{ _inputElement(individualInput) }}
+{% endfor %}
+
+
+</div>
