@@ -12,8 +12,19 @@ module.exports = {
   },
   "/prepopulate": {
     controller: prepopulate,
-    next: "search",
     skip: true,
+    next: [
+      {
+        field: "context",
+        value: "international_user",
+        next: "what-country",
+      },
+      "search",
+    ],
+  },
+  "/what-country": {
+    fields: ["country"],
+    next: "enter-non-UK-address",
   },
   "/search": {
     controller: search,

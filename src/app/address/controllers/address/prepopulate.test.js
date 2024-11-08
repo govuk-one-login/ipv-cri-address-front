@@ -42,7 +42,6 @@ describe("Prepopulate controller", () => {
       expect(req.axios.get).to.have.been.calledWith(GET_ADDRESSES, {
         headers: {
           session_id: sessionId,
-          "session-id": sessionId,
         },
       });
     });
@@ -93,7 +92,7 @@ describe("Prepopulate controller", () => {
     describe("with addresses", () => {
       beforeEach(async () => {
         req.axios.get = sinon.fake.resolves({
-          data: [{ postalCode: "Q1 1AB" }],
+          data: { addresses: [{ postalCode: "Q1 1AB" }] },
         });
 
         await prepopulateController.saveValues(req, res, next);
@@ -101,10 +100,32 @@ describe("Prepopulate controller", () => {
 
       it("should set prepopulatedPostcode to be true", () => {
         expect(req.session.prepopulatedPostcode).to.be.true;
+        expect(req.sessionModel.get("context")).to.be.undefined;
       });
 
       it("should set addressPostcode using first postcode in results", () => {
         expect(req.sessionModel.get("addressSearch")).to.equal("Q1 1AB");
+      });
+
+      it("should call callback", async () => {
+        expect(next).to.have.been.calledOnce;
+      });
+    });
+
+    describe("with context", () => {
+      beforeEach(async () => {
+        req.axios.get = sinon.fake.resolves({
+          data: {
+            addresses: [{ postalCode: "Q1 1AB" }],
+            context: "international_user",
+          },
+        });
+
+        await prepopulateController.saveValues(req, res, next);
+      });
+
+      it("should set context", () => {
+        expect(req.sessionModel.get("context")).to.equal("international_user");
       });
 
       it("should call callback", async () => {
