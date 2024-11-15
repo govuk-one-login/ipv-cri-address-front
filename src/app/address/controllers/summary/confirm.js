@@ -1,5 +1,7 @@
+const { API, PACKAGE_NAME } = require("../../../../lib/config");
+
 const BaseController = require("hmpo-form-wizard").Controller;
-const logger = require("hmpo-logger").get("di-ipv-cri-address-front");
+const logger = require("hmpo-logger").get(PACKAGE_NAME);
 const {
   generateHTMLofAddress,
 } = require("../../../../presenters/addressPresenter");
@@ -8,7 +10,6 @@ const {
   confirmationValidation,
 } = require("../../validators/confirmationValidator");
 
-const { API } = require("../../../../lib/config");
 const {
   createPersonalDataHeaders,
 } = require("@govuk-one-login/frontend-passthrough-headers");
