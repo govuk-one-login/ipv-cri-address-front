@@ -1,5 +1,5 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-const logger = require("hmpo-logger").get();
+const logger = require("hmpo-logger").get("di-ipv-cri-address-front");
 const { API } = require("../../../../lib/config");
 const {
   createPersonalDataHeaders,
