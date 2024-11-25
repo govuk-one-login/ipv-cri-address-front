@@ -24,7 +24,14 @@ module.exports = {
   },
   "/what-country": {
     fields: ["country"],
-    next: "enter-non-UK-address",
+    next: [
+      ...["GB", "GG", "JE", "IM"].map((countryCode) => ({
+        field: "country",
+        value: countryCode,
+        next: "search",
+      })),
+      "enter-non-UK-address",
+    ],
   },
   "/search": {
     controller: search,
