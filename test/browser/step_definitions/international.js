@@ -1,5 +1,9 @@
 const { Given, Then, When } = require("@cucumber/cucumber");
-const { CountryPage, InternationalAddressPage } = require("../pages");
+const {
+  CountryPage,
+  InternationalAddressPage,
+  SearchPage,
+} = require("../pages");
 const { expect } = require("chai");
 
 Then("they should see the country selector page", async function () {
@@ -15,6 +19,11 @@ When("they have selected the country {string}", async function (value) {
 
 Then("they should see international address form", async function () {
   const internationalAddressPage = new InternationalAddressPage(this.page);
+  expect(internationalAddressPage.isCurrentPage()).to.be.true;
+});
+
+Then("they should see the UK address form", async function () {
+  const internationalAddressPage = new SearchPage(this.page);
   expect(internationalAddressPage.isCurrentPage()).to.be.true;
 });
 
