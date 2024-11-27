@@ -1184,10 +1184,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.56.0.tgz#ef20350fec605a7f7035a01764731b2de0f3782b"
   integrity sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==
 
-"@govuk-one-login/di-ipv-cri-common-express@8.0.1":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-8.0.1.tgz#84d93a5eaa1b3283c1778ad7cb472345075e072a"
-  integrity sha512-fFp0J49qcbGEZ1ap9NMUiAXVzc3dCGOvGh4wVywRUZhPCJuTbBp091/5cEPfDol23Y0INrfADjn2JbTE6cdh7A==
+"@govuk-one-login/di-ipv-cri-common-express@8.1.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-8.1.0.tgz#9d97a90742638f85fec5cc87ec902facd172f560"
+  integrity sha512-xdwZDPtijFC5F2GtUvllgNSTkOEjQGwFeTUcq9+ZCnqYJMZiwU6jDHvfc6ar26yh6iUqASsyLD9J5UzuD/szew==
   dependencies:
     hmpo-logger "7.0.1"
     i18next "23.8.1"
