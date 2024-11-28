@@ -644,7 +644,7 @@ Resources:
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     Properties:
       MaxCapacity: 60
-      MinCapacity: 2
+      MinCapacity: 6
       ResourceId: !Join
         - "/"
         - - "service"
