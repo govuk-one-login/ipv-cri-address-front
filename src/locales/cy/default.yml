@@ -3,6 +3,9 @@ buttons:
   select-address: "Dewiswch gyfeiriad"
   cancel: "Canslo"
   find-address: "Darganfyddwch gyfeiriad"
+buildingAddress:
+  label: Building address
+  hint: Fill in at least 1 field in this section
 govuk:
   serviceName: "Profi pwy ydych chi"
   backLink: "Yn ôl"
@@ -72,6 +75,8 @@ links:
   changeAddress: '<a href="/address/edit?edit=true" id="change-address" data-id="changeAddress" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cyfeiriad presennol</span></a>'
   changeYearFrom: '<a href="/address/edit?edit=true" id="change-address" data-id="changeAddress" class="govuk-link">Newid<span class="govuk-visually-hidden"> y flwyddyn y dechreuoch chi fyw yn eich cyfeiriad presennol</span></a>'
   changePostcode: '<p>Cod post <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search" data-id="changePostcode" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cod post presennol</span></a></p>'
+  changeCountry:
+    title: your current country
   cantFindAddress:
     - '<p><a href="/address" data-id="cantFindAddress" class="govuk-link">Ni allaf ddod o hyd i fy nghyfeiriad ar y rhestr</a></p>'
   previous:
@@ -92,6 +97,8 @@ validation:
   alphaNumericWithSpecialChars: "Ni ddylai eich {{ label }} gynnwys unrhyw nodau neu symbolau arbennig"
   default: "Mae'n rhaid i chi ateb y cwestiwn hwn"
   houseNameOrHouseNumber: "Rhowch enw tŷ neu rif tŷ"
+  apartmentOrBuildingNumberOrName: Rhowch rif fflat, rhif adeilad neu enw adeilad
+
 addressSelect:
   addressFoundWithCount_one: "Darganfyddwyd {{ count }} cyfeiriad"
   addressFoundWithCount_two: "Darganfyddwyd {{ count }} cyfeiriad"

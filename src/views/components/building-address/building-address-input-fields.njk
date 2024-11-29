@@ -3,14 +3,14 @@
 {%- from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "./macro.njk" import inputGroup %}
 
-{%- set args = {
+{{ inputGroup({
   id: "buildingAddress",
-  label: { text: "Building address" },
-  hint: { text: "Fill in at least 1 field in this section" },
+  label: { text: translate("buildingAddress.label") },
+  hint: { text: translate("buildingAddress.hint") },
   wrapper: {
     classes: "govuk-inset-text govuk-!-margin-top-0"
   },
-  errorMessage: values.buildAddressErrorMessage,
+  errorMessage: values.buildingAddressEmptyErrorMessage,
   inputs: [
     {
       id: "nonUKAddressApartmentNumber",
@@ -37,39 +37,5 @@
       errorMessage: values.nonUKAddressBuildingNameInValid
     }
   ]
-} %}
-{{ inputGroup(args) }}
-{{ hmpoText(ctx, {
-      id: "nonUKAddressStreetName",
-      name: "nonUKAddressStreetName",
-      label: { text: translate("fields.nonUKAddressStreetName.label") },
-      classes: "govuk-input--width-20",
-      hint: "",
-      autocomplete: "address-line1"
-    }) }}
-
-{{ hmpoText(ctx, {
-      id: "nonUKAddressLocality",
-      name: "nonUKAddressLocality",
-      label: { text: translate("fields.nonUKAddressLocality.label") },
-      classes: "govuk-input--width-20",
-      hint: "",
-      autocomplete: "address-line2"
-    }) }}
-
-{{ hmpoText(ctx, {
-      id: "nonUKAddressPostalCode",
-      name: "nonUKAddressPostalCode",
-      label: { text: translate("fields.nonUKAddressPostalCode.label") },
-      classes: "govuk-input--width-10",
-      hint: "",
-      autocomplete: "postal-code"
-    }) }}
-
-{{ hmpoText(ctx, {
-      id: "nonUKAddressRegion",
-      name: "nonUKAddressRegion",
-      label: { text: translate("fields.nonUKAddressRegion.label") },
-      classes: "govuk-input--width-20",
-      hint: { text: translate("fields.nonUKAddressRegion.hint") }
-    }) }}
+} )
+}}

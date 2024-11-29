@@ -3,6 +3,9 @@ buttons:
   select-address: Choose address
   cancel: Cancel
   find-address: Find address
+buildingAddress:
+  label: Building address
+  hint: Fill in at least 1 field in this section
 govuk:
   serviceName: Prove your identity
   backLink: Back
@@ -74,6 +77,8 @@ links:
   changeAddress: <a href="/address/edit?edit=true" id="change-address" data-id="changeAddress" class="govuk-link">Change<span class="govuk-visually-hidden"> your current address</span></a>
   changeYearFrom: <a href="/address/edit?edit=true" id="change-address" data-id="changeAddress" class="govuk-link">Change<span class="govuk-visually-hidden"> the year you started living at your current address</span></a>
   changePostcode: <p>Postcode <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search" data-id="changePostcode" class="govuk-link">Change<span class="govuk-visually-hidden"> your current postcode</span></a></p>
+  changeCountry:
+    title: your current country
   cantFindAddress:
     - <p><a href="/address" data-id="cantFindAddress" class="govuk-link">I cannot find my address in the list</a></p>
   previous:
@@ -94,6 +99,7 @@ validation:
   alphaNumericWithSpecialChars: Your {{ label }} should not include any special characters or symbols
   default: You must answer this question
   houseNameOrHouseNumber: Enter a house name or house number
+  apartmentOrBuildingNumberOrName: Enter an apartment number, building number or building name
 addressSelect:
   addressFoundWithCount_one: "{{ count }} address found"
   addressFoundWithCount_other: "{{ count }} addresses found"

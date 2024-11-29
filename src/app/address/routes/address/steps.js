@@ -2,6 +2,7 @@ const address = require("../../controllers/address/manual");
 const prepopulate = require("../../controllers/address/prepopulate");
 const search = require("../../controllers/address/search");
 const results = require("../../controllers/address/results");
+const nonUKAddressController = require("../../controllers/address/nonUKAddress");
 
 module.exports = {
   "/": {
@@ -74,6 +75,23 @@ module.exports = {
       "addressStreetName",
       "addressLocality",
       "addressYearFrom",
+    ],
+    next: "/summary/confirm",
+  },
+  "/enter-non-UK-address": {
+    controller: nonUKAddressController,
+    editable: true,
+    continueOnEdit: true,
+    prereqs: ["/what-country"],
+    fields: [
+      "nonUKAddressApartmentNumber",
+      "nonUKAddressBuildingNumber",
+      "nonUKAddressBuildingName",
+      "nonUKAddressStreetName",
+      "nonUKAddressLocality",
+      "nonUKAddressPostalCode",
+      "nonUKAddressRegion",
+      "nonUKAddressYearFrom",
     ],
     next: "/summary/confirm",
   },

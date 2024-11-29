@@ -1,0 +1,52 @@
+{% extends "base-form.njk" %}
+{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
+{% from "components/address-year-from-field.njk" import yearFromField %}
+
+{% set hmpoPageKey = "address-form" %}
+{% set hmpoPageContent = "address-form" %}
+{% set gtmJourney = "address - middle" %}
+{% set label = translate("fields.nonUKAddressYearFrom.label") %}
+{% set label = translate("fields.nonUKAddressYearFrom.title") %}
+
+
+{% block mainContent %}
+
+  <h1 id="header" class="govuk-heading-l">
+    {{ translate("pages.address-form.title") }}
+  </h1>
+
+  <p class="govuk-body">
+    Country<br>
+    <span data-id="changeCountryValue" class="govuk-!-static-padding-right-4">
+      <b>{{ translate(values.addressCountryName) }}</b>
+    </span>
+    <a href="/what-country" data-id="changeCountry" class="govuk-link">
+      Change<span class="govuk-visually-hidden">
+        {{ translate(links.changeCountry.title) }}</span>
+    </a>
+  </p>
+
+  {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
+
+  {% include "../components/building-address/building-address-input-fields.njk" %}
+  {% include "../components/non-UK-address-input-fields.njk" %}
+  {{ yearFromField(ctx, { name: "nonUKAddressYearFrom", title: title, label: label }) }}
+
+  {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
+
+  {% endcall %}
+
+  {{ ga4OnPageLoad({
+    nonce: cspNonce,
+    statusCode: '200',
+    englishPageTitle: 'pages.address-form.title' | translate,
+    taxonomyLevel1: 'web cri',
+    taxonomyLevel2: 'address',
+    contentId: '003169c0-f24a-4640-935f-b6e19d04d4a8',
+    loggedInStatus: true,
+    dynamic: false
+  }) }}
+
+{% endblock %}
