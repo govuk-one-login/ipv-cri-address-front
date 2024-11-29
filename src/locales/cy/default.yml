@@ -76,6 +76,7 @@ links:
   changeYearFrom: '<a href="/address/edit?edit=true" id="change-address" data-id="changeAddress" class="govuk-link">Newid<span class="govuk-visually-hidden"> y flwyddyn y dechreuoch chi fyw yn eich cyfeiriad presennol</span></a>'
   changePostcode: '<p>Cod post <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search" data-id="changePostcode" class="govuk-link">Newid<span class="govuk-visually-hidden"> eich cod post presennol</span></a></p>'
   changeCountry:
+    label: Country
     title: your current country
   cantFindAddress:
     - '<p><a href="/address" data-id="cantFindAddress" class="govuk-link">Ni allaf ddod o hyd i fy nghyfeiriad ar y rhestr</a></p>'

@@ -47,6 +47,9 @@ address-form:
     check-details:
       title: Check your previous address
 
+enter-nonUK-address-form:
+  title: Enter your address
+
 addressProblem:
   title: Sorry, there is a problem
   content: We cannot find any addresses with the postcode <b>{{values.addressPostcode}}</b>.

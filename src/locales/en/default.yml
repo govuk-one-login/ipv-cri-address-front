@@ -78,6 +78,7 @@ links:
   changeYearFrom: <a href="/address/edit?edit=true" id="change-address" data-id="changeAddress" class="govuk-link">Change<span class="govuk-visually-hidden"> the year you started living at your current address</span></a>
   changePostcode: <p>Postcode <br> <span data-id="changePostcodeValue"><b>{{values.addressPostcode}}</b></span> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/search" data-id="changePostcode" class="govuk-link">Change<span class="govuk-visually-hidden"> your current postcode</span></a></p>
   changeCountry:
+    label: Country
     title: your current country
   cantFindAddress:
     - <p><a href="/address" data-id="cantFindAddress" class="govuk-link">I cannot find my address in the list</a></p>

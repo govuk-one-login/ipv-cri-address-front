@@ -14,11 +14,11 @@
 {% block mainContent %}
 
   <h1 id="header" class="govuk-heading-l">
-    {{ translate("pages.address-form.title") }}
+    {{ translate("pages.enter-nonUK-address-form.title") }}
   </h1>
 
   <p class="govuk-body">
-    Country<br>
+    {{ translate("links.changeCountry.label") }}<br>
     <span data-id="changeCountryValue" class="govuk-!-static-padding-right-4">
       <b>{{ translate(values.addressCountryName) }}</b>
     </span>
