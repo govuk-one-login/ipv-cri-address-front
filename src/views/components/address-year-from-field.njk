@@ -1,14 +1,16 @@
-{% from "hmpo-text/macro.njk" import hmpoText %}
+{% macro yearFromField(ctx, params) %}
+  {% from "hmpo-text/macro.njk" import hmpoText %}
 
-<h4>{{translate("fields.addressYearFrom.title")}}</h4>
+  <h4>{{ params.title }}</h4>
 
-{{ hmpoText(ctx,{
-  id: "addressYearFrom",
-  name: "addressYearFrom",
-  label: { text: translate("fields.addressYearFrom.label")},
-  classes: "govuk-input--width-4",
-  hint: "",
-  type:"text",
-  inputmode: "numeric",
-  attributes: { "spellcheck": "false" }
-}) }}
+  {{ hmpoText(ctx, {
+    id: params.name,
+    name: params.name,
+    label: { text: params.label },
+    classes: "govuk-input--width-4",
+    hint: "",
+    type: "text",
+    inputmode: "numeric",
+    attributes: { "spellcheck": "false" }
+  }) }}
+{% endmacro %}
