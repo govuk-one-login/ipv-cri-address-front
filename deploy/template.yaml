@@ -364,7 +364,7 @@ Resources:
             - Name: GA4_ENABLED
               Value: true
             - Name: UA_ENABLED
-              Value: true
+              Value: false
             - Name: ANALYTICS_COOKIE_DOMAIN
               Value:
                 !If [
