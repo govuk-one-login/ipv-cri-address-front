@@ -77,7 +77,6 @@ nonUKAddressRegion:
 
 nonUKAddressYearFrom:
   title: "Pryd wnaethoch chi ddechrau byw yno?"
-  classes: "govuk-input--width-4"
   label: "Rhowch y flwyddyn y dechreuoch chi fyw yn y cyfeiriad hwn, er enghraifft 2017"
   validation:
     default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
@@ -85,7 +84,6 @@ nonUKAddressYearFrom:
 
 addressYearFrom:
   title: "Pryd wnaethoch ddechrau byw yn y cyfeiriad hwn?"
-  classes: "govuk-input--width-4"
   label: "Rhowch y flwyddyn y wnaethoch ddechrau byw yma, er enghraifft 2017"
   validation:
     default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
