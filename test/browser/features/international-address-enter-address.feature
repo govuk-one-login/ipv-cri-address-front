@@ -17,7 +17,7 @@ Feature: International address - Enter your address
     And they add their Region "Nairobi County"
     And they add the "recent" year they started living at this address
     And they continue to confirm international address
-    Then they should see the confirm page
+    Then they should see the non UK confirm page
 
   Scenario: Successfully validate international address with only building name provided
     Given they have selected the country "Kenya"
@@ -30,7 +30,7 @@ Feature: International address - Enter your address
     And they add their Region "Nairobi County"
     And they add the "recent" year they started living at this address
     And they continue to confirm international address
-    Then they should see the confirm page
+    Then they should see the non UK confirm page
 
   Scenario: Successfully validate international address with only building number provided
     Given they have selected the country "Kenya"
@@ -43,7 +43,7 @@ Feature: International address - Enter your address
     And they add their Region "Nairobi County"
     And they add the "recent" year they started living at this address
     And they continue to confirm international address
-    Then they should see the confirm page
+    Then they should see the non UK confirm page
 
   Scenario: Successfully validate international address with all building details provided
     Given they have selected the country "Kenya"
@@ -58,7 +58,7 @@ Feature: International address - Enter your address
     And they add their Region "Nairobi County"
     And they add the "older" year they started living at this address
     And they continue to confirm international address
-    Then they should see the confirm page
+    Then they should see the non UK confirm page
 
   Scenario: Successfully validate international address with all required details except optionals
     Given they have selected the country "Kenya"
@@ -71,7 +71,7 @@ Feature: International address - Enter your address
     And they add their Postal code or zipcode "00100"
     And they add the "older" year they started living at this address
     And they continue to confirm international address
-    Then they should see the confirm page
+    Then they should see the non UK confirm page
 
   Scenario: Enter international address details and fail validation due to no residential year
     Given they have selected the country "Kenya"

@@ -1,4 +1,4 @@
-const { API, PACKAGE_NAME } = require("../../../../lib/config");
+const { PACKAGE_NAME } = require("../../../../lib/config");
 
 const BaseController = require("hmpo-form-wizard").Controller;
 const logger = require("hmpo-logger").get(PACKAGE_NAME);
@@ -10,9 +10,9 @@ const {
   confirmationValidation,
 } = require("../../validators/confirmationValidator");
 
-const {
-  createPersonalDataHeaders,
-} = require("@govuk-one-login/frontend-passthrough-headers");
+const saveAddressess = require("./utils/saveAddresses");
+
+const CHANGE_CURRENT_HREF = "/address/edit?edit=true";
 
 class AddressConfirmController extends BaseController {
   locals(req, res, callback) {
@@ -43,6 +43,7 @@ class AddressConfirmController extends BaseController {
       locals.currentAddressRowValue = currentAddressHtml;
       locals.validFromRow = String(yearFrom);
       locals.previousAddressRowValue = previousAddressHtml;
+      locals.changeCurrentHref = CHANGE_CURRENT_HREF;
 
       callback(null, locals);
     });
@@ -91,7 +92,7 @@ class AddressConfirmController extends BaseController {
           addresses.push(previousAddress);
         }
 
-        await this.saveAddressess(req, addresses);
+        await saveAddressess(req, addresses);
 
         super.saveValues(req, res, () => {
           // if we're into save values we're finished with gathering addresses
@@ -105,28 +106,6 @@ class AddressConfirmController extends BaseController {
 
       callback(error);
     }
-  }
-
-  async saveAddressess(req, addresses) {
-    // set the headers to undefined will a fail a production level request but pass the browser tests for now.
-    const headers = req.session.tokenId
-      ? {
-          session_id: req.session.tokenId,
-          "session-id": req.session.tokenId,
-          ...createPersonalDataHeaders(
-            `${API.BASE_URL}${API.PATHS.SAVE_ADDRESS}`,
-            req
-          ),
-        }
-      : createPersonalDataHeaders(
-          `${API.BASE_URL}${API.PATHS.SAVE_ADDRESS}`,
-          req
-        );
-    const resp = await req.axios.put(`${API.PATHS.SAVE_ADDRESS}`, addresses, {
-      headers,
-    });
-
-    return resp.data;
   }
 
   // yearFrom = int

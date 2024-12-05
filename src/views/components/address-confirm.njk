@@ -1,0 +1,173 @@
+{% extends "base-form.njk" %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "hmpo-radios/macro.njk" import hmpoRadios %}
+{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
+
+{% set hmpoPageKey = "address-confirm" %}
+{% set gtmJourney = "address - end" %}
+
+{% block mainContent %}
+
+<h1 id="header" class="govuk-heading-l">{{translate("pages.address-confirm.title")}}</h1>
+
+  {{ govukWarningText({
+    text: translate("pages.address-confirm.warning"),
+    iconFallbackText: "Warning"
+  }) }}
+
+  {% if previousAddressRowValue %}
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: translate("fields.address-confirm.current")
+          },
+          value: {
+            html: currentAddressRowValue
+          },
+          actions: {
+            items: [
+              {
+                href: changeCurrentHref,
+                html: translate("fields.address-confirm.change.change-current-address"),
+                attributes: {
+                  "data-id": "yearFromChange"
+                }
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: translate("fields.address-confirm.year-current")
+          },
+          value: {
+            text: validFromRow
+          },
+          actions: {
+            items: [
+              {
+                href: changeCurrentHref,
+                html: translate("fields.address-confirm.change.change-current-yearfrom"),
+                attributes: {
+                  "data-id": "yearFromChange"
+                }
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: translate("fields.address-confirm.previous")
+          },
+          value: {
+            html: previousAddressRowValue
+          },
+          actions: {
+            items: [
+              {
+                href: "/previous/address/edit?edit=true",
+                html: translate("fields.address-confirm.change.change-previous-address"),
+                attributes: {
+                  "data-id": "previousAddressChange"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }) }}
+
+  {% else %}
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: translate("fields.address-confirm.current")
+          },
+          value: {
+            html: currentAddressRowValue
+          },
+          actions: {
+            items: [
+              {
+                href: changeCurrentHref,
+                html: translate("fields.address-confirm.change.change-current-address"),
+                attributes: {
+                  "data-id": "currentAddressChange"
+                }
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: translate("fields.address-confirm.year-current")
+          },
+          value: {
+            text: validFromRow
+          },
+          actions: {
+            items: [
+              {
+                href: changeCurrentHref,
+                html: translate("fields.address-confirm.change.change-current-yearfrom"),
+                attributes: {
+                  "data-id": "yearFromChange"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }) }}
+  {% endif %}
+
+  {% call hmpoForm(ctx) %}
+
+    {% if isMoreInfoRequired %}
+
+      {{ hmpoRadios(ctx, {
+        id: "hasPreviousUKAddressWithinThreeMonths",
+        name: "hasPreviousUKAddressWithinThreeMonths",
+        value: "hasPreviousUKAddressWithinThreeMonths",
+        inline: true,
+        attributes: {
+          "data-id": "getPreviousAddressRadios"
+        },
+        label: {
+          classes: ["govuk-fieldset__legend--s"]
+        },
+        legend: translate("fields.hasPreviousUKAddressWithinThreeMonths.label"),
+        fields: hasPreviousUKAddressWithinThreeMonths.items
+      }) }}
+
+    {% endif %}
+
+    {{ hmpoSubmit(ctx, {
+        text: translate("pages.address-confirm.buttons.next"),
+        id: "continue",
+        attributes: {
+        "data-id": "next"
+      }
+    }) }}
+    {%- include "../components/continue-submit-spinner.njk" -%}
+
+  {% endcall %}
+
+  <br>
+  {{ ga4OnPageLoad({
+    nonce: cspNonce,
+    statusCode: '200',
+    englishPageTitle: 'pages.address-confirm.title' | translate,
+    taxonomyLevel1: 'web cri',
+    taxonomyLevel2: 'address',
+    content_id: 'b5e5b9eb-3310-4254-ae84-3fa8a7740372',
+    loggedInStatus: true,
+    dynamic: false
+  }) }}
+
+  {% endblock %}

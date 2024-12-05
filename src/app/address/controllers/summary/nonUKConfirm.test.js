@@ -1,8 +1,7 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-const AddressConfirmController = require("./confirm");
+const NonUKAddressConfirmController = require("./nonUKConfirm");
 const addressFactory = require("../../../../../test/utils/addressFactory");
 const { expect } = require("chai");
-
 const testData = require("../../../../../test/data/testData");
 const {
   API: {
@@ -18,7 +17,7 @@ let addresses = [];
 let addressConfirm;
 const sessionId = "session-id-123";
 
-describe("Address confirmation controller", () => {
+describe("Non UK Address confirmation controller", () => {
   beforeEach(() => {
     sandbox = sinon.createSandbox();
     const setup = setupDefaultMocks();
@@ -28,11 +27,12 @@ describe("Address confirmation controller", () => {
     next = setup.next;
     req.session.tokenId = sessionId;
     req.session.authParams = {};
+    req.translate = sinon.stub();
+    req.translate.returns("United Kingdom");
 
-    addresses = addressFactory(2);
+    addresses = addressFactory(1);
     req.journeyModel.set("currentAddress", addresses[0]);
-    req.journeyModel.set("previousAddress", addresses[1]);
-    addressConfirm = new AddressConfirmController({ route: "/test" });
+    addressConfirm = new NonUKAddressConfirmController({ route: "/test" });
   });
 
   afterEach(() => {
@@ -44,14 +44,12 @@ describe("Address confirmation controller", () => {
   });
 
   describe("locals", () => {
-    it("Should format the current address and previous addresses in locals", async () => {
-      // factor in the address might have building name or number or both
+    it("Should format the current address in locals", async () => {
       const params = {
         currentAddressRowValue:
-          "flat 1<br>1 street1,<br>town1,<br>postcode1<br>",
-        validFromRow: String(new Date().getFullYear()),
-        previousAddressRowValue: "farm2,<br>town2,<br>postcode2<br>",
-        changeCurrentHref: "/address/edit?edit=true",
+          "flat 1<br>1<br>street1<br>town1<br>postcode1<br>United Kingdom",
+        validFromRow: new Date().getFullYear(),
+        changeCurrentHref: "/enter-non-UK-address?edit=true",
       };
 
       addressConfirm.locals(req, res, next);
@@ -90,15 +88,8 @@ describe("Address confirmation controller", () => {
       expect(next).to.have.been.calledWith();
     });
 
-    it("Should reset journey wide variables and enter previous journey when user has previous UK address within 3 months", async () => {
-      req.form.values.hasPreviousUKAddressWithinThreeMonths = "yes";
-      await addressConfirm.saveValues(req, res, next);
-      expect(req.session.test.addPreviousAddresses).to.equal(true);
-    });
-
     it("should return an error when no addresses are found", async () => {
       req.journeyModel.set("currentAddress", null);
-      req.journeyModel.set("previousAddress", null);
 
       await addressConfirm.saveValues(req, res, next);
 
@@ -111,53 +102,16 @@ describe("Address confirmation controller", () => {
     });
   });
 
-  describe("isMoreInfoRequired", () => {
-    const testData = [
-      {
-        fakeToday: new Date(),
-        yearFrom: 2020,
-        expect: false,
-        message: "is more than 3 months ago",
-      },
-      {
-        fakeToday: new Date(2022, 1),
-        yearFrom: 2021,
-        expect: true,
-        message: "is within the last 3 months",
-      },
-      {
-        fakeToday: new Date(2022, 3, 1),
-        yearFrom: 2021,
-        expect: false,
-        message: "is exactly 3 months ago",
-      },
-      {
-        fakeToday: new Date(2022, 2, 31),
-        yearFrom: 2021,
-        expect: true,
-        message: "is 1 day less than 3 months ago",
-      },
-      {
-        fakeToday: new Date(2024, 3, 1),
-        yearFrom: 2023,
-        expect: false,
-        message: "is exactly 3 months ago - leap year",
-      },
-      {
-        fakeToday: new Date(2024, 2, 31),
-        yearFrom: 2024,
-        expect: true,
-        message: "is 1 day less than 3 months ago - leap year",
-      },
-    ];
+  it("Should handle put address throwing an error and redirect back to callback", async () => {
+    req.axios.put = sinon.fake.throws(new Error("Some error"));
 
-    testData.forEach((data) => {
-      const todayMessage = data.fakeToday.toISOString().split("T")[0];
-      it(`should return ${data.expect} when today is ${todayMessage} and yearFrom is ${data.yearFrom} which means residency ${data.message}`, () => {
-        expect(
-          addressConfirm.isMoreInfoRequired(data.yearFrom, data.fakeToday)
-        ).to.equal(data.expect);
-      });
-    });
+    await addressConfirm.saveValues(req, res, next);
+
+    const errMessage = "Some error";
+    const callbackError = next.firstArg;
+    expect(next).to.have.been.calledOnce;
+    expect(callbackError).to.be.instanceOf(Error);
+    expect(callbackError.message).to.equal(errMessage);
+    expect(next).to.have.been.calledWith();
   });
 });
