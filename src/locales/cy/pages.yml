@@ -47,6 +47,9 @@ address-form:
     check-details:
       title: "Gwiriwch eich cyfeiriad blaenorol"
 
+enter-nonUK-address-form:
+  title: Enter your address
+
 addressProblem:
   title: "Mae’n ddrwg gennym, mae problem"
   content: "Ni allwn ddod o hyd i unrhyw gyfeiriadau gyda’r cod post <b>{{values.addressPostcode}}</b>."

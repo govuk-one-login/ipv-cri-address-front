@@ -115,7 +115,108 @@ module.exports = {
       },
     ],
   },
+  nonUKAddressApartmentNumber: {
+    type: "text",
+    validate: [
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  nonUKAddressBuildingNumber: {
+    type: "text",
+    validate: [
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  nonUKAddressBuildingName: {
+    type: "text",
+    validate: [
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  nonUKAddressStreetName: {
+    type: "text",
+    validate: [
+      {
+        type: "maxlength",
+        fn: "maxlength",
+        arguments: [60],
+      },
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  nonUKAddressLocality: {
+    type: "text",
+    validate: [
+      {
+        type: "required",
+      },
+      {
+        type: "maxlength",
+        fn: "maxlength",
+        arguments: [60],
+      },
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  nonUKAddressPostalCode: {
+    type: "text",
+    validate: [
+      {
+        type: "maxlength",
+        fn: "maxlength",
+        arguments: [10],
+      },
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
+  nonUKAddressRegion: {
+    type: "text",
+    validate: [
+      {
+        type: "maxlength",
+        fn: "maxlength",
+        arguments: [60],
+      },
+      {
+        type: "alphaNumericWithSpecialChars",
+        fn: alphaNumericWithSpecialChars,
+      },
+    ],
+  },
   addressYearFrom: {
+    type: "number",
+    validate: [
+      {
+        type: "required",
+      },
+      {
+        type: "date-year",
+      },
+      {
+        type: "isPreviousDate",
+        fn: isPreviousYear,
+      },
+    ],
+  },
+  nonUKAddressYearFrom: {
     type: "number",
     validate: [
       {

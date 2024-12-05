@@ -31,9 +31,59 @@ addressLocality:
   label: "Tref neu ddinas"
   validation:
     maxlength: "Gwiriwch eich bod wedi rhoi enw eich tref neu ddinas yn yn gywir"
+
+nonUKAddressApartmentNumber:
+  label: Apartment number
+  validation:
+    maxlength: Check you've entered your apartment number correctly
+    alphaNumericWithSpecialChars: Apartment number must only include numbers 0 to 9, letters a to z and .,-\/* or '
+
+nonUKAddressBuildingNumber:
+  label: Building number
+  validation:
+    maxlength: Check you've entered your building number correctly
+    alphaNumericWithSpecialChars: Building number must only include numbers 0 to 9, letters a to z and .,-\/* or '
+
+nonUKAddressBuildingName:
+  label: Building name
+  validation:
+    maxlength: Check you've entered your building name correctly
+    alphaNumericWithSpecialChars: Building name must only include letters a to z, numbers 0 to 9 and .,-\/* or '
+
+nonUKAddressStreetName:
+  label: Street name (optional)
+  validation:
+    maxlength: Check you've entered your street name correctly
+    alphaNumericWithSpecialChars: Street name must only include letters a to z, numbers 0 to 9 and .,-\/* or '
+
+nonUKAddressLocality:
+  label: Town, suburb or city
+  validation:
+    maxlength: Check you've entered your town, suburb or city correctly
+    alphaNumericWithSpecialChars: Town, suburb or city must only include letters a to z, numbers 0 to 9 and .,-\/* or '
+
+nonUKAddressPostalCode:
+  label: Postal code or zipcode (if your country has one)
+  validation:
+    maxlength: Check you've entered your postal code or zipcode correctly
+    alphaNumericWithSpecialChars: Postal code or zipcode must only include numbers 0 to 9, letters a to z and .,-\/* or '
+
+nonUKAddressRegion:
+  label: Region (optional)
+  hint: For example, state, district, county, parish or province
+  validation:
+    maxlength: Check you've entered your region correctly
+    alphaNumericWithSpecialChars: Region must only include letters a to z, numbers 0 to 9 and .,-\/* or '
+
+nonUKAddressYearFrom:
+  title: "Pryd wnaethoch chi ddechrau byw yno?"
+  label: "Rhowch y flwyddyn y dechreuoch chi fyw yn y cyfeiriad hwn, er enghraifft 2017"
+  validation:
+    default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
+    isPreviousDate: "Rhaid i'r dyddiad y dechreuoch chi fyw yn y cyfeiriad hwn fod yn y gorffennol"
+
 addressYearFrom:
   title: "Pryd wnaethoch ddechrau byw yn y cyfeiriad hwn?"
-  classes: "govuk-input--width-4"
   label: "Rhowch y flwyddyn y wnaethoch ddechrau byw yma, er enghraifft 2017"
   validation:
     default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
@@ -135,7 +185,7 @@ countries:
   CO: Colombia
   KM: Comoros
   CG: Congo
-  CD: Congo (Democratic Republic
+  CD: Congo (Democratic Republic)
   CR: Costa Rica
   HR: Croatia
   CU: Cuba

@@ -1,0 +1,41 @@
+{% from "hmpo-text/macro.njk" import hmpoText %}
+{%- from "govuk/components/hint/macro.njk" import govukHint %}
+{%- from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "./macro.njk" import inputGroup %}
+
+{{ inputGroup({
+  id: "buildingAddress",
+  label: { text: translate("buildingAddress.label") },
+  hint: { text: translate("buildingAddress.hint") },
+  wrapper: {
+    classes: "govuk-inset-text govuk-!-margin-top-0"
+  },
+  errorMessage: values.buildingAddressEmptyErrorMessage,
+  inputs: [
+    {
+      id: "nonUKAddressApartmentNumber",
+      name: "nonUKAddressApartmentNumber",
+      label: { text: translate("fields.nonUKAddressApartmentNumber.label") },
+      classes: "govuk-input--width-5",
+      value: values.nonUKAddressApartmentNumber,
+      errorMessage: values.nonUKAddressApartmentNumberInValid
+    },
+    {
+      id: "nonUKAddressBuildingNumber",
+      name: "nonUKAddressBuildingNumber",
+      label: { text: translate("fields.nonUKAddressBuildingNumber.label") },
+      classes: "govuk-input--width-5",
+      value: values.nonUKAddressBuildingNumber,
+      errorMessage: values.nonUKAddressBuildingNumberInValid
+    },
+    {
+      id: "nonUKAddressBuildingName",
+      name: "nonUKAddressBuildingName",
+      label: { text: translate("fields.nonUKAddressBuildingName.label") },
+      classes: "govuk-input--width-20",
+      value: values.nonUKAddressBuildingName,
+      errorMessage: values.nonUKAddressBuildingNameInValid
+    }
+  ]
+} )
+}}

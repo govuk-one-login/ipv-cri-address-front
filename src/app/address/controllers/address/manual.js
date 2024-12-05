@@ -1,4 +1,5 @@
 const BaseController = require("hmpo-form-wizard").Controller;
+const { yearFrom } = require("../../../../lib/helpers");
 
 const {
   validateHouseNumberAndName,
@@ -81,11 +82,7 @@ class AddressController extends BaseController {
     chosenAddress
   ) {
     // only want year from for current address
-    let yearFrom = null;
-
-    if (addressYearFrom) {
-      yearFrom = new Date(addressYearFrom).toISOString().split("T")[0];
-    }
+    const validFrom = yearFrom(addressYearFrom);
 
     const address = {
       subBuildingName: addressFlatNumber,
@@ -94,7 +91,7 @@ class AddressController extends BaseController {
       streetName: addressStreetName,
       addressLocality,
       addressCountry: "GB",
-      validFrom: yearFrom,
+      validFrom,
     };
 
     const isChanged = this.checkForChanges(address, chosenAddress);

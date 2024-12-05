@@ -2,12 +2,15 @@
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
+{% from "components/address-year-from-field.njk" import yearFromField %}
 
 {% set hmpoPageKey = "address-form" %}
 {% set hmpoPageContent = "address-form" %}
 {% set gtmJourney = "address - middle" %}
 
 {% set hmpoPageKey = "address-form" %}
+{% set label = translate("fields.addressYearFrom.label") %}
+{% set title = translate("fields.addressYearFrom.title") %}
 
 {% block mainContent %}
 
@@ -22,7 +25,7 @@
   {% call hmpoForm(ctx, {autocomplete:'on'}) %}
 
     {% include "../components/address-input-fields.njk" %}
-    {% include "../components/address-year-from-field.njk" %}
+    {{ yearFromField(ctx, { name: "addressYearFrom", title: title, label: label }) }}
 
     {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 

@@ -22,6 +22,13 @@ module.exports = class PlaywrightDevPage {
     select.selectOption({ label: value });
   }
 
+  async getSelectedCountry() {
+    const select = this.page.locator("select");
+    const text = await select.locator("option:checked").textContent();
+
+    return text.trim();
+  }
+
   getErrorSummary() {
     return this.page.textContent(".govuk-error-summary");
   }
