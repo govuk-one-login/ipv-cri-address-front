@@ -33,6 +33,30 @@ module.exports = {
       return `${fullBuildingName},<br>${fullLocality},<br>${address.postalCode}<br>`;
     }
   },
+  generateHTMLofNonUKAddress: function (translate, address) {
+    const countryList = require("../app/address/data/countries.json");
+
+    let addressHTML = [];
+
+    address.subBuildingName?.trim() &&
+      addressHTML.push(address.subBuildingName);
+    address.buildingNumber?.trim() && addressHTML.push(address.buildingNumber);
+    address.buildingName?.trim() && addressHTML.push(address.buildingName);
+    address.streetName?.trim() && addressHTML.push(address.streetName);
+    address.addressLocality?.trim() &&
+      addressHTML.push(address.addressLocality);
+    address.postalCode?.trim() && addressHTML.push(address.postalCode);
+    address.addressRegion?.trim() && addressHTML.push(address.addressRegion);
+    if (address.addressCountry?.trim()) {
+      const countryName = translate(
+        countryList.find((country) => country.value === address.addressCountry)
+          .key
+      );
+      addressHTML.push(countryName);
+    }
+
+    return addressHTML.join("<br>");
+  },
 };
 
 function extractAddressFields(address) {

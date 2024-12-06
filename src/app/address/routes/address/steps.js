@@ -93,6 +93,6 @@ module.exports = {
       "nonUKAddressRegion",
       "nonUKAddressYearFrom",
     ],
-    next: "/summary/confirm",
+    next: "/summary/non-UK-confirm",
   },
 };

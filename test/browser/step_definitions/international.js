@@ -23,6 +23,11 @@ Then("they click the continue button", async function () {
   await countryPage.continue();
 });
 
+Given("they are on the international address form", async function () {
+  const internationalAddressPage = new InternationalAddressPage(this.page);
+  expect(internationalAddressPage.isCurrentPage()).to.be.true;
+});
+
 Then("they should see international address form", async function () {
   const internationalAddressPage = new InternationalAddressPage(this.page);
 
@@ -170,3 +175,39 @@ Then(
     expect(errorInputCount).to.equal(3);
   }
 );
+
+Then(
+  "they see the Apartment Number Input with value {string}",
+  async function (value) {
+    const internationalAddressPage = new InternationalAddressPage(this.page);
+
+    const apartmentNumberInput =
+      await internationalAddressPage.getApartmentNumber();
+
+    expect(apartmentNumberInput).to.include(value);
+  }
+);
+
+Then("they see the Town Input with value {string}", async function (value) {
+  const internationalAddressPage = new InternationalAddressPage(this.page);
+
+  const townInput = await internationalAddressPage.getTownOrCity();
+
+  expect(townInput).to.include(value);
+});
+
+Then("they see the Region with value {string}", async function (value) {
+  const internationalAddressPage = new InternationalAddressPage(this.page);
+
+  const regionInput = await internationalAddressPage.getTownOrCity();
+
+  expect(regionInput).to.include(value);
+});
+
+Then("they see the Year From with value {string}", async function (value) {
+  const internationalAddressPage = new InternationalAddressPage(this.page);
+
+  const yearInput = await internationalAddressPage.getYearFrom();
+
+  expect(yearInput).to.include(internationalAddressPage.getYear(value));
+});

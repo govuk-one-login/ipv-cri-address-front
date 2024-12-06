@@ -3,6 +3,7 @@ module.exports = {
   CountryPage: require("./country.js"),
   InternationalAddressPage: require("./internationalAddress.js"),
   ConfirmPage: require("./confirm.js"),
+  NonUKConfirmPage: require("./nonUKConfirm.js"),
   DonePage: require("./done.js"),
   ErrorPage: require("./error.js"),
   ResultsPage: require("./result.js"),

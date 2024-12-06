@@ -1,4 +1,5 @@
 const confirm = require("../../controllers/summary/confirm");
+const nonUKConfirm = require("../../controllers/summary/nonUKConfirm");
 
 module.exports = {
   "/confirm": {
@@ -19,5 +20,10 @@ module.exports = {
       },
       "/oauth2/callback",
     ],
+  },
+  "/non-UK-confirm": {
+    controller: nonUKConfirm,
+    fields: ["currentAddress"],
+    next: "/oauth2/callback",
   },
 };
