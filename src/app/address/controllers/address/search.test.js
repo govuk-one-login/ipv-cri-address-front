@@ -84,8 +84,8 @@ describe("Address Search controller", function () {
         expect(req.sessionModel.get("requestIsSuccessful")).to.be.true;
       });
       it("should set searchResults", () => {
-        expect(req.sessionModel.get("searchResults")).to.equal(
-          testData.apiResponse.data
+        expect(req.sessionModel.get("searchResults")).to.deep.equal(
+          testData.titleCasedAddresses
         );
       });
       it("should set addressPostcode", () => {
@@ -121,6 +121,52 @@ describe("Address Search controller", function () {
       it("should call callback without an error", () => {
         expect(next).to.have.been.calledOnceWithExactly();
       });
+    });
+  });
+
+  describe("titleCaseAddresses", () => {
+    it("should title case addresses", () => {
+      const returnedAddresses = addressSearch.titleCaseAddresses(
+        testData.apiResponse.data
+      );
+      expect(returnedAddresses).to.deep.equal(testData.titleCasedAddresses);
+    });
+
+    it("should not title case postalCode fields", () => {
+      const addresses = [
+        {
+          postalCode: "PoSt cOde",
+        },
+        {
+          postalCode: "PO51 CDE",
+        },
+        {
+          postalCode: "po51 cde",
+        },
+      ];
+      const returnedAddresses = addressSearch.titleCaseAddresses(addresses);
+      expect(returnedAddresses).to.deep.equal(addresses);
+    });
+
+    it("should return empty array if addresses is empty", () => {
+      const returnedAddresses = addressSearch.titleCaseAddresses([]);
+      expect(returnedAddresses).to.deep.equal([]);
+    });
+
+    it("should not attempt to title case null fields", () => {
+      const returnedAddresses = addressSearch.titleCaseAddresses([
+        { buildingName: null },
+      ]);
+      expect(returnedAddresses).to.deep.equal([{ buildingName: null }]);
+    });
+
+    it("should not attempt to title case non string fields", () => {
+      const returnedAddresses = addressSearch.titleCaseAddresses([
+        { buildingNumber: 1, booleanField: true },
+      ]);
+      expect(returnedAddresses).to.deep.equal([
+        { buildingNumber: 1, booleanField: true },
+      ]);
     });
   });
 });

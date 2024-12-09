@@ -14,8 +14,8 @@ Feature: Happy Path - confirming preselected address details and date invalidati
       Given they are on the address page
       Then they should see the postcode prefilled with "E1 8QS"
       Then they should see house number prefilled with "10"
-      And they should see street prefilled with "WHITECHAPEL HIGH STREET"
-      And they should see town or city prefilled with "LONDON"
+      And they should see street prefilled with "Whitechapel High Street"
+      And they should see town or city prefilled with "London"
       When they add their residency date with a "recent" move year
       And they continue to confirm address
       Then they should see the confirm page
