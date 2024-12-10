@@ -12,7 +12,7 @@ module.exports = class PlaywrightDevPage {
     return this.paths.findIndex((path) => path === pathname) !== -1;
   }
 
-  async selectAddress(value = "10 Whitechapel High Street, London, E1 8QS") {
+  async selectAddress(value = "10 WHITECHAPEL HIGH STREET, LONDON, E1 8QS") {
     await this.page.click(".govuk-select");
     await this.page.selectOption(".govuk-select", {
       value,

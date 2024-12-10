@@ -13,14 +13,14 @@ Feature: Happy Path - confirming preselected address details and date invalidati
     And they confirm their details
     And they searched for their postcode "E1 8QS"
     Then they should see the results page
-    And they have selected an address "1 Whitechapel High Street, London, E1 8QS"
+    And they have selected an address "1 WHITECHAPEL HIGH STREET, LONDON, E1 8QS"
     Then they should see the address page
 
     Scenario: Changing address values and successfully passing validation when a previous date is added
       Given they are on the address page
       Then they should see the postcode prefilled with "E1 8QS"
       And they should see house number prefilled with "1"
-      And they should see street prefilled with "Whitechapel High Street"
-      And they should see town or city prefilled with "London"
+      And they should see street prefilled with "WHITECHAPEL HIGH STREET"
+      And they should see town or city prefilled with "LONDON"
       When they continue to confirm address
       Then they should see the confirm page

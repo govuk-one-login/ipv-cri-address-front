@@ -33,38 +33,6 @@ module.exports = {
       },
     ],
   },
-  titleCasedAddresses: [
-    {
-      buildingNumber: "1",
-      streetName: "Some Road",
-      addressLocality: "Somewhere",
-      postalCode: "SOMEPOST",
-    },
-    {
-      buildingName: "Named Building",
-      streetName: "Some Road",
-      addressLocality: "Somewhere",
-      postalCode: "SOMEPOST",
-    },
-    {
-      organisationName: "Named Org",
-      departmentName: "My Department",
-      buildingName: "Named Building",
-      streetName: "Some Road",
-      addressLocality: "Somewhere",
-      postalCode: "SOMEPOST",
-    },
-    {
-      subBuildingName: "Subbuilding Name",
-      buildingName: "Named Building",
-      dependentStreetName: "Some Dependent Road",
-      streetName: "Some Road",
-      doubleDependentAddressLocality: "Somewhere Double Dep",
-      dependentAddressLocality: "Somewhere Dep",
-      addressLocality: "Somewhere",
-      postalCode: "SOMEPOST",
-    },
-  ],
   formattedAddressed: [
     {
       buildingNumber: "1",

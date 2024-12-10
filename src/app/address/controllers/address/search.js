@@ -60,26 +60,8 @@ class AddressSearchController extends BaseController {
       }
     );
     const addresses = addressResults.data;
-    return this.titleCaseAddresses(addresses);
-  }
 
-  titleCaseAddresses(addresses) {
-    const titleCasedAddresses = addresses.map((address) => {
-      const tempAddress = {};
-      for (let key in address) {
-        if (typeof address[key] === "string" && key !== "postalCode") {
-          tempAddress[key] = address[key].replace(
-            /\w\S*/g,
-            (text) =>
-              text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
-          );
-        } else {
-          tempAddress[key] = address[key];
-        }
-      }
-      return tempAddress;
-    });
-    return titleCasedAddresses;
+    return addresses;
   }
 }
 
