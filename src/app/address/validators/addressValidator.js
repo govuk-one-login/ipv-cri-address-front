@@ -8,10 +8,16 @@ module.exports = {
   isPreviousYear: function (val) {
     return new Date(val).getFullYear() <= new Date().getFullYear();
   },
-  validateHouseNumberAndName: function (houseName, houseNumber) {
-    if (!houseName.trim() && !houseNumber.trim()) {
-      return false;
-    }
-    return true;
+  ukBuildingAddressEmptyValidator: function (
+    houseNumber,
+    houseName
+  ) {
+    const trimOrDefaultToEmpty = (value) =>
+      value != null ? String(value).trim() : "";
+
+    return (
+      trimOrDefaultToEmpty(houseNumber) ||
+      trimOrDefaultToEmpty(houseName)
+    );
   },
 };
