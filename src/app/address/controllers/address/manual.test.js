@@ -35,6 +35,7 @@ describe("address controller", () => {
       expect(next).to.have.been.calledOnce;
       expect(next).to.have.been.calledWith(null, {
         addressPostcode: generatedAddress[0].postalCode,
+        ukBuildingAddressEmptyValidator: false,
       });
     });
 
@@ -57,6 +58,52 @@ describe("address controller", () => {
           addressHouseName: generatedAddress[0].buildingName,
         })
       );
+    });
+  });
+
+  describe("validateFields", () => {
+    it("defaults validation to the first field when all building address fields are empty", () => {
+      req.body = {
+        addressHouseNumber: "",
+        addressHouseName: "",
+      };
+
+      req.form.options.fields = {
+        addressHouseNumber: { validate: [] },
+      };
+
+      sandbox.stub(address, "defaultToFirstField");
+
+      address.validateFields(req, res, next);
+
+      expect(address.defaultToFirstField).to.have.been.calledOnceWith(
+        req.form.options.fields,
+        "addressHouseNumber",
+        req
+      );
+      expect(next).to.have.been.calledOnce;
+    });
+
+    it("does not default to the first field when at least one building address field is provided", () => {
+      req.body = {
+        addressHouseNumber: "123",
+        addressHouseName: "",
+      };
+
+      req.form.options.fields = {
+        addressHouseNumber: { validate: [] },
+      };
+
+      sandbox.stub(address, "defaultToFirstField");
+
+      address.validateFields(req, res, next);
+
+      expect(address.defaultToFirstField).not.to.have.been.calledOnceWith(
+        req.form.options.fields,
+        "addressHouseNumber",
+        req
+      );
+      expect(next).to.have.been.calledOnce;
     });
   });
 

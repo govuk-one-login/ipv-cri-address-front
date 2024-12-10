@@ -1,7 +1,7 @@
 const {
   alphaNumericWithSpecialChars,
   isPreviousYear,
-  validateHouseNumberAndName,
+  ukBuildingAddressEmptyValidator,
 } = require("./addressValidator");
 
 const today = new Date();
@@ -55,20 +55,25 @@ describe("Address validator", () => {
     });
   });
 
-  describe("validateHouseNumberAndName", () => {
-    it("should pass when both values exist", () => {
-      const results = validateHouseNumberAndName("number", "name");
-      expect(results).to.equal(true);
+  describe("ukBuildingAddressEmptyValidator", () => {
+    it("should return houseNumber when both houseNumber and houseName exist", () => {
+      const results = ukBuildingAddressEmptyValidator("2", "houseName");
+      expect(results).to.equal("2");
     });
 
-    it("should fail when the both values dont exist", () => {
-      const results = validateHouseNumberAndName("", "");
-      expect(results).to.equal(false);
+    it("should return empty string when both houseNumber and houseName are empty", () => {
+      const results = ukBuildingAddressEmptyValidator("", "");
+      expect(results).to.equal("");
     });
 
-    it("shoudl pass when one value exists", () => {
-      const results = validateHouseNumberAndName("", "name");
-      expect(results).to.equal(true);
+    it("should return houseName when houseNumber is empty and houseName exists", () => {
+      const results = ukBuildingAddressEmptyValidator("", "houseName");
+      expect(results).to.equal("houseName");
+    });
+
+    it("should return houseNumber when houseName is empty and houseNumber exists", () => {
+      const results = ukBuildingAddressEmptyValidator("2", "");
+      expect(results).to.equal("2");
     });
   });
 });
