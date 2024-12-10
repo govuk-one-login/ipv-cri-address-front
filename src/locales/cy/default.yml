@@ -97,8 +97,8 @@ validation:
   isUkPostcode: "Rhowch god post yn y DU"
   alphaNumericWithSpecialChars: "Ni ddylai eich {{ label }} gynnwys unrhyw nodau neu symbolau arbennig"
   default: "Mae'n rhaid i chi ateb y cwestiwn hwn"
-  houseNameOrHouseNumber: "Rhowch enw tŷ neu rif tŷ"
-  buildingAddressEmptyValidator: Rhowch rif fflat, rhif adeilad neu enw adeilad
+  houseNameOrHouseNumber: "Rhowch rif y neu enw tŷ neu rhif fflat."
+  apartmentOrBuildingNumberOrName: Rhowch rif fflat, rhif adeilad neu enw adeilad
 
 addressSelect:
   addressFoundWithCount_one: "Darganfyddwyd {{ count }} cyfeiriad"

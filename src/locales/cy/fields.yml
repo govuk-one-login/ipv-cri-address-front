@@ -12,21 +12,25 @@ addressSearch:
     postcodeLength: "Dylai eich cod post fod rhwng 5 a 7 nod"
     alphaNumeric: "Dylai eich cod post gynnwys rhifau a llythrennau yn unig"
 addressFlatNumber:
-  label: "Rif fflat"
+  label: "Rif fflat (dewisol)"
   validation:
     maxlength: "Gwiriwch eich bod wedi rhoi rhif eich fflat yn gywir"
+    alphaNumericWithSpecialChars: "Ni ddylai eich rif fflat gynnwys unrhyw nodau neu symbolau arbennig"
 addressHouseNumber:
   label: "Rhif tŷ"
   validation:
     maxlength: "Gwiriwch eich bod wedi rhoi rhif eich tŷ yn yn gywir"
+    alphaNumericWithSpecialChars: "Ni ddylai eich rhif tŷ gynnwys unrhyw nodau neu symbolau arbennig"
 addressHouseName:
   label: "Enw tŷ"
   validation:
     maxlength: "Gwiriwch eich bod wedi rhoi enw eich tŷ yn yn gywir"
+    alphaNumericWithSpecialChars: "Ni ddylai eich enw tŷ gynnwys unrhyw nodau neu symbolau arbennig"
 addressStreetName:
-  label: "Enw stryd"
+  label: "Enw stryd (dewisol)"
   validation:
     maxlength: "Gwiriwch eich bod wedi rhoi enw eich stryd yn yn gywir"
+    alphaNumericWithSpecialChars: "Ni ddylai eich enw stryd gynnwys unrhyw nodau neu symbolau arbennig"
 addressLocality:
   label: "Tref neu ddinas"
   validation:
