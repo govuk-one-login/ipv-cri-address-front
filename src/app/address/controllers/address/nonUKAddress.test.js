@@ -71,16 +71,10 @@ describe("NonUKAddressController", () => {
         .withArgs("nonUKAddressApartmentNumber.validation.required")
         .returns("Apartment number is required");
 
-      sandbox
-        .stub(address, "getInputFieldErrorMessage")
-        .callsFake((translate, key, type) => ({
-          text: translate(`${key}.validation.${type}`),
-        }));
-
       address.getValues(req, res, (err, values) => {
         expect(err).to.be.null;
         expect(values).to.deep.include({
-          nonUKAddressApartmentNumberInValid: {
+          nonUKAddressApartmentNumberInvalid: {
             text: "Apartment number is required",
           },
         });
