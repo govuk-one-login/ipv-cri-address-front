@@ -1,5 +1,8 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-const { yearFrom } = require("../../../../lib/helpers");
+const {
+  yearFrom,
+  addIndividualFieldErrorMessages,
+} = require("../../../../lib/helpers");
 
 const {
   ukBuildingAddressEmptyValidator,
@@ -30,15 +33,12 @@ class AddressController extends BaseController {
         values.checkDetailsHeader = "false";
       }
 
-      Object.entries(req?.form?.errors || {})?.map(
-        ([fieldName, validationAttribute]) =>
-          validationAttribute.type !== "ukBuildingAddressEmptyValidator" &&
-          (values[`${fieldName}Invalid`] = this.getInputFieldErrorMessage(
-            req.translate,
-            validationAttribute.key,
-            validationAttribute.type
-          ))
+      addIndividualFieldErrorMessages(
+        "ukBuildingAddressEmptyValidator",
+        req,
+        values
       );
+
       values.ukBuildingAddressEmptyValidator = this.isBuildingAddressEmpty(
         req
       ) && {
@@ -150,12 +150,6 @@ class AddressController extends BaseController {
     return Object.entries(req?.form?.errors || {})
       .map(([, value]) => value)
       .some((error) => error?.type === "ukBuildingAddressEmptyValidator");
-  }
-
-  getInputFieldErrorMessage(translate, key, type) {
-    return {
-      text: translate(`${key}.validation.${type}`),
-    };
   }
 }
 const fieldIsEmpty = ([, value]) => value.trim() === "";

@@ -2,7 +2,11 @@ const BaseController = require("hmpo-form-wizard").Controller;
 const {
   buildingAddressEmptyValidator,
 } = require("../../validators/nonUKAddressValidator");
-const { yearFrom, getCountry } = require("../../../../lib/helpers");
+const {
+  yearFrom,
+  getCountry,
+  addIndividualFieldErrorMessages,
+} = require("../../../../lib/helpers");
 
 class NonUKAddressController extends BaseController {
   getValues(req, res, callback) {
@@ -11,14 +15,10 @@ class NonUKAddressController extends BaseController {
         req.sessionModel.get("country")
       ).key;
 
-      Object.entries(req?.form?.errors || {})?.map(
-        ([fieldName, validationAttribute]) =>
-          validationAttribute.type !== "buildingAddressEmptyValidator" &&
-          (values[`${fieldName}InValid`] = this.getInputFieldErrorMessage(
-            req.translate,
-            validationAttribute.key,
-            validationAttribute.type
-          ))
+      addIndividualFieldErrorMessages(
+        "buildingAddressEmptyValidator",
+        req,
+        values
       );
       /*
        * Display a single error message for a missing entry in the input group (apartment, number, or name).
@@ -99,12 +99,6 @@ class NonUKAddressController extends BaseController {
     return Object.entries(req?.form?.errors || {})
       .map(([, value]) => value)
       .some((error) => error?.type === "buildingAddressEmptyValidator");
-  }
-
-  getInputFieldErrorMessage(translate, key, type) {
-    return {
-      text: translate(`${key}.validation.${type}`),
-    };
   }
 }
 
