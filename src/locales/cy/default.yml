@@ -5,7 +5,7 @@ buttons:
   find-address: "Darganfyddwch gyfeiriad"
 buildingAddress:
   label: Building address
-  hint: Fill in at least 1 field in this section
+  hint: Rhowch o leiaf un
 govuk:
   serviceName: "Profi pwy ydych chi"
   backLink: "Yn ôl"

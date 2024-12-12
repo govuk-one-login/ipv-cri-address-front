@@ -5,7 +5,7 @@ buttons:
   find-address: Find address
 buildingAddress:
   label: Building address
-  hint: Fill in at least 1 field in this section
+  hint: Fill in at least one
 govuk:
   serviceName: Prove your identity
   backLink: Back
