@@ -67,7 +67,11 @@ class AddressSearchController extends BaseController {
     const titleCasedAddresses = addresses.map((address) => {
       const tempAddress = {};
       for (let key in address) {
-        if (typeof address[key] === "string" && key !== "postalCode") {
+        if (
+          typeof address[key] === "string" &&
+          key !== "postalCode" &&
+          key !== "addressCountry"
+        ) {
           tempAddress[key] = address[key].replace(
             /\w\S*/g,
             (text) =>
