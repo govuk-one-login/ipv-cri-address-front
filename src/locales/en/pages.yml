@@ -42,10 +42,11 @@ address-form:
   title: Enter your address
   check-details:
     title: Check your address
-  previous:
-    title: Enter your previous address
-    check-details:
-      title: Check your previous address
+
+address-form-previous:
+  title: Enter your previous address
+  check-details:
+    title: Check your previous address
 
 enter-nonUK-address-form:
   title: Enter your address

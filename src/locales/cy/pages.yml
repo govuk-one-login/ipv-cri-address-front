@@ -42,10 +42,11 @@ address-form:
   title: "Rhowch eich cyfeiriad"
   check-details:
     title: "Gwiriwch eich cyfeiriad"
-  previous:
-    title: "Rhowch eich cyfeiriad blaenorol"
-    check-details:
-      title: "Gwiriwch eich cyfeiriad blaenorol"
+
+address-form-previous:
+  title: "Rhowch eich cyfeiriad blaenorol"
+  check-details:
+    title: "Gwiriwch eich cyfeiriad blaenorol"
 
 enter-nonUK-address-form:
   title: Enter your address

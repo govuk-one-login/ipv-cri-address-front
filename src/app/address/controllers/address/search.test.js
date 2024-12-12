@@ -148,6 +148,16 @@ describe("Address Search controller", function () {
       expect(returnedAddresses).to.deep.equal(addresses);
     });
 
+    it("should not title case country field", () => {
+      const addresses = [
+        {
+          addressCountry: "GB",
+        },
+      ];
+      const returnedAddresses = addressSearch.titleCaseAddresses(addresses);
+      expect(returnedAddresses).to.deep.equal(addresses);
+    });
+
     it("should return empty array if addresses is empty", () => {
       const returnedAddresses = addressSearch.titleCaseAddresses([]);
       expect(returnedAddresses).to.deep.equal([]);
