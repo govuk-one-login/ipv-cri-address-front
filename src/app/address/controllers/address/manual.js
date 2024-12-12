@@ -30,9 +30,7 @@ class AddressController extends BaseController {
         values.addressYearFrom = yearFrom;
       }
 
-      if (req.url.includes("edit")) {
-        values.checkDetailsHeader = "false";
-      }
+      values.addressFormTitle = this.getAddressFormTitle(req.originalUrl || "");
 
       if (req?.form?.errors) {
         const errorValues =
@@ -53,6 +51,7 @@ class AddressController extends BaseController {
             visuallyHiddenText: "error",
           };
       }
+
       callback(null, values);
     });
   }
@@ -141,6 +140,22 @@ class AddressController extends BaseController {
     });
 
     return hasChanged !== -1;
+  }
+
+  getAddressFormTitle(originalUrl) {
+    if (originalUrl.includes("previous") && originalUrl.includes("edit")) {
+      return "pages.address-form-previous.check-details.title";
+    }
+
+    if (originalUrl.includes("previous")) {
+      return "pages.address-form-previous.title";
+    }
+
+    if (originalUrl.includes("edit")) {
+      return "pages.address-form.check-details.title";
+    }
+
+    return "pages.address-form.title";
   }
 }
 module.exports = AddressController;

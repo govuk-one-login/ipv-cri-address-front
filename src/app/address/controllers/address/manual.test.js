@@ -42,6 +42,7 @@ describe("address controller", () => {
       expect(next).to.have.been.calledOnce;
       expect(next).to.have.been.calledWith(null, {
         addressPostcode: generatedAddress[0].postalCode,
+        addressFormTitle: "pages.address-form.title",
       });
     });
 
@@ -66,16 +67,6 @@ describe("address controller", () => {
       );
     });
 
-    it("should set checkDetailsHeader to false if the user is editing", () => {
-      req.url = "/address/edit";
-      address.getValues(req, res, next);
-
-      expect(next).to.have.been.calledWith(null, {
-        addressPostcode: undefined,
-        checkDetailsHeader: "false",
-      });
-    });
-
     it("sets field and group level errors", () => {
       req.translate = (args) => args;
       req.form.errors = {
@@ -97,6 +88,7 @@ describe("address controller", () => {
 
       expect(next).to.have.been.calledWith(null, {
         addressPostcode: undefined,
+        addressFormTitle: "pages.address-form.title",
         errors: {
           addressHouseName: {
             text: "addressHouseName.validation.alphaNumericWithSpecialChars",
@@ -124,12 +116,75 @@ describe("address controller", () => {
 
       expect(next).to.have.been.calledWith(null, {
         addressPostcode: undefined,
+        addressFormTitle: "pages.address-form.title",
         errors: {
           ukBuildingAddressEmptyValidator: {
             text: "validation.ukBuildingAddressEmptyValidator",
             visuallyHiddenText: "error",
           },
         },
+      });
+    });
+
+    context("viewing /address", () => {
+      it("should populate addressFormTitle with pages.address-form.title", () => {
+        address.getValues(req, res, next);
+
+        expect(next).to.have.been.calledOnce;
+        expect(next).to.have.been.calledWith(null, {
+          addressPostcode: undefined,
+          addressFormTitle: "pages.address-form.title",
+        });
+
+        req.originalUrl = "/address";
+        address.getValues(req, res, next);
+
+        expect(next).to.have.been.calledWith(null, {
+          addressPostcode: undefined,
+          addressFormTitle: "pages.address-form.title",
+        });
+      });
+    });
+
+    context("viewing /previous/address", () => {
+      it("should populate addressFormTitle with pages.address-form-previous.title", () => {
+        req.originalUrl = "/previous/address";
+
+        address.getValues(req, res, next);
+
+        expect(next).to.have.been.calledOnce;
+        expect(next).to.have.been.calledWith(null, {
+          addressPostcode: undefined,
+          addressFormTitle: "pages.address-form-previous.title",
+        });
+      });
+    });
+
+    context("viewing /address/edit?edit=true", () => {
+      it("should populate addressFormTitle with pages.address-form.check-details.title", () => {
+        req.originalUrl = "/address/edit?edit=true";
+
+        address.getValues(req, res, next);
+
+        expect(next).to.have.been.calledOnce;
+        expect(next).to.have.been.calledWith(null, {
+          addressPostcode: undefined,
+          addressFormTitle: "pages.address-form.check-details.title",
+        });
+      });
+    });
+
+    context("viewing /previous/address/edit?edit=true", () => {
+      it("should populate addressFormTitle with pages.address-form-previous.check-details.title", () => {
+        req.originalUrl = "/previous/address/edit?edit=true";
+
+        address.getValues(req, res, next);
+
+        expect(next).to.have.been.calledOnce;
+        expect(next).to.have.been.calledWith(null, {
+          addressPostcode: undefined,
+          addressFormTitle: "pages.address-form-previous.check-details.title",
+        });
       });
     });
   });
