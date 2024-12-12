@@ -14,7 +14,7 @@ done:
   title: "Wedi'i wneud"
 
 country:
-  title: What country do you live in?
+  title: "Ym mha wlad ydych chi'n byw?"
 
 addressSearch:
   title: "Darganfyddwch eich cyfeiriad"
@@ -49,7 +49,7 @@ address-form-previous:
     title: "Gwiriwch eich cyfeiriad blaenorol"
 
 enter-nonUK-address-form:
-  title: Enter your address
+  title: "Rhowch eich cyfeiriad"
 
 addressProblem:
   title: "Mae’n ddrwg gennym, mae problem"

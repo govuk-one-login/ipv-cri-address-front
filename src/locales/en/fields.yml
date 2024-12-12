@@ -41,19 +41,16 @@ addressLocality:
 nonUKAddressApartmentNumber:
   label: Apartment number
   validation:
-    maxlength: Check you've entered your apartment number correctly
     alphaNumericWithSpecialChars: Apartment number must only include numbers 0 to 9, letters a to z and .,-\/* or '
 
 nonUKAddressBuildingNumber:
   label: Building number
   validation:
-    maxlength: Check you've entered your building number correctly
     alphaNumericWithSpecialChars: Building number must only include numbers 0 to 9, letters a to z and .,-\/* or '
 
 nonUKAddressBuildingName:
   label: Building name
   validation:
-    maxlength: Check you've entered your building name correctly
     alphaNumericWithSpecialChars: Building name must only include letters a to z, numbers 0 to 9 and .,-\/* or '
 
 nonUKAddressStreetName:
