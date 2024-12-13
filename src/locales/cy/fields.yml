@@ -33,47 +33,44 @@ addressLocality:
     maxlength: "Gwiriwch eich bod wedi rhoi enw eich tref neu ddinas yn yn gywir"
 
 nonUKAddressApartmentNumber:
-  label: Apartment number
+  label: "Rhif fflat"
   validation:
-    maxlength: Check you've entered your apartment number correctly
-    alphaNumericWithSpecialChars: Apartment number must only include numbers 0 to 9, letters a to z and .,-\/* or '
+    alphaNumericWithSpecialChars: "Rhaid i rif y fflat ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressBuildingNumber:
-  label: Building number
+  label: "Rhif adeilad"
   validation:
-    maxlength: Check you've entered your building number correctly
-    alphaNumericWithSpecialChars: Building number must only include numbers 0 to 9, letters a to z and .,-\/* or '
+    alphaNumericWithSpecialChars: "Rhaid i rif yr adeilad ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressBuildingName:
-  label: Building name
+  label: "Enw adeilad"
   validation:
-    maxlength: Check you've entered your building name correctly
-    alphaNumericWithSpecialChars: Building name must only include letters a to z, numbers 0 to 9 and .,-\/* or '
+    alphaNumericWithSpecialChars: "Rhaid i enw'r adeilad ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressStreetName:
-  label: Street name (optional)
+  label: "Enw stryd (dewisol)"
   validation:
-    maxlength: Check you've entered your street name correctly
-    alphaNumericWithSpecialChars: Street name must only include letters a to z, numbers 0 to 9 and .,-\/* or '
+    maxlength: "Gwiriwch eich bod wedi rhoi enw eich stryd yn gywir"
+    alphaNumericWithSpecialChars: "Rhaid i enw'r stryd ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressLocality:
-  label: Town, suburb or city
+  label: "Tref, maestref neu ddinas"
   validation:
-    maxlength: Check you've entered your town, suburb or city correctly
-    alphaNumericWithSpecialChars: Town, suburb or city must only include letters a to z, numbers 0 to 9 and .,-\/* or '
+    maxlength: "Gwiriwch eich bod wedi rhoi enw eich tref, maestref neu ddinas yn gywir"
+    alphaNumericWithSpecialChars: "Rhaid i enw'r tref, maestref neu ddinas ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressPostalCode:
-  label: Postal code or zipcode (if your country has one)
+  label: "Cod post neu god zip (os oes gan eich gwlad un)"
   validation:
-    maxlength: Check you've entered your postal code or zipcode correctly
-    alphaNumericWithSpecialChars: Postal code or zipcode must only include numbers 0 to 9, letters a to z and .,-\/* or '
+    maxlength: "Gwiriwch eich bod wedi rhoi eich cod post neu god zip yn gywir"
+    alphaNumericWithSpecialChars: "Rhaid i god post neu god zip ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressRegion:
-  label: Region (optional)
-  hint: For example, state, district, county, parish or province
+  label: "Rhanbarth (dewisol)"
+  hint: "Er enghraifft, gwlad, ardal, sir, plwyf neu dalaith"
   validation:
-    maxlength: Check you've entered your region correctly
-    alphaNumericWithSpecialChars: Region must only include letters a to z, numbers 0 to 9 and .,-\/* or '
+    maxlength: "Gwiriwch eich bod wedi rhoi eich rhanbarth yn gywir"
+    alphaNumericWithSpecialChars: "Rhaid i rhanbarth ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressYearFrom:
   title: "Pryd wnaethoch chi ddechrau byw yno?"
@@ -139,7 +136,7 @@ hasPreviousUKAddressWithinThreeMonths:
 country:
   placeholder: ""
   validation:
-    required: Select the country you live in
+    required: Dewiswch y wlad rydych yn byw ynddi
 
 countries:
   AF: Afghanistan

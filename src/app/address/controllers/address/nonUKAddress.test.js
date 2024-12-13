@@ -107,8 +107,7 @@ describe("NonUKAddressController", () => {
 
       expect(address.defaultToFirstField).to.have.been.calledOnceWith(
         req.form.options.fields,
-        "nonUKAddressApartmentNumber",
-        req
+        "nonUKAddressApartmentNumber"
       );
       expect(next).to.have.been.calledOnce;
     });
@@ -130,8 +129,7 @@ describe("NonUKAddressController", () => {
 
       expect(address.defaultToFirstField).not.to.have.been.calledOnceWith(
         req.form.options.fields,
-        "nonUKAddressApartmentNumber",
-        req
+        "nonUKAddressApartmentNumber"
       );
       expect(next).to.have.been.calledOnce;
     });

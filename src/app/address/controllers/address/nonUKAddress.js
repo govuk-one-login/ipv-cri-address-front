@@ -27,7 +27,7 @@ class NonUKAddressController extends BaseController {
       values.buildingAddressEmptyErrorMessage = this.isBuildingAddressEmpty(
         req
       ) && {
-        text: req.translate("validation.apartmentOrBuildingNumberOrName"),
+        text: req.translate("validation.buildingAddressEmptyValidator"),
         visuallyHiddenText: "error",
       };
 
@@ -48,7 +48,7 @@ class NonUKAddressController extends BaseController {
     ];
 
     buildingAddress.every(fieldIsEmpty) &&
-      this.defaultToFirstField(formFields, apartment, req);
+      this.defaultToFirstField(formFields, apartment);
 
     super.validateFields(req, res, callback);
   }
@@ -89,10 +89,9 @@ class NonUKAddressController extends BaseController {
     };
   }
 
-  defaultToFirstField(formFields, first, req) {
+  defaultToFirstField(formFields, first) {
     formFields[first].validate.push({
       fn: buildingAddressEmptyValidator,
-      message: req.translate("validation.apartmentOrBuildingNumberOrName"),
     });
   }
 
