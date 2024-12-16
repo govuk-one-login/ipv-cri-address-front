@@ -99,8 +99,8 @@ validation:
   isUkPostcode: "Enter a UK postcode"
   alphaNumericWithSpecialChars: Your {{ label }} should not include any special characters or symbols
   default: You must answer this question
-  houseNameOrHouseNumber: Enter a house number or house name.
-  apartmentOrBuildingNumberOrName: Enter an apartment number, building number or building name
+  houseNameOrHouseNumber: Enter a house number or house name
+  buildingAddressEmptyValidator: Enter an apartment number, building number or building name
 addressSelect:
   addressFoundWithCount_one: "{{ count }} address found"
   addressFoundWithCount_other: "{{ count }} addresses found"
