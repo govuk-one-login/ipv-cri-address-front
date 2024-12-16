@@ -35,7 +35,6 @@ describe("address controller", () => {
       expect(next).to.have.been.calledOnce;
       expect(next).to.have.been.calledWith(null, {
         addressPostcode: generatedAddress[0].postalCode,
-        ukBuildingAddressEmptyValidator: false,
       });
     });
 
@@ -78,8 +77,7 @@ describe("address controller", () => {
 
       expect(address.defaultToFirstField).to.have.been.calledOnceWith(
         req.form.options.fields,
-        "addressHouseNumber",
-        req
+        "addressHouseNumber"
       );
       expect(next).to.have.been.calledOnce;
     });

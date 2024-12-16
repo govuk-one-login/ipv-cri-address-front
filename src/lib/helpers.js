@@ -8,22 +8,23 @@ const yearFrom = (year) =>
 const getCountry = (countryCode) =>
   countryList.find((country) => country.value === countryCode);
 
-function addIndividualFieldErrorMessages(validator, req, values) {
-  Object.entries(req?.form?.errors || {})?.map(
-    ([fieldName, validationAttribute]) =>
-      validationAttribute.type !== `${validator}` &&
-      (values[`${fieldName}Invalid`] = getInputFieldErrorMessage(
-        req.translate,
-        validationAttribute.key,
-        validationAttribute.type
-      ))
+function getIndividualFieldErrorMessages(errors, validatorToSkip, translate) {
+  return Object.entries(errors)?.reduce(
+    (errorValues, [fieldName, { type, key }]) => {
+      if (type !== `${validatorToSkip}`) {
+        errorValues[fieldName] = {
+          text: translate(`${key}.validation.${type}`),
+        };
+      }
+
+      return errorValues;
+    },
+    {}
   );
 }
 
-function getInputFieldErrorMessage(translate, key, type) {
-  return {
-    text: translate(`${key}.validation.${type}`),
-  };
-}
-
-module.exports = { yearFrom, getCountry, addIndividualFieldErrorMessages };
+module.exports = {
+  yearFrom,
+  getCountry,
+  getIndividualFieldErrorMessages,
+};

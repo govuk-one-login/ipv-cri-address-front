@@ -1,7 +1,7 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 const {
   yearFrom,
-  addIndividualFieldErrorMessages,
+  getIndividualFieldErrorMessages,
 } = require("../../../../lib/helpers");
 
 const {
@@ -33,18 +33,25 @@ class AddressController extends BaseController {
         values.checkDetailsHeader = "false";
       }
 
-      addIndividualFieldErrorMessages(
-        "ukBuildingAddressEmptyValidator",
-        req,
-        values
-      );
+      if (req?.form?.errors) {
+        const errorValues = getIndividualFieldErrorMessages(
+          req?.form?.errors,
+          "ukBuildingAddressEmptyValidator",
+          req.translate
+        );
 
-      values.ukBuildingAddressEmptyValidator = this.isBuildingAddressEmpty(
-        req
-      ) && {
-        text: req.translate("validation.houseNameOrHouseNumber"),
-        visuallyHiddenText: "error",
-      };
+        values = { ...values, errors: { ...errorValues } };
+
+        /*
+         * Display a single error message for a missing entry in the input group (house name or number).
+         * At least one entry is required; if none is provided, a validation message is displayed for the group.
+         */
+        values.errors.ukBuildingAddressEmptyValidator =
+          this.isBuildingAddressEmpty(req) && {
+            text: req.translate("validation.ukBuildingAddressEmptyValidator"),
+            visuallyHiddenText: "error",
+          };
+      }
 
       callback(null, values);
     });
@@ -61,7 +68,7 @@ class AddressController extends BaseController {
     ];
 
     buildingAddress.every(fieldIsEmpty) &&
-      this.defaultToFirstField(formFields, number, req);
+      this.defaultToFirstField(formFields, number);
 
     super.validateFields(req, res, callback);
   }
@@ -139,10 +146,9 @@ class AddressController extends BaseController {
     return hasChanged !== -1;
   }
 
-  defaultToFirstField(formFields, first, req) {
+  defaultToFirstField(formFields, first) {
     formFields[first].validate.push({
       fn: ukBuildingAddressEmptyValidator,
-      message: req.translate("validation.houseNameOrHouseNumber"),
     });
   }
 

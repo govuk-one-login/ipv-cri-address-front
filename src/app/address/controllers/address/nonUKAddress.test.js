@@ -74,8 +74,11 @@ describe("NonUKAddressController", () => {
       address.getValues(req, res, (err, values) => {
         expect(err).to.be.null;
         expect(values).to.deep.include({
-          nonUKAddressApartmentNumberInvalid: {
-            text: "Apartment number is required",
+          errors: {
+            buildingAddressEmptyErrorMessage: false,
+            nonUKAddressApartmentNumber: {
+              text: "Apartment number is required",
+            },
           },
         });
         done();

@@ -5,7 +5,7 @@ const {
 const {
   yearFrom,
   getCountry,
-  addIndividualFieldErrorMessages,
+  getIndividualFieldErrorMessages,
 } = require("../../../../lib/helpers");
 
 class NonUKAddressController extends BaseController {
@@ -15,21 +15,25 @@ class NonUKAddressController extends BaseController {
         req.sessionModel.get("country")
       ).key;
 
-      addIndividualFieldErrorMessages(
-        "buildingAddressEmptyValidator",
-        req,
-        values
-      );
-      /*
-       * Display a single error message for a missing entry in the input group (apartment, number, or name).
-       * At least one entry is required; if none is provided, a validation message is displayed for the group.
-       */
-      values.buildingAddressEmptyErrorMessage = this.isBuildingAddressEmpty(
-        req
-      ) && {
-        text: req.translate("validation.buildingAddressEmptyValidator"),
-        visuallyHiddenText: "error",
-      };
+      if (req?.form?.errors) {
+        const errorValues = getIndividualFieldErrorMessages(
+          req?.form?.errors,
+          "buildingAddressEmptyValidator",
+          req.translate
+        );
+
+        values = { ...values, errors: { ...errorValues } };
+
+        /*
+         * Display a single error message for a missing entry in the input group (apartment, number, or name).
+         * At least one entry is required; if none is provided, a validation message is displayed for the group.
+         */
+        values.errors.buildingAddressEmptyErrorMessage =
+          this.isBuildingAddressEmpty(req) && {
+            text: req.translate("validation.buildingAddressEmptyValidator"),
+            visuallyHiddenText: "error",
+          };
+      }
 
       callback(err, values);
     });

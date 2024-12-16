@@ -1,5 +1,9 @@
 describe("helpers", () => {
-  const { yearFrom, getCountry } = require("./helpers");
+  const {
+    yearFrom,
+    getCountry,
+    getIndividualFieldErrorMessages,
+  } = require("./helpers");
 
   context("yearFrom", () => {
     it("returns ISO string for a valid year", () => {
@@ -37,6 +41,51 @@ describe("helpers", () => {
 
     it("returns undefined for an empty string country code", () => {
       expect(getCountry("")).to.be.undefined;
+    });
+  });
+
+  context("getIndividualFieldErrorMessages", () => {
+    const translate = (args) => args;
+
+    it("returns empty object where there are no errors", () => {
+      const result = getIndividualFieldErrorMessages(
+        {},
+        "validatorToSkip",
+        translate
+      );
+      expect(result).to.deep.equal({});
+    });
+
+    it("returns an object of errors with skipped validator", () => {
+      const errors = {
+        validatorToSkip: {
+          key: "skipMe",
+          type: "validatorToSkip",
+          url: "/address",
+          args: {},
+        },
+        addressLocality: {
+          key: "addressLocality",
+          type: "required",
+          url: "/address",
+          args: {},
+        },
+        addressYearFrom: {
+          key: "addressYearFrom",
+          type: "required",
+          url: "/address",
+          args: {},
+        },
+      };
+      const result = getIndividualFieldErrorMessages(
+        errors,
+        "validatorToSkip",
+        translate
+      );
+      expect(result).to.deep.equal({
+        addressLocality: { text: "addressLocality.validation.required" },
+        addressYearFrom: { text: "addressYearFrom.validation.required" },
+      });
     });
   });
 });
