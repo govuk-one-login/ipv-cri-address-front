@@ -67,7 +67,6 @@ module.exports = {
     controller: address,
     editable: true,
     continueOnEdit: true,
-    entryPoint: true,
     prereqs: ["/search"],
     fields: [
       "addressFlatNumber",
@@ -82,7 +81,6 @@ module.exports = {
   "/enter-non-UK-address": {
     controller: nonUKAddressController,
     editable: true,
-    entryPoint: true,
     continueOnEdit: true,
     prereqs: ["/what-country"],
     fields: [

@@ -58,6 +58,73 @@ describe("address controller", () => {
         })
       );
     });
+
+    it("should set checkDetailsHeader to false if the user is editing", () => {
+      req.url = "/address/edit";
+      address.getValues(req, res, next);
+
+      expect(next).to.have.been.calledWith(null, {
+        addressPostcode: undefined,
+        checkDetailsHeader: "false",
+      });
+    });
+
+    it("sets field and group level errors", () => {
+      req.translate = (args) => args;
+      req.form.errors = {
+        addressHouseNumber: {
+          key: "addressHouseNumber",
+          type: "ukBuildingAddressEmptyValidator",
+          url: "/address",
+          args: {},
+        },
+        addressHouseName: {
+          key: "addressHouseName",
+          type: "alphaNumericWithSpecialChars",
+          url: "/address",
+          args: {},
+        },
+      };
+
+      address.getValues(req, res, next);
+
+      expect(next).to.have.been.calledWith(null, {
+        addressPostcode: undefined,
+        errors: {
+          addressHouseName: {
+            text: "addressHouseName.validation.alphaNumericWithSpecialChars",
+          },
+          ukBuildingAddressEmptyValidator: {
+            text: "validation.ukBuildingAddressEmptyValidator",
+            visuallyHiddenText: "error",
+          },
+        },
+      });
+    });
+
+    it("sets building address empty errors if there are any", () => {
+      req.translate = (args) => args;
+      req.form.errors = {
+        addressHouseNumber: {
+          key: "addressHouseNumber",
+          type: "ukBuildingAddressEmptyValidator",
+          url: "/address",
+          args: {},
+        },
+      };
+
+      address.getValues(req, res, next);
+
+      expect(next).to.have.been.calledWith(null, {
+        addressPostcode: undefined,
+        errors: {
+          ukBuildingAddressEmptyValidator: {
+            text: "validation.ukBuildingAddressEmptyValidator",
+            visuallyHiddenText: "error",
+          },
+        },
+      });
+    });
   });
 
   describe("validateFields", () => {

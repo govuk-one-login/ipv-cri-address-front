@@ -17,7 +17,7 @@ class NonUKAddressController extends BaseController {
 
       if (req?.form?.errors) {
         const errorValues = getIndividualFieldErrorMessages(
-          req?.form?.errors,
+          req.form.errors,
           "buildingAddressEmptyValidator",
           req.translate
         );
@@ -29,7 +29,7 @@ class NonUKAddressController extends BaseController {
          * At least one entry is required; if none is provided, a validation message is displayed for the group.
          */
         values.errors.buildingAddressEmptyErrorMessage =
-          this.isBuildingAddressEmpty(req) && {
+          this.isBuildingAddressEmpty(req.form.errors) && {
             text: req.translate("validation.buildingAddressEmptyValidator"),
             visuallyHiddenText: "error",
           };
@@ -99,8 +99,8 @@ class NonUKAddressController extends BaseController {
     });
   }
 
-  isBuildingAddressEmpty(req) {
-    return Object.entries(req?.form?.errors || {})
+  isBuildingAddressEmpty(errors) {
+    return Object.entries(errors || {})
       .map(([, value]) => value)
       .some((error) => error?.type === "buildingAddressEmptyValidator");
   }
