@@ -41,6 +41,8 @@ const loggerConfig = {
   app: false,
 };
 
+const protect = require("overload-protection");
+
 const dynamodb = new DynamoDB({
   region: "eu-west-2",
 });
@@ -110,6 +112,19 @@ const { app, router } = setup({
       ],
     });
     app.use(setHeaders);
+
+    app.use(
+      protect("express", {
+        production: process.env.NODE_ENV === "production",
+        clientRetrySecs: 1,
+        sampleInterval: 5,
+        maxEventLoopDelay: 52,
+        maxHeapUsedBytes: 0,
+        maxRssBytes: 0,
+        errorPropagationMode: false,
+        logging: "error",
+      })
+    );
   },
   dev: true,
 });
