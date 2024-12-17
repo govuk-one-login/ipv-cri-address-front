@@ -29,6 +29,7 @@
     "check-translation": "node node_modules/@govuk-one-login/di-ipv-cri-common-express/scripts/checkTranslations.js '../../../../src/locales'"
   },
   "dependencies": {
+    "overload-protection": "1.2.3",
     "@aws-sdk/client-dynamodb": "3.609.0",
     "@govuk-one-login/di-ipv-cri-common-express": "8.1.0",
     "@govuk-one-login/frontend-analytics": "3.0.1",
@@ -55,6 +56,7 @@
     "wiremock": "3.8.0"
   },
   "devDependencies": {
+    "@types/overload-protection": "1.2.4",
     "@cucumber/cucumber": "11.0.1",
     "chai": "4.4.1",
     "chai-as-promised": "7.1.1",
