@@ -8,4 +8,7 @@ const yearFrom = (year) =>
 const getCountry = (countryCode) =>
   countryList.find((country) => country.value === countryCode);
 
-module.exports = { yearFrom, getCountry };
+module.exports = {
+  yearFrom,
+  getCountry,
+};

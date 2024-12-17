@@ -10,7 +10,7 @@
   wrapper: {
     classes: "govuk-inset-text govuk-!-margin-top-0"
   },
-  errorMessage: values.buildingAddressEmptyErrorMessage,
+  errorMessage: values.errors.buildingAddressEmptyErrorMessage,
   inputs: [
     {
       id: "nonUKAddressApartmentNumber",
@@ -18,7 +18,7 @@
       label: { text: translate("fields.nonUKAddressApartmentNumber.label") },
       classes: "govuk-input--width-5",
       value: values.nonUKAddressApartmentNumber,
-      errorMessage: values.nonUKAddressApartmentNumberInValid
+      errorMessage: values.errors.nonUKAddressApartmentNumber
     },
     {
       id: "nonUKAddressBuildingNumber",
@@ -26,7 +26,7 @@
       label: { text: translate("fields.nonUKAddressBuildingNumber.label") },
       classes: "govuk-input--width-5",
       value: values.nonUKAddressBuildingNumber,
-      errorMessage: values.nonUKAddressBuildingNumberInValid
+      errorMessage: values.errors.nonUKAddressBuildingNumber
     },
     {
       id: "nonUKAddressBuildingName",
@@ -34,7 +34,7 @@
       label: { text: translate("fields.nonUKAddressBuildingName.label") },
       classes: "govuk-input--width-20",
       value: values.nonUKAddressBuildingName,
-      errorMessage: values.nonUKAddressBuildingNameInValid
+      errorMessage: values.errors.nonUKAddressBuildingName
     }
   ]
 } )

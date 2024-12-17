@@ -3,6 +3,9 @@ const {
   buildingAddressEmptyValidator,
 } = require("../../validators/nonUKAddressValidator");
 const { yearFrom, getCountry } = require("../../../../lib/helpers");
+const {
+  buildingAddressComponent,
+} = require("../../components/buildingAddress");
 
 class NonUKAddressController extends BaseController {
   getValues(req, res, callback) {
@@ -11,44 +14,44 @@ class NonUKAddressController extends BaseController {
         req.sessionModel.get("country")
       ).key;
 
-      Object.entries(req?.form?.errors || {})?.map(
-        ([fieldName, validationAttribute]) =>
-          validationAttribute.type !== "buildingAddressEmptyValidator" &&
-          (values[`${fieldName}InValid`] = this.getInputFieldErrorMessage(
-            req.translate,
-            validationAttribute.key,
-            validationAttribute.type
-          ))
-      );
-      /*
-       * Display a single error message for a missing entry in the input group (apartment, number, or name).
-       * At least one entry is required; if none is provided, a validation message is displayed for the group.
-       */
-      values.buildingAddressEmptyErrorMessage = this.isBuildingAddressEmpty(
-        req
-      ) && {
-        text: req.translate("validation.buildingAddressEmptyValidator"),
-        visuallyHiddenText: "error",
-      };
+      if (req?.form?.errors) {
+        const errorValues =
+          buildingAddressComponent.getIndividualFieldErrorMessages(
+            req.form.errors,
+            "buildingAddressEmptyValidator",
+            req.translate
+          );
 
+        values = { ...values, errors: { ...errorValues } };
+        /*
+         * Display a single error message for a missing entry in the input group (apartment, number, or name).
+         * At least one entry is required; if none is provided, a validation message is displayed for the group.
+         */
+        values.errors.buildingAddressEmptyErrorMessage =
+          buildingAddressComponent.hasValidationError(
+            "buildingAddressEmptyValidator",
+            req.form.errors
+          ) && {
+            text: req.translate("validation.buildingAddressEmptyValidator"),
+            visuallyHiddenText: "error",
+          };
+      }
       callback(err, values);
     });
   }
 
   validateFields(req, res, callback) {
-    const formFields = req.form.options.fields;
-    const apartment = "nonUKAddressApartmentNumber";
-    const number = "nonUKAddressBuildingNumber";
-    const name = "nonUKAddressBuildingName";
+    const buildingAddress = {
+      nonUKAddressApartmentNumber: req.body["nonUKAddressApartmentNumber"],
+      nonUKAddressBuildingNumber: req.body["nonUKAddressBuildingNumber"],
+      nonUKAddressBuildingName: req.body["nonUKAddressBuildingName"],
+    };
 
-    const buildingAddress = [
-      [apartment, req.body[apartment]],
-      [number, req.body[number]],
-      [name, req.body[name]],
-    ];
-
-    buildingAddress.every(fieldIsEmpty) &&
-      this.defaultToFirstField(formFields, apartment);
+    buildingAddressComponent.validateBuildingAddressEmpty(
+      req.form.options.fields,
+      buildingAddress,
+      buildingAddressEmptyValidator
+    );
 
     super.validateFields(req, res, callback);
   }
@@ -88,26 +91,6 @@ class NonUKAddressController extends BaseController {
       addressCountry,
     };
   }
-
-  defaultToFirstField(formFields, first) {
-    formFields[first].validate.push({
-      fn: buildingAddressEmptyValidator,
-    });
-  }
-
-  isBuildingAddressEmpty(req) {
-    return Object.entries(req?.form?.errors || {})
-      .map(([, value]) => value)
-      .some((error) => error?.type === "buildingAddressEmptyValidator");
-  }
-
-  getInputFieldErrorMessage(translate, key, type) {
-    return {
-      text: translate(`${key}.validation.${type}`),
-    };
-  }
 }
-
-const fieldIsEmpty = ([, value]) => value.trim() === "";
 
 module.exports = NonUKAddressController;

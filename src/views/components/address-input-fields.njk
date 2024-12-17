@@ -1,5 +1,6 @@
 
 {% from "hmpo-text/macro.njk" import hmpoText %}
+{% from "./building-address/macro.njk" import inputGroup %}
 
 {{ hmpoText(ctx, {
   id: "addressFlatNumber",
@@ -9,21 +10,7 @@
   hint: ""
 }) }}
 
-{{ hmpoText(ctx, {
-  id: "addressHouseNumber",
-  name: "addressHouseNumber",
-  label: { text: translate("fields.addressHouseNumber.label") },
-  classes: "govuk-input--width-5",
-  hint: ""
-}) }}
-
-{{ hmpoText(ctx, {
-  id: "addressHouseName",
-  name: "addressHouseName",
-  label: { text: translate("fields.addressHouseName.label") },
-  classes: "govuk-input--width-20",
-  hint: ""
-}) }}
+{% include "./building-address/UK-building-address-input.njk" %}
 
 {{ hmpoText(ctx,{
   id: "addressStreetName",

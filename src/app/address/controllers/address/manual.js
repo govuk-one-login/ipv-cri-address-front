@@ -2,7 +2,11 @@ const BaseController = require("hmpo-form-wizard").Controller;
 const { yearFrom } = require("../../../../lib/helpers");
 
 const {
-  validateHouseNumberAndName,
+  buildingAddressComponent,
+} = require("../../components/buildingAddress");
+
+const {
+  ukBuildingAddressEmptyValidator,
 } = require("../../validators/addressValidator");
 
 class AddressController extends BaseController {
@@ -29,27 +33,40 @@ class AddressController extends BaseController {
       if (req.url.includes("edit")) {
         values.checkDetailsHeader = "false";
       }
+
+      if (req?.form?.errors) {
+        const errorValues =
+          buildingAddressComponent.getIndividualFieldErrorMessages(
+            req.form.errors,
+            "ukBuildingAddressEmptyValidator",
+            req.translate
+          );
+
+        values = { ...values, errors: { ...errorValues } };
+
+        values.errors.ukBuildingAddressEmptyValidator =
+          buildingAddressComponent.hasValidationError(
+            "ukBuildingAddressEmptyValidator",
+            req.form.errors
+          ) && {
+            text: req.translate("validation.ukBuildingAddressEmptyValidator"),
+            visuallyHiddenText: "error",
+          };
+      }
       callback(null, values);
     });
   }
 
   validateFields(req, res, callback) {
-    // add custom validator for houseName/Number check.
-    const formFields = req.form.options.fields;
-    const houseName = req.body.addressHouseName;
-    const houseNumber = req.body.addressHouseNumber;
-
-    formFields.addressHouseNumber?.validate.push({
-      fn: validateHouseNumberAndName,
-      arguments: [houseName],
-      message: "Enter a house name or house number",
-    });
-    formFields.addressHouseName?.validate.push({
-      fn: validateHouseNumberAndName,
-      arguments: [houseNumber],
-      message: "Enter a house name or house number",
-    });
-
+    const buildingAddress = {
+      addressHouseNumber: req.body["addressHouseNumber"],
+      addressHouseName: req.body["addressHouseName"],
+    };
+    buildingAddressComponent.validateBuildingAddressEmpty(
+      req.form.options.fields,
+      buildingAddress,
+      ukBuildingAddressEmptyValidator
+    );
     super.validateFields(req, res, callback);
   }
 
@@ -126,5 +143,4 @@ class AddressController extends BaseController {
     return hasChanged !== -1;
   }
 }
-
 module.exports = AddressController;

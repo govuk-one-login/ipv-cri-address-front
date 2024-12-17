@@ -1,6 +1,12 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 const { expect } = require("chai");
 const addressFactory = require("../../../../../test/utils/addressFactory");
+const {
+  buildingAddressComponent,
+} = require("../../components/buildingAddress");
+const {
+  ukBuildingAddressEmptyValidator,
+} = require("../../validators/addressValidator");
 const AddressController = require("./manual");
 
 describe("address controller", () => {
@@ -15,6 +21,7 @@ describe("address controller", () => {
     sandbox = sinon.createSandbox();
     const setup = setupDefaultMocks();
     req = setup.req;
+    req.translate = sandbox.stub();
     res = setup.res;
     next = setup.next;
   });
@@ -57,6 +64,155 @@ describe("address controller", () => {
           addressHouseName: generatedAddress[0].buildingName,
         })
       );
+    });
+
+    it("should set checkDetailsHeader to false if the user is editing", () => {
+      req.url = "/address/edit";
+      address.getValues(req, res, next);
+
+      expect(next).to.have.been.calledWith(null, {
+        addressPostcode: undefined,
+        checkDetailsHeader: "false",
+      });
+    });
+
+    it("sets field and group level errors", () => {
+      req.translate = (args) => args;
+      req.form.errors = {
+        addressHouseNumber: {
+          key: "addressHouseNumber",
+          type: "ukBuildingAddressEmptyValidator",
+          url: "/address",
+          args: {},
+        },
+        addressHouseName: {
+          key: "addressHouseName",
+          type: "alphaNumericWithSpecialChars",
+          url: "/address",
+          args: {},
+        },
+      };
+
+      address.getValues(req, res, next);
+
+      expect(next).to.have.been.calledWith(null, {
+        addressPostcode: undefined,
+        errors: {
+          addressHouseName: {
+            text: "addressHouseName.validation.alphaNumericWithSpecialChars",
+          },
+          ukBuildingAddressEmptyValidator: {
+            text: "validation.ukBuildingAddressEmptyValidator",
+            visuallyHiddenText: "error",
+          },
+        },
+      });
+    });
+
+    it("sets building address empty errors if there are any", () => {
+      req.translate = (args) => args;
+      req.form.errors = {
+        addressHouseNumber: {
+          key: "addressHouseNumber",
+          type: "ukBuildingAddressEmptyValidator",
+          url: "/address",
+          args: {},
+        },
+      };
+
+      address.getValues(req, res, next);
+
+      expect(next).to.have.been.calledWith(null, {
+        addressPostcode: undefined,
+        errors: {
+          ukBuildingAddressEmptyValidator: {
+            text: "validation.ukBuildingAddressEmptyValidator",
+            visuallyHiddenText: "error",
+          },
+        },
+      });
+    });
+  });
+
+  describe("validateFields", () => {
+    it("defaults validation to the first field when all building address fields are empty", () => {
+      let validateBuildingAddressEmptySpy = sinon.spy(
+        buildingAddressComponent,
+        "validateBuildingAddressEmpty"
+      );
+      let defaultToFirstFieldSpy = sinon.spy(
+        buildingAddressComponent,
+        "defaultToFirstField"
+      );
+
+      req.body = {
+        addressHouseNumber: "",
+        addressHouseName: "",
+      };
+
+      req.form.options.fields = {
+        addressHouseNumber: { validate: [] },
+      };
+
+      req.translate
+        .withArgs("validation.houseNameOrHouseNumber")
+        .returns("Enter a house number or house name.");
+
+      const buildingAddress = {
+        addressHouseNumber: "",
+        addressHouseName: "",
+      };
+
+      address.validateFields(req, res, next);
+
+      expect(validateBuildingAddressEmptySpy).to.have.been.calledOnceWith(
+        req.form.options.fields,
+        buildingAddress,
+        ukBuildingAddressEmptyValidator
+      );
+      expect(defaultToFirstFieldSpy).to.have.been.calledOnce;
+      expect(next).to.have.been.calledOnce;
+
+      validateBuildingAddressEmptySpy.restore();
+      defaultToFirstFieldSpy.restore();
+    });
+
+    it("does not default to the first field when at least one building address field is provided", () => {
+      let validateBuildingAddressEmptySpy = sinon.spy(
+        buildingAddressComponent,
+        "validateBuildingAddressEmpty"
+      );
+      let defaultToFirstFieldSpy = sinon.spy(
+        buildingAddressComponent,
+        "defaultToFirstField"
+      );
+
+      req.body = {
+        addressHouseNumber: "123",
+        addressHouseName: "",
+      };
+
+      req.form.options.fields = {
+        addressHouseNumber: { validate: [] },
+      };
+
+      const buildingAddress = {
+        addressHouseNumber: "123",
+        addressHouseName: "",
+      };
+
+      address.validateFields(req, res, next);
+
+      expect(validateBuildingAddressEmptySpy).to.have.been.calledOnceWith(
+        req.form.options.fields,
+        buildingAddress,
+        ukBuildingAddressEmptyValidator
+      );
+      expect(defaultToFirstFieldSpy).not.to.have.been.calledOnce;
+      expect(next).to.have.been.calledOnce;
+
+      validateBuildingAddressEmptySpy.restore();
+      defaultToFirstFieldSpy.restore();
     });
   });
 

@@ -36,4 +36,4 @@ Feature: Happy Path - confirming manual address details
       And they add their city "London"
       And they add their residency date with a "older" move year
       And they continue to confirm address
-      Then they should see an error message on the address page "Enter a house name or house number"
+      Then they should see an error message on the address page "Enter a house number or house name"
