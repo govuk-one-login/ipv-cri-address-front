@@ -1,0 +1,35 @@
+{% from "hmpo-text/macro.njk" import hmpoText %}
+{%- from "govuk/components/hint/macro.njk" import govukHint %}
+{%- from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "./macro.njk" import inputGroup %}
+
+{{ inputGroup({
+  id: "ukBuildingAddress",
+  label: { text: translate("buildingAddress.label") },
+  hint: { text: translate("buildingAddress.hint") },
+  wrapper: {
+    classes: "govuk-inset-text govuk-!-margin-top-0"
+  },
+  errorMessage: values.errors.ukBuildingAddressEmptyValidator,
+  inputs: [
+    {
+      id: "addressHouseNumber",
+      name: "addressHouseNumber",
+      label: { text: translate("fields.addressHouseNumber.label") },
+      classes: "govuk-input--width-5",
+      value: values.addressHouseNumber,
+      hint: "",
+      errorMessage: values.errors.addressHouseNumber
+    },
+    {
+      id: "addressHouseName",
+      name: "addressHouseName",
+      label: { text: translate("fields.addressHouseName.label") },
+      classes: "govuk-input--width-20",
+      value: values.addressHouseName,
+      hint: "",
+      errorMessage: values.errors.addressHouseName
+    }
+  ]
+} )
+}}

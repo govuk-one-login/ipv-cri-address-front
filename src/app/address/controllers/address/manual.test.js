@@ -1,6 +1,12 @@
 const BaseController = require("hmpo-form-wizard").Controller;
 const { expect } = require("chai");
 const addressFactory = require("../../../../../test/utils/addressFactory");
+const {
+  buildingAddressComponent,
+} = require("../../components/buildingAddress");
+const {
+  ukBuildingAddressEmptyValidator,
+} = require("../../validators/addressValidator");
 const AddressController = require("./manual");
 
 describe("address controller", () => {
@@ -15,6 +21,7 @@ describe("address controller", () => {
     sandbox = sinon.createSandbox();
     const setup = setupDefaultMocks();
     req = setup.req;
+    req.translate = sandbox.stub();
     res = setup.res;
     next = setup.next;
   });
@@ -129,6 +136,15 @@ describe("address controller", () => {
 
   describe("validateFields", () => {
     it("defaults validation to the first field when all building address fields are empty", () => {
+      let validateBuildingAddressEmptySpy = sinon.spy(
+        buildingAddressComponent,
+        "validateBuildingAddressEmpty"
+      );
+      let defaultToFirstFieldSpy = sinon.spy(
+        buildingAddressComponent,
+        "defaultToFirstField"
+      );
+
       req.body = {
         addressHouseNumber: "",
         addressHouseName: "",
@@ -138,18 +154,39 @@ describe("address controller", () => {
         addressHouseNumber: { validate: [] },
       };
 
-      sandbox.stub(address, "defaultToFirstField");
+      req.translate
+        .withArgs("validation.houseNameOrHouseNumber")
+        .returns("Enter a house number or house name.");
+
+      const buildingAddress = {
+        addressHouseNumber: "",
+        addressHouseName: "",
+      };
 
       address.validateFields(req, res, next);
 
-      expect(address.defaultToFirstField).to.have.been.calledOnceWith(
+      expect(validateBuildingAddressEmptySpy).to.have.been.calledOnceWith(
         req.form.options.fields,
-        "addressHouseNumber"
+        buildingAddress,
+        ukBuildingAddressEmptyValidator
       );
+      expect(defaultToFirstFieldSpy).to.have.been.calledOnce;
       expect(next).to.have.been.calledOnce;
+
+      validateBuildingAddressEmptySpy.restore();
+      defaultToFirstFieldSpy.restore();
     });
 
     it("does not default to the first field when at least one building address field is provided", () => {
+      let validateBuildingAddressEmptySpy = sinon.spy(
+        buildingAddressComponent,
+        "validateBuildingAddressEmpty"
+      );
+      let defaultToFirstFieldSpy = sinon.spy(
+        buildingAddressComponent,
+        "defaultToFirstField"
+      );
+
       req.body = {
         addressHouseNumber: "123",
         addressHouseName: "",
@@ -159,16 +196,23 @@ describe("address controller", () => {
         addressHouseNumber: { validate: [] },
       };
 
-      sandbox.stub(address, "defaultToFirstField");
+      const buildingAddress = {
+        addressHouseNumber: "123",
+        addressHouseName: "",
+      };
 
       address.validateFields(req, res, next);
 
-      expect(address.defaultToFirstField).not.to.have.been.calledOnceWith(
+      expect(validateBuildingAddressEmptySpy).to.have.been.calledOnceWith(
         req.form.options.fields,
-        "addressHouseNumber",
-        req
+        buildingAddress,
+        ukBuildingAddressEmptyValidator
       );
+      expect(defaultToFirstFieldSpy).not.to.have.been.calledOnce;
       expect(next).to.have.been.calledOnce;
+
+      validateBuildingAddressEmptySpy.restore();
+      defaultToFirstFieldSpy.restore();
     });
   });
 

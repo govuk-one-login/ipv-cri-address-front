@@ -75,5 +75,20 @@ describe("Address validator", () => {
       const results = ukBuildingAddressEmptyValidator("2", "");
       expect(results).to.equal("2");
     });
+
+    it("should return empty when houseNumber and houseName are null", () => {
+      const results = ukBuildingAddressEmptyValidator(null, null);
+      expect(results).to.equal("");
+    });
+
+    it("should return houseNumber when houseName is null", () => {
+      const results = ukBuildingAddressEmptyValidator("1", null);
+      expect(results).to.equal("1");
+    });
+
+    it("should return houseName when houseNumber is null", () => {
+      const results = ukBuildingAddressEmptyValidator(null, "2");
+      expect(results).to.equal("2");
+    });
   });
 });

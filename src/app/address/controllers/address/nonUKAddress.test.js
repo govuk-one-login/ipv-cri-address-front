@@ -1,6 +1,12 @@
 const { expect } = require("chai");
 const BaseController = require("hmpo-form-wizard").Controller;
 const NonUKAddressController = require("./nonUKAddress");
+const {
+  buildingAddressComponent,
+} = require("../../components/buildingAddress");
+const {
+  buildingAddressEmptyValidator,
+} = require("../../validators/nonUKAddressValidator");
 const address = new NonUKAddressController({ route: "/test" });
 
 describe("NonUKAddressController", () => {
@@ -33,9 +39,7 @@ describe("NonUKAddressController", () => {
     next = sandbox.stub();
   });
 
-  afterEach(() => {
-    sandbox.restore();
-  });
+  afterEach(() => sandbox.restore());
 
   it("should be an instance of BaseController", () => {
     expect(address).to.be.an.instanceOf(BaseController);
@@ -46,6 +50,8 @@ describe("NonUKAddressController", () => {
       BaseController.prototype.getValues.callsFake((_, __, callback) => {
         callback(null, {});
       });
+
+      req.form.errors = null;
 
       req.sessionModel.get.withArgs("country").returns("FR");
 
@@ -84,10 +90,45 @@ describe("NonUKAddressController", () => {
         done();
       });
     });
+
+    it("includes buildingAddressEmptyErrorMessage in errors", (done) => {
+      req.form.errors = {
+        nonUKAddressApartmentNumber: {
+          key: "nonUKAddressApartmentNumber",
+          type: "buildingAddressEmptyValidator",
+        },
+      };
+
+      req.translate
+        .withArgs("validation.buildingAddressEmptyValidator")
+        .returns("Apartment number is required");
+
+      address.getValues(req, res, (err, values) => {
+        expect(err).to.be.null;
+        expect(values).to.deep.include({
+          errors: {
+            buildingAddressEmptyErrorMessage: {
+              text: "Apartment number is required",
+              visuallyHiddenText: "error",
+            },
+          },
+        });
+        done();
+      });
+    });
   });
 
   describe("validateFields", () => {
     it("defaults validation to the first field when all building address fields are empty", () => {
+      let validateBuildingAddressEmptySpy = sinon.spy(
+        buildingAddressComponent,
+        "validateBuildingAddressEmpty"
+      );
+      let defaultToFirstFieldSpy = sinon.spy(
+        buildingAddressComponent,
+        "defaultToFirstField"
+      );
+
       req.body = {
         nonUKAddressApartmentNumber: "",
         nonUKAddressBuildingNumber: "",
@@ -98,18 +139,37 @@ describe("NonUKAddressController", () => {
         nonUKAddressApartmentNumber: { validate: [] },
       };
 
-      sandbox.stub(address, "defaultToFirstField");
+      const buildingAddress = {
+        nonUKAddressApartmentNumber: "",
+        nonUKAddressBuildingNumber: "",
+        nonUKAddressBuildingName: "",
+      };
 
       address.validateFields(req, res, next);
 
-      expect(address.defaultToFirstField).to.have.been.calledOnceWith(
+      expect(validateBuildingAddressEmptySpy).to.have.been.calledOnceWith(
         req.form.options.fields,
-        "nonUKAddressApartmentNumber"
+        buildingAddress,
+        buildingAddressEmptyValidator
       );
+      expect(defaultToFirstFieldSpy).to.have.been.calledOnce;
       expect(next).to.have.been.calledOnce;
+      expect(next).to.have.been.calledOnce;
+
+      validateBuildingAddressEmptySpy.restore();
+      defaultToFirstFieldSpy.restore();
     });
 
     it("does not default to the first field when at least one building address field is provided", () => {
+      let validateBuildingAddressEmptySpy = sinon.spy(
+        buildingAddressComponent,
+        "validateBuildingAddressEmpty"
+      );
+      let defaultToFirstFieldSpy = sinon.spy(
+        buildingAddressComponent,
+        "defaultToFirstField"
+      );
+
       req.body = {
         nonUKAddressApartmentNumber: "2",
         nonUKAddressBuildingNumber: "",
@@ -120,15 +180,24 @@ describe("NonUKAddressController", () => {
         nonUKAddressApartmentNumber: { validate: [] },
       };
 
-      sandbox.stub(address, "defaultToFirstField");
+      const buildingAddress = {
+        nonUKAddressApartmentNumber: "2",
+        nonUKAddressBuildingNumber: "",
+        nonUKAddressBuildingName: "",
+      };
 
       address.validateFields(req, res, next);
 
-      expect(address.defaultToFirstField).not.to.have.been.calledOnceWith(
+      expect(validateBuildingAddressEmptySpy).to.have.been.calledOnceWith(
         req.form.options.fields,
-        "nonUKAddressApartmentNumber"
+        buildingAddress,
+        buildingAddressEmptyValidator
       );
+      expect(defaultToFirstFieldSpy).not.to.have.been.calledOnce;
       expect(next).to.have.been.calledOnce;
+
+      validateBuildingAddressEmptySpy.restore();
+      defaultToFirstFieldSpy.restore();
     });
   });
 

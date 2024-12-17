@@ -30,7 +30,7 @@
 
   {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
 
-  {% include "../components/building-address/building-address-input-fields.njk" %}
+  {% include "../components/building-address/non-UK-building-address-input.njk" %}
   {% include "../components/non-UK-address-input-fields.njk" %}
   {{ yearFromField(ctx, { name: "nonUKAddressYearFrom", title: title, label: label }) }}
 
