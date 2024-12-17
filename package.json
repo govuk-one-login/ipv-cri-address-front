@@ -53,7 +53,7 @@
     "hmpo-i18n": "6.0.1",
     "hmpo-logger": "7.0.1",
     "nunjucks": "3.2.4",
-    "wiremock": "3.8.0"
+    "wiremock": "3.10.0"
   },
   "devDependencies": {
     "@types/overload-protection": "1.2.4",
