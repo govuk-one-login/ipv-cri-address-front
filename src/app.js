@@ -118,7 +118,7 @@ const { app, router } = setup({
         production: process.env.NODE_ENV === "production",
         clientRetrySecs: 1,
         sampleInterval: 5,
-        maxEventLoopDelay: 52,
+        maxEventLoopDelay: 80,
         maxHeapUsedBytes: 0,
         maxRssBytes: 0,
         errorPropagationMode: false,
