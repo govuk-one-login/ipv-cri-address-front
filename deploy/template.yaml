@@ -39,6 +39,15 @@ Parameters:
     Type: String
     Default: "None"
 
+  SupportManualURL:
+    Type: String
+    Default: "https://team-manual.account.gov.uk/teams/CRI-Orange-team/supporting-cri-orange/address-credential-issuer-runbook"
+    Description: The support manual URL to be provided in alarm messages.
+
+  DeployAlarmsInDevEnvironment:
+    Description: "Set to the string value `true` to deploy alarms in a DEV environment"
+    Type: String
+    Default: false
 Conditions:
   IsNotDevelopment: !Or
     - !Equals [!Ref Environment, build]
@@ -63,6 +72,9 @@ Conditions:
     - !Equals [!Ref CodeSigningConfigArn, "none"]
   UseCanaryDeployment: !Not
     - !Equals [!Ref DeploymentStrategy, "None"]
+  DeployAlarms: !Or
+    - !Condition IsNotDevelopment
+    - !Equals [!Ref DeployAlarmsInDevEnvironment, "true"]
 
 Mappings:
   EnvironmentConfiguration:
@@ -636,6 +648,57 @@ Resources:
       FilterPattern: ""
       LogGroupName: !Ref APIGWAccessLogsGroup
 
+  AddressFE5XXErrorCriticalAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Condition: DeployAlarms
+    Properties:
+      AlarmName: !Sub "${AWS::StackName}-${Environment}-AddressFE5XXErrorCriticalAlarm"
+      AlarmDescription: !Sub "Threshold exceeds 10% with a minimum of 20 invocations in 2 out of the last 5 evaluation periods. ${SupportManualURL}"
+      ActionsEnabled: true
+      AlarmActions:
+        - !ImportValue core-infrastructure-AlarmTopic
+        - !ImportValue platform-alarm-critical-alert-topic
+      OKActions:
+        - !ImportValue core-infrastructure-AlarmTopic
+        - !ImportValue platform-alarm-critical-alert-topic
+      InsufficientDataActions: []
+      EvaluationPeriods: 5
+      DatapointsToAlarm: 2
+      Threshold: 80
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      Metrics:
+        - Id: errorThreshold
+          Label: errorThreshold
+          ReturnData: true
+          Expression: IF(invocations >= 20, errorPercentage, 0)
+        - Id: errorPercentage
+          Label: errorPercentage
+          ReturnData: false
+          Expression: (error/invocations) * 100
+        - Id: invocations
+          ReturnData: false
+          MetricStat:
+            Metric:
+              Namespace: AWS/ApiGateway
+              MetricName: Count
+              Dimensions:
+                - Name: ApiId
+                  Value: !Ref ApiGwHttpEndpoint
+            Period: 60
+            Stat: Sum
+        - Id: error
+          ReturnData: false
+          MetricStat:
+            Metric:
+              Namespace: AWS/ApiGateway
+              MetricName: 5xx
+              Dimensions:
+                - Name: ApiId
+                  Value: !Ref ApiGwHttpEndpoint
+            Period: 60
+            Stat: Sum
+
   # ECS Autoscaling
   # The number of pods will increase when the configured CPU utilization is breached for more than 3 minutes.
   # Scaling down will occur after 15 minutes of 90% utilization of the configured CPU utilization.
@@ -795,6 +858,7 @@ Resources:
 
   AddressNoTaskCountAlarm:
     Type: AWS::CloudWatch::Alarm
+    Condition: DeployAlarms
     Properties:
       AlarmDescription: !Sub Address ${Environment} frontend no ECS service tasks
       ActionsEnabled: true
@@ -817,6 +881,7 @@ Resources:
 
   AddressOnlyOneTaskCountAlarm:
     Type: AWS::CloudWatch::Alarm
+    Condition: DeployAlarms
     Properties:
       AlarmDescription: !Sub Address ${Environment} frontend below desired ECS service tasks
       ActionsEnabled: true
