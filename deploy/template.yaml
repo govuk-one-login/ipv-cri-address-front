@@ -653,7 +653,7 @@ Resources:
     Condition: DeployAlarms
     Properties:
       AlarmName: !Sub "${AWS::StackName}-${Environment}-AddressFE5XXErrorCriticalAlarm"
-      AlarmDescription: !Sub "Threshold exceeds 10% with a minimum of 20 invocations in 2 out of the last 5 evaluation periods. ${SupportManualURL}"
+      AlarmDescription: !Sub "Threshold exceeds 80% with a minimum of 20 invocations in 2 out of the last 5 evaluation periods. ${SupportManualURL}"
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
