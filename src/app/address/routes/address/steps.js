@@ -3,6 +3,7 @@ const prepopulate = require("../../controllers/address/prepopulate");
 const search = require("../../controllers/address/search");
 const results = require("../../controllers/address/results");
 const nonUKAddressController = require("../../controllers/address/nonUKAddress");
+const whatCountryController = require("../../controllers/address/whatCountry");
 
 module.exports = {
   "/": {
@@ -24,6 +25,7 @@ module.exports = {
     ],
   },
   "/what-country": {
+    controller: whatCountryController,
     fields: ["country"],
     next: [
       ...["GB", "GG", "JE", "IM"].map((countryCode) => ({
