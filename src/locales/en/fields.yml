@@ -87,13 +87,15 @@ addressYearFrom:
   label: Enter the year you started living here, for example 2017
   validation:
     default: Enter the year using only 4 digits
+    required: Enter the year
     isPreviousDate: The date you started living at this address must be in the past
 
 nonUKAddressYearFrom:
   title: When did you start living at this address?
-  label: Enter the year you started living at this address, for example 2017
+  label: Enter the year you started living here, for example 2017
   validation:
     default: Enter the year using only 4 digits
+    required: Enter the year
     isPreviousDate: Enter a year that is not in the future
 
 addressResults:

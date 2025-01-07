@@ -85,7 +85,7 @@ Feature: International address - Enter your address
     And they add their Postal code or zipcode "00100"
     And they add their Region "Nairobi County"
     And they continue to confirm international address
-    Then they see an error summary with failed validation message: "Enter the year using only 4 digits"
+    Then they see an error summary with failed validation message: "Enter the year"
 
   Scenario: Enter international address details and fail validation due to future residential year
     Given they have selected the country "Kenya"
@@ -101,6 +101,21 @@ Feature: International address - Enter your address
     And they add the "future" year they started living at this address
     And they continue to confirm international address
     Then they see an error summary with failed validation message: "Enter a year that is not in the future"
+
+  Scenario: Enter international address details and fail validation due to invalid residential year
+    Given they have selected the country "Kenya"
+    When they click the continue button
+    Then they should see international address form
+    When they add their building address apartment number "A2"
+    And they add their building address name "Kilimanjaro Apartments"
+    And they add their building address number "45"
+    And they add their international street "Ngong Road"
+    And they add their town, suburb or city "Nairobi"
+    And they add their Postal code or zipcode "00100"
+    And they add their Region "Nairobi County"
+    And they add the "0" year they started living at this address
+    And they continue to confirm international address
+    Then they see an error summary with failed validation message: "Enter the year using only 4 digits"
 
   Scenario: Enter international address details and fail validation due to no building address information
     Given they have selected the country "Kenya"
@@ -119,7 +134,7 @@ Feature: International address - Enter your address
     When they click the continue button
     Then they should see international address form
     And they continue to confirm international address
-    Then they see an error summary with failed validation message: "Enter the year using only 4 digits"
+    Then they see an error summary with failed validation message: "Enter the year"
     Then they see an error summary with failed validation message: "Enter your town, suburb or city"
     Then they see an error summary with failed validation message: "Enter an apartment number, building number or building name"
     Then they see 3 building address input fields highlighted as invalid with error summary and message: "Enter an apartment number, building number or building name"

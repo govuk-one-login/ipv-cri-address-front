@@ -78,9 +78,10 @@ nonUKAddressRegion:
 
 nonUKAddressYearFrom:
   title: "Pryd wnaethoch chi ddechrau byw yno?"
-  label: "Rhowch y flwyddyn y dechreuoch chi fyw yn y cyfeiriad hwn, er enghraifft 2017"
+  label: "Rhowch y flwyddyn y wnaethoch ddechrau byw yma, er enghraifft 2017"
   validation:
     default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
+    required: "Rhowch y flwyddyn"
     isPreviousDate: "Rhaid i'r dyddiad y dechreuoch chi fyw yn y cyfeiriad hwn fod yn y gorffennol"
 
 addressYearFrom:
@@ -88,6 +89,7 @@ addressYearFrom:
   label: "Rhowch y flwyddyn y wnaethoch ddechrau byw yma, er enghraifft 2017"
   validation:
     default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
+    required: "Rhowch y flwyddyn"
     isPreviousDate: "Rhaid i'r dyddiad y dechreuoch chi fyw yn y cyfeiriad hwn fod yn y gorffennol"
 addressResults:
   label: "Dewiswch eich cyfeiriad cartref presennol o'r rhestr"
