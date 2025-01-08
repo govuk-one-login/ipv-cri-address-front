@@ -49,17 +49,9 @@ Parameters:
     Type: String
     Default: false
 Conditions:
-  IsNotDevelopment: !Or
-    - !Equals [!Ref Environment, build]
-    - !Equals [!Ref Environment, staging]
-    - !Equals [!Ref Environment, integration]
-    - !Equals [!Ref Environment, production]
+  IsNotDevelopment: !Not
+    - !Equals [!Ref Environment, dev]
   IsProduction: !Equals [!Ref Environment, production]
-
-  # This is for performance testing as build and production should be identical
-  IsProductionOrBuild: !Or
-    - !Equals [!Ref Environment, production]
-    - !Equals [!Ref Environment, build]
   IsBuildOrDev: !Or
     - !Equals [!Ref Environment, build]
     - !Equals [!Ref Environment, dev]
@@ -80,14 +72,24 @@ Mappings:
   EnvironmentConfiguration:
     dev:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      minECSCount: 1
+      maxECSCount: 4
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      minECSCount: 6
+      maxECSCount: 60
     staging:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      minECSCount: 2
+      maxECSCount: 4
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
+      minECSCount: 2
+      maxECSCount: 4
     production:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables
+      minECSCount: 6
+      maxECSCount: 60
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
     eu-west-2:
@@ -709,32 +711,24 @@ Resources:
   # Scaling down will occur after 15 minutes of 90% utilization of the configured CPU utilization.
 
   ECSAutoScalingTarget:
-    Condition: IsProductionOrBuild
     Type: AWS::ApplicationAutoScaling::ScalableTarget
     Properties:
-      MaxCapacity: 60
-      MinCapacity: 6
-      ResourceId: !Join
-        - "/"
-        - - "service"
-          - !Ref AddressFrontEcsCluster
-          - !GetAtt AddressFrontEcsService.Name
+      MaxCapacity:
+        !FindInMap [EnvironmentConfiguration, !Ref Environment, maxECSCount]
+      MinCapacity:
+        !FindInMap [EnvironmentConfiguration, !Ref Environment, minECSCount]
+      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
       RoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
 
   ECSAutoScalingPolicy:
-    Condition: IsProductionOrBuild
     DependsOn: ECSAutoScalingTarget
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
       PolicyName: ECSAutoScalingPolicy
       PolicyType: TargetTrackingScaling
-      ResourceId: !Join
-        - "/"
-        - - "service"
-          - !Ref AddressFrontEcsCluster
-          - !GetAtt AddressFrontEcsService.Name
+      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
       TargetTrackingScalingPolicyConfiguration:
@@ -744,18 +738,31 @@ Resources:
         ScaleInCooldown: 420
         ScaleOutCooldown: 60
 
+  ECSPredictiveScalingPolicy:
+    DependsOn: ECSAutoScalingTarget
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: ECSPredictiveScalingPolicy
+      PolicyType: PredictiveScaling
+      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
+      ScalableDimension: ecs:service:DesiredCount
+      ServiceNamespace: ecs
+      PredictiveScalingPolicyConfiguration:
+        MaxCapacityBreachBehavior: HonorMaxCapacity
+        MetricSpecifications:
+          - PredefinedMetricPairSpecification:
+              PredefinedMetricType: ECSServiceCPUUtilization
+            TargetValue: 60
+        Mode: ForecastOnly
+        SchedulingBufferTime: 600
+
   StepScaleInPolicy:
-    Condition: IsProductionOrBuild
     DependsOn: ECSAutoScalingTarget
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
       PolicyName: StepScalingInPolicy
       PolicyType: StepScaling
-      ResourceId: !Join
-        - "/"
-        - - "service"
-          - !Ref AddressFrontEcsCluster
-          - !GetAtt AddressFrontEcsService.Name
+      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
       StepScalingPolicyConfiguration:
@@ -766,17 +773,12 @@ Resources:
             ScalingAdjustment: -50
 
   StepScaleOutPolicy:
-    Condition: IsProductionOrBuild
     DependsOn: ECSAutoScalingTarget
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
       PolicyName: StepScalingOutPolicy
       PolicyType: StepScaling
-      ResourceId: !Join
-        - "/"
-        - - "service"
-          - !Ref AddressFrontEcsCluster
-          - !GetAtt AddressFrontEcsService.Name
+      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
       StepScalingPolicyConfiguration:
@@ -794,7 +796,6 @@ Resources:
             ScalingAdjustment: 500
 
   StepScaleOutAlarm:
-    Condition: IsProductionOrBuild
     DependsOn: ECSAutoScalingTarget
     Type: AWS::CloudWatch::Alarm
     Properties:
@@ -818,7 +819,6 @@ Resources:
       Threshold: "60"
 
   StepScaleInAlarm:
-    Condition: IsProductionOrBuild
     DependsOn: ECSAutoScalingTarget
     Type: AWS::CloudWatch::Alarm
     Properties:
