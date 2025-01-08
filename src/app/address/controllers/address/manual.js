@@ -15,7 +15,8 @@ class AddressController extends BaseController {
       const address = req.sessionModel.get("address");
 
       values.addressPostcode =
-        address?.postalCode || req.sessionModel.get("addressPostcode");
+        (address && address?.postalCode) ||
+        req.sessionModel.get("addressPostcode");
 
       if (address) {
         values.addressFlatNumber = address.subBuildingName;
