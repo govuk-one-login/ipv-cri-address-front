@@ -167,6 +167,7 @@ Feature: International address - Enter your address
     And they see the change country link "Kenya"
     When they click change country link
     Then they should see the country selector page
+    Then they have selected the country "Kenya"
     When they click the continue button
     Then they should see international address form
 
@@ -177,7 +178,7 @@ Feature: International address - Enter your address
     And they see the change country link "Kenya"
     When they click change country link
     Then they should see the country selector page
-    And they should also see the selected country is still "Kenya"
+    And they should also see the selected country is empty
     When they have selected the country "France"
     And they click the continue button
     Then they should see international address form
@@ -190,7 +191,7 @@ Feature: International address - Enter your address
     And they see the change country link "Kenya"
     When they click change country link
     Then they should see the country selector page
-    And they should also see the selected country is still "Kenya"
+    And they should also see the selected country is empty
     When they have selected the country "Isle of Man"
     And they click the continue button
     Then they should see the UK address form

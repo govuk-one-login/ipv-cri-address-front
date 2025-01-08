@@ -150,6 +150,14 @@ Then(
   }
 );
 
+Then("they should also see the selected country is empty", async function () {
+  const countryPage = new CountryPage(this.page);
+
+  const selectedCountry = await countryPage.getSelectedCountry();
+
+  expect(selectedCountry).to.equal("");
+});
+
 Then(
   "they see an error summary with failed validation message: {string}",
   async function (message) {
