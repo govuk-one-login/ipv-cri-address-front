@@ -284,6 +284,11 @@ Resources:
 
   AddressFrontEcsService:
     Type: "AWS::ECS::Service"
+    Metadata:
+      cfn-lint:
+        config:
+          ignore_checks:
+            - E3056 #We want to remove load balancers if we are doing canary deployments
     Properties:
       Cluster: !Ref AddressFrontEcsCluster
       DeploymentConfiguration: !If
