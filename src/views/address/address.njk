@@ -14,11 +14,7 @@
 
 {% block mainContent %}
 
-   {% if values.checkDetailsHeader === true %}
-   <h1 id="header" class="govuk-heading-l">{{translate("pages.address-form.check-details.title")}}</h1>
-  {% else %}
-    <h1 id="header" class="govuk-heading-l">{{translate("pages.address-form.title")}}</h1>
-  {% endif %}
+  <h1 id="header" class="govuk-heading-l">{{translate(values.addressFormTitle)}}</h1>
 
   {{hmpoHtml(translate("links.changePostcode"))}}
 
