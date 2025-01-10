@@ -775,8 +775,11 @@ Resources:
       ServiceNamespace: ecs
       StepScalingPolicyConfiguration:
         AdjustmentType: PercentChangeInCapacity
-        Cooldown: 420
+        Cooldown: 300
         StepAdjustments:
+          - MetricIntervalUpperBound: -20
+            MetricIntervalLowerBound: -40
+            ScalingAdjustment: -10
           - MetricIntervalUpperBound: -40
             ScalingAdjustment: -50
 
@@ -791,9 +794,11 @@ Resources:
       ServiceNamespace: ecs
       StepScalingPolicyConfiguration:
         AdjustmentType: PercentChangeInCapacity
-        Cooldown: 120
+        Cooldown: 60
         MinAdjustmentMagnitude: 5
         StepAdjustments:
+          - MetricIntervalUpperBound: 20
+            ScalingAdjustment: 100
           - MetricIntervalLowerBound: 20
             MetricIntervalUpperBound: 30
             ScalingAdjustment: 200
