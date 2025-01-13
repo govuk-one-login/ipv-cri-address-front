@@ -445,7 +445,7 @@ Resources:
               - CMD-SHELL
               - curl -f http://localhost:8080/healthcheck || exit 1 # If a HealthCheck returns a non-zero exit code, then it's considered unhealthy.
             Interval: 10
-            Timeout:  2
+            Timeout: 2
             Retries: 10 # This ensures that just one healthcheck failure won't cause the container to be drained and replaced.
             StartPeriod: 0
       Cpu: "1024"
