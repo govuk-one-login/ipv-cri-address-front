@@ -31,7 +31,8 @@ const {
   SESSION_TTL,
 } = require("./lib/config");
 
-const { setup } = require("hmpo-app");
+const { setup } =
+  require("@govuk-one-login/di-ipv-cri-common-express").bootstrap;
 
 const loggerConfig = {
   console: true,
