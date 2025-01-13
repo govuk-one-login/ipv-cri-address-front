@@ -7,7 +7,7 @@ buildingAddress:
   label: Building address
   hint: Fill in at least one
 govuk:
-  serviceName: Prove your identity
+  serviceName: " "
   backLink: Back
   errorSummaryTitle: There’s a problem
   error: Error

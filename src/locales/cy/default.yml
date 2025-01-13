@@ -7,7 +7,7 @@ buildingAddress:
   label: Cyfeiriad adeilad
   hint: Rhowch o leiaf un
 govuk:
-  serviceName: "Profi pwy ydych chi"
+  serviceName: " "
   backLink: "Yn ôl"
   errorSummaryTitle: "Mae problem"
   error: "Gwall"
