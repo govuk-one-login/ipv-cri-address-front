@@ -17,8 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run pre-commit
-        uses: govuk-one-login/github-actions/code-quality/run-pre-commit@145049ebd9a33e57da9a852847c4ee2c8970ea51
+        uses: govuk-one-login/github-actions/code-quality/run-pre-commit@52a9e8e35980e6bcaf24d88180a61501e6f2605b
         with:
+          node-version: 20
           install-dependencies: true
           package-manager: yarn
           all-files: true
