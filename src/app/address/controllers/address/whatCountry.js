@@ -4,7 +4,11 @@ class WhatCountryController extends BaseController {
   async getValues(req, res, callback) {
     super.getValues(req, res, (err, values) => {
       values.country = "";
-      callback(err, values);
+      if (err) {
+        callback(err, values);
+      } else {
+        callback(null, values);
+      }
     });
   }
 }
