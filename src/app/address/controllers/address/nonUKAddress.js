@@ -6,6 +6,9 @@ const { yearFrom, getCountry } = require("../../../../lib/helpers");
 const {
   buildingAddressComponent,
 } = require("../../components/buildingAddress");
+const { PACKAGE_NAME } = require("../../../../lib/config");
+
+const logger = require("hmpo-logger").get(PACKAGE_NAME);
 
 class NonUKAddressController extends BaseController {
   getValues(req, res, callback) {
@@ -36,6 +39,8 @@ class NonUKAddressController extends BaseController {
             visuallyHiddenText: "error",
           };
       }
+
+      logger.warn("Calling callback with err: " + err);
       callback(err, values);
     });
   }
