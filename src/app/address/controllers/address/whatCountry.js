@@ -4,7 +4,7 @@ const BaseController = require("hmpo-form-wizard").Controller;
 const logger = require("hmpo-logger").get(PACKAGE_NAME);
 
 class WhatCountryController extends BaseController {
-  async getValues(req, res, callback) {
+  getValues(req, res, callback) {
     super.getValues(req, res, (err, values) => {
       values.country = "";
       if (err) {
