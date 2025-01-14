@@ -12,12 +12,18 @@ const logger = require("hmpo-logger").get(PACKAGE_NAME);
 
 class NonUKAddressController extends BaseController {
   getValues(req, res, callback) {
+    logger.debug("Non UK address controller: Entering get values");
+
     super.getValues(req, res, (err, values) => {
       values.addressCountryName = getCountry(
         req.sessionModel.get("country")
       ).key;
 
+      logger.debug("Non UK address controller: set values.addressCountryName");
+
       if (req?.form?.errors) {
+        logger.debug("Non UK address controller: req.form.errors is true");
+
         const errorValues =
           buildingAddressComponent.getIndividualFieldErrorMessages(
             req.form.errors,
