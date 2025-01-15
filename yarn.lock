@@ -1184,10 +1184,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.56.0.tgz#ef20350fec605a7f7035a01764731b2de0f3782b"
   integrity sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==
 
-"@govuk-one-login/di-ipv-cri-common-express@10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-10.0.0.tgz#9703763f87bb4da30b028e677e6a5fc7e78dc63f"
-  integrity sha512-47EtwDmM7nCv9SOnlmOunuT56GauF375mefmcmy5FFUMABrE659W5ch2gLOwm57/l+scJkm6cAFNVOFYi9jmjg==
+"@govuk-one-login/di-ipv-cri-common-express@10.0.1":
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-10.0.1.tgz#1c7d9aa2c7fa9d039131d0f3cac5ccbab0f6b178"
+  integrity sha512-J7FS5nZY+CcrM6IYYGoB8qOvRneT8chzMrEDGX9l0V06SvB1YJyCBko4iGyfVhQHbnUGSO6ik963trzjVs0iww==
   dependencies:
     async "^3.2.6"
     compression "^1.7.5"
