@@ -440,6 +440,14 @@ Resources:
               awslogs-group: !Ref ECSAccessLogsGroup
               awslogs-region: !Sub ${AWS::Region}
               awslogs-stream-prefix: !Sub address-front-${Environment}
+          HealthCheck:
+            Command:
+              - CMD-SHELL
+              - curl -f http://localhost:8080/healthcheck || exit 1 # If a HealthCheck returns a non-zero exit code, then it's considered unhealthy.
+            Interval: 10
+            Timeout: 2
+            Retries: 10 # This ensures that just one healthcheck failure won't cause the container to be drained and replaced.
+            StartPeriod: 0
       Cpu: "1024"
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
       Memory: "2048"
