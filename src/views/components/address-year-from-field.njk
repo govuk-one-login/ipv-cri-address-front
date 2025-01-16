@@ -1,7 +1,7 @@
 {% macro yearFromField(ctx, params) %}
   {% from "hmpo-text/macro.njk" import hmpoText %}
 
-  <h4>{{ params.title }}</h4>
+  <h2 class="govuk-heading-s">{{ params.title }}</h2>
 
   {{ hmpoText(ctx, {
     id: params.name,
