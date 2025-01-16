@@ -81,8 +81,7 @@ Mappings:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
       maxECSCount: 4
-      # Temporarily to debug an issue seen in staging
-      logLevel: "debug"
+      logLevel: "warn"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
