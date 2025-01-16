@@ -1,6 +1,7 @@
 {
   "name": "di-ipv-cri-address-front",
   "description": "User interface for the Identity Proofing and Verification (IPV) system within the GDS digital identity platform, GOV.UK Sign In.",
+  "license": "MIT",
   "scripts": {
     "start": "node src/app.js",
     "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ LANGUAGE_TOGGLE_DISABLED=false yarn dev",
