@@ -151,9 +151,11 @@
         text: translate("pages.address-confirm.buttons.next"),
         id: "continue",
         attributes: {
-        "data-id": "next"
-      }
-    }) }}
+        "data-id": "next",
+        "data-nav": true,
+        "data-link": "/undefined"
+        }
+      }) }}
     {%- include "../components/continue-submit-spinner.njk" -%}
 
   {% endcall %}
