@@ -45,41 +45,44 @@ addressLocality:
 nonUKAddressApartmentNumber:
   label: Apartment number
   validation:
+    underMaxLength: Apartment number must be 30 characters or less
     alphaNumericWithSpecialChars: Apartment number must only include numbers 0 to 9, letters a to z and .,-\/* or '
 
 nonUKAddressBuildingNumber:
   label: Building number
   validation:
+    underMaxLength: Building number must be 30 characters or less
     alphaNumericWithSpecialChars: Building number must only include numbers 0 to 9, letters a to z and .,-\/* or '
 
 nonUKAddressBuildingName:
   label: Building name
   validation:
+    underMaxLength: Building name must be 50 characters or less
     alphaNumericWithSpecialChars: Building name must only include letters a to z, numbers 0 to 9 and .,-\/* or '
 
 nonUKAddressStreetName:
   label: Street name (optional)
   validation:
-    maxlength: Check you've entered your street name correctly
+    underMaxLength: Street name must be 60 characters or less
     alphaNumericWithSpecialChars: Street name must only include letters a to z, numbers 0 to 9 and .,-\/* or '
 
 nonUKAddressLocality:
   label: Town, suburb or city
   validation:
-    maxlength: Check you've entered your town, suburb or city correctly
+    underMaxLength: Town, suburb or city must be 60 characters or less
     alphaNumericWithSpecialChars: Town, suburb or city must only include letters a to z, numbers 0 to 9 and .,-\/* or '
 
 nonUKAddressPostalCode:
   label: Postal code or zipcode (if your country has one)
   validation:
-    maxlength: Check you've entered your postal code or zipcode correctly
+    underMaxLength: Postal code or zipcode must be 15 characters or less
     alphaNumericWithSpecialChars: Postal code or zipcode must only include numbers 0 to 9, letters a to z and .,-\/* or '
 
 nonUKAddressRegion:
   label: Region (optional)
   hint: For example, state, district, county, parish or province
   validation:
-    maxlength: Check you've entered your region correctly
+    underMaxLength: Region must be 60 characters or less
     alphaNumericWithSpecialChars: Region must only include letters a to z, numbers 0 to 9 and .,-\/* or '
 
 addressYearFrom:
