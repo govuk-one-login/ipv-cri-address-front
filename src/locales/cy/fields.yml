@@ -39,41 +39,44 @@ addressLocality:
 nonUKAddressApartmentNumber:
   label: "Rhif fflat"
   validation:
+    underMaxLength: "Rhaid i'r rhif fflat fod yn 30 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i rif y fflat ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressBuildingNumber:
   label: "Rhif adeilad"
   validation:
+    underMaxLength: "Rhaid i'r rhif adeilad fod yn 30 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i rif yr adeilad ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressBuildingName:
   label: "Enw adeilad"
   validation:
+    underMaxLength: "Rhaid i'r enw adeilad fod yn 50 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i enw'r adeilad ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressStreetName:
   label: "Enw stryd (dewisol)"
   validation:
-    maxlength: "Gwiriwch eich bod wedi rhoi enw eich stryd yn gywir"
+    underMaxLength: "Rhaid i'r enw stryd fod yn 60 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i enw'r stryd ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressLocality:
   label: "Tref, maestref neu ddinas"
   validation:
-    maxlength: "Gwiriwch eich bod wedi rhoi enw eich tref, maestref neu ddinas yn gywir"
+    underMaxLength: "Rhaid i'r dref, y faestref neu'r ddinas fod yn 60 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i enw'r tref, maestref neu ddinas ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressPostalCode:
   label: "Cod post neu god zip (os oes gan eich gwlad un)"
   validation:
-    maxlength: "Gwiriwch eich bod wedi rhoi eich cod post neu god zip yn gywir"
+    underMaxLength: "Rhaid i'r cod post neu'r cod zip fod yn 15 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i god post neu god zip ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressRegion:
   label: "Rhanbarth (dewisol)"
   hint: "Er enghraifft, gwlad, ardal, sir, plwyf neu dalaith"
   validation:
-    maxlength: "Gwiriwch eich bod wedi rhoi eich rhanbarth yn gywir"
+    underMaxLength: "Rhaid i'r rhanbarth fod yn 60 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i rhanbarth ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressYearFrom:

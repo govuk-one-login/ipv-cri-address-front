@@ -160,6 +160,27 @@ Feature: International address - Enter your address
     Then they see an error summary with failed validation message: "Region must only include letters a to z, numbers 0 to 9 and .,-\/* or '"
     Then they see an error summary with failed validation message: "Town, suburb or city must only include letters a to z, numbers 0 to 9 and .,-\/* or '"
 
+  Scenario: Enter international address details fails validation when fields are too long
+    Given they have selected the country "Kenya"
+    When they click the continue button
+    Then they should see international address form
+    When they add their building address apartment number "1234567890123456789012345678901"
+    And they add their building address name "123456789012345678901234567890123456789012345678901"
+    And they add their building address number "1234567890123456789012345678901"
+    And they add their international street "1234567890123456789012345678901234567890123456789012345678901"
+    And they add their town, suburb or city "1234567890123456789012345678901234567890123456789012345678901"
+    And they add their Postal code or zipcode "1234567890123456"
+    And they add their Region "1234567890123456789012345678901234567890123456789012345678901"
+    And they add the "older" year they started living at this address
+    And they continue to confirm international address
+    Then they see an error summary with failed validation message: "Apartment number must be 30 characters or less"
+    Then they see an error summary with failed validation message: "Building number must be 30 characters or less"
+    Then they see an error summary with failed validation message: "Building name must be 50 characters or less"
+    Then they see an error summary with failed validation message: "Street name must be 60 characters or less"
+    Then they see an error summary with failed validation message: "Postal code or zipcode must be 15 characters or less"
+    Then they see an error summary with failed validation message: "Region must be 60 characters or less"
+    Then they see an error summary with failed validation message: "Town, suburb or city must be 60 characters or less"
+
   Scenario: Change selected international country, selected same country leads to international page
     Given they have selected the country "Kenya"
     When they click the continue button
