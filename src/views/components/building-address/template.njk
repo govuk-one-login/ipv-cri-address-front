@@ -98,7 +98,7 @@
 
   <div class="{%- if params.wrapper.classes %} {{ params.wrapper.classes }}{% endif %}">
   {% set listHintId = 'building-address-hint' %}
-  <ol class="govuk-list" aria-describedby="{{ listHintId }}">
+  <ol class="govuk-list" role="list" aria-describedby="{{ listHintId }}">
   {% for individualInput in params.inputs %}
   <li>
     <div class="{{ 'govuk-!-margin-bottom-5' if not loop.last }} {{ 'govuk-form-group--error' if individualInput.errorMessage and individualInput.errorMessage.text and individualInput.errorMessage.text | trim }}">
