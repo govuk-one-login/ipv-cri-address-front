@@ -447,9 +447,9 @@ Resources:
             Timeout: 2
             Retries: 10 # This ensures that just one healthcheck failure won't cause the container to be drained and replaced.
             StartPeriod: 0
-      Cpu: "1024"
+      Cpu: "2048"
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
-      Memory: "2048"
+      Memory: "4096"
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - FARGATE
