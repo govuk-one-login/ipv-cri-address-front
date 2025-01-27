@@ -68,7 +68,7 @@ const {
 
 const { app, router } = setup({
   config: { APP_ROOT: __dirname },
-  port: PORT,
+  port: false, /// Disabling the bootstrap starting the server.
   logs: loggerConfig,
   session: sessionConfig,
   redis: SESSION_TABLE_NAME ? false : commonExpress.lib.redis(),
@@ -186,3 +186,28 @@ router.use("^/$", (req, res) => {
 });
 
 router.use(commonExpress.lib.errorHandling.redirectAsErrorToCallback);
+
+/* Server configuration */
+const server = app.listen(PORT);
+
+// AWS recommends the keep-alive duration of the target is longer than the idle timeout value of the load balancer (default 60s)
+// to prevent possible 502 errors where the target connection has already been closed
+// https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-troubleshooting.html#http-502-issues
+server.keepAliveTimeout = 65000;
+
+// Handles graceful shutdown of the NODE service, so that if the container is killed by a SIGTERM, it finishes processing existing connections before the server shuts down.
+process.on("SIGTERM", () => {
+  // eslint-disable-next-line no-console
+  console.log("SIGTERM signal received: closing HTTP server");
+  server.close((err) => {
+    if (err) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `Error while calling server.close() occurred: ${err.message}`
+      );
+    } else {
+      // eslint-disable-next-line no-console
+      console.log("HTTP server closed");
+    }
+  });
+});
