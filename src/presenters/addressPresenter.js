@@ -30,19 +30,19 @@ module.exports = {
     let addressConfirm = [];
 
     if (fullBuildingName) {
-      addressConfirm.push(fullBuildingName);
+      addressConfirm.push(`${fullBuildingName}`);
     }
 
     if (fullStreetName) {
-      addressConfirm.push(fullStreetName);
+      addressConfirm.push(`${fullStreetName},`);
     }
 
     if (fullLocality) {
-      addressConfirm.push(fullLocality);
+      addressConfirm.push(`${fullLocality},`);
     }
 
     if (address.postalCode) {
-      addressConfirm.push(address.postalCode);
+      addressConfirm.push(`${address.postalCode}`);
     }
 
     return addressConfirm.join("<br>");
