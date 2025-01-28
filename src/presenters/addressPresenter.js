@@ -27,11 +27,25 @@ module.exports = {
 
     const fullLocality = localityNames.join(" ");
 
-    if (fullStreetName) {
-      return `${fullBuildingName}<br>${fullStreetName},<br>${fullLocality},<br>${address.postalCode}<br>`;
-    } else {
-      return `${fullBuildingName},<br>${fullLocality},<br>${address.postalCode}<br>`;
+    let addressConfirm = [];
+
+    if (fullBuildingName) {
+      addressConfirm.push(fullBuildingName);
     }
+
+    if (fullStreetName) {
+      addressConfirm.push(fullStreetName);
+    }
+
+    if (fullLocality) {
+      addressConfirm.push(fullLocality);
+    }
+
+    if (address.postalCode) {
+      addressConfirm.push(address.postalCode);
+    }
+
+    return addressConfirm.join("<br>");
   },
   generateHTMLofNonUKAddress: function (translate, address) {
     const countryList = require("../app/address/data/countries.json");
