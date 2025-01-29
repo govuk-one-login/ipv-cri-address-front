@@ -19,8 +19,8 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "Flat 1"
-    And they should see the address value "87 Zzz Way,"
-    And they should see the address value "Whitehouse Milton Keynes,"
+    And they should see the address value "87 Zzz Way"
+    And they should see the address value "Whitehouse Milton Keynes"
     And they should see the address value "ZZ1 1ZZ"
 
 
@@ -38,7 +38,7 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "Flat 11 Blashford<br>Zzz Road"
-    And they should see the address value "London,"
+    And they should see the address value "London"
     And they should see the address value "ZZ1 1ZZ"
 
   Scenario: Show neither flat number nor house number
@@ -55,8 +55,8 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "Zzz Marina"
-    And they should see the address value "Zzz Road,"
-    And they should see the address value "Long Zzz Nottingham,"
+    And they should see the address value "Zzz Road"
+    And they should see the address value "Long Zzz Nottingham"
     And they should see the address value "ZZ1 1ZZ"
 
 
@@ -74,8 +74,8 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "Zzz Group Unit 2b Zzz Business Park"
-    And they should see the address value "16 Zzz Park Zzz Street,"
-    And they should see the address value "Some Zzz Long Eaton Great Missenden,"
+    And they should see the address value "16 Zzz Park Zzz Street"
+    And they should see the address value "Some Zzz Long Eaton Great Missenden"
     And they should see the address value "ZZ1 1ZZ"
 
   Scenario: no uprn is ok
@@ -92,8 +92,8 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "R103"
-    And they should see the address value "Zzz Park Creek Road,"
-    And they should see the address value "Zzz Island,"
+    And they should see the address value "Zzz Park Creek Road"
+    And they should see the address value "Zzz Island"
     And they should see the address value "ZZ1 1ZZ"
 
   Scenario: dependent address locality is not editable
@@ -110,8 +110,8 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "13"
-    And they should see the address value "Zzz Crescent,"
-    And they should see the address value "New Pitsligo Fraserburgh,"
+    And they should see the address value "Zzz Crescent"
+    And they should see the address value "New Pitsligo Fraserburgh"
     And they should see the address value "ZZ1 1ZZ"
 
   Scenario: organisation name and dependent street name is not editable
@@ -128,6 +128,6 @@ Feature: compliance for address structures presented in https://github.com/alpha
     And they continue to confirm address
     Then they should see the confirm page
     And they should see the address value "3"
-    And they should see the address value "Zzz Walk,"
-    And they should see the address value "Middlesbrough,"
+    And they should see the address value "Zzz Walk"
+    And they should see the address value "Middlesbrough"
     And they should see the address value "ZZ1 1ZZ"
