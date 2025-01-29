@@ -18,7 +18,7 @@ Background:
       And they add their city "London"
       And they add their residency date with a "older" move year
       And they continue to confirm address
-      Then they should see the address value "17<br>115 Downing Street,<br>"
+      Then they should see the address value "17<br>115 Downing Street<br>"
 
     Scenario: Testing flat number on edit. Adding flat number and house name
       Given they are on the address page
@@ -28,7 +28,7 @@ Background:
       And they add their city "London"
       And they add their residency date with a "older" move year
       And they continue to confirm address
-      Then they should see the address value "17 house<br>Downing Street,<br>"
+      Then they should see the address value "17 house<br>Downing Street<br>"
 
     Scenario: Testing flat number on edit. Adding flat number, house name and house number
       Given they are on the address page
@@ -39,4 +39,4 @@ Background:
       And they add their city "London"
       And they add their residency date with a "older" move year
       And they continue to confirm address
-      Then they should see the address value "17 house<br>115 Downing Street,<br>"
+      Then they should see the address value "17 house<br>115 Downing Street<br>"

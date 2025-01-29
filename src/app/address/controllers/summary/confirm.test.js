@@ -47,10 +47,9 @@ describe("Address confirmation controller", () => {
     it("Should format the current address and previous addresses in locals", async () => {
       // factor in the address might have building name or number or both
       const params = {
-        currentAddressRowValue:
-          "flat 1<br>1 street1,<br>town1,<br>postcode1<br>",
+        currentAddressRowValue: "flat 1<br>1 street1<br>town1<br>postcode1",
         validFromRow: String(new Date().getFullYear()),
-        previousAddressRowValue: "farm2,<br>town2,<br>postcode2<br>",
+        previousAddressRowValue: "farm2<br>town2<br>postcode2",
         changeCurrentHref: "/address/edit?edit=true",
       };
 
