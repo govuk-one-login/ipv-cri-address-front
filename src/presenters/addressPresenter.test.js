@@ -81,9 +81,7 @@ describe("Generate HTML of address", () => {
         ].join("<br>"),
         localityText,
         address.postalCode,
-      ]
-        .join(",<br>")
-        .concat("<br>")
+      ].join("<br>")
     );
   });
 
@@ -100,9 +98,7 @@ describe("Generate HTML of address", () => {
         ].join("<br>"),
         localityText,
         address.postalCode,
-      ]
-        .join(",<br>")
-        .concat("<br>")
+      ].join("<br>")
     );
   });
 });
