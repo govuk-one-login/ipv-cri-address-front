@@ -23,7 +23,7 @@
     {% include "../components/address-input-fields.njk" %}
     {{ yearFromField(ctx, { name: "addressYearFrom", title: title, label: label }) }}
 
-    {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
+    {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
 

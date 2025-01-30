@@ -25,7 +25,7 @@
 
     {{ hmpoHtml(translate("links.previous.cantFindAddress")) }}
 
-    {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.select-address")}) }}
+    {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/previous-address-check"}, id: "continue", text: translate("buttons.select-address")}) }}
 
   {% endcall %}
 
