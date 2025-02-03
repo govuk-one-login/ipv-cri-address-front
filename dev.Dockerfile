@@ -1,4 +1,4 @@
-FROM --platform="linux/arm64" arm64v8/node@sha256:56e8282f4392fb96c877babc93b3829e46b79c6fbcd48c92de578febffc80587 AS builder
+FROM --platform="linux/arm64" arm64v8/node@sha256:451e72886d6a58dc4af5680faeebb1a5f71cd13098324ce0181af0d334edc30c AS builder
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ RUN yarn build
 RUN [ "rm", "-rf", "node_modules" ]
 RUN yarn install --production --frozen-lockfile
 
-FROM --platform="linux/arm64" arm64v8/node@sha256:56e8282f4392fb96c877babc93b3829e46b79c6fbcd48c92de578febffc80587 AS final
+FROM --platform="linux/arm64" arm64v8/node@sha256:451e72886d6a58dc4af5680faeebb1a5f71cd13098324ce0181af0d334edc30c AS final
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends curl tini \
