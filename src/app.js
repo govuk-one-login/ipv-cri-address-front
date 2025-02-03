@@ -209,5 +209,7 @@ process.on("SIGTERM", () => {
       // eslint-disable-next-line no-console
       console.log("HTTP server closed");
     }
+
+    process.exit(0);
   });
 });
