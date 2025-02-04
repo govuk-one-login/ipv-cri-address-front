@@ -44,17 +44,18 @@ class AddressSearchController extends BaseController {
           session_id: req.session.tokenId,
           "session-id": req.session.tokenId,
           ...createPersonalDataHeaders(
-            `${API.BASE_URL}${API.PATHS.POSTCODE_LOOKUP}/${postcode}`,
+            `${API.BASE_URL}${API.PATHS.POSTCODE_LOOKUP}`,
             req
           ),
         }
       : createPersonalDataHeaders(
-          `${API.BASE_URL}${API.PATHS.POSTCODE_LOOKUP}/${postcode}`,
+          `${API.BASE_URL}${API.PATHS.POSTCODE_LOOKUP}`,
           req
         ); // set the header to null should fail the req but pass the browser tests for now.
 
-    const addressResults = await req.axios.get(
-      `${API.PATHS.POSTCODE_LOOKUP}/${postcode}`,
+    const addressResults = await req.axios.post(
+      `${API.PATHS.POSTCODE_LOOKUP}`,
+      { postcode },
       {
         headers,
       }

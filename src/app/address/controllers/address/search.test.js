@@ -52,8 +52,11 @@ describe("Address Search controller", function () {
         "txma-audit-encoded": "dummy-txma-header",
         "x-forwarded-for": "127.0.0.1",
       };
-      expect(req.axios.get).to.have.been.calledWith(
-        `${POSTCODE_LOOKUP}/myPostcode`,
+      expect(req.axios.post).to.have.been.calledWith(
+        `${POSTCODE_LOOKUP}`,
+        {
+          postcode: "myPostcode",
+        },
         {
           headers,
         }
@@ -68,7 +71,7 @@ describe("Address Search controller", function () {
         prototypeSpy = sinon.stub(BaseController.prototype, "saveValues");
         BaseController.prototype.saveValues.callThrough();
 
-        req.axios.get = sinon.fake.returns(testData.apiResponse);
+        req.axios.post = sinon.fake.returns(testData.apiResponse);
 
         testPostcode = "myPostcode";
         req.body["addressSearch"] = testPostcode;
@@ -99,7 +102,7 @@ describe("Address Search controller", function () {
 
     describe("on api error", () => {
       beforeEach(async () => {
-        req.axios.get = sinon.fake.rejects(new Error("Error!"));
+        req.axios.post = sinon.fake.rejects(new Error("Error!"));
 
         testPostcode = "myPostcode";
         req.body["addressSearch"] = testPostcode;
