@@ -32,7 +32,10 @@
       autocomplete: "postal-code"
     }) }}
 
-    {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.find-address")}) }}
+    {{ hmpoSubmit(ctx, {
+      id: "continue",
+      attributes: { "data-nav": true, "data-link": "/results" },
+      text: translate("buttons.find-address")}) }}
     {%- include "../components/continue-submit-spinner.njk" -%}
 
   {% endcall %}

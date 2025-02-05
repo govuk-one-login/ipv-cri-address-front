@@ -17,7 +17,7 @@
 
     {% include "../components/address-input-fields.njk" %}
 
-    {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
+    {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
   {{ ga4OnPageLoad({
