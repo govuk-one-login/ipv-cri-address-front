@@ -22,7 +22,7 @@
       hint:  translate("fields.addressSearch.previous.hint")
     }) }}
 
-    {{ hmpoSubmit(ctx, {id:"continue", text: translate("buttons.find-address")}) }}
+    {{ hmpoSubmit(ctx, {id:"continue", attributes: {"data-nav": true, "data-link": "/previous-results"}, text: translate("buttons.find-address")}) }}
 
   {% endcall %}
 

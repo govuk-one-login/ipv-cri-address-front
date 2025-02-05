@@ -24,7 +24,7 @@
 
     {{ hmpoHtml(translate("links.cantFindAddress")) }}
 
-    {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.select-address")}) }}
+    {{ hmpoSubmit(ctx, {id: "continue", attributes: {"data-nav": true, "data-link": "/undefined"}, text: translate("buttons.select-address")}) }}
 
   {% endcall %}
 
