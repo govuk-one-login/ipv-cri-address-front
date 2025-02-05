@@ -96,8 +96,15 @@
       "requiredScenarioState": "AddressResponses",
       "newScenarioState": "AddressResponses",
       "request": {
-        "method": "GET",
-        "url": "/postcode-lookup/E1%208QS",
+        "method": "POST",
+        "url": "/postcode-lookup",
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "postcode": "E1 8QS"
+            }
+          }
+        ],
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-prepopulated"
@@ -135,8 +142,15 @@
       "requiredScenarioState": "Started",
       "newScenarioState": "AddressResponses",
       "request": {
-        "method": "GET",
-        "url": "/postcode-lookup/XXX_XX",
+        "method": "POST",
+        "url": "/postcode-lookup",
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "postcode": "XXX_XX"
+            }
+          }
+        ],
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-prepopulated",
@@ -160,8 +174,15 @@
       "requiredScenarioState": "AddressResponses",
       "newScenarioState": "AddressResponses",
       "request": {
-        "method": "GET",
-        "url": "/postcode-lookup/PR3VC0DE",
+        "method": "POST",
+        "url": "/postcode-lookup",
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "postcode": "PR3VC0DE"
+            }
+          }
+        ],
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-prepopulated"

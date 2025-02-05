@@ -36,8 +36,15 @@
     {
       "scenarioName": "Compliance for addresses discussed at https://github.com/alphagov/digital-identity-architecture/blob/main/rfc/0020-address-structure.md",
       "request": {
-        "method": "GET",
-        "urlPathPattern": "/postcode-lookup/ZZ1%201ZZ",
+        "method": "POST",
+        "urlPathPattern": "/postcode-lookup",
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "postcode": "ZZ1 1ZZ"
+            }
+          }
+        ],
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-success"
@@ -121,8 +128,15 @@
       "requiredScenarioState": "AddressResponses",
       "newScenarioState": "AddressResponses",
       "request": {
-        "method": "GET",
-        "url": "/postcode-lookup/E1%208QS",
+        "method": "POST",
+        "url": "/postcode-lookup",
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "postcode": "E1 8QS"
+            }
+          }
+        ],
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-success"
@@ -160,8 +174,15 @@
       "requiredScenarioState": "Started",
       "newScenarioState": "AddressResponses",
       "request": {
-        "method": "GET",
-        "url": "/postcode-lookup/XXX_XX",
+        "method": "POST",
+        "url": "/postcode-lookup",
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "postcode": "XXX_XX"
+            }
+          }
+        ],
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-success",
@@ -185,8 +206,15 @@
       "requiredScenarioState": "AddressResponses",
       "newScenarioState": "AddressResponses",
       "request": {
-        "method": "GET",
-        "url": "/postcode-lookup/PR3VC0DE",
+        "method": "POST",
+        "url": "/postcode-lookup",
+        "bodyPatterns": [
+          {
+            "equalToJson": {
+              "postcode": "PR3VC0DE"
+            }
+          }
+        ],
         "headers": {
           "x-scenario-id": {
             "equalTo": "address-success"
