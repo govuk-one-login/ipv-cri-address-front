@@ -50,11 +50,16 @@ global.setupDefaultMocks = () => {
     fields: {},
   });
 
-  const res = {};
+  const res = {
+    status: sinon.fake(),
+    render: sinon.fake(),
+  };
   const next = sinon.fake();
+  const err = sinon.stub();
   return {
     req,
     res,
     next,
+    err,
   };
 };
