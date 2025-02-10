@@ -65,6 +65,9 @@ const helmetConfig = require("@govuk-one-login/di-ipv-cri-common-express/src/lib
 const {
   frontendVitalSignsInitFromApp,
 } = require("@govuk-one-login/frontend-vital-signs");
+const {
+  missingRedirectErrorHandler,
+} = require("./middleware/missingRedirectErrorHandler");
 
 const { app, router } = setup({
   config: { APP_ROOT: __dirname },
@@ -186,6 +189,7 @@ router.use("^/$", (req, res) => {
 });
 
 router.use(commonExpress.lib.errorHandling.redirectAsErrorToCallback);
+router.use(missingRedirectErrorHandler);
 
 /* Server configuration */
 const server = app.listen(PORT);
