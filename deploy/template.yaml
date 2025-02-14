@@ -216,6 +216,9 @@ Resources:
           - Key: access_logs.s3.prefix
             Value: !Sub address-front-${Environment}
         - !Ref AWS::NoValue
+      Tags:
+        - Key: FMSRegionalPolicy
+          Value: false
 
   LoadBalancerListenerTargetGroupECS:
     Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
