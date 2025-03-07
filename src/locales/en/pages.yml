@@ -19,6 +19,7 @@ country:
 addressSearch:
   title: Find your address
   drivingLicence: We found the following postcode on your driving licence.
+  prefix: ""
 
 address-previous-search:
   title: Find your previous address

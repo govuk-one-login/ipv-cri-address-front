@@ -13,6 +13,7 @@ addressSearch:
     alphaNumeric: "Dylai eich cod post gynnwys rhifau a llythrennau yn unig"
 addressFlatNumber:
   label: "Rif fflat (dewisol)"
+  prefix: ""
   validation:
     maxlength: "Gwiriwch eich bod wedi rhoi rhif eich fflat yn gywir"
     alphaNumericWithSpecialChars: "Ni ddylai eich rif fflat gynnwys unrhyw nodau neu symbolau arbennig"
@@ -28,11 +29,13 @@ addressHouseName:
     alphaNumericWithSpecialChars: "Ni ddylai eich enw tŷ gynnwys unrhyw nodau neu symbolau arbennig"
 addressStreetName:
   label: "Enw stryd (dewisol)"
+  prefix: ""
   validation:
     maxlength: "Gwiriwch eich bod wedi rhoi enw eich stryd yn yn gywir"
     alphaNumericWithSpecialChars: "Ni ddylai eich enw stryd gynnwys unrhyw nodau neu symbolau arbennig"
 addressLocality:
   label: "Tref neu ddinas"
+  prefix: ""
   validation:
     maxlength: "Gwiriwch eich bod wedi rhoi enw eich tref neu ddinas yn yn gywir"
 
@@ -56,18 +59,21 @@ nonUKAddressBuildingName:
 
 nonUKAddressStreetName:
   label: "Enw stryd (dewisol)"
+  prefix: ""
   validation:
     underMaxLength: "Rhaid i'r enw stryd fod yn 60 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i enw'r stryd ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressLocality:
   label: "Tref, maestref neu ddinas"
+  prefix: ""
   validation:
     underMaxLength: "Rhaid i'r dref, y faestref neu'r ddinas fod yn 60 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i enw'r tref, maestref neu ddinas ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
 
 nonUKAddressPostalCode:
   label: "Cod post neu god zip (os oes gan eich gwlad un)"
+  prefix: ""
   validation:
     underMaxLength: "Rhaid i'r cod post neu'r cod zip fod yn 15 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i god post neu god zip ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
@@ -75,6 +81,7 @@ nonUKAddressPostalCode:
 nonUKAddressRegion:
   label: "Rhanbarth (dewisol)"
   hint: "Er enghraifft, gwlad, ardal, sir, plwyf neu dalaith"
+  prefix: ""
   validation:
     underMaxLength: "Rhaid i'r rhanbarth fod yn 60 nod neu lai"
     alphaNumericWithSpecialChars: "Rhaid i rhanbarth ond cynnwys rhifau 0 i 9, llythrennau a i z a .,-\/* neu '"
@@ -82,6 +89,7 @@ nonUKAddressRegion:
 nonUKAddressYearFrom:
   title: "Pryd wnaethoch chi ddechrau byw yno?"
   label: "Rhowch y flwyddyn y wnaethoch ddechrau byw yma, er enghraifft 2017"
+  prefix: ""
   validation:
     default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
     required: "Rhowch y flwyddyn"
@@ -90,6 +98,7 @@ nonUKAddressYearFrom:
 addressYearFrom:
   title: "Pryd wnaethoch ddechrau byw yn y cyfeiriad hwn?"
   label: "Rhowch y flwyddyn y wnaethoch ddechrau byw yma, er enghraifft 2017"
+  prefix: ""
   validation:
     default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
     required: "Rhowch y flwyddyn"
