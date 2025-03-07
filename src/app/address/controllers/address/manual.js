@@ -107,7 +107,7 @@ class AddressController extends BaseController {
       streetName: addressStreetName,
       addressLocality,
       addressCountry: "GB",
-      validFrom,
+      ...(validFrom && { validFrom }),
     };
 
     const isChanged = this.checkForChanges(address, chosenAddress);
