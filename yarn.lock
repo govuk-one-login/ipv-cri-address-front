@@ -3812,10 +3812,10 @@ hmpo-form-wizard@13.0.2:
     moment "^2.30.1"
     underscore "^1.13.7"
 
-hmpo-i18n@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/hmpo-i18n/-/hmpo-i18n-7.0.0.tgz#ee6b055914670076e7bb01c28439b76dd1656e13"
-  integrity sha512-3pPt0wBfy57DbstSm07LR12kRZuPCJQF/M8opIJwr7PIo6uMt+fg9d0dTQvlrsySBn9vTfDoQNMbyr91JUxfBA==
+hmpo-i18n@7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/hmpo-i18n/-/hmpo-i18n-7.0.1.tgz#155fb746fd56c6347513784dbb66fb3622d0ab6a"
+  integrity sha512-7mnT/Mxd1aEFdhjvS178b2VGdatl2Kb0ZLDXbbWFwzqhzc8UQiVxnWYubD2cOrv2M2s+nNLASHW2ofwfR4wA5A==
   dependencies:
     async "^3.2.6"
     callsites "^3.1.0"
