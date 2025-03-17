@@ -49,7 +49,7 @@
     "hmpo-components": "7.1.0",
     "hmpo-config": "4.0.0",
     "hmpo-form-wizard": "13.0.2",
-    "hmpo-i18n": "7.0.0",
+    "hmpo-i18n": "7.0.1",
     "hmpo-logger": "8.0.0",
     "nunjucks": "3.2.4",
     "overload-protection": "1.2.3",
