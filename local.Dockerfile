@@ -1,20 +1,18 @@
-FROM node:20.11.1-alpine3.19@sha256:f4c96a28c0b2d8981664e03f461c2677152cd9a756012ffa8e2c6727427c2bda
+FROM node:22.4.1-alpine3.19@sha256:67225d40d3fb36314e392846effda04b95c973bf52e44ea064a8e0015c83056e AS builder
 
 ENV PORT 5010
 
 WORKDIR /app
 
-COPY .yarn ./.yarn
-COPY package.json yarn.lock .yarnrc.yml ./
-RUN yarn install
+COPY package.json package-lock.json ./
+RUN npm ci
 
 COPY . ./
-
-RUN yarn build
+RUN npm run build
 
 HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:$PORT/healthcheck || exit 1
 
-CMD yarn run dev
+CMD npm run dev
 
 EXPOSE $PORT
