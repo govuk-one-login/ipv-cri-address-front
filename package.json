@@ -4,13 +4,13 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/app.js",
-    "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ LANGUAGE_TOGGLE_DISABLED=false yarn dev",
+    "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ LANGUAGE_TOGGLE_DISABLED=false npm run dev",
     "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8010/ npm-run-all -p -r mocks dev",
     "dev": "nodemon src/app.js",
-    "build": "yarn build-sass && yarn build-js && yarn copy-assets && yarn copy-js",
+    "build": "npm run build-sass && npm run build-js && npm run copy-assets && npm run copy-js",
     "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
     "copy-assets": "mkdir -p dist && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts && copyfiles -u 3 src/assets/images/** dist/public/images",
-    "build-js": "yarn build-js:analytics && yarn build-js:all",
+    "build-js": "npm run build-js:analytics && npm run build-js:all",
     "copy-js": "copyfiles -u 3 node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js.map dist/public/javascripts",
     "build-js:analytics": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/frontend-analytics/lib/analytics.js node_modules/@govuk-one-login/di-ipv-cri-common-express/src/assets/javascript/analytics/ua/init.js --beautify -o dist/public/javascripts/analytics.js",
     "build-js:all": "mkdir -p dist/public/javascripts; uglifyjs node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js --beautify -o dist/public/javascripts/all.js",
@@ -20,9 +20,9 @@
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:fix": "npm run lint:eslint -- --fix && npm run lint:prettier -- --write",
     "test": "mocha",
-    "test:coverage": "nyc --reporter=lcov --reporter=text-summary yarn test",
+    "test:coverage": "nyc --reporter=lcov --reporter=text-summary npm run test",
     "test:watch": "mocha --watch",
-    "mocks": "yarn run wiremock --port 8010 --root-dir test/mocks",
+    "mocks": "npx wiremock --port 8010 --root-dir test/mocks",
     "test:browser": "wait-on tcp:127.0.0.1:8010 tcp:127.0.0.1:5010 && API_BASE_URL=http://127.0.0.1:8010 MOCK_API=true cucumber-js --config test/browser/cucumber.js --tags \"not @skip\"",
     "test:browser:ci": "npm-run-all -p -r start:ci mocks test:browser",
     "test:browser:only": "wait-on tcp:127.0.0.1:8010 tcp:127.0.0.1:5010 && API_BASE_URL=http://127.0.0.1:8010 MOCK_API=true cucumber-js --config test/browser/cucumber.js --tags \"@only and not @skip\"",
@@ -84,5 +84,5 @@
     "string-width": "^4.2.2",
     "wrap-ansi": "^7.0.0"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "npm run@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
