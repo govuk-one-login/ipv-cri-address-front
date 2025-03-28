@@ -1,4 +1,3 @@
-import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import mocha from "eslint-plugin-mocha";
 import path from "node:path";
@@ -14,28 +13,29 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 });
 
-export default defineConfig([
-  globalIgnores([
-    "**/wallaby.conf.js",
-    "**/node_modules",
-    "**/reports",
-    "**/.aws-sam",
-    "**/dist",
-  ]),
+export default [
   {
-    extends: compat.extends(
-      "prettier",
-      "eslint:recommended",
-      "plugin:prettier/recommended"
-    ),
-
+    ignores: [
+      "**/wallaby.conf.js",
+      "**/node_modules",
+      "**/reports",
+      "**/.aws-sam",
+      "**/dist",
+    ],
+  },
+  ...compat.extends(
+    "prettier",
+    "eslint:recommended",
+    "plugin:prettier/recommended"
+  ),
+  {
     languageOptions: {
       globals: {
         ...globals.node,
         ...globals.mocha,
         sinon: true,
         expect: true,
-        setupDefaultMocks: true,
+        setupDefaultMocks: "readonly",
       },
     },
 
@@ -52,9 +52,12 @@ export default defineConfig([
       ],
     },
   },
+  ...compat.extends("plugin:mocha/recommended").map((config) => ({
+    ...config,
+    files: ["src/**/*.test.js"],
+  })),
   {
     files: ["src/**/*.test.js"],
-    extends: compat.extends("plugin:mocha/recommended"),
 
     plugins: {
       mocha,
@@ -65,4 +68,4 @@ export default defineConfig([
       "mocha/no-setup-in-describe": 0,
     },
   },
-]);
+];
