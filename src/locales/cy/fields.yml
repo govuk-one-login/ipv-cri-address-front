@@ -15,29 +15,29 @@ addressFlatNumber:
   label: "Rif fflat (dewisol)"
   prefix: ""
   validation:
-    maxlength: "Gwiriwch eich bod wedi rhoi rhif eich fflat yn gywir"
+    underMaxLength: "Rhaid i'r rhif fflat fod yn 30 nod neu lai"
     alphaNumericWithSpecialChars: "Ni ddylai eich rif fflat gynnwys unrhyw nodau neu symbolau arbennig"
 addressHouseNumber:
   label: "Rhif tŷ"
   validation:
-    maxlength: "Gwiriwch eich bod wedi rhoi rhif eich tŷ yn yn gywir"
+    underMaxLength: "Rhaid i'r rhif tŷ fod yn 30 nod neu lai"
     alphaNumericWithSpecialChars: "Ni ddylai eich rhif tŷ gynnwys unrhyw nodau neu symbolau arbennig"
 addressHouseName:
   label: "Enw tŷ"
   validation:
-    maxlength: "Gwiriwch eich bod wedi rhoi enw eich tŷ yn yn gywir"
+    underMaxLength: "Rhaid i'r enw tŷ fod yn 50 nod neu lai"
     alphaNumericWithSpecialChars: "Ni ddylai eich enw tŷ gynnwys unrhyw nodau neu symbolau arbennig"
 addressStreetName:
   label: "Enw stryd (dewisol)"
   prefix: ""
   validation:
-    maxlength: "Gwiriwch eich bod wedi rhoi enw eich stryd yn yn gywir"
+    underMaxLength: "Rhaid i'r enw stryd fod yn 60 nod neu lai"
     alphaNumericWithSpecialChars: "Ni ddylai eich enw stryd gynnwys unrhyw nodau neu symbolau arbennig"
 addressLocality:
   label: "Tref neu ddinas"
   prefix: ""
   validation:
-    maxlength: "Gwiriwch eich bod wedi rhoi enw eich tref neu ddinas yn yn gywir"
+    underMaxLength: "Rhaid i'r dref neu'r ddinas fod yn 60 nod neu lai"
 
 nonUKAddressApartmentNumber:
   label: "Rhif fflat"
