@@ -23,8 +23,8 @@ Required environment variables:
 - `MOCK_API` - true
 
 1. `docker-compose up`
-2. `yarn run cucumber-js --config test/browser/cucumber.js`
-   - `yarn run` runs from the root directory, so the full path to the config file needs to be specified
+2. `npm run cucumber-js --config test/browser/cucumber.js`
+   - `npm run` runs from the root directory, so the full path to the config file needs to be specified
 
 ## Running against environment
 
@@ -34,5 +34,5 @@ Required environment variables:
 - `CORE_STUB_URL` - https://di-ipv-core-stub.example.org
 - `MOCK_API` - false
 
-1. `yarn run cucumber-js --config test/browser/cucumber.js`
-   - `yarn run` runs from the root directory, so the full path to the config file needs to be specified
+1. `npm run cucumber-js --config test/browser/cucumber.js`
+   - `npm run` runs from the root directory, so the full path to the config file needs to be specified
