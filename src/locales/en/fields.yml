@@ -17,33 +17,33 @@ addressFlatNumber:
   label: Flat number (optional)
   prefix: ""
   validation:
-    maxlength: Check you've entered your flat number correctly
+    underMaxLength: Flat number must be 30 characters or less
     alphaNumericWithSpecialChars: Your flat number should not include any special characters or symbols
 
 addressHouseNumber:
   label: House number
   validation:
-    maxlength: Check you've entered your house number correctly
+    underMaxLength: House number must be 30 characters or less
     alphaNumericWithSpecialChars: Your house number should not include any special characters or symbols
 
 addressHouseName:
   label: House name
   validation:
-    maxlength: Check you've entered your house name correctly
+    underMaxLength: House name must be 50 characters or less
     alphaNumericWithSpecialChars: Your house name should not include any special characters or symbols
 
 addressStreetName:
   label: Street name (optional)
   prefix: ""
   validation:
-    maxlength: Check you've entered your street name correctly
+    underMaxLength: Street name must be 60 characters or less
     alphaNumericWithSpecialChars: Your street name should not include any special characters or symbols
 
 addressLocality:
   label: Town or city
   prefix: ""
   validation:
-    maxlength: Check you've entered your town or city correctly
+    underMaxLength: Town or city must be 60 characters or less
 
 nonUKAddressApartmentNumber:
   label: Apartment number

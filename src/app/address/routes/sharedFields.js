@@ -48,9 +48,9 @@ module.exports = {
     type: "text",
     validate: [
       {
-        type: "maxlength",
-        fn: "maxlength",
-        arguments: [30],
+        type: "underMaxLength",
+        fn: underMaxLength,
+        arguments: 30,
       },
       {
         type: "alphaNumericWithSpecialChars",
@@ -62,9 +62,9 @@ module.exports = {
     type: "text",
     validate: [
       {
-        type: "maxlength",
-        fn: "maxlength",
-        arguments: [10],
+        type: "underMaxLength",
+        fn: underMaxLength,
+        arguments: 30,
       },
       {
         type: "alphaNumericWithSpecialChars",
@@ -76,9 +76,9 @@ module.exports = {
     type: "text",
     validate: [
       {
-        type: "maxlength",
-        fn: "maxlength",
-        arguments: [50],
+        type: "underMaxLength",
+        fn: underMaxLength,
+        arguments: 50,
       },
       {
         type: "alphaNumericWithSpecialChars",
@@ -90,9 +90,9 @@ module.exports = {
     type: "text",
     validate: [
       {
-        type: "maxlength",
-        fn: "maxlength",
-        arguments: [60],
+        type: "underMaxLength",
+        fn: underMaxLength,
+        arguments: 60,
       },
       {
         type: "alphaNumericWithSpecialChars",
@@ -107,9 +107,9 @@ module.exports = {
         type: "required",
       },
       {
-        type: "maxlength",
-        fn: "maxlength",
-        arguments: [60],
+        type: "underMaxLength",
+        fn: underMaxLength,
+        arguments: 60,
       },
       {
         type: "alphaNumericWithSpecialChars",
