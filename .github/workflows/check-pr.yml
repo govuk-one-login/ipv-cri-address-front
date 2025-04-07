@@ -11,6 +11,8 @@ jobs:
   unit-tests:
     name: Run tests
     uses: ./.github/workflows/run-unit-tests.yml
+    with:
+      coverage-report: true
 
   browser-tests:
     name: Run tests
