@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/app.js",
-    "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ LANGUAGE_TOGGLE_DISABLED=false yarn dev",
+    "start:ci": "NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ yarn dev",
     "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8010/ npm-run-all -p -r mocks dev",
     "dev": "nodemon src/app.js",
     "build": "yarn build-sass && yarn build-js && yarn copy-assets && yarn copy-js",

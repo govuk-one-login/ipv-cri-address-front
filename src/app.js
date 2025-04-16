@@ -141,7 +141,7 @@ setI18n({
   router,
   config: {
     secure: true,
-    cookieDomain: APP.GTM.ANALYTICS_COOKIE_DOMAIN,
+    cookieDomain: APP.FRONTEND_DOMAIN,
   },
 });
 
@@ -153,7 +153,7 @@ app.get("nunjucks").addGlobal("addLanguageParam", addLanguageParam);
 setDeviceIntelligence({
   app,
   deviceIntelligenceEnabled: APP.DEVICE_INTELLIGENCE_ENABLED,
-  deviceIntelligenceDomain: APP.DEVICE_INTELLIGENCE_DOMAIN,
+  deviceIntelligenceDomain: APP.FRONTEND_DOMAIN,
 });
 
 setAPIConfig({
@@ -167,7 +167,7 @@ setOAuthPaths({ app, entryPointPath: APP.PATHS.ADDRESS });
 
 setGTM({
   app,
-  analyticsCookieDomain: APP.GTM.ANALYTICS_COOKIE_DOMAIN,
+  analyticsCookieDomain: APP.FRONTEND_DOMAIN,
   uaEnabled: APP.GTM.UA_ENABLED,
   uaContainerId: APP.GTM.UA_CONTAINER_ID,
   ga4Enabled: APP.GTM.GA4_ENABLED,
