@@ -26,6 +26,10 @@ module.exports = {
       GA4_CONTAINER_ID: process.env.GA4_CONTAINER_ID,
     },
     LANGUAGE_TOGGLE_DISABLED: process.env.LANGUAGE_TOGGLE_DISABLED || "true",
+    DEVICE_INTELLIGENCE_ENABLED:
+      process.env.DEVICE_INTELLIGENCE_ENABLED || "false",
+    DEVICE_INTELLIGENCE_DOMAIN:
+      process.env.DEVICE_INTELLIGENCE_DOMAIN || "localhost",
   },
   LOG_LEVEL: process.env.LOG_LEVEL || "request",
   PORT: process.env.PORT || 5010,
