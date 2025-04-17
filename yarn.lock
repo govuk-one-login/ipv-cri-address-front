@@ -1213,7 +1213,7 @@
   dependencies:
     copy-webpack-plugin "^12.0.2"
 
-"@govuk-one-login/frontend-device-intelligence@^1.1.0":
+"@govuk-one-login/frontend-device-intelligence@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@govuk-one-login/frontend-device-intelligence/-/frontend-device-intelligence-1.1.0.tgz#46986297b4bc18331a520a7ca7750ec2696ff081"
   integrity sha512-d17WVKllVZeHTVU40n95bvVIXXeNdNI6shn8xg15xDtwqV6VZ+SEr6l5pvoWxjiPHbbfbpZ8IjUldjhvwm2ASw==

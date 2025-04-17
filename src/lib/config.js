@@ -24,7 +24,7 @@ module.exports = {
       GA4_ENABLED: process.env.GA4_ENABLED || "false",
       GA4_CONTAINER_ID: process.env.GA4_CONTAINER_ID,
     },
-    LANGUAGE_TOGGLE_DISABLED: process.env.LANGUAGE_TOGGLE_DISABLED || "true",
+    LANGUAGE_TOGGLE_DISABLED: process.env.LANGUAGE_TOGGLE_DISABLED || "false",
     DEVICE_INTELLIGENCE_ENABLED:
       process.env.DEVICE_INTELLIGENCE_ENABLED || "false",
   },

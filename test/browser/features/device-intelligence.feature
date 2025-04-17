@@ -1,4 +1,4 @@
-@mock-api:address-success @device
+@mock-api:address-success @device_intelligence
 Feature: Happy Path - Device intelligence cookie is set
 
   Scenario: User has the di-device-intelligence cookie
