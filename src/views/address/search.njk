@@ -52,3 +52,24 @@
   }) }}
 
 {% endblock %}
+
+{% block bodyEnd %}
+
+
+ <h1>caitlin</h1>
+ {{ cspNonce }}
+
+  <script type="module" src="/public/javascripts/deviceIntelligence.js"></script>
+  <script type="module" src="/public/javascripts/test.js"></script>
+  <script type="module" {% if cspNonce %} nonce="{{ cspNonce }}"{%  endif %}>
+    console.log("🍊 before")
+
+    import { setFingerprintCookie } from "/public/javascripts/deviceIntelligence.js";
+    import { setFingerprintCookie } from "/public/javascripts/test.js";
+    console.log("🍊 after setting cookie from search page")
+
+
+    {# setFingerprintCookie("localhost") #}
+  </script>
+
+{% endblock %}

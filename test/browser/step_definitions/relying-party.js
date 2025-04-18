@@ -4,11 +4,17 @@ const { RelyingPartyPage } = require("../pages");
 const { expect } = require("chai");
 
 Given(/^([A-Za-z ])+ is using the system$/, async function (name) {
+  this.page.on("console", (msg) => {
+    console.log(`🍎 console log from page ${this.page.url()} was`, msg);
+  });
   this.user = this.allUsers[name];
 
   const rpPage = new RelyingPartyPage(this.page);
 
   await rpPage.goto();
+
+  const content = await this.page.content();
+  // console.log("🍎 content first page", content);
 });
 
 Given("they have been redirected as a success", function () {

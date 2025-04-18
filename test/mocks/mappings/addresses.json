@@ -29,7 +29,30 @@
         "jsonBody": {
           "session_id": "ABADCAFE",
           "state": "sT@t3",
-          "redirect_uri": "http://example.net/return"
+          "redirect_uri": "http://example.net/test"
+        }
+      }
+    },
+    {
+      "scenarioName": "Address",
+      "requiredScenarioState": "AddressResponses",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "GET",
+        "url": "/addresses/v2",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-success"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "addresses": []
         }
       }
     },

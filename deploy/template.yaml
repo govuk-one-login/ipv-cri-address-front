@@ -71,26 +71,31 @@ Mappings:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 1
       maxECSCount: 4
+      deviceIntelligenceEnabled: true
       logLevel: "info"
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 6
       maxECSCount: 60
+      deviceIntelligenceEnabled: true
       logLevel: "info"
     staging:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
       maxECSCount: 4
+      deviceIntelligenceEnabled: true
       logLevel: "warn"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
       maxECSCount: 4
+      deviceIntelligenceEnabled: false
       logLevel: "warn"
     production:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables
       minECSCount: 6
       maxECSCount: 60
+      deviceIntelligenceEnabled: false
       logLevel: "warn"
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
@@ -389,7 +394,7 @@ Resources:
               Value: true
             - Name: UA_ENABLED
               Value: false
-            - Name: ANALYTICS_COOKIE_DOMAIN
+            - Name: FRONTEND_DOMAIN
               Value:
                 !If [
                   IsProduction,
@@ -398,6 +403,13 @@ Resources:
                 ]
             - Name: LANGUAGE_TOGGLE_DISABLED
               Value: false
+            - Name: DEVICE_INTELLIGENCE_ENABLED
+              Value:
+                !FindInMap [
+                  EnvironmentConfiguration,
+                  !Ref Environment,
+                  deviceIntelligenceEnabled,
+                ]
             - Name: NODE_ENV
               Value: "production"
             - Name: LOG_LEVEL
