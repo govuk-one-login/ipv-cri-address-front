@@ -19,7 +19,7 @@ BeforeAll(async function () {
         // Not headless so we can watch test runs
         headless: false,
         // Slow so we can see things happening
-        slowMo: 500,
+        slowMo: 5000,
       });
 });
 
@@ -58,7 +58,7 @@ Before(async function ({ pickle } = {}) {
 
 // Create a new test context and page per scenario
 Before(async function () {
-  this.context = await global.browser.newContext({ javaScriptEnabled: true });
+  this.context = await global.browser.newContext({});
 
   if (this.SCENARIO_ID_HEADER) {
     await this.context.setExtraHTTPHeaders({
