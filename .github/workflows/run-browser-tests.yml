@@ -17,6 +17,12 @@ jobs:
     name: Browser
     runs-on: ubuntu-latest
     steps:
+      - name: Install playwright browsers
+        uses: govuk-one-login/github-actions/env/run-script@145049ebd9a33e57da9a852847c4ee2c8970ea51
+        with:
+          node-version: 20.x
+          package-manager: yarn
+          script: yarn playwright install
       - name: Run tests
         uses: govuk-one-login/github-actions/env/run-script@145049ebd9a33e57da9a852847c4ee2c8970ea51
         with:
