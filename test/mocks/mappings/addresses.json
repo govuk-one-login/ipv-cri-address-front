@@ -34,6 +34,29 @@
       }
     },
     {
+      "scenarioName": "Address",
+      "requiredScenarioState": "AddressResponses",
+      "newScenarioState": "AddressResponses",
+      "request": {
+        "method": "GET",
+        "url": "/addresses/v2",
+        "headers": {
+          "x-scenario-id": {
+            "equalTo": "address-success"
+          },
+          "session_id": {
+            "equalTo": "ABADCAFE"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "addresses": []
+        }
+      }
+    },
+    {
       "scenarioName": "Compliance for addresses discussed at https://github.com/alphagov/digital-identity-architecture/blob/main/rfc/0020-address-structure.md",
       "request": {
         "method": "POST",
