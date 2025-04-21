@@ -1,4 +1,4 @@
-{# <script {% if params.nonce%} nonce='{{ params.nonce }}'{%  endif %}>
+<script {% if params.nonce%} nonce='{{ params.nonce }}'{%  endif %}>
     window.addEventListener('load', function () {
         window
             .DI
@@ -14,4 +14,4 @@
                 dynamic: {{params.dynamic}}
             });
     });
-</script> #}
+</script>

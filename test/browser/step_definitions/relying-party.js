@@ -14,7 +14,7 @@ Given(/^([A-Za-z ])+ is using the system$/, async function (name) {
   await rpPage.goto();
 
   const content = await this.page.content();
-  // console.log("🍎 content first page", content);
+  console.log("🍎 content first page", content);
 });
 
 Given("they have been redirected as a success", function () {
