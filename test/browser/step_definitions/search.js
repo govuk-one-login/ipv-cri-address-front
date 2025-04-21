@@ -3,8 +3,6 @@ const { SearchPage } = require("../pages");
 const { expect } = require("chai");
 
 Given("they searched for their postcode {string}", async function (postcode) {
-  await this.page.waitForTimeout(5000);
-
   const searchPage = new SearchPage(this.page);
   await searchPage.searchPostcode(postcode);
 });
