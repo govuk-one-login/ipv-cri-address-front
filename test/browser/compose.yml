@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  db:
+    image: redis
+  mocks:
+    image: wiremock/wiremock
+    volumes:
+      - "../mocks:/home/wiremock"
+    ports:
+      - "8010:8080"
+  core-stub:
+    image: ghcr.io/alphagov/di/di-ipv-core-stub:latest
+    environment:
+      CORE_STUB_CONFIG_FILE: "/app/di-ipv-config.yaml"
+      CORE_STUB_KEYSTORE_ALIAS: ipv-core-stub
+      CORE_STUB_KEYSTORE_PASSWORD: "puppet"
+      CORE_STUB_KEYSTORE_FILE: "/app/keystore.jks"
+      CORE_STUB_USER_DATA_PATH: "/app/experian-uat-users-large.zip"
+
+    volumes:
+      - "./di-ipv-config.yaml:/app/di-ipv-config.yaml"
+      - "${CORE_STUB_CONFIG_DIRECTORY}/keystore.jks:/app/keystore.jks"
+      - "${CORE_STUB_CONFIG_DIRECTORY}/experian-uat-users-large.zip:/app/experian-uat-users-large.zip"
+    ports:
+      - "8085:8085"
+  web-address:
+    build:
+      context: ../..
+      dockerfile: local.Dockerfile
+    environment:
+      REDIS_SESSION_URL: db
+      API_BASE_URL: http://172.17.0.1:8010
+      LANGUAGE_TOGGLE_DISABLED: false
+      DEVICE_INTELLIGENCE_ENABLED: true
+      #      API_BASE_URL: http://mocks:8010
+      PORT: 5010
+      NODE_ENV: development
+    ports:
+      - "5010:5010"
+    depends_on:
+      - db
+      - mocks
+      - core-stub
+    links:
+      - mocks
