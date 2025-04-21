@@ -7,7 +7,7 @@
     "start:ci": "yarn build && NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ DEVICE_INTELLIGENCE_ENABLED=true yarn start",
     "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8010/ npm-run-all -p -r mocks dev",
     "dev": "nodemon src/app.js",
-    "build": "yarn build-sass && yarn build-js && yarn copy-assets",
+    "build": "yarn build-sass && yarn build-js && yarn copy-assets && yarn copy-js",
     "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
     "copy-assets": "mkdir -p dist && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts && copyfiles -u 3 src/assets/images/** dist/public/images",
     "build-js": "yarn build-js:analytics && yarn build-js:device-intelligence && yarn build-js:all",
