@@ -18,8 +18,10 @@ module.exports = class PlaywrightDevPage {
   }
 
   async selectCountry(value) {
-    const select = this.page.locator("select");
-    select.selectOption({ label: value });
+    // The country selector is not a select component when javascript is enabled
+    const input = this.page.locator("#country");
+    input.fill(value);
+    await this.page.click("#country__option--0");
   }
 
   async getSelectedCountry() {
