@@ -17,15 +17,16 @@ module.exports = {
     PATHS: {
       ADDRESS: "/",
     },
+    FRONTEND_DOMAIN: process.env.FRONTEND_DOMAIN || "localhost",
     GTM: {
-      ANALYTICS_COOKIE_DOMAIN:
-        process.env.ANALYTICS_COOKIE_DOMAIN || "localhost",
       UA_ENABLED: process.env.UA_ENABLED || "false",
       UA_CONTAINER_ID: process.env.UA_CONTAINER_ID,
       GA4_ENABLED: process.env.GA4_ENABLED || "false",
       GA4_CONTAINER_ID: process.env.GA4_CONTAINER_ID,
     },
-    LANGUAGE_TOGGLE_DISABLED: process.env.LANGUAGE_TOGGLE_DISABLED || "true",
+    LANGUAGE_TOGGLE_DISABLED: process.env.LANGUAGE_TOGGLE_DISABLED || "false",
+    DEVICE_INTELLIGENCE_ENABLED:
+      process.env.DEVICE_INTELLIGENCE_ENABLED || "false",
   },
   LOG_LEVEL: process.env.LOG_LEVEL || "request",
   PORT: process.env.PORT || 5010,

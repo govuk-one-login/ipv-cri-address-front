@@ -13,8 +13,10 @@ const setScenarioHeaders = commonExpress.lib.scenarioHeaders;
 const setAxiosDefaults = commonExpress.lib.axios;
 
 const { setAPIConfig, setOAuthPaths } = require("./lib/settings");
-const { setGTM, setLanguageToggle } = commonExpress.lib.settings;
-const { getGTM, getLanguageToggle } = commonExpress.lib.locals;
+const { setGTM, setLanguageToggle, setDeviceIntelligence } =
+  commonExpress.lib.settings;
+const { getGTM, getLanguageToggle, getDeviceIntelligence } =
+  commonExpress.lib.locals;
 const {
   setI18n,
 } = require("@govuk-one-login/di-ipv-cri-common-express/src/lib/i18next");
@@ -139,14 +141,20 @@ setI18n({
   router,
   config: {
     secure: true,
-    cookieDomain: APP.GTM.ANALYTICS_COOKIE_DOMAIN,
+    cookieDomain: APP.FRONTEND_DOMAIN,
   },
 });
 
 // Common express relies on 0/1 strings
 const showLanguageToggle = APP.LANGUAGE_TOGGLE_DISABLED === "true" ? "0" : "1";
-setLanguageToggle({ app, showLanguageToggle: showLanguageToggle });
+setLanguageToggle({ app, showLanguageToggle });
 app.get("nunjucks").addGlobal("addLanguageParam", addLanguageParam);
+
+setDeviceIntelligence({
+  app,
+  deviceIntelligenceEnabled: APP.DEVICE_INTELLIGENCE_ENABLED,
+  deviceIntelligenceDomain: APP.FRONTEND_DOMAIN,
+});
 
 setAPIConfig({
   app,
@@ -159,7 +167,7 @@ setOAuthPaths({ app, entryPointPath: APP.PATHS.ADDRESS });
 
 setGTM({
   app,
-  analyticsCookieDomain: APP.GTM.ANALYTICS_COOKIE_DOMAIN,
+  analyticsCookieDomain: APP.FRONTEND_DOMAIN,
   uaEnabled: APP.GTM.UA_ENABLED,
   uaContainerId: APP.GTM.UA_CONTAINER_ID,
   ga4Enabled: APP.GTM.GA4_ENABLED,
@@ -174,6 +182,7 @@ setGTM({
 
 router.use(getGTM);
 router.use(getLanguageToggle);
+router.use(getDeviceIntelligence);
 
 router.use(setScenarioHeaders);
 router.use(setAxiosDefaults);

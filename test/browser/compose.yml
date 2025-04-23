@@ -31,6 +31,7 @@ services:
       REDIS_SESSION_URL: db
       API_BASE_URL: http://172.17.0.1:8010
       LANGUAGE_TOGGLE_DISABLED: false
+      DEVICE_INTELLIGENCE_ENABLED: true
       #      API_BASE_URL: http://mocks:8010
       PORT: 5010
       NODE_ENV: development

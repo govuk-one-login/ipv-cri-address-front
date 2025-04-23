@@ -58,7 +58,7 @@ Before(async function ({ pickle } = {}) {
 
 // Create a new test context and page per scenario
 Before(async function () {
-  this.context = await global.browser.newContext({ javaScriptEnabled: false });
+  this.context = await global.browser.newContext({});
 
   if (this.SCENARIO_ID_HEADER) {
     await this.context.setExtraHTTPHeaders({
