@@ -2,6 +2,7 @@ const {
   alphaNumericWithSpecialChars,
   isPreviousYear,
   ukBuildingAddressEmptyValidator,
+  isNotZero,
 } = require("./addressValidator");
 
 const today = new Date();
@@ -18,7 +19,7 @@ const validYears = [
   "2021",
   "2010",
   "1970",
-  "0000",
+  "0001",
   String(today.getFullYear()),
 ];
 
@@ -52,6 +53,17 @@ describe("Address validator", () => {
     it("should fail with invalid dates", () => {
       const results = invalidFutureYears.map(isPreviousYear);
       results.forEach((val) => expect(val).to.equal(false));
+    });
+  });
+
+  describe("isNotZero", () => {
+    it("should pass with valid year", () => {
+      const results = validYears.map(isNotZero);
+      results.forEach((val) => expect(val).to.equal(true));
+    });
+
+    it("should fail with invalid dates", () => {
+      expect(isNotZero("0000")).to.equal(false);
     });
   });
 
