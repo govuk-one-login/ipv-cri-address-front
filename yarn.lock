@@ -1931,11 +1931,6 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.4.tgz#56e2cc26c397c038fab0e3a917a12d5c5909e901"
   integrity sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==
 
-"@types/overload-protection@1.2.4":
-  version "1.2.4"
-  resolved "https://registry.yarnpkg.com/@types/overload-protection/-/overload-protection-1.2.4.tgz#d0ebacee6c95be3421ab252edbc2b801a74ee9b5"
-  integrity sha512-zbKBN5pZXwF4yiXUeF0Cng4Y+sqqTWVeyi++uR6Ycd8oThOGPBMEdHyX81Z1vU4wojh9+NDS0y6JX7nM6ylBCw==
-
 "@types/responselike@^1.0.0":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@types/responselike/-/responselike-1.0.3.tgz#cc29706f0a397cfe6df89debfe4bf5cea159db50"

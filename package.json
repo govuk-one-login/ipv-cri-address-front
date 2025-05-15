@@ -54,12 +54,10 @@
     "hmpo-i18n": "7.0.0",
     "hmpo-logger": "8.0.0",
     "nunjucks": "3.2.4",
-    "overload-protection": "1.2.3",
     "wiremock": "3.10.0"
   },
   "devDependencies": {
     "@cucumber/cucumber": "11.0.1",
-    "@types/overload-protection": "1.2.4",
     "chai": "4.4.1",
     "chai-as-promised": "7.1.1",
     "eslint": "8.56.0",
