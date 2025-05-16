@@ -37,4 +37,14 @@ module.exports = {
     SESSION_URL: process.env.REDIS_SESSION_URL,
     PORT: process.env.REDIS_PORT || 6379,
   },
+  OVERLOAD_PROTECTION: {
+    production: process.env.NODE_ENV === "production",
+    clientRetrySecs: 1,
+    sampleInterval: 5,
+    maxEventLoopDelay: 400,
+    maxHeapUsedBytes: 0,
+    maxRssBytes: 0,
+    errorPropagationMode: false,
+    logging: "error",
+  },
 };
