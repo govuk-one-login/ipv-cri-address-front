@@ -17,7 +17,6 @@ module.exports = {
     PATHS: {
       ADDRESS: "/",
     },
-    FRONTEND_DOMAIN: process.env.FRONTEND_DOMAIN || "localhost",
     GTM: {
       UA_ENABLED: process.env.UA_ENABLED || "false",
       UA_CONTAINER_ID: process.env.UA_CONTAINER_ID,
@@ -27,6 +26,9 @@ module.exports = {
     LANGUAGE_TOGGLE_DISABLED: process.env.LANGUAGE_TOGGLE_DISABLED || "false",
     DEVICE_INTELLIGENCE_ENABLED:
       process.env.DEVICE_INTELLIGENCE_ENABLED || "false",
+    DEVICE_INTELLIGENCE_DOMAIN:
+      process.env.DEVICE_INTELLIGENCE_DOMAIN || "account.gov.uk",
+    FRONTEND_DOMAIN: process.env.FRONTEND_DOMAIN || "localhost",
   },
   LOG_LEVEL: process.env.LOG_LEVEL || "request",
   PORT: process.env.PORT || 5010,
