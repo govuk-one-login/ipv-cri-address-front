@@ -906,7 +906,10 @@ Resources:
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
-      OKActions: []
+        - !ImportValue platform-alarm-critical-alert-topic
+      OKActions:
+        - !ImportValue core-infrastructure-AlarmTopic
+        - !ImportValue platform-alarm-critical-alert-topic
       InsufficientDataActions: []
       MetricName: TaskCount
       Namespace: ECS/ContainerInsights
@@ -929,7 +932,10 @@ Resources:
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
-      OKActions: []
+        - !ImportValue platform-alarm-critical-alert-topic
+      OKActions:
+        - !ImportValue core-infrastructure-AlarmTopic
+        - !ImportValue platform-alarm-critical-alert-topic
       InsufficientDataActions: []
       MetricName: TaskCount
       Namespace: ECS/ContainerInsights
@@ -951,7 +957,10 @@ Resources:
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
-      OKActions: []
+        - !ImportValue platform-alarm-critical-alert-topic
+      OKActions:
+        - !ImportValue core-infrastructure-AlarmTopic
+        - !ImportValue platform-alarm-critical-alert-topic
       InsufficientDataActions: []
       MetricName: HTTPCode_Target_5XX_Count
       Namespace: AWS/ApplicationELB
@@ -976,6 +985,10 @@ Resources:
       AlarmDescription: >
         The number of HTTP 5XX server error codes that originate from the
         target group is greater than 5% of all traffic.
+      AlarmActions:
+        - !ImportValue platform-alarm-warning-alert-topic
+      OKActions:
+        - !ImportValue platform-alarm-warning-alert-topic
       EvaluationPeriods: 2
       DatapointsToAlarm: 2
       Threshold: 5
