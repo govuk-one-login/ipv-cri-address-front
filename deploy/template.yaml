@@ -39,11 +39,6 @@ Parameters:
     Type: String
     Default: "None"
 
-  SupportManualURL:
-    Type: String
-    Default: "https://team-manual.account.gov.uk/teams/CRI-Orange-team/supporting-cri-orange/address-credential-issuer-runbook"
-    Description: The support manual URL to be provided in alarm messages.
-
   DeployAlarmsInDevEnvironment:
     Description: "Set to the string value `true` to deploy alarms in a DEV environment"
     Type: String
@@ -66,6 +61,10 @@ Conditions:
     - !Equals [!Ref DeployAlarmsInDevEnvironment, "true"]
 
 Mappings:
+  StaticVariables:
+    Urls:
+      SupportManualURL: "https://team-manual.account.gov.uk/teams/CRI-Orange-team/supporting-cri-orange/address-credential-issuer-runbook"
+
   EnvironmentConfiguration:
     dev:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
@@ -692,7 +691,9 @@ Resources:
     Condition: DeployAlarms
     Properties:
       AlarmName: !Sub "${AWS::StackName}-${Environment}-AddressFE5XXErrorCriticalAlarm"
-      AlarmDescription: !Sub "Threshold exceeds 80% with a minimum of 20 invocations in 2 out of the last 5 evaluation periods. ${SupportManualURL}"
+      AlarmDescription: !Sub
+        - "Threshold exceeds 80% with a minimum of 20 invocations in 2 out of the last 5 evaluation periods. Runbook: ${SupportManualURL}"
+        - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
@@ -902,7 +903,9 @@ Resources:
     Type: AWS::CloudWatch::Alarm
     Condition: DeployAlarms
     Properties:
-      AlarmDescription: !Sub Address ${Environment} frontend no ECS service tasks
+      AlarmDescription: !Sub
+        - "Address ${Environment} frontend no ECS service tasks. Runbook: ${SupportManualURL}"
+        - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
@@ -928,7 +931,9 @@ Resources:
     Type: AWS::CloudWatch::Alarm
     Condition: DeployAlarms
     Properties:
-      AlarmDescription: !Sub Address ${Environment} frontend below desired ECS service tasks
+      AlarmDescription: !Sub
+        - "Address ${Environment} frontend below desired ECS service tasks. Runbook: ${SupportManualURL}"
+        - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
@@ -953,7 +958,9 @@ Resources:
   Address5XXOnELB:
     Type: AWS::CloudWatch::Alarm
     Properties:
-      AlarmDescription: !Sub Address ${Environment} frontend 5XX count
+      AlarmDescription: !Sub
+        - "Address ${Environment} frontend 5XX count. Runbook: ${SupportManualURL}"
+        - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue core-infrastructure-AlarmTopic
@@ -979,7 +986,7 @@ Resources:
 
   FrontTargetGroup5xxPercentErrors:
     Type: AWS::CloudWatch::Alarm
-    # Condition: UseCanaryDeployment
+    Condition: UseCanaryDeployment
     Properties:
       AlarmName: FrontTargetGroup5xxPercentAlarm
       AlarmDescription: >
