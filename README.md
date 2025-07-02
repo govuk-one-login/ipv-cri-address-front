@@ -41,6 +41,7 @@ Run `git config --unset-all core.hooksPath` to reset your git hook settings.
 - `DEVICE_INTELLIGENCE_ENABLED` - Feature flag to disable device intelligence, defaulted to `false`
 - `DEVICE_INTELLIGENCE_DOMAIN` - Domain to set the device intelligence cookie, defaults to `account.gov.uk`
 - `LANGUAGE_TOGGLE_DISABLED` - Feature flag to disable Language Toggle, defaulted to `true`
+- `MAY_2025_REBRAND_ENABLED` - Feature flag to enable the May 2025 GOV.UK branding change, defaults to `false`
 
 # Testing
 
