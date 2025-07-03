@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  mocks:
+    image: wiremock/wiremock
+    volumes:
+      - "../mocks:/home/wiremock"
+    ports:
+      - "8010:8080"
+
+  web:
+    build:
+      context: ../..
+      dockerfile: local.Dockerfile
+    environment:
+      API_BASE_URL: http://172.17.0.1:8010
+      MOCK_API: true
+      PORT: 5010
+      NODE_ENV: development
+      DEVICE_INTELLIGENCE_ENABLED: true
+      DEVICE_INTELLIGENCE_DOMAIN: localhost 
+    ports:
+      - "5010:5010"
+    depends_on:
+      - mocks
