@@ -71,30 +71,35 @@ Mappings:
       minECSCount: 1
       maxECSCount: 4
       deviceIntelligenceEnabled: true
+      may2025RebrandEnabled: true
       logLevel: "info"
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 6
       maxECSCount: 60
       deviceIntelligenceEnabled: true
+      may2025RebrandEnabled: true
       logLevel: "info"
     staging:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
       maxECSCount: 4
       deviceIntelligenceEnabled: true
+      may2025RebrandEnabled: true
       logLevel: "warn"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
       maxECSCount: 4
       deviceIntelligenceEnabled: true
+      may2025RebrandEnabled: false
       logLevel: "warn"
     production:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables
       minECSCount: 6
       maxECSCount: 60
       deviceIntelligenceEnabled: true
+      may2025RebrandEnabled: false
       logLevel: "warn"
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
@@ -408,6 +413,13 @@ Resources:
                   EnvironmentConfiguration,
                   !Ref Environment,
                   deviceIntelligenceEnabled,
+                ]
+            - Name: MAY_2025_REBRAND_ENABLED
+              Value:
+                !FindInMap [
+                  EnvironmentConfiguration,
+                  !Ref Environment,
+                  may2025RebrandEnabled,
                 ]
             - Name: NODE_ENV
               Value: "production"
