@@ -40,7 +40,7 @@ jobs:
         run: sam validate --region ${{ env.AWS_REGION }} -t deploy/template.yaml
 
       - name: Deploy SAM app to ECR
-        uses: govuk-one-login/devplatform-upload-action-ecr@v1.3.0
+        uses: govuk-one-login/devplatform-upload-action-ecr@v1.4.0
         with:
           artifact-bucket-name: ${{ secrets.BUILD_ARTIFACT_BUCKET }}
           container-sign-kms-key-arn: ${{ secrets.BUILD_CONTAINER_SIGN_KMS_KEY }}
