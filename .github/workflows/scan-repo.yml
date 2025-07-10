@@ -30,7 +30,7 @@ jobs:
     if: ${{ success() || needs.coverage.result == 'skipped' }}
     steps:
       - name: Run SonarCloud scan
-        uses: govuk-one-login/github-actions/code-quality/sonarcloud@5480cced560e896dea12c47ea33e548a4d093e65
+        uses: govuk-one-login/github-actions/code-quality/sonarcloud@c8eefadf581d2087ce2af48b7060c1329cfa5251
         with:
           sonar-token: ${{ secrets.SONAR_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -44,6 +44,6 @@ jobs:
       security-events: write
     steps:
       - name: Run CodeQL scan
-        uses: govuk-one-login/github-actions/code-quality/codeql@145049ebd9a33e57da9a852847c4ee2c8970ea51
+        uses: govuk-one-login/github-actions/code-quality/codeql@c8eefadf581d2087ce2af48b7060c1329cfa5251
         with:
           languages: javascript
