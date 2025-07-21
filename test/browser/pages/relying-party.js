@@ -17,14 +17,14 @@ module.exports = class PlaywrightDevPage {
     const url = this.page.url();
 
     const isCorrectPage =
-      url.startsWith("http://example.net") &&
+      url.startsWith("http://localhost:8010") &&
       url.endsWith("client_id=standalone&state=sT%40t3&code=FACEFEED");
 
     return isCorrectPage;
   }
 
   isRelyingPartyServer() {
-    return new URL(this.page.url()).origin === "http://example.net";
+    return new URL(this.page.url()).origin === "http://localhost:8010";
   }
 
   hasSuccessQueryParams() {
