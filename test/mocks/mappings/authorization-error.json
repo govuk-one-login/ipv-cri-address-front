@@ -29,7 +29,7 @@
         "jsonBody": {
           "session_id": "ABADCAFE",
           "state": "sT@t3",
-          "redirect_uri": "http://example.net/return"
+          "redirect_uri": "http://localhost:8010/return"
         }
       }
     },
@@ -206,7 +206,7 @@
       "response": {
         "status": 500,
         "jsonBody": {
-          "redirect_uri": "http://example.net",
+          "redirect_uri": "http://localhost:8010/return",
           "oauth_error": {
             "error_description": "gateway",
             "error": "server_error"

@@ -29,7 +29,7 @@
         "jsonBody": {
           "session_id": "ABADCAFE",
           "state": "sT@t3",
-          "redirect_uri": "http://example.net/test"
+          "redirect_uri": "http://localhost:8010/return"
         }
       }
     },
