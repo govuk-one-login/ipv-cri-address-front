@@ -47,7 +47,7 @@
     "express": "4.21.2",
     "express-async-errors": "3.1.1",
     "express-session": "1.18.1",
-    "govuk-frontend": "4.10.0",
+    "govuk-frontend": "4.10.1",
     "hmpo-components": "7.1.0",
     "hmpo-config": "4.0.0",
     "hmpo-form-wizard": "13.0.2",
