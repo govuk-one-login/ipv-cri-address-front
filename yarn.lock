@@ -1160,7 +1160,7 @@
   resolved "https://registry.yarnpkg.com/@govuk-one-login/di-ipv-cri-common-express/-/di-ipv-cri-common-express-11.1.0.tgz#a506c905331c20d006ac886ddd0bc2dd410eb8e2"
   integrity sha512-mZFl69j8MkxlwOmwG4oCZ9dB2N3WOXCd7VgFTabp27z9aa9ITDAqs2a7q0d1bDSdPCv/ef0A8YV5nIz41cN7kg==
   dependencies:
-    "@govuk-one-login/frontend-ui" "^1.2.0"
+    "@govuk-one-login/frontend-ui" "1.3.12"
     async "^3.2.6"
     compression "^1.7.5"
     connect-redis "6.1.3"
@@ -1203,7 +1203,7 @@
     forwarded-parse "^2.1.2"
     pino "^8.20.0"
 
-"@govuk-one-login/frontend-ui@^1.2.0":
+"@govuk-one-login/frontend-ui@1.3.12":
   version "1.3.12"
   resolved "https://registry.yarnpkg.com/@govuk-one-login/frontend-ui/-/frontend-ui-1.3.12.tgz#f859bfef55c4c22aed98c50fdb2d1ea686f8031c"
   integrity sha512-EKf43hi61A5IhIlaFRO2gPlOTPkHvRDBLCiBGyWwppibDUvN+tYdvlhtn1UDsYZaHRXSl6cow/1ILE/DOwH3Vg==
