@@ -99,7 +99,7 @@ Mappings:
       minECSCount: 6
       maxECSCount: 60
       deviceIntelligenceEnabled: true
-      may2025RebrandEnabled: false
+      may2025RebrandEnabled: true
       logLevel: "warn"
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
