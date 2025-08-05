@@ -8,6 +8,9 @@ module.exports = {
   isPreviousYear: function (val) {
     return new Date(val).getFullYear() <= new Date().getFullYear();
   },
+  isNotZero: function (val) {
+    return val !== "0000";
+  },
   ukBuildingAddressEmptyValidator: function (houseNumber, houseName) {
     const trimOrDefaultToEmpty = (value) =>
       value != null ? String(value).trim() : "";
