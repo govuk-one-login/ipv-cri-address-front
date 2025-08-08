@@ -7,10 +7,12 @@
 
 {% set hmpoPageKey = "address-confirm" %}
 {% set gtmJourney = "address - end" %}
+{% set isPageDataSensitiveFlag = false %}
+{% set contentId = b5e5b9eb - 3310 - 4254 - ae84 - 3 fa8a7740372 %}
 
 {% block mainContent %}
 
-<h1 id="header" class="govuk-heading-l">{{translate("pages.address-confirm.title")}}</h1>
+  <h1 id="header" class="govuk-heading-l">{{translate("pages.address-confirm.title")}}</h1>
 
   {{ govukWarningText({
     text: translate("pages.address-confirm.warning"),
@@ -128,9 +130,9 @@
 
   {% call hmpoForm(ctx) %}
 
-    {% if isMoreInfoRequired %}
+  {% if isMoreInfoRequired %}
 
-      {{ hmpoRadios(ctx, {
+    {{ hmpoRadios(ctx, {
         id: "hasPreviousUKAddressWithinThreeMonths",
         name: "hasPreviousUKAddressWithinThreeMonths",
         value: "hasPreviousUKAddressWithinThreeMonths",
@@ -145,9 +147,9 @@
         fields: hasPreviousUKAddressWithinThreeMonths.items
       }) }}
 
-    {% endif %}
+  {% endif %}
 
-    {{ hmpoSubmit(ctx, {
+  {{ hmpoSubmit(ctx, {
         text: translate("pages.address-confirm.buttons.next"),
         id: "continue",
         attributes: {
@@ -156,7 +158,7 @@
         "data-link": "/undefined"
         }
       }) }}
-    {%- include "../components/continue-submit-spinner.njk" -%}
+  {%- include "../components/continue-submit-spinner.njk" -%}
 
   {% endcall %}
 
@@ -165,11 +167,12 @@
     nonce: cspNonce,
     statusCode: '200',
     englishPageTitle: 'pages.address-confirm.title' | translate,
+    isPageDataSensitiveFlag: isPageDataSensitiveFlag,
     taxonomyLevel1: 'web cri',
     taxonomyLevel2: 'address',
-    content_id: 'b5e5b9eb-3310-4254-ae84-3fa8a7740372',
+    content_id: contentId,
     loggedInStatus: true,
     dynamic: false
   }) }}
 
-  {% endblock %}
+{% endblock %}

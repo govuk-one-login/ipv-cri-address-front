@@ -6,6 +6,8 @@
 {% set hmpoPageKey = "address-results" %}
 {% set hmpoPageContent = "address-results" %}
 {% set gtmJourney = "address - middle" %}
+{% set isPageDataSensitiveFlag = true %}
+{% set contentId = "06f6fd28-448d-4207-a012-0ef7aa2fef67" %}
 
 {% block mainContent %}
 
@@ -13,18 +15,18 @@
 
   {{hmpoHtml(translate("links.changePostcode"))}}
 
-  {% call hmpoForm(ctx, {autocomplete:'on'}) %}
+  {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
 
-    {{ hmpoSelect(ctx, {
+  {{ hmpoSelect(ctx, {
       id: "addressResults",
       label: translate("fields.addressResults.label"),
       hint: "",
       items: addresses
     }) }}
 
-    {{ hmpoHtml(translate("links.cantFindAddress")) }}
+  {{ hmpoHtml(translate("links.cantFindAddress")) }}
 
-    {{ hmpoSubmit(ctx, {id: "continue", attributes: {"data-nav": true, "data-link": "/undefined"}, text: translate("buttons.select-address")}) }}
+  {{ hmpoSubmit(ctx, {id: "continue", attributes: {"data-nav": true, "data-link": "/undefined"}, text: translate("buttons.select-address")}) }}
 
   {% endcall %}
 
@@ -32,9 +34,10 @@
     nonce: cspNonce,
     statusCode: '200',
     englishPageTitle: 'pages.address-results.title' | translate,
+     isPageDataSensitiveFlag: isPageDataSensitiveFlag,
     taxonomyLevel1: 'web cri',
     taxonomyLevel2: 'address',
-    contentId: '06f6fd28-448d-4207-a012-0ef7aa2fef67',
+    contentId: contentId,
     loggedInStatus: true,
     dynamic: false
   }) }}

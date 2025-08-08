@@ -6,7 +6,8 @@
 {% set hmpoPageKey = "address-previous-results" %}
 {% set hmpoPageContent = "address-previous-results" %}
 {% set gtmJourney = "address - prev - middle" %}
-
+{% set isPageDataSensitiveFlag = true %}
+{% set contentId = "083cb516-b395-47a1-971b-8dfc0f900dea" %}
 
 {% block mainContent %}
 
@@ -16,16 +17,16 @@
 
   {% call hmpoForm(ctx) %}
 
-    {{ hmpoSelect(ctx, {
+  {{ hmpoSelect(ctx, {
       id: "addressResults",
       label: translate("fields.addressResultsPrevious.label"),
       hint: "",
       items: addresses
     }) }}
 
-    {{ hmpoHtml(translate("links.previous.cantFindAddress")) }}
+  {{ hmpoHtml(translate("links.previous.cantFindAddress")) }}
 
-    {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/previous-address-check"}, id: "continue", text: translate("buttons.select-address")}) }}
+  {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/previous-address-check"}, id: "continue", text: translate("buttons.select-address")}) }}
 
   {% endcall %}
 
@@ -33,9 +34,10 @@
     nonce: cspNonce,
     statusCode: '200',
     englishPageTitle: 'pages.address-previous-results.title' | translate,
+    isPageDataSensitiveFlag: isPageDataSensitiveFlag,
     taxonomyLevel1: 'web cri',
     taxonomyLevel2: 'address',
-    contentId: '06f6fd28-448d-4207-a012-0ef7aa2fef67',
+    contentId: contentId,
     loggedInStatus: true,
     dynamic: false
   }) }}

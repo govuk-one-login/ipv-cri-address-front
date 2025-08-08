@@ -2,6 +2,8 @@
 {% set hmpoPageKey = "country" %}
 {% set hmpoPageContent = "country" %}
 {% set gtmJourney = "address - middle" %}
+{% set isPageDataSensitiveFlag = true %}
+{% set contentId = "189ae53d-c845-477a-92f3-24f42e0b597f" %}
 
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-select/macro.njk" import hmpoSelect %}
@@ -11,13 +13,13 @@
 
   {% call hmpoForm(ctx) %}
 
-    {{ hmpoSelect(ctx, {
+  {{ hmpoSelect(ctx, {
       id: "country",
       label: translate("pages.country.title"),
       isPageHeading: true
     }) }}
 
-    {{ hmpoSubmit(ctx, { id: "continue", text: translate("buttons.next") }) }}
+  {{ hmpoSubmit(ctx, { id: "continue", text: translate("buttons.next") }) }}
 
   {% endcall %}
 
@@ -25,6 +27,7 @@
     nonce: cspNonce,
     statusCode: '200',
     englishPageTitle: 'pages.addrescountryPickersSearch.title' | translate,
+    isPageDataSensitiveFlag: isPageDataSensitiveFlag,
     taxonomyLevel1: 'web cri',
     taxonomyLevel2: 'address',
     contentId: 'd29ae122-986d-4730-8dac-8798b79f7aba',

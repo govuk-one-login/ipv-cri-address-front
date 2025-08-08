@@ -1,7 +1,9 @@
 {% extends "base-form.njk" %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
+
+{% set isPageDataSensitiveFlag = false %}
+{% set contentId = "003169c0-f24a-4640-935f-b6e19d04d4a8" %}
 
 {% set hmpoPageKey = "address-form-previous" %}
 {% set hmpoPageContent = "address-form-previous" %}
@@ -15,18 +17,19 @@
 
   {% call hmpoForm(ctx) %}
 
-    {% include "../components/address-input-fields.njk" %}
+  {% include "../components/address-input-fields.njk" %}
 
-    {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
+  {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
   {{ ga4OnPageLoad({
       nonce: cspNonce,
       statusCode: "200",
       englishPageTitle: "pages.address-form.previous.title" | translate,
+      isPageDataSensitiveFlag: isPageDataSensitiveFlag,
       taxonomyLevel1: "web cri",
       taxonomyLevel2: "address",
-      contentId: "003169c0-f24a-4640-935f-b6e19d04d4a8",
+      contentId: contentId,
       loggedInStatus: false,
       dynamic: false
     }) }}

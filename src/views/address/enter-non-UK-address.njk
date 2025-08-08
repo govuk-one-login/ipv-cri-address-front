@@ -9,7 +9,8 @@
 {% set gtmJourney = "address - middle" %}
 {% set label = translate("fields.nonUKAddressYearFrom.label") %}
 {% set title = translate("fields.nonUKAddressYearFrom.title") %}
-
+{% set isPageDataSensitiveFlag = false %}
+{% set contentId = "38f45a0f-7f57-4e17-8fdc-8c557cfe5fff" %}
 
 {% block mainContent %}
 
@@ -42,9 +43,10 @@
     nonce: cspNonce,
     statusCode: '200',
     englishPageTitle: 'pages.address-form.title' | translate,
+    isPageDataSensitiveFlag: isPageDataSensitiveFlag,
     taxonomyLevel1: 'web cri',
     taxonomyLevel2: 'address',
-    contentId: '003169c0-f24a-4640-935f-b6e19d04d4a8',
+    contentId: contentId,
     loggedInStatus: true,
     dynamic: false
   }) }}
