@@ -181,6 +181,14 @@ Feature: International address - Enter your address
     Then they see an error summary with failed validation message: "Region must be 60 characters or less"
     Then they see an error summary with failed validation message: "Town, suburb or city must be 60 characters or less"
 
+ Scenario: Enter international address details fails validation when the year they started living at address is more than one hundred years ago
+    Given they have selected the country "Kenya"
+    When they click the continue button
+    Then they should see international address form
+    And they add the "1900" year they started living at this address
+    And they continue to confirm international address
+    Then they see an error summary with failed validation message: "Enter a year less than 100 years ago"
+
   Scenario: Change selected international country, selected same country leads to international page
     Given they have selected the country "Kenya"
     When they click the continue button
