@@ -1,6 +1,7 @@
 const {
   alphaNumericWithSpecialChars,
   isPreviousYear,
+  isLessThanOneHundredYearsAgo,
   ukBuildingAddressEmptyValidator,
 } = require("./addressValidator");
 
@@ -14,12 +15,14 @@ const validInput = [
   "ST. JOHN'S ROAD",
 ];
 
+const currentYear = today.getFullYear();
+
 const validYears = [
-  "2021",
-  "2010",
-  "1970",
-  "0000",
-  String(today.getFullYear()),
+  currentYear - 3,
+  currentYear - 15,
+  currentYear - 50,
+  currentYear - 99,
+  currentYear,
 ];
 
 const invalidInput = ["()%&^5$£@!|", "BadFlatNumber%"];
@@ -52,6 +55,23 @@ describe("Address validator", () => {
     it("should fail with invalid dates", () => {
       const results = invalidFutureYears.map(isPreviousYear);
       results.forEach((val) => expect(val).to.equal(false));
+    });
+  });
+
+  describe("isLessThanOneHundredYearsAgo", () => {
+    it("should pass with valid year", () => {
+      const results = validYears.map(isLessThanOneHundredYearsAgo);
+      results.forEach((val) => expect(val).to.equal(true));
+    });
+
+    it("should fail with date > 100 years", () => {
+      const invalidPastYears = [currentYear - 101, currentYear - 1000, 0];
+      const results = invalidPastYears.map(isLessThanOneHundredYearsAgo);
+      results.forEach((val) => expect(val).to.equal(false));
+    });
+
+    it("should fail with date 0000", () => {
+      expect(isLessThanOneHundredYearsAgo("0000")).to.equal(false);
     });
   });
 

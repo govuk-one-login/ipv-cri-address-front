@@ -8,6 +8,7 @@ const {
 const {
   alphaNumericWithSpecialChars,
   isPreviousYear,
+  isLessThanOneHundredYearsAgo,
 } = require("../validators/addressValidator");
 
 const { underMaxLength } = require("../validators/underMaxLengthValidator");
@@ -231,6 +232,10 @@ module.exports = {
         type: "isPreviousDate",
         fn: isPreviousYear,
       },
+      {
+        type: "isLessThanOneHundredYearsAgo",
+        fn: isLessThanOneHundredYearsAgo,
+      },
     ],
   },
   nonUKAddressYearFrom: {
@@ -245,6 +250,10 @@ module.exports = {
       {
         type: "isPreviousDate",
         fn: isPreviousYear,
+      },
+      {
+        type: "isLessThanOneHundredYearsAgo",
+        fn: isLessThanOneHundredYearsAgo,
       },
     ],
   },
