@@ -2,8 +2,12 @@
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 
-{% set isPageDataSensitiveFlag = false %}
-{% set contentId = "003169c0-f24a-4640-935f-b6e19d04d4a8" %}
+{% set isPageDataSensitive = false %}
+{% set pageTitleKey = "pages.address-form-previous.title" %}
+{% set contentID = "ec7749ee-cd54-4ab8-8a8e-c5feb3499853" %}
+{% set taxLevel2 = 'address' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = false %}
 
 {% set hmpoPageKey = "address-form-previous" %}
 {% set hmpoPageContent = "address-form-previous" %}
@@ -22,15 +26,5 @@
   {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
-  {{ ga4OnPageLoad({
-      nonce: cspNonce,
-      statusCode: "200",
-      englishPageTitle: "pages.address-form.previous.title" | translate,
-      isPageDataSensitiveFlag: isPageDataSensitiveFlag,
-      taxonomyLevel1: "web cri",
-      taxonomyLevel2: "address",
-      contentId: contentId,
-      loggedInStatus: false,
-      dynamic: false
-    }) }}
+
 {% endblock %}

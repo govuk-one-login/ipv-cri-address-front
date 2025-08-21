@@ -1,25 +1,18 @@
 {% extends "base-form.njk" %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 {% set hmpoPageKey = "addressProblem" %}
 {% set gtmJourney = "address - prev - middle" %}
-{% set isPageDataSensitiveFlag = false %}
-{% set contentId = "a0c9a8c7-ef06-42f1-990e-24be8eea707e" %}
+
+{% set isPageDataSensitive = false %}
+{% set pageTitleKey = "pages.addressProblem.title" %}
+{% set contentID = "a0c9a8c7-ef06-42f1-990e-24be8eea707e" %}
+{% set taxLevel2 = 'address' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = true %}
 
 {% set backLink = false %}
 
 {% block mainContent %}
 
   {% include "../components/address-problem-field.njk" %}
-  {{ ga4OnPageLoad({
-    nonce: cspNonce,
-    statusCode: '200',
-    englishPageTitle: 'pages.addressProblem.title' | translate,
-    isPageDataSensitiveFlag: isPageDataSensitiveFlag,
-    taxonomyLevel1: 'web cri',
-    taxonomyLevel2: 'address',
-    contentId: contentId,
-    loggedInStatus: true,
-    dynamic: false
-  })}}
 
 {% endblock %}

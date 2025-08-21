@@ -2,11 +2,15 @@
 {% set hmpoPageKey = "address-previous-search" %}
 {% set hmpoPageContent = "address-previous-search" %}
 {% set gtmJourney = "address - prev - start" %}
-{% set isPageDataSensitiveFlag = false %}
-{% set contentId = "3f01503e-4b44-4bd4-80d0-70d16177879f" %}
+
+{% set isPageDataSensitive = false %}
+{% set pageTitleKey = "pages.address-previous-search.title" %}
+{% set contentID = "3f01503e-4b44-4bd4-80d0-70d16177879f" %}
+{% set taxLevel2 = 'address' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = true %}
 
 {% from "hmpo-text/macro.njk" import hmpoText %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
 {% block mainContent %}
 
@@ -28,17 +32,5 @@
   {{ hmpoSubmit(ctx, {id:"continue", attributes: {"data-nav": true, "data-link": "/previous-results"}, text: translate("buttons.find-address")}) }}
 
   {% endcall %}
-
-  {{ ga4OnPageLoad({
-    nonce: cspNonce,
-    statusCode: '200',
-    englishPageTitle: 'pages.address-previous-search.title' | translate,
-    isPageDataSensitiveFlag: isPageDataSensitiveFlag,
-    taxonomyLevel1: 'web cri',
-    taxonomyLevel2: 'address',
-    contentId: contentId,
-    loggedInStatus: true,
-    dynamic: false
-  }) }}
 
 {% endblock %}
