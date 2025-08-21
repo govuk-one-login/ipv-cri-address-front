@@ -1,18 +1,27 @@
 {% extends "base-form.njk" %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 {% from "components/address-year-from-field.njk" import yearFromField %}
 
 {% set hmpoPageKey = "address-form" %}
 {% set hmpoPageContent = "address-form" %}
 {% set gtmJourney = "address - middle" %}
-{% set contentId = "d29ae122-986d-4730-8dac-8798b79f7aba" %}
+
+
+{% set isPageDataSensitive = false %}
+{% set pageTitleKey = "pages.address.title" %}
+{% if query.edit == "true" %}
+  {% set contentID = "8db200f0-55ce-40a5-867b-673c2ddac241" %}
+{% else %}
+{% set contentID = "003169c0-f24a-4640-935f-b6e19d04d4a8" %}
+{% endif %}
+{% set taxLevel2 = 'address' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = true %}
 
 {% set hmpoPageKey = "address-form" %}
 {% set label = translate("fields.addressYearFrom.label") %}
 {% set title = translate("fields.addressYearFrom.title") %}
-{% set isPageDataSensitiveFlag = false %}
 
 {% block mainContent %}
 
@@ -28,17 +37,5 @@
   {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
-
-  {{ ga4OnPageLoad({
-    nonce: cspNonce,
-    statusCode: '200',
-    englishPageTitle: 'pages.address-form.title' | translate,
-    isPageDataSensitiveFlag: isPageDataSensitiveFlag,
-    taxonomyLevel1: 'web cri',
-    taxonomyLevel2: 'address',
-    contentId: '003169c0-f24a-4640-935f-b6e19d04d4a8',
-    loggedInStatus: true,
-    dynamic: false
-  }) }}
 
 {% endblock %}

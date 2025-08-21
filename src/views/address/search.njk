@@ -2,13 +2,17 @@
 {% set hmpoPageKey = "addressSearch" %}
 {% set hmpoPageContent = "addressSearch" %}
 {% set gtmJourney = "address - start" %}
-{% set isPageDataSensitiveFlag = false %}
-{% set contentId = "d29ae122-986d-4730-8dac-8798b79f7aba" %}
 
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-text/macro.njk" import hmpoText %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
+
+{% set isPageDataSensitive = false %}
+{% set pageTitleKey = "pages.addressSearch.title" %}
+{% set contentID = "d29ae122-986d-4730-8dac-8798b79f7aba" %}
+{% set taxLevel2 = 'address' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = true %}
 
 {% block mainContent %}
 
@@ -42,17 +46,5 @@
   {%- include "../components/continue-submit-spinner.njk" -%}
 
   {% endcall %}
-
-  {{ ga4OnPageLoad({
-    nonce: cspNonce,
-    statusCode: '200',
-    englishPageTitle: 'pages.addressSearch.title' | translate,
-    taxonomyLevel1: 'web cri',
-    taxonomyLevel2: 'address',
-    contentId: contentId,
-    isPageDataSensitiveFlag: isPageDataSensitiveFlag,
-    loggedInStatus: true,
-    dynamic: false
-  }) }}
 
 {% endblock %}
