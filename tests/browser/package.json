@@ -1,0 +1,22 @@
+{
+  "name": "di-ipv-cri-address-front-tests",
+  "version": "1.0.0",
+  "description": "Browser tests for the frontend of the Address Credential Issuer",
+  "scripts": {
+    "test:browser": "cucumber-js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@cucumber/cucumber": "11.0.1",
+    "axios": "1.11.0",
+    "chai": "4.4.1",
+    "dotenv": "16.4.5",
+    "playwright": "1.32.0",
+    "wait-on": "8.0.4"
+  },
+  "devDependencies": {
+    "@aws-sdk/credential-providers": "3.782.0",
+    "aws4-axios": "3.4.0"
+  }
+}
