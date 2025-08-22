@@ -10,12 +10,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                client_id:
-                  type: string
-                request:
-                  type: string
+              $ref: "#/components/schemas/Authorization"
         required: true
       responses:
         "201":
@@ -23,14 +18,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  session_id:
-                    type: string
-                  state:
-                    type: string
-                  redirect_uri:
-                    type: string
+                $ref: "#/components/schemas/Session"
         "400":
           description: "400 response"
         "500":
@@ -41,17 +29,14 @@ paths:
       parameters:
         - name: "session_id"
           in: header
-          required: true
+          required: false
           schema:
             type: string
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                postcode:
-                  type: string
+              $ref: "#/components/schemas/Postcode"
         required: true
       responses:
         "200":
@@ -59,9 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
+                $ref: "#/components/schemas/PostcodeLookupResponse"
         "404":
           description: "404 response"
 
@@ -77,13 +60,17 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: "#/components/schemas/Address"
         required: true
       responses:
         "200":
           description: "Address saved successfully"
         "201":
           description: "Address saved and credential issued"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthorizationResponse"
 
   /authorization:
     get:
@@ -99,13 +86,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  authorizationCode:
-                    type: object
-                    properties:
-                      value:
-                        type: string
+                $ref: "#/components/schemas/AuthorizationResponse"
+        "500":
+          description: "500 response"
 
   /addresses/v2:
     get:
@@ -121,13 +104,104 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  addresses:
-                    type: array
+                $ref: "#/components/schemas/AddressesLookupResponse"
 
   /return:
     get:
       responses:
         "200":
           description: "200 response"
+
+components:
+  schemas:
+    Authorization:
+      required:
+        - "client_id"
+        - "request"
+      type: "object"
+      properties:
+        client_id:
+          type: "string"
+          minLength: 1
+        request:
+          type: "string"
+    
+    Session:
+      type: "object"
+      properties:
+        session_id:
+          type: "string"
+        state:
+          type: "string"
+        redirect_uri:
+          type: "string"
+          format: "uri"
+    
+    Postcode:
+      type: "object"
+      properties:
+        postcode:
+          type: "string"
+    
+    PostcodeLookupResponse:
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          uprn:
+            type: "string"
+          buildingNumber:
+            type: "string"
+          buildingName:
+            type: "string"
+          subBuildingName:
+            type: "string"
+          streetName:
+            type: "string"
+          addressLocality:
+            type: "string"
+          postalCode:
+            type: "string"
+    
+    Address:
+      type: "object"
+      properties:
+        uprn:
+          type: "string"
+        buildingNumber:
+          type: "string"
+        buildingName:
+          type: "string"
+        streetName:
+          type: "string"
+        addressLocality:
+          type: "string"
+        postalCode:
+          type: "string"
+    
+    AuthorizationResponse:
+      type: "object"
+      properties:
+        authorizationCode:
+          type: "object"
+          properties:
+            value:
+              type: "string"
+        redirect_uri:
+          type: "string"
+          format: "uri"
+        oauth_error:
+          type: "object"
+          properties:
+            error:
+              type: "string"
+            error_description:
+              type: "string"
+    
+    AddressesLookupResponse:
+      type: "object"
+      properties:
+        addresses:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/Address"
