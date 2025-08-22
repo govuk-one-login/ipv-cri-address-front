@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  mocks:
+    image: outofcoffee/imposter:3.25.1
+    volumes:
+      - "../imposter:/opt/imposter/config"
+    ports:
+      - "8080:8080"
+
+  web:
+    build:
+      context: ../..
+      dockerfile: local.Dockerfile
+    environment:
+      REDIS_SESSION_URL: db
+      API_BASE_URL: http://localhost:8080
+      PORT: 5050
+      NODE_ENV: development
+      LANGUAGE_TOGGLE_DISABLED: false
+      DEVICE_INTELLIGENCE_ENABLED: true
+      DEVICE_INTELLIGENCE_DOMAIN: localhost
+    ports:
+      - "5050:5050"
+    depends_on:
+      - mocks
+
+  cucumber:
+    build:
+      context: ../browser
+      dockerfile: pre-merge.Dockerfile
+    environment:
+      USE_LOCAL_API: true
+      GITHUB_ACTIONS: true
+      WEBSITE_HOST: http://localhost:5050
+      RELYING_PARTY_URL: "http://localhost:8080"
+    volumes:
+      - ./reports:/reports
