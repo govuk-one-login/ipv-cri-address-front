@@ -1,0 +1,133 @@
+openapi: "3.0.1"
+info:
+  version: "0.2"
+  title: "Address Credential Issuer Private API"
+
+paths:
+  /session:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                request:
+                  type: string
+        required: true
+      responses:
+        "201":
+          description: "201 response"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_id:
+                    type: string
+                  state:
+                    type: string
+                  redirect_uri:
+                    type: string
+        "400":
+          description: "400 response"
+        "500":
+          description: "500 response"
+
+  /postcode-lookup:
+    post:
+      parameters:
+        - name: "session_id"
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                postcode:
+                  type: string
+        required: true
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        "404":
+          description: "404 response"
+
+  /address:
+    put:
+      parameters:
+        - name: "session_id"
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        "200":
+          description: "Address saved successfully"
+        "201":
+          description: "Address saved and credential issued"
+
+  /authorization:
+    get:
+      parameters:
+        - name: session-id
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  authorizationCode:
+                    type: object
+                    properties:
+                      value:
+                        type: string
+
+  /addresses/v2:
+    get:
+      parameters:
+        - name: "session_id"
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "200 response"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  addresses:
+                    type: array
+
+  /return:
+    get:
+      responses:
+        "200":
+          description: "200 response"

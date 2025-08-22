@@ -1,0 +1,45 @@
+plugin: openapi
+specFile: ./private-api.yaml
+
+validation:
+  request: true
+
+resources:
+  # Session endpoint - maps client_id to session_id for testing
+  - method: POST
+    path: /session
+    requestBody:
+      jsonPath: $.client_id
+      value: "address-success"
+    capture:
+      cid:
+        jsonPath: $.client_id
+        store: testStore
+    response:
+      statusCode: 201
+      template: true
+      content: '{"session_id": "${stores.testStore.cid}", "state": "sT@t3", "redirect_uri": "http://localhost:8080/return"}'
+
+  # Session error scenario
+  - method: POST
+    path: /session
+    requestBody:
+      jsonPath: $.client_id
+      value: "session-error"
+    response:
+      statusCode: 500
+      content: "{}"
+
+  # Default session response
+  - method: POST
+    path: /session
+    response:
+      statusCode: 400
+      content: "{}"
+
+  # Return endpoint for testing
+  - method: GET
+    path: /return
+    response:
+      statusCode: 200
+      content: "OK"
