@@ -1,9 +1,0 @@
-{
-  "request": {
-    "method": "GET",
-    "urlPath": "/return"
-  },
-  "response": {
-    "status": 200
-  }
-}
