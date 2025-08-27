@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Browser tests for the frontend of the Address Credential Issuer",
   "scripts": {
-    "test:browser": "cucumber-js"
+    "test": "cucumber-js",
+    "test:ci": "cucumber-js --format json:reports/cucumber-report.json",
+    "test:only": "cucumber-js --tags @only --format json:reports/cucumber-report.json"
   },
   "author": "",
   "license": "MIT",
