@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/app.js",
-    "start:ci": "yarn build && NODE_ENV=development API_BASE_URL=http://127.0.0.1:8010/ DEVICE_INTELLIGENCE_ENABLED=true DEVICE_INTELLIGENCE_DOMAIN=localhost yarn start",
-    "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8010/ npm-run-all -p -r mocks dev",
+    "start:ci": "yarn build && NODE_ENV=development API_BASE_URL=http://127.0.0.1:8080/ DEVICE_INTELLIGENCE_ENABLED=true DEVICE_INTELLIGENCE_DOMAIN=localhost yarn start",
+    "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8080/ npm-run-all -p -r imposter dev",
     "dev": "nodemon src/app.js",
     "build": "yarn build-sass && yarn build-js && yarn copy-assets && yarn copy-js",
     "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
@@ -23,11 +23,12 @@
     "test": "mocha",
     "test:coverage": "nyc --reporter=lcov --reporter=text-summary yarn test",
     "test:watch": "mocha --watch",
-    "mocks": "cd tests/docker && docker-compose up -d mocks",
-    "mocks:stop": "cd tests/docker && docker-compose down",
-    "test:browser": "cd tests/docker && docker-compose up -d redis mocks web && wait-on tcp:localhost:8080 tcp:localhost:5050 && cd ../browser && npm test && cd ../docker && docker-compose down",
-    "test:browser:ci": "cd tests/docker && docker-compose up -d redis mocks web && wait-on tcp:localhost:8080 tcp:localhost:5050 && cd ../browser && npm run test:ci && cd ../docker && docker-compose down",
-    "test:browser:only": "cd tests/docker && docker-compose up -d redis mocks web && wait-on tcp:localhost:8080 tcp:localhost:5050 && cd ../browser && npm run test:only && cd ../docker && docker-compose down",
+    "imposter": "cd test/docker && docker compose up -d imposter",
+    "imposter:stop": "cd test/docker && docker compose down",
+    "test:browser": "cd test/docker && trap 'docker compose down' EXIT && docker compose run --rm cucumber npx cucumber-js --tags \"not @skip\"",
+    "test:browser:ci": "cd test/docker && trap 'docker compose down' EXIT && docker compose run --rm cucumber",
+    "test:browser:only": "cd test/docker && trap 'docker compose down' EXIT && docker compose run --rm cucumber npx cucumber-js --tags \"@only and not @skip\"",
+    "test:browser:ci:only": "cd test/docker && trap 'docker compose down' EXIT && docker compose run --rm cucumber npx cucumber-js --tags \"@only and not @skip\"",
     "check-translation": "node node_modules/@govuk-one-login/di-ipv-cri-common-express/scripts/checkTranslations.js '../../../../src/locales'"
   },
   "dependencies": {

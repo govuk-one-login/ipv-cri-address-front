@@ -56,24 +56,17 @@ This can be run by using:
 
 The frontend can be configured to use this server through changing two environment variables:
 
-- `NODE_ENV = development` - this enables a middleware that passes the `x-scenario-id` header from web requests through to the API.
-- `API_BASE_URL = http://localhost:8010` - this points the frontend to the wiremock instance.
-
-A browser extension that can modify headers can be used to set the value of the header in a web browser. Example - [Mod Header](https://modheader.com)
-
-## Request properties
-
-In order to support consistent use of headers for API requests. [middleware](./src/lib/axios.js) is applied to add an instance of [axios](https://axios-http.com/) on each reqest onto `req.axios`. This is then reused in any code that uses the API.
+- `API_BASE_URL = http://localhost:8080` - this points the frontend to the imposter instance.
 
 ## Testing Environment Variables
 
 #### Running against a deployed system
 
-| Variable                | Value                                              | Comment                                                                                                    |
-| ----------------------- | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| CREDENTIAL_ISSUER_LABEL | Address CRI Dev                                    | There might be many different buttons on the credential issuer page, this allows selection of a single one |
-| CORE_STUB_URL           | https://di-ipv-core-stub.london.cloudapps.digital/ | Initial host to start the web journey on. Will be either Core or a Core stub.                              |
-| MOCK_API                | false                                              | Should the automatic mocking be used                                                                       |
+| Variable                | Value                                  | Comment                                                                                                    |
+| ----------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| CREDENTIAL_ISSUER_LABEL | Address CRI Dev                        | There might be many different buttons on the credential issuer page, this allows selection of a single one |
+| CORE_STUB_URL           | https://cri.core.stubs.account.gov.uk. | Initial host to start the web journey on. Will be either Core or a Core stub.                              |
+| MOCK_API                | false                                  | Should the automatic mocking be used                                                                       |
 
 ## Browser tests.
 
@@ -99,7 +92,7 @@ eg:
   ...
 ```
 
-This scenario will be configured to send a `x-scenario-id` header of `address-error` on every web browser request.
+This scenario will be configured to send using `address-error` as the clientId to drive the test
 
 ## Using live data
 

@@ -1,0 +1,60 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  imposter:
+    image: outofcoffee/imposter:4.7.0
+    volumes:
+      - "../imposter:/opt/imposter/config"
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ../..
+      dockerfile: local.Dockerfile
+    platform: linux/amd64
+    environment:
+      REDIS_SESSION_URL: redis://redis:6379
+      API_BASE_URL: http://imposter:8080
+      PORT: 5010
+      NODE_ENV: development
+      LANGUAGE_TOGGLE_DISABLED: false
+      DEVICE_INTELLIGENCE_ENABLED: true
+      DEVICE_INTELLIGENCE_DOMAIN: localhost
+    ports:
+      - "5010:5010"
+    depends_on:
+      - redis
+      - imposter
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5010/healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  cucumber:
+    build:
+      context: ../browser
+      dockerfile: pre-merge.Dockerfile
+    platform: linux/amd64
+    environment:
+      MOCK_API: ${MOCK_API:-true}
+      WEBSITE_HOST: ${WEBSITE_HOST:-http://localhost:5010}
+      MOCK_API_URL: ${MOCK_API_URL:-http://localhost:8080}
+      RELYING_PARTY_URL: ${RELYING_PARTY_URL:-http://localhost:8080}
+      GITHUB_ACTIONS: ${GITHUB_ACTIONS:-true}
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./reports:/reports
+    depends_on:
+      frontend:
+        condition: service_healthy
+      imposter:
+        condition: service_started
+    network_mode: host

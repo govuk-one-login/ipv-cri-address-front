@@ -8,13 +8,16 @@ Given(/^([A-Za-z ])+ is using the system$/, async function (name) {
 
   const rpPage = new RelyingPartyPage(this.page);
 
-  await rpPage.goto();
+  const clientId = this.clientId || "standalone";
+  await rpPage.goto(clientId);
 });
 
 Given("they have been redirected as a success", function () {
   const rpPage = new RelyingPartyPage(this.page);
   expect(rpPage.isRelyingPartyServer()).to.be.true;
-  expect(rpPage.hasSuccessQueryParams()).to.be.true;
+
+  const clientId = this.clientId || "standalone";
+  expect(rpPage.hasSuccessQueryParams(clientId)).to.be.true;
 });
 
 Then(
@@ -33,7 +36,8 @@ Then(/^they should be redirected as a success$/, function () {
 
   expect(rpPage.isRelyingPartyServer()).to.be.true;
 
-  expect(rpPage.hasSuccessQueryParams()).to.be.true;
+  const clientId = this.clientId || "standalone";
+  expect(rpPage.hasSuccessQueryParams(clientId)).to.be.true;
 });
 
 Then(/^the error should be (.*)$/, function (error_code) {

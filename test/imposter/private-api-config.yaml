@@ -1,0 +1,274 @@
+plugin: rest
+
+resources:
+  # Session endpoints - map client_id to session scenarios
+  - method: POST
+    path: /session
+    requestBody:
+      anyOf:
+        - jsonPath: $.client_id
+          value: "address-success"
+        - jsonPath: $.client_id
+          value: "address-authorization-error"
+        - jsonPath: $.client_id
+          value: "international-address"
+        - jsonPath: $.client_id
+          value: "address-prepopulated"
+        - jsonPath: $.client_id
+          value: "address-prepopulated-postcode"
+    capture:
+      cid:
+        jsonPath: $.client_id
+        store: testStore
+    response:
+      statusCode: 201
+      template: true
+      content: '{"session_id": "${stores.testStore.cid}", "state": "sT@t3", "redirect_uri": "${system.server.url}/return"}'
+
+  # Session error scenario
+  - method: POST
+    path: /session
+    requestBody:
+      jsonPath: $.client_id
+      value: "session-error"
+    response:
+      statusCode: 500
+      content: "{}"
+
+  # 400 session response
+  - method: POST
+    path: /session
+    requestBody:
+      jsonPath: $.client_id
+      value: "session-400"
+    response:
+      statusCode: 400
+      content: "{}"
+
+  # Postcode lookup - E1 8QS (success scenarios)
+  - method: POST
+    path: /postcode-lookup
+    requestHeaders:
+      session_id: "address-success"
+    requestBody:
+      jsonPath: $.postcode
+      value: "E1 8QS"
+    response:
+      statusCode: 200
+      file: postcode-lookup-e18qs.json
+
+  # Postcode lookup - E1 8QS (authorization error scenario)
+  - method: POST
+    path: /postcode-lookup
+    requestHeaders:
+      session_id: "address-authorization-error"
+    requestBody:
+      jsonPath: $.postcode
+      value: "E1 8QS"
+    response:
+      statusCode: 200
+      file: postcode-lookup-e18qs.json
+
+  # Postcode lookup - ZZ1 1ZZ (postcode with valid address combinations scenario)
+  - method: POST
+    path: /postcode-lookup
+    requestBody:
+      jsonPath: $.postcode
+      value: "ZZ1 1ZZ"
+    response:
+      statusCode: 200
+      file: postcode-lookup-zz11zz.json
+
+  # Postcode lookup - E1 8QS (prepopulated scenario)
+  - method: POST
+    path: /postcode-lookup
+    requestHeaders:
+      session_id: "address-prepopulated"
+    requestBody:
+      jsonPath: $.postcode
+      value: "E1 8QS"
+    response:
+      statusCode: 200
+      file: postcode-lookup-e18qs.json
+
+  # Postcode lookup - PR3VC0DE (test postcode)
+  - method: POST
+    path: /postcode-lookup
+    requestBody:
+      jsonPath: $.postcode
+      value: "PR3VC0DE"
+    response:
+      statusCode: 200
+      file: postcode-lookup-pr3vc0de.json
+
+  # Postcode lookup - SW1A 1AA (not found)
+  - method: POST
+    path: /postcode-lookup
+    requestBody:
+      jsonPath: $.postcode
+      value: "SW1A 1AA"
+    response:
+      statusCode: 404
+      file: postcode-lookup-sw1a1aa.json
+
+  # Authorization endpoint - success
+  - method: GET
+    path: /authorization
+    requestHeaders:
+      session-id: "address-success"
+    response:
+      statusCode: 200
+      template: true
+      content: |
+        {
+          "authorizationCode": {
+            "value": "FACEFEED"
+          },
+          "state": "sT@t3",
+          "redirect_uri": "${system.server.url}/return"
+        }
+
+  # Authorization endpoint - error
+  - method: GET
+    path: /authorization
+    requestHeaders:
+      session-id: "address-authorization-error"
+    response:
+      statusCode: 500
+      template: true
+      content: |
+        {
+          "redirect_uri": "${system.server.url}/return",
+          "oauth_error": {
+            "error_description": "gateway",
+            "error": "server_error"
+          }
+        }
+
+  # Authorization endpoint - international address success
+  - method: GET
+    path: /authorization
+    requestHeaders:
+      session-id: "international-address"
+    response:
+      statusCode: 200
+      template: true
+      content: |
+        {
+          "authorizationCode": {
+            "value": "FACEFEED"
+          },
+          "state": "sT@t3",
+          "redirect_uri": "${system.server.url}/return"
+        }
+
+  # Authorization endpoint - prepopulated address success
+  - method: GET
+    path: /authorization
+    requestHeaders:
+      session-id: "address-prepopulated"
+    response:
+      statusCode: 200
+      template: true
+      content: |
+        {
+          "authorizationCode": {
+            "value": "FACEFEED"
+          },
+          "state": "sT@t3",
+          "redirect_uri": "${system.server.url}/return"
+        }
+
+  # Authorization endpoint - prepopulated postcode success
+  - method: GET
+    path: /authorization
+    requestHeaders:
+      session-id: "address-prepopulated-postcode"
+    response:
+      statusCode: 200
+      template: true
+      content: |
+        {
+          "authorizationCode": {
+            "value": "FACEFEED"
+          },
+          "state": "sT@t3",
+          "redirect_uri": "${system.server.url}/return"
+        }
+
+  # Address save endpoint
+  - method: PUT
+    path: /address
+    requestBody:
+      jsonPath: $
+      operator: Exists
+    response:
+      statusCode: 201
+      content: "{}"
+
+  # Addresses v2 endpoint - international address
+  - method: GET
+    path: /addresses/v2
+    requestHeaders:
+      session_id: "international-address"
+    response:
+      statusCode: 200
+      file: addresses-v2-international.json
+
+  # Addresses v2 endpoint - prepopulated addresses
+  - method: GET
+    path: /addresses/v2
+    requestHeaders:
+      session_id: "address-prepopulated"
+    response:
+      statusCode: 200
+      file: addresses-v2-prepopulated.json
+
+  # Addresses v2 endpoint - prepopulated postcode
+  - method: GET
+    path: /addresses/v2
+    requestHeaders:
+      session_id: "address-prepopulated-postcode"
+    response:
+      statusCode: 200
+      file: addresses-v2-prepopulated-postcode.json
+
+  # Addresses v2 endpoint - default (empty)
+  - method: GET
+    path: /addresses/v2
+    response:
+      statusCode: 200
+      file: addresses-v2-empty.json
+  # Return endpoint for testing - success redirect
+  - method: GET
+    path: /return
+    queryParams:
+      client_id: "address-success"
+    response:
+      statusCode: 200
+      content: "OK"
+
+  # Return endpoint for testing - authorization error redirect
+  - method: GET
+    path: /return
+    queryParams:
+      error: "server_error"
+    response:
+      statusCode: 200
+      content: "OK"
+
+  # Return endpoint for testing - international address success
+  - method: GET
+    path: /return
+    queryParams:
+      client_id: "international-address"
+    response:
+      statusCode: 200
+      content: "OK"
+
+  # Return endpoint for testing - default
+  - method: GET
+    path: /return
+    response:
+      statusCode: 200
+      content: "OK"
