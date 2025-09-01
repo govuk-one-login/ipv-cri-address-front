@@ -2,37 +2,56 @@
 
 A number of environment variables are needed by the browser tests, as they affect how Playwright is setup, and affect some of the Before/After hooks in cucumberjs.
 
-## Environment variables
+Browser tests for the Address Credential Issuer frontend using Cucumber.js and Playwright.
 
-| env var                    | example                        | description                                              |
-| -------------------------- | ------------------------------ | -------------------------------------------------------- |
-| CORE_STUB_CONFIG_DIRECTORY | config/stubs/di-ipv-core-stub/ | Location of the config directory including the Keystore  |
-| CREDENTIAL_ISSUER_LABEL    | Address Development            | Label to click on inside the Core stub instance          |
-| CORE_STUB_URL              | http://localhost:8085          | URL of the core stub, where the tests start              |
-| MOCK_API_URL               | http://localhost:8010          | URL of the mock API, used to reset scenarios as required |
-| MOCK_API                   | true                           | Use the mock API                                         |
+## Environment Variables
 
-## Running against mocks
+| Variable            | Default                 | Description                          |
+| ------------------- | ----------------------- | ------------------------------------ |
+| `MOCK_API`          | `true`                  | Enable mock mode for the Address CRI |
+| `WEBSITE_HOST`      | `http://localhost:5010` | URL of the frontend                  |
+| `MOCK_API_URL`      | `http://localhost:8080` | URL of the mock API for Address CRI  |
+| `RELYING_PARTY_URL` | `http://localhost:8080` | URL for OAuth redirects              |
+| `GITHUB_ACTIONS`    | `true`                  | Run browser in headless mode         |
 
-Required environment variables:
+### Running in Docker (Recommended)
 
-- `CORE_STUB_CONFIG_DIRECTORY` - config/stubs/di-ipv-core-stub/
-- `CREDENTIAL_ISSUER_LABEL`- Address Local
-- `CORE_STUB_URL` - http://localhost:8085
-- `MOCK_API_URL` - http://localhost:8010
-- `MOCK_API` - true
+```bash
+# From the project root
+cd test/docker
 
-1. `docker-compose up`
-2. `yarn run cucumber-js --config test/browser/cucumber.js`
-   - `yarn run` runs from the root directory, so the full path to the config file needs to be specified
+# Run all tests
+docker-compose run --rm cucumber
 
-## Running against environment
+# Run specific tag
+docker-compose run --rm cucumber npx cucumber-js --tags "@mock-api:address-success"
 
-Required environment variables:
+# Run single scenario
+docker-compose run --rm cucumber npx cucumber-js --name "Adding an year date"
+```
 
-- `CREDENTIAL_ISSUER_LABEL` - Address CRI Dev
-- `CORE_STUB_URL` - https://di-ipv-core-stub.example.org
-- `MOCK_API` - false
+Alternatively, use npm script command in the root package from the root directory
 
-1. `yarn run cucumber-js --config test/browser/cucumber.js`
-   - `yarn run` runs from the root directory, so the full path to the config file needs to be specified
+For example
+
+npm run test:browser:ci
+
+### Running Locally
+
+```bash
+# Start services
+cd test/docker
+docker-compose up -d web mocks redis
+
+# Run tests from browser directory
+cd ../browser
+MOCK_API=true WEBSITE_HOST=http://localhost:5010 MOCK_API_URL=http://localhost:8080 npm test
+```
+
+## Test Tags
+
+Tests use Cucumber tags to control mock API scenarios:
+
+- `@mock-api:address-success` - Successful address journey
+- `@mock-api:international-address` - International address flow
+- `@mock-api:address-authorization-error` - Authorization error scenarios

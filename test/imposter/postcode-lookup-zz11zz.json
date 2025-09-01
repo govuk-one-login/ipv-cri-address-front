@@ -1,0 +1,68 @@
+[
+  {
+    "uprn": "000",
+    "buildingName": "EAST ZZZ",
+    "addressLocality": "BEAMINSTER",
+    "postalCode": "ZZ1 1ZZ"
+  },
+  {
+    "uprn": "111",
+    "subBuildingName": "FLAT 1",
+    "buildingNumber": "87",
+    "streetName": "ZZZ WAY",
+    "dependentAddressLocality": "WHITEHOUSE",
+    "addressLocality": "MILTON KEYNES",
+    "postalCode": "ZZ1 1ZZ"
+  },
+  {
+    "subBuildingName": "FLAT 11",
+    "buildingName": "BLASHFORD",
+    "streetName": "ZZZ ROAD",
+    "addressLocality": "LONDON",
+    "postalCode": "ZZ1 1ZZ"
+  },
+  {
+    "uprn": "222",
+    "buildingName": "ZZZ MARINA",
+    "streetName": "ZZZ ROAD",
+    "dependentAddressLocality": "LONG ZZZ",
+    "addressLocality": "NOTTINGHAM",
+    "postalCode": "ZZ1 1ZZ"
+  },
+  {
+    "uprn": "333",
+    "organisationName": "ZZZ GROUP",
+    "subBuildingName": "UNIT 2B",
+    "buildingNumber": "16",
+    "buildingName": "ZZZ BUSINESS PARK",
+    "dependentStreetName": "ZZZ PARK",
+    "streetName": "ZZZ STREET",
+    "doubleDependentAddressLocality": "SOME ZZZ",
+    "dependentAddressLocality": "LONG EATON",
+    "addressLocality": "GREAT MISSENDEN",
+    "postalCode": "ZZ1 1ZZ"
+  },
+  {
+    "buildingName": "R103",
+    "dependentStreetName": "ZZZ PARK",
+    "streetName": "CREEK ROAD",
+    "doubleDependentAddressLocality": "",
+    "addressLocality": "ZZZ ISLAND",
+    "postalCode": "ZZ1 1ZZ"
+  },
+  {
+    "uprn": "444",
+    "buildingNumber": "13",
+    "streetName": "ZZZ CRESCENT",
+    "dependentAddressLocality": "NEW PITSLIGO",
+    "addressLocality": "FRASERBURGH",
+    "postalCode": "ZZ1 1ZZ"
+  },
+  {
+    "uprn": "555",
+    "buildingNumber": "3",
+    "streetName": "ZZZ WALK",
+    "addressLocality": "MIDDLESBROUGH",
+    "postalCode": "ZZ1 1ZZ"
+  }
+]

@@ -4,6 +4,8 @@ ENV PORT 5010
 
 WORKDIR /app
 
+RUN apk add --no-cache curl
+
 COPY .yarn ./.yarn
 COPY package.json yarn.lock .yarnrc.yml ./
 RUN yarn install
