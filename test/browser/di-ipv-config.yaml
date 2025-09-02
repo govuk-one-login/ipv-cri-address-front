@@ -4,8 +4,8 @@ credentialIssuerConfigs:
     jwksEndpoint: https://api.review-a.dev.account.gov.uk/.well-known/jwks.json
     useKeyRotation: true
     authorizeUrl: http://localhost:5010/oauth2/authorize
-    tokenUrl: https://xxxxx.execute-api.eu-west-2.amazonaws.com/localdev/token
-    credentialUrl: https://xxxxx.execute-api.eu-west-2.amazonaws.com/localdev/credential/issue
+    tokenUrl: https://vzndztrmga.execute-api.eu-west-2.amazonaws.com/localdev/token
+    credentialUrl: https://vzndztrmga.execute-api.eu-west-2.amazonaws.com/localdev/credential/issue
     audience: https://review-a.dev.account.gov.uk
     publicEncryptionJwkBase64: ewogICJ1c2UiOiAiZW5jIiwKICAiYWxnIjogIkVTMjU2IiwKICAia3R5IjogIlJTQSIsCiAgImUiOiAiQVFBQiIsCiAgIm4iOiAiNU9DaHZwVEhWZUc4WllNZ0hRS2JNRFRnSGNLbkw1M1lERjdrcjRYSFh1TFZjX3RFeFBrOHN2NExDUUFxR2FFRkN1VEwzVDA2eGdadEpUZ1hiTERjeGRjVVVpdjBzb3VsZE8xSmU0emZSWWpERm5TUDJnVGd0azlJdGJhYUJDTXNNMkpJbGdadXlrWnN0ZEw3UW5jOGd6NWQxR2g3cXF3dHVvTzAzMGpzM3VIN0xscFZnTE56V1F2TlBhbFJZeWxETnRfcm52SmZoQWlSVDI0RGxjRy1sQld6cnFSTGE0QmcyN0VkZHFremNDRF9FbDgzWXQza1dtS1MwU3NLNnJqMV82N0dyV2FBdHZ1Z01oc2RMZlRPUzFGY1pIV2c4LW5SUUJ4UTJQbFFiTHNMVldXY19BZVZTUTM2YUdkZnJLWmlFa0M0Mk0tdEh2Znh4R1hpNDk5T0t3Igp9
     publicVCSigningVerificationJwkBase64: ewogICJ1c2UiOiAic2lnIiwKICAiYWxnIjogIkVTMjU2IiwKICAia3R5IjogIkVDIiwKICAiY3J2IjogIlAtMjU2IiwKICAieCI6ICJuTThfMUxKZEdaRUVmOXdYZTg1djRocGZubHBqNS1SaVlxcTMwcTlLN180IiwKICAieSI6ICJPbXFXRDlydWh5NUFtWVhkTE9qaVBKUGJkcWxnN0p2eEo5UDVrNl9xcEVFIgp9

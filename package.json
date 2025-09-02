@@ -30,7 +30,9 @@
     "test:browser:only": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm cucumber npx cucumber-js --tags \"@only and not @skip\"",
     "test:browser:ci:only": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm cucumber npx cucumber-js --tags \"@only and not @skip\"",
     "check-translation": "node node_modules/@govuk-one-login/di-ipv-cri-common-express/scripts/checkTranslations.js '../../../../src/locales'",
-    "ipv-core-stub": "cd test/docker && trap 'docker compose --profile core-stub down' EXIT && COMPOSE_BAKE=true docker compose --profile core-stub up --build ipv-core-stub"
+    "ipv-core-stub": "cd test/docker && trap 'docker compose --profile core-stub down' EXIT && COMPOSE_BAKE=true docker compose --profile core-stub up --build ipv-core-stub",
+    "frontend:aws:cri": "bash scripts/generate-oauth-url.sh aws-api",
+    "frontend:localdev:cri": "bash scripts/generate-oauth-url.sh local-dev"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.609.0",
