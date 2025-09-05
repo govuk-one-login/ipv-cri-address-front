@@ -1,7 +1,18 @@
 {% extends "base-form.njk" %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
+
+{% set isPageDataSensitive = false %}
+{% set statusCode = '200' %}
+{% set pageTitleKey = "pages.address-form-previous.title" %}
+{% if query.edit == "true" %}
+  {% set contentID = "71960c4f-0080-451c-8769-875ac76ea9e7" %}
+{% else %}
+{% set contentID = "ec7749ee-cd54-4ab8-8a8e-c5feb3499853" %}
+{% endif %}
+{% set taxLevel2 = 'address' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = false %}
 
 {% set hmpoPageKey = "address-form-previous" %}
 {% set hmpoPageContent = "address-form-previous" %}
@@ -15,19 +26,10 @@
 
   {% call hmpoForm(ctx) %}
 
-    {% include "../components/address-input-fields.njk" %}
+  {% include "../components/address-input-fields.njk" %}
 
-    {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
+  {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
-  {{ ga4OnPageLoad({
-      nonce: cspNonce,
-      statusCode: "200",
-      englishPageTitle: "pages.address-form.previous.title" | translate,
-      taxonomyLevel1: "web cri",
-      taxonomyLevel2: "address",
-      contentId: "003169c0-f24a-4640-935f-b6e19d04d4a8",
-      loggedInStatus: false,
-      dynamic: false
-    }) }}
+
 {% endblock %}

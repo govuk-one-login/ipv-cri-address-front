@@ -3,34 +3,31 @@
 {% set hmpoPageContent = "country" %}
 {% set gtmJourney = "address - middle" %}
 
+{% set isPageDataSensitive = true %}
+{% set statusCode = '200' %}
+{% set pageTitleKey = "pages.country.title" %}
+{% set contentID = "189ae53d-c845-477a-92f3-24f42e0b597f" %}
+{% set taxLevel2 = 'address' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = true %}
+
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-select/macro.njk" import hmpoSelect %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
 {% block mainContent %}
 
   {% call hmpoForm(ctx) %}
 
-    {{ hmpoSelect(ctx, {
+  {{ hmpoSelect(ctx, {
       id: "country",
       label: translate("pages.country.title"),
       isPageHeading: true
     }) }}
 
-    {{ hmpoSubmit(ctx, { id: "continue", text: translate("buttons.next") }) }}
+  {{ hmpoSubmit(ctx, { id: "continue", text: translate("buttons.next") }) }}
 
   {% endcall %}
 
-  {{ ga4OnPageLoad({
-    nonce: cspNonce,
-    statusCode: '200',
-    englishPageTitle: 'pages.addrescountryPickersSearch.title' | translate,
-    taxonomyLevel1: 'web cri',
-    taxonomyLevel2: 'address',
-    contentId: 'd29ae122-986d-4730-8dac-8798b79f7aba',
-    loggedInStatus: true,
-    dynamic: false
-  }) }}
 
   <script type="text/javascript" nonce="{{ cspNonce }}" src="/public/javascripts/accessible-autocomplete.min.js"></script>
   <script type="text/javascript" nonce="{{ cspNonce }}">

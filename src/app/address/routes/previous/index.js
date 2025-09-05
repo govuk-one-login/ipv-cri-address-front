@@ -10,6 +10,11 @@ const allFields = {
   ...sharedFields,
 };
 
+router.use((req, res, next) => {
+  res.locals.query = req.query; // Makes ?edit=true available as query.edit
+  next();
+});
+
 router.use(
   require("hmpo-form-wizard")(steps, allFields, {
     name: "previous",

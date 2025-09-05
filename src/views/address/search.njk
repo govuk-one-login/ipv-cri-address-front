@@ -6,22 +6,30 @@
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-text/macro.njk" import hmpoText %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
+
+{% set isPageDataSensitive = false %}
+{% set statusCode = '200' %}
+{% set pageTitleKey = "pages.addressSearch.title" %}
+{% set contentID = "d29ae122-986d-4730-8dac-8798b79f7aba" %}
+{% set taxLevel2 = 'address' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = true %}
 
 {% block mainContent %}
 
-  <h1 id="header" class="govuk-heading-l">{{translate("pages.addressSearch.title")}} </h1>
-  {% call hmpoForm(ctx, {autocomplete:'on'}) %}
+  <h1 id="header" class="govuk-heading-l">{{translate("pages.addressSearch.title")}}
+  </h1>
+  {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
 
-{% if prepopulatedPostcode %}
-{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+  {% if prepopulatedPostcode %}
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 
-{{ govukInsetText({
+    {{ govukInsetText({
   text: translate("pages.addressSearch.drivingLicence")
 }) }}
-{% endif %}
+  {% endif %}
 
-    {{ hmpoText(ctx, {
+  {{ hmpoText(ctx, {
       id: "addressSearch",
       label: {
         key: translate(fields.addressSearch.label),
@@ -32,23 +40,12 @@
       autocomplete: "postal-code"
     }) }}
 
-    {{ hmpoSubmit(ctx, {
+  {{ hmpoSubmit(ctx, {
       id: "continue",
       attributes: { "data-nav": true, "data-link": "/results" },
       text: translate("buttons.find-address")}) }}
-    {%- include "../components/continue-submit-spinner.njk" -%}
+  {%- include "../components/continue-submit-spinner.njk" -%}
 
   {% endcall %}
-
-  {{ ga4OnPageLoad({
-    nonce: cspNonce,
-    statusCode: '200',
-    englishPageTitle: 'pages.addressSearch.title' | translate,
-    taxonomyLevel1: 'web cri',
-    taxonomyLevel2: 'address',
-    contentId: 'd29ae122-986d-4730-8dac-8798b79f7aba',
-    loggedInStatus: true,
-    dynamic: false
-  }) }}
 
 {% endblock %}

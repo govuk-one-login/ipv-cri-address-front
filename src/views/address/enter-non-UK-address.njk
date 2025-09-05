@@ -1,7 +1,6 @@
 {% extends "base-form.njk" %}
 {% from "hmpo-form/macro.njk" import hmpoForm %}
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 {% from "components/address-year-from-field.njk" import yearFromField %}
 
 {% set hmpoPageKey = "address-form" %}
@@ -10,6 +9,17 @@
 {% set label = translate("fields.nonUKAddressYearFrom.label") %}
 {% set title = translate("fields.nonUKAddressYearFrom.title") %}
 
+{% set isPageDataSensitive = false %}
+{% set statusCode = '200' %}
+{% set pageTitleKey = "pages.address-form.title" %}
+{% if query.edit == "true" %}
+  {% set contentID = "a85b2acb-fd3a-4114-b56c-ccbb61c77ff1" %}
+{% else %}
+  {% set contentID = "38f45a0f-7f57-4e17-8fdc-8c557cfe5fff" %}
+{% endif %}
+{% set taxLevel2 = 'address' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = true %}
 
 {% block mainContent %}
 
@@ -38,15 +48,5 @@
 
   {% endcall %}
 
-  {{ ga4OnPageLoad({
-    nonce: cspNonce,
-    statusCode: '200',
-    englishPageTitle: 'pages.address-form.title' | translate,
-    taxonomyLevel1: 'web cri',
-    taxonomyLevel2: 'address',
-    contentId: '003169c0-f24a-4640-935f-b6e19d04d4a8',
-    loggedInStatus: true,
-    dynamic: false
-  }) }}
 
 {% endblock %}

@@ -3,14 +3,21 @@
 {% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "hmpo-radios/macro.njk" import hmpoRadios %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
 
 {% set hmpoPageKey = "address-confirm" %}
 {% set gtmJourney = "address - end" %}
 
+{% set isPageDataSensitive = false %}
+{% set statusCode = '200' %}
+{% set pageTitleKey = "pages.address-confirm.title" %}
+{% set contentID = "9ce5b0a2-5e6d-4e05-8757-7463aba2dc0a" %}
+{% set taxLevel2 = 'address' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = true %}
+
 {% block mainContent %}
 
-<h1 id="header" class="govuk-heading-l">{{translate("pages.address-confirm.title")}}</h1>
+  <h1 id="header" class="govuk-heading-l">{{translate("pages.address-confirm.title")}}</h1>
 
   {{ govukWarningText({
     text: translate("pages.address-confirm.warning"),
@@ -128,9 +135,9 @@
 
   {% call hmpoForm(ctx) %}
 
-    {% if isMoreInfoRequired %}
+  {% if isMoreInfoRequired %}
 
-      {{ hmpoRadios(ctx, {
+    {{ hmpoRadios(ctx, {
         id: "hasPreviousUKAddressWithinThreeMonths",
         name: "hasPreviousUKAddressWithinThreeMonths",
         value: "hasPreviousUKAddressWithinThreeMonths",
@@ -145,9 +152,9 @@
         fields: hasPreviousUKAddressWithinThreeMonths.items
       }) }}
 
-    {% endif %}
+  {% endif %}
 
-    {{ hmpoSubmit(ctx, {
+  {{ hmpoSubmit(ctx, {
         text: translate("pages.address-confirm.buttons.next"),
         id: "continue",
         attributes: {
@@ -156,20 +163,10 @@
         "data-link": "/undefined"
         }
       }) }}
-    {%- include "../components/continue-submit-spinner.njk" -%}
+  {%- include "../components/continue-submit-spinner.njk" -%}
 
   {% endcall %}
 
   <br>
-  {{ ga4OnPageLoad({
-    nonce: cspNonce,
-    statusCode: '200',
-    englishPageTitle: 'pages.address-confirm.title' | translate,
-    taxonomyLevel1: 'web cri',
-    taxonomyLevel2: 'address',
-    content_id: 'b5e5b9eb-3310-4254-ae84-3fa8a7740372',
-    loggedInStatus: true,
-    dynamic: false
-  }) }}
 
-  {% endblock %}
+{% endblock %}
