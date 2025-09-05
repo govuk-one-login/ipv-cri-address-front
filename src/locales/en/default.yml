@@ -13,56 +13,6 @@ govuk:
   error: Error
   warning: Warning
   skipLink: Skip to main content
-  cookie:
-    cookieBanner:
-      title: "Cookies on GOV.UK One Login"
-      heading: "Cookies on GOV.UK One Login"
-      paragraph1: "We use some essential cookies to make this service work."
-      paragraph2: "We’d like to set additional cookies so we can remember your settings, understand how people use the service and make improvements."
-      buttonAcceptText: "Accept analytics cookies"
-      buttonRejectText: "Reject analytics cookies"
-      linkViewCookiesText: "View cookies"
-      cookieBannerHideLink: "Hide this message"
-      cookieBannerAccept:
-        paragraph1: "You’ve accepted additional cookies. You can "
-        paragraph2: " at any time."
-      cookieBannerReject:
-        paragraph1: "You’ve rejected additional cookies. You can "
-        paragraph2: " at any time."
-      changeCookiePreferencesLink: "change your cookie settings"
-    cookieText: "GOV.UK uses cookies to make the site simpler."
-    cookieLink: "#"
-    cookieLinkText: "Find out more about cookies"
-  phaseBanner:
-    tag: beta
-    content: This is a new service – your <a href="https://home.account.gov.uk/contact-gov-uk-one-login" class="govuk-link" rel="noopener" target="_blank">feedback (opens in new tab)</a> will help us to improve it.
-  languageToggle:
-    ariaLabel: Choose a language
-    englishLanguage: English
-    englishVisuallyHidden: Change to English
-    welshLanguage: Cymraeg
-    welshVisuallyHidden: Newid yr iaith ir Gymraeg
-  footerNavItems:
-    meta:
-      items:
-        - href: https://signin.account.gov.uk/accessibility-statement
-          text: Accessibility statement
-        - href: https://signin.account.gov.uk/cookies
-          text: Cookies
-        - href: https://signin.account.gov.uk/terms-and-conditions
-          text: Terms and conditions
-        - href: https://signin.account.gov.uk/privacy-notice
-          text: Privacy notice
-        - href: https://home.account.gov.uk/contact-gov-uk-one-login
-          text: Support (opens in new tab)
-          attributes:
-            rel: "noreferrer noopener"
-            target: "_blank"
-  copyright:
-    text: "© Crown copyright"
-  contentLicence:
-    html: 'All content is available under the <a class="govuk-footer__link" href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="licence">Open Government Licence v3.0</a>, except where otherwise stated'
-
 error:
   unrecoverable:
     title: Sorry, there is a problem with the service

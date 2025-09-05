@@ -4,7 +4,7 @@ module.exports = class PlaywrightDevPage {
    */
   constructor(page) {
     this.page = page;
-    this.url = "http://localhost:5010/search";
+    this.url = `${process.env.WEBSITE_HOST || "http://localhost:5010"}/search`;
     this.paths = ["/search", "/previous/search"];
   }
 

@@ -1,12 +1,9 @@
 module.exports = {
   default: {
-    paths: ["./test/browser/features/**/**.feature"],
-    require: [
-      "./test/browser/support/**/*.js",
-      "./test/browser/step_definitions/**/*.js",
-    ],
+    paths: ["./features/**/**.feature"],
+    require: ["./support/**/*.js", "./step_definitions/**/*.js"],
     format: [
-      "progress-bar",
+      "progress",
       "json:reports/cucumber-report.json",
       "html:reports/index.html",
     ],

@@ -94,6 +94,7 @@ nonUKAddressYearFrom:
     default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
     required: "Rhowch y flwyddyn"
     isPreviousDate: "Rhaid i'r dyddiad y dechreuoch chi fyw yn y cyfeiriad hwn fod yn y gorffennol"
+    isLessThanOneHundredYearsAgo: "Rhowch flwyddyn sy'n llai na 100 mlynedd yn ôl"
 
 addressYearFrom:
   title: "Pryd wnaethoch ddechrau byw yn y cyfeiriad hwn?"
@@ -103,6 +104,7 @@ addressYearFrom:
     default: "Rhowch y flwyddyn gan ddefnyddio 4 digid yn unig"
     required: "Rhowch y flwyddyn"
     isPreviousDate: "Rhaid i'r dyddiad y dechreuoch chi fyw yn y cyfeiriad hwn fod yn y gorffennol"
+    isLessThanOneHundredYearsAgo: "Rhowch flwyddyn sy'n llai na 100 mlynedd yn ôl"
 addressResults:
   label: "Dewiswch eich cyfeiriad cartref presennol o'r rhestr"
   validation:

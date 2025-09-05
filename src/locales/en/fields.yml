@@ -100,6 +100,7 @@ addressYearFrom:
     default: Enter the year using only 4 digits
     required: Enter the year
     isPreviousDate: The date you started living at this address must be in the past
+    isLessThanOneHundredYearsAgo: Enter a year less than 100 years ago
 
 nonUKAddressYearFrom:
   title: When did you start living at this address?
@@ -109,6 +110,7 @@ nonUKAddressYearFrom:
     default: Enter the year using only 4 digits
     required: Enter the year
     isPreviousDate: Enter a year that is not in the future
+    isLessThanOneHundredYearsAgo: Enter a year less than 100 years ago
 
 addressResults:
   label: Choose your current home address from the list

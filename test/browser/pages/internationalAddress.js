@@ -55,13 +55,13 @@ module.exports = class PlaywrightDevPage {
 
   getYear(year) {
     if (year === "recent") {
-      this.value = new Date().getFullYear();
+      return new Date().getFullYear();
     } else if (year === "future") {
-      this.value = new Date().getFullYear() + 1;
+      return new Date().getFullYear() + 1;
     } else if (year === "older") {
-      this.value = new Date().getFullYear() - 2;
+      return new Date().getFullYear() - 2;
     }
-    return this.value;
+    return year;
   }
 
   async continue() {
