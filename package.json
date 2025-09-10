@@ -54,7 +54,7 @@
     "hmpo-config": "4.0.0",
     "hmpo-form-wizard": "13.0.2",
     "hmpo-i18n": "7.0.0",
-    "hmpo-logger": "8.0.0",
+    "hmpo-logger": "8.0.2",
     "nunjucks": "3.2.4"
   },
   "devDependencies": {
