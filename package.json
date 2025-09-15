@@ -41,7 +41,7 @@
     "@govuk-one-login/frontend-ui": "1.3.12",
     "@govuk-one-login/frontend-vital-signs": "0.1.3",
     "accessible-autocomplete": "3.0.1",
-    "axios": "1.11.0",
+    "axios": "1.12.0",
     "cfenv": "1.2.4",
     "connect-dynamodb": "^3.0.3",
     "copyfiles": "2.4.1",
