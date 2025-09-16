@@ -78,7 +78,7 @@
     "sinon": "19.0.2",
     "sinon-chai": "3.7.0",
     "uglify-js": "3.19.3",
-    "wait-on": "8.0.4"
+    "wait-on": "8.0.5"
   },
   "resolutions": {
     "strip-ansi": "^6.0.1",
