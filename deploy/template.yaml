@@ -387,9 +387,7 @@ Resources:
             - Name: EXTERNAL_WEBSITE_HOST
               Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
             - Name: SESSION_TABLE_NAME
-              Value: !Sub
-                - "cri-address-front-sessions-${Environment}"
-                - Environment: !Ref Environment
+              Value: !Ref AddressFrontSessionsTable
             - Name: UA_CONTAINER_ID
               Value: !If [IsProduction, "GTM-TT5HDKV", "GTM-TK92W68"]
             - Name: GA4_CONTAINER_ID
@@ -895,7 +893,10 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       # checkov:skip=CKV_AWS_28: Point in time recovery is not necessary for this table.
-      TableName: !Sub "cri-address-front-sessions-${Environment}"
+      TableName: !If
+        - IsNotDevelopment
+        - !Sub "cri-address-front-sessions-${Environment}"
+        - !Sub "${AWS::StackName}-cri-address-front-sessions-${Environment}"
       BillingMode: "PAY_PER_REQUEST"
       AttributeDefinitions:
         - AttributeName: "id"
