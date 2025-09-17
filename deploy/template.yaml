@@ -216,15 +216,24 @@ Resources:
         - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
         - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
       Type: application
-      LoadBalancerAttributes: !If
-        - IsNotDevelopment
-        - - Key: access_logs.s3.enabled
+      LoadBalancerAttributes:
+        - Key: routing.http.drop_invalid_header_fields.enabled
+          Value: true
+        - !If
+          - IsNotDevelopment
+          - Key: access_logs.s3.enabled
             Value: true
+          - !Ref AWS::NoValue
+        - !If
+          - IsNotDevelopment
           - Key: access_logs.s3.bucket
             Value: !Ref AccessLogsBucket
+          - !Ref AWS::NoValue
+        - !If
+          - IsNotDevelopment
           - Key: access_logs.s3.prefix
             Value: !Sub address-front-${Environment}
-        - !Ref AWS::NoValue
+          - !Ref AWS::NoValue
       Tags:
         - Key: FMSRegionalPolicy
           Value: false
