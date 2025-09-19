@@ -198,6 +198,18 @@ Resources:
               - s3:PutObject
             Resource:
               - !Sub arn:aws:s3:::${AccessLogsBucket}/address-front-${Environment}/AWSLogs/${AWS::AccountId}/*
+          - Effect: Deny
+            Resource:
+              - !GetAtt AccessLogsBucket.Arn
+              - !Sub "${AccessLogsBucket.Arn}/*"
+            Principal: "*"
+            Action:
+              - "s3:*"
+            Condition:
+              Bool:
+                "aws:SecureTransport": false
+              NumericLessThan:
+                "s3:TlsVersion": "1.2"
 
   CloudFrontWAFv2ACLAssociation:
     Type: AWS::WAFv2::WebACLAssociation
