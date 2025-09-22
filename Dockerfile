@@ -33,5 +33,5 @@ EXPOSE $PORT
 HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:$PORT/healthcheck || exit 1
 
-ENTRYPOINT ["sh", "-c", "export DT_HOST_ID=ADDRESS-CRI-FRONT-$RANDOM && tini --"]
+ENTRYPOINT ["sh", "-c", "export DT_HOST_ID=ADDRESS-CRI-FRONT-$RANDOM && tini npm start"]
 CMD ["yarn", "start"]
