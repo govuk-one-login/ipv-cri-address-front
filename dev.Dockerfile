@@ -5,9 +5,6 @@ WORKDIR /app
 COPY .yarn ./.yarn
 COPY .yarnrc.yml ./
 
-ENV YARN_CACHE_FOLDER=/opt/.yarn-cache
-RUN mkdir $YARN_CACHE_FOLDER
-
 RUN [ "yarn", "set", "version", "1.22.17" ]
 
 COPY /src ./src

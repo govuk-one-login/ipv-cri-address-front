@@ -7,9 +7,6 @@ COPY src/ ./src
 COPY .yarn/ ./.yarn
 COPY .yarnrc.yml yarn.lock package.json ./
 
-ENV YARN_CACHE_FOLDER=/opt/.yarn-cache
-RUN mkdir $YARN_CACHE_FOLDER
-
 RUN <<COMMANDS
   yarn install --ignore-scripts --frozen-lockfile
   yarn build
