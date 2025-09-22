@@ -7,9 +7,6 @@ COPY src/ ./src
 COPY .yarn/ ./.yarn
 COPY .yarnrc.yml yarn.lock package.json ./
 
-ENV YARN_CACHE_FOLDER=/opt/.yarn-cache
-RUN mkdir $YARN_CACHE_FOLDER
-
 RUN <<COMMANDS
   yarn install --ignore-scripts --frozen-lockfile
   yarn build
@@ -36,5 +33,5 @@ EXPOSE $PORT
 HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:$PORT/healthcheck || exit 1
 
-ENTRYPOINT ["sh", "-c", "export DT_HOST_ID=ADDRESS-CRI-FRONT-$RANDOM && tini --"]
+ENTRYPOINT ["sh", "-c", "export DT_HOST_ID=ADDRESS-CRI-FRONT-$RANDOM && tini npm start"]
 CMD ["yarn", "start"]
