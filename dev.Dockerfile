@@ -5,8 +5,7 @@ WORKDIR /app
 COPY .yarn ./.yarn
 COPY .yarnrc.yml ./
 
-ENV YARN_CACHE_FOLDER=/opt/.yarn-cache
-RUN mkdir -p $YARN_CACHE_FOLDER
+RUN mkdir -p /opt/.yarn-cache
 
 RUN [ "yarn", "set", "version", "1.22.17" ]
 
@@ -50,4 +49,4 @@ HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
 
 ENTRYPOINT ["tini", "--"]
 
-CMD ["yarn", "start"]
+CMD ["yarn", "start", "--cache-folder", "/opt/.yarn-cache"]
