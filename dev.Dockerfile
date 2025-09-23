@@ -24,9 +24,6 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends curl tini \
   && rm -rf /var/lib/apt/lists/*
 
-ENV YARN_CACHE_FOLDER=/opt/.yarn-cache
-RUN mkdir -p $YARN_CACHE_FOLDER
-
 RUN [ "yarn", "set", "version", "1.22.17" ]
 
 WORKDIR /app
@@ -50,4 +47,4 @@ HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
 
 ENTRYPOINT ["tini", "--"]
 
-CMD ["yarn", "start", "--cache-folder", "/opt/.yarn-cache"]
+CMD ["node", "app.js"]

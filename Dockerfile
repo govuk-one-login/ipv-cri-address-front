@@ -17,9 +17,6 @@ COMMANDS
 FROM node:20.11.1-alpine3.19@${NODE_SHA} AS runner
 RUN apk --no-cache upgrade && apk add --no-cache tini curl
 
-ENV YARN_CACHE_FOLDER=/opt/.yarn-cache
-RUN mkdir -p $YARN_CACHE_FOLDER
-
 WORKDIR /app
 
 COPY --from=builder /app/package.json /app/yarn.lock ./
@@ -39,4 +36,4 @@ HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
 
 ENTRYPOINT ["tini", "--"]
 
-CMD ["sh", "-c", "DT_HOST_ID=ADDRESS-CRI-FRONT-$RANDOM yarn start --cache-folder /opt/.yarn-cache"]
+CMD ["sh", "-c", "DT_HOST_ID=ADDRESS-CRI-FRONT-$RANDOM node app.js"]
