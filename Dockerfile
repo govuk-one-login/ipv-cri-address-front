@@ -7,8 +7,6 @@ COPY src/ ./src
 COPY .yarn/ ./.yarn
 COPY .yarnrc.yml yarn.lock package.json ./
 
-RUN mkdir -p /opt/.yarn-cache
-
 RUN <<COMMANDS
   yarn install --ignore-scripts --frozen-lockfile
   yarn build
@@ -18,6 +16,10 @@ COMMANDS
 
 FROM node:20.11.1-alpine3.19@${NODE_SHA} AS runner
 RUN apk --no-cache upgrade && apk add --no-cache tini curl
+
+ENV YARN_CACHE_FOLDER=/opt/.yarn-cache
+RUN mkdir -p $YARN_CACHE_FOLDER
+
 WORKDIR /app
 
 COPY --from=builder /app/package.json /app/yarn.lock ./
