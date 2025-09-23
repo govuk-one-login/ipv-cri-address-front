@@ -5,8 +5,6 @@ WORKDIR /app
 COPY .yarn ./.yarn
 COPY .yarnrc.yml ./
 
-RUN mkdir -p /opt/.yarn-cache
-
 RUN [ "yarn", "set", "version", "1.22.17" ]
 
 COPY /src ./src
@@ -25,6 +23,9 @@ FROM --platform="linux/arm64" arm64v8/node@sha256:56e8282f4392fb96c877babc93b382
 RUN apt-get update \
   && apt-get install -y --no-install-recommends curl tini \
   && rm -rf /var/lib/apt/lists/*
+
+ENV YARN_CACHE_FOLDER=/opt/.yarn-cache
+RUN mkdir -p $YARN_CACHE_FOLDER
 
 RUN [ "yarn", "set", "version", "1.22.17" ]
 
