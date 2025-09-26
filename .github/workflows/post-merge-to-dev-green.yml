@@ -1,0 +1,54 @@
+name: Development Green Docker build, ECR push, template copy to S3
+on:
+  push:
+    branches:
+      - IPS-2050-transit-gateway-spike
+  workflow_dispatch: # deploy manually
+
+jobs:
+  dockerBuildAndPush:
+    name: Docker build and push
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: eu-west-2
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: "0"
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up AWS creds
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN_GREEN }}
+          aws-region: eu-west-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Login to GDS Dev Dynatrace Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: khw46367.live.dynatrace.com
+          username: khw46367
+          password: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
+
+      - name: SAM Validate
+        run: sam validate --region ${{ env.AWS_REGION }} -t deploy/template-green.yaml
+
+      - name: Deploy SAM app to ECR
+        uses: govuk-one-login/devplatform-upload-action-ecr@v1.4.0
+        with:
+          artifact-bucket-name: ${{ secrets.DEV_ARTIFACT_BUCKET_GREEN }}
+          container-sign-kms-key-arn: ${{ secrets.DEV_CONTAINER_SIGN_KMS_KEY }}
+          working-directory: .
+          docker-build-path: .
+          dockerfile: dev.Dockerfile
+          template-file: deploy/template-green.yaml
+          role-to-assume-arn: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN_GREEN }}
+          ecr-repo-name: ${{ secrets.DEV_ECR_REPOSITORY }}
