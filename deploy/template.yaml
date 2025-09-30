@@ -47,6 +47,7 @@ Conditions:
   IsNotDevelopment: !Not
     - !Equals [!Ref Environment, dev]
   IsProduction: !Equals [!Ref Environment, production]
+
   IsProductionOrIntegration: !Or
     - !Equals [!Ref Environment, production]
     - !Equals [!Ref Environment, integration]
@@ -252,6 +253,11 @@ Resources:
       Tags:
         - Key: FMSRegionalPolicy
           Value: false
+        - !If
+          - IsProductionOrIntegration
+          - Key: CustomPolicy
+            Value: "true"
+          - !Ref AWS::NoValue
 
   LoadBalancerListenerTargetGroupECS:
     Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
