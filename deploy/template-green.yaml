@@ -642,7 +642,7 @@ Resources:
         CloudWatchAlarms: !Sub
           - "${MyAlarmOneVar},${MyAlarmTwoVar}"
           - MyAlarmOneVar: !Ref Address5XXOnELB
-            MyAlarmTwoVar: !Ref FrontTargetGroup5xxPercentErrors
+            MyAlarmTwoVar: !Ref FrontTargetGroupGreen5xxPercentErrors
 
   ApiGwHttpEndpoint:
     Type: "AWS::ApiGatewayV2::Api"
@@ -1009,11 +1009,11 @@ Resources:
       ComparisonOperator: GreaterThanThreshold
       TreatMissingData: notBreaching
 
-  FrontTargetGroup5xxPercentErrors:
+  FrontTargetGroupGreen5xxPercentErrors:
     Type: AWS::CloudWatch::Alarm
     Condition: UseCanaryDeployment
     Properties:
-      AlarmName: FrontTargetGroup5xxPercentAlarm
+      AlarmName: FrontTargetGroupGreen5xxPercentAlarm
       AlarmDescription: >
         The number of HTTP 5XX server error codes that originate from the
         target group is greater than 5% of all traffic.
