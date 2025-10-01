@@ -51,4 +51,4 @@ jobs:
           dockerfile: dev.Dockerfile
           template-file: deploy/template-green.yaml
           role-to-assume-arn: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN_GREEN }}
-          ecr-repo-name: ${{ secrets.DEV_ECR_REPOSITORY }}
+          ecr-repo-name: ${{ secrets.DEV_ECR_REPOSITORY_GREEN }}
