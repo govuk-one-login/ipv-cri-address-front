@@ -290,7 +290,7 @@ Resources:
       Protocol: HTTP
 
   # ECS cluster, service and task definition
-  AddressFrontEcsCluster:
+  AddressFrontGreenEcsCluster:
     Type: "AWS::ECS::Cluster"
     Properties:
       ClusterSettings:
@@ -308,7 +308,7 @@ Resources:
         - Key: Environment
           Value: !Sub "${Environment}"
 
-  AddressFrontEcsService:
+  AddressFrontGreenEcsService:
     Type: "AWS::ECS::Service"
     Metadata:
       cfn-lint:
@@ -316,7 +316,7 @@ Resources:
           ignore_checks:
             - E3056 #We want to remove load balancers if we are doing canary deployments
     Properties:
-      Cluster: !Ref AddressFrontEcsCluster
+      Cluster: !Ref AddressFrontGreenEcsCluster
       DeploymentConfiguration: !If
         - UseCanaryDeployment
         - !Ref AWS::NoValue
@@ -623,8 +623,8 @@ Resources:
           - UseCodeSigning
           - !Ref CodeSigningConfigArn
           - !Ref AWS::NoValue
-        ECSClusterName: !Ref AddressFrontEcsCluster
-        ECSServiceName: !GetAtt AddressFrontEcsService.Name
+        ECSClusterName: !Ref AddressFrontGreenEcsCluster
+        ECSServiceName: !GetAtt AddressFrontGreenEcsService.Name
         TargetGroupName: !GetAtt LoadBalancerListenerTargetGroupECS.TargetGroupName
         GreenTargetGroupName: !GetAtt LoadBalancerListenerGreenTargetGroupECS.TargetGroupName
         LoadBalancerListenerARN: !Ref LoadBalancerListener
@@ -772,7 +772,7 @@ Resources:
         !FindInMap [EnvironmentConfiguration, !Ref Environment, maxECSCount]
       MinCapacity:
         !FindInMap [EnvironmentConfiguration, !Ref Environment, minECSCount]
-      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
+      ResourceId: !Sub service/${AddressFrontGreenEcsCluster}/${AddressFrontGreenEcsService.Name}
       RoleARN: !Sub "arn:aws:iam::${AWS::AccountId}:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService"
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
@@ -783,7 +783,7 @@ Resources:
     Properties:
       PolicyName: ECSAutoScalingPolicy
       PolicyType: TargetTrackingScaling
-      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
+      ResourceId: !Sub service/${AddressFrontGreenEcsCluster}/${AddressFrontGreenEcsService.Name}
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
       TargetTrackingScalingPolicyConfiguration:
@@ -799,7 +799,7 @@ Resources:
     Properties:
       PolicyName: ECSPredictiveScalingPolicy
       PolicyType: PredictiveScaling
-      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
+      ResourceId: !Sub service/${AddressFrontGreenEcsCluster}/${AddressFrontGreenEcsService.Name}
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
       PredictiveScalingPolicyConfiguration:
@@ -817,7 +817,7 @@ Resources:
     Properties:
       PolicyName: StepScalingInPolicy
       PolicyType: StepScaling
-      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
+      ResourceId: !Sub service/${AddressFrontGreenEcsCluster}/${AddressFrontGreenEcsService.Name}
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
       StepScalingPolicyConfiguration:
@@ -836,7 +836,7 @@ Resources:
     Properties:
       PolicyName: StepScalingOutPolicy
       PolicyType: StepScaling
-      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
+      ResourceId: !Sub service/${AddressFrontGreenEcsCluster}/${AddressFrontGreenEcsService.Name}
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
       StepScalingPolicyConfiguration:
@@ -867,9 +867,9 @@ Resources:
       DatapointsToAlarm: "2"
       Dimensions:
         - Name: ClusterName
-          Value: !Ref AddressFrontEcsCluster
+          Value: !Ref AddressFrontGreenEcsCluster
         - Name: ServiceName
-          Value: !GetAtt AddressFrontEcsService.Name
+          Value: !GetAtt AddressFrontGreenEcsService.Name
       Unit: "Percent"
       EvaluationPeriods: "2"
       MetricName: "CPUUtilization"
@@ -890,9 +890,9 @@ Resources:
       DatapointsToAlarm: "5"
       Dimensions:
         - Name: ClusterName
-          Value: !Ref AddressFrontEcsCluster
+          Value: !Ref AddressFrontGreenEcsCluster
         - Name: ServiceName
-          Value: !GetAtt AddressFrontEcsService.Name
+          Value: !GetAtt AddressFrontGreenEcsService.Name
       Unit: "Percent"
       EvaluationPeriods: "5"
       MetricName: "CPUUtilization"
@@ -944,7 +944,7 @@ Resources:
       Statistic: Average
       Dimensions:
         - Name: ClusterName
-          Value: !Ref AddressFrontEcsCluster
+          Value: !Ref AddressFrontGreenEcsCluster
       Period: 60
       EvaluationPeriods: 2
       DatapointsToAlarm: 2
@@ -972,7 +972,7 @@ Resources:
       Statistic: Average
       Dimensions:
         - Name: ClusterName
-          Value: !Ref AddressFrontEcsCluster
+          Value: !Ref AddressFrontGreenEcsCluster
       Period: 300
       EvaluationPeriods: 3
       DatapointsToAlarm: 3
