@@ -198,6 +198,18 @@ Resources:
               - s3:PutObject
             Resource:
               - !Sub arn:aws:s3:::${AccessLogsBucket}/address-front-${Environment}/AWSLogs/${AWS::AccountId}/*
+          - Effect: Deny
+            Resource:
+              - !GetAtt AccessLogsBucket.Arn
+              - !Sub "${AccessLogsBucket.Arn}/*"
+            Principal: "*"
+            Action:
+              - "s3:*"
+            Condition:
+              Bool:
+                "aws:SecureTransport": false
+              NumericLessThan:
+                "s3:TlsVersion": "1.2"
 
   CloudFrontWAFv2ACLAssociation:
     Type: AWS::WAFv2::WebACLAssociation
@@ -216,15 +228,24 @@ Resources:
         - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
         - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
       Type: application
-      LoadBalancerAttributes: !If
-        - IsNotDevelopment
-        - - Key: access_logs.s3.enabled
+      LoadBalancerAttributes:
+        - Key: routing.http.drop_invalid_header_fields.enabled
+          Value: true
+        - !If
+          - IsNotDevelopment
+          - Key: access_logs.s3.enabled
             Value: true
+          - !Ref AWS::NoValue
+        - !If
+          - IsNotDevelopment
           - Key: access_logs.s3.bucket
             Value: !Ref AccessLogsBucket
+          - !Ref AWS::NoValue
+        - !If
+          - IsNotDevelopment
           - Key: access_logs.s3.prefix
             Value: !Sub address-front-${Environment}
-        - !Ref AWS::NoValue
+          - !Ref AWS::NoValue
       Tags:
         - Key: FMSRegionalPolicy
           Value: false
@@ -377,6 +398,7 @@ Resources:
         - Essential: true
           Image: CONTAINER-IMAGE-PLACEHOLDER
           Name: app
+          ReadonlyRootFilesystem: true
           Environment:
             - Name: API_BASE_URL
               Value: !Sub
@@ -387,9 +409,7 @@ Resources:
             - Name: EXTERNAL_WEBSITE_HOST
               Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
             - Name: SESSION_TABLE_NAME
-              Value: !Sub
-                - "cri-address-front-sessions-${Environment}"
-                - Environment: !Ref Environment
+              Value: !Ref AddressFrontSessionsTable
             - Name: UA_CONTAINER_ID
               Value: !If [IsProduction, "GTM-TT5HDKV", "GTM-TK92W68"]
             - Name: GA4_CONTAINER_ID
@@ -895,7 +915,10 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       # checkov:skip=CKV_AWS_28: Point in time recovery is not necessary for this table.
-      TableName: !Sub "cri-address-front-sessions-${Environment}"
+      TableName: !If
+        - IsNotDevelopment
+        - !Sub "cri-address-front-sessions-${Environment}"
+        - !Sub "${AWS::StackName}-cri-address-front-sessions-${Environment}"
       BillingMode: "PAY_PER_REQUEST"
       AttributeDefinitions:
         - AttributeName: "id"

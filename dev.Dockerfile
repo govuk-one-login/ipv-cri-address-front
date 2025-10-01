@@ -47,4 +47,4 @@ HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
 
 ENTRYPOINT ["tini", "--"]
 
-CMD ["yarn", "start"]
+CMD ["node", "src/app.js"]

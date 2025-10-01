@@ -41,7 +41,7 @@
     "@govuk-one-login/frontend-ui": "2.0.0",
     "@govuk-one-login/frontend-analytics": "4.0.3",
     "accessible-autocomplete": "3.0.1",
-    "axios": "1.11.0",
+    "axios": "1.12.0",
     "cfenv": "1.2.4",
     "connect-dynamodb": "^3.0.3",
     "copyfiles": "2.4.1",
@@ -78,7 +78,7 @@
     "sinon": "19.0.2",
     "sinon-chai": "3.7.0",
     "uglify-js": "3.19.3",
-    "wait-on": "8.0.4"
+    "wait-on": "8.0.5"
   },
   "resolutions": {
     "strip-ansi": "^6.0.1",

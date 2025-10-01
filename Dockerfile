@@ -16,6 +16,7 @@ COMMANDS
 
 FROM node:20.11.1-alpine3.19@${NODE_SHA} AS runner
 RUN apk --no-cache upgrade && apk add --no-cache tini curl
+
 WORKDIR /app
 
 COPY --from=builder /app/package.json /app/yarn.lock ./
@@ -33,5 +34,6 @@ EXPOSE $PORT
 HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:$PORT/healthcheck || exit 1
 
-ENTRYPOINT ["sh", "-c", "export DT_HOST_ID=ADDRESS-CRI-FRONT-$RANDOM && tini npm start"]
-CMD ["yarn", "start"]
+ENTRYPOINT ["tini", "--"]
+
+CMD ["sh", "-c", "DT_HOST_ID=ADDRESS-CRI-FRONT-$RANDOM node src/app.js"]
