@@ -164,6 +164,7 @@ setGTM({
   uaContainerId: APP.GTM.UA_CONTAINER_ID,
   ga4Enabled: APP.GTM.GA4_ENABLED,
   ga4ContainerId: APP.GTM.GA4_CONTAINER_ID,
+  analyticsDataSensitive: APP.GTM.ANALYTICS_DATA_SENSITIVE,
   ga4PageViewEnabled: true,
   ga4FormResponseEnabled: true,
   ga4FormErrorEnabled: true,

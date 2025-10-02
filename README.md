@@ -37,6 +37,7 @@ Run `git config --unset-all core.hooksPath` to reset your git hook settings.
 - `UA_ENABLED` - Feature flag to disable UA, defaulted to `false`
 - `UA_CONTAINER_ID` - Container ID for Universal Analytics, required for UA to work correctly. Default value is `GTM-TK92W68`
 - `GA4_CONTAINER_ID` - Container ID for GA4, required for analytics to work correctly. Default value is `GTM-KD86CMZ`
+- `ANALYTICS_DATA_SENSITIVE` - Used to set isDataSensitive flag for @govuk-one-login/frontend-analytics package. If true, will redact all form data from analytics.
 - `FRONTEND_DOMAIN` - Cookie domain to persist values throughout the different sections of the OneLogin journey. Default value is `localhost`
 - `DEVICE_INTELLIGENCE_ENABLED` - Feature flag to disable device intelligence, defaulted to `false`
 - `DEVICE_INTELLIGENCE_DOMAIN` - Domain to set the device intelligence cookie, defaults to `account.gov.uk`
