@@ -426,7 +426,7 @@ Resources:
             - Name: GA4_ENABLED
               Value: true
             - Name: ANALYTICS_DATA_SENSITIVE
-              Value: !If [IsProductionOrIntegration, true, false]
+              Value: false
             - Name: UA_ENABLED
               Value: false
             - Name: FRONTEND_DOMAIN
