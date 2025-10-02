@@ -47,6 +47,9 @@ Conditions:
   IsNotDevelopment: !Not
     - !Equals [!Ref Environment, dev]
   IsProduction: !Equals [!Ref Environment, production]
+  IsProductionOrIntegration: !Or
+    - !Equals [!Ref Environment, production]
+    - !Equals [!Ref Environment, integration]
 
   EnableSpotArmInstance: !Equals [!Ref Environment, dev]
 
@@ -416,6 +419,8 @@ Resources:
               Value: !If [IsProduction, "GTM-K4PBJH3", "GTM-KD86CMZ"]
             - Name: GA4_ENABLED
               Value: true
+            - Name: ANALYTICS_DATA_SENSITIVE
+              Value: !If [IsProductionOrIntegration, true, false]
             - Name: UA_ENABLED
               Value: false
             - Name: FRONTEND_DOMAIN
