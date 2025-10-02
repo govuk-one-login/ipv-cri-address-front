@@ -670,6 +670,12 @@ Resources:
     Properties:
       Name: !Sub address-front-${Environment}
       ProtocolType: HTTP
+      Tags:
+        FMSRegionalPolicy: false
+        CustomPolicy: !If
+          - IsProductionOrIntegration
+          - "true"
+          - !Ref AWS::NoValue
 
   ApiGwHttpEndpointIntegration:
     Type: "AWS::ApiGatewayV2::Integration"
@@ -714,6 +720,12 @@ Resources:
           "responseLength":"$context.responseLength",
           "responseLatency":"$context.responseLatency"
           }
+      Tags:
+        FMSRegionalPolicy: false
+        CustomPolicy: !If
+          - IsProductionOrIntegration
+          - "true"
+          - !Ref AWS::NoValue
 
   APIGWAccessLogsGroup:
     Type: AWS::Logs::LogGroup
