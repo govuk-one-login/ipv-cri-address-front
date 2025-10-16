@@ -40,3 +40,8 @@ Feature: International address - What country?
     Given they have selected the country "India"
     When they click the continue button
     Then they should see international address form
+
+  Scenario:
+    Given they have selected the country "Palestine"
+    When they click the continue button
+    Then they should see international address form
