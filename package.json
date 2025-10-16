@@ -4,13 +4,13 @@
   "license": "MIT",
   "scripts": {
     "start": "node src/app.js",
-    "start:ci": "yarn build && NODE_ENV=development API_BASE_URL=http://127.0.0.1:8080/ DEVICE_INTELLIGENCE_ENABLED=true DEVICE_INTELLIGENCE_DOMAIN=localhost yarn start",
+    "start:ci": "npm run build && NODE_ENV=development API_BASE_URL=http://127.0.0.1:8080/ DEVICE_INTELLIGENCE_ENABLED=true DEVICE_INTELLIGENCE_DOMAIN=localhost npm start",
     "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8080/ npm-run-all -p -r imposter dev",
     "dev": "nodemon src/app.js",
-    "build": "yarn build-sass && yarn build-js && yarn copy-assets && yarn copy-js",
+    "build": "npm run build-sass && npm run build-js && npm run copy-assets && npm run copy-js",
     "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
     "copy-assets": "mkdir -p dist && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts && copyfiles -u 3 src/assets/images/** dist/public/images",
-    "build-js": "yarn build-js:analytics && yarn build-js:device-intelligence && yarn build-js:all",
+    "build-js": "npm run build-js:analytics && npm run build-js:device-intelligence && npm run build-js:all",
     "copy-js": "copyfiles -u 3 node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js.map dist/public/javascripts",
     "build-js:analytics": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/frontend-analytics/lib/analytics.js node_modules/@govuk-one-login/di-ipv-cri-common-express/src/assets/javascript/analytics/ua/init.js --beautify -o dist/public/javascripts/analytics.js",
     "build-js:device-intelligence": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/frontend-device-intelligence/build/esm/index.js -o dist/public/javascripts/deviceIntelligence.js",
@@ -21,7 +21,7 @@
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:fix": "npm run lint:eslint -- --fix && npm run lint:prettier -- --write",
     "test": "mocha",
-    "test:coverage": "nyc --reporter=lcov --reporter=text-summary yarn test",
+    "test:coverage": "nyc --reporter=lcov --reporter=text-summary npm test",
     "test:watch": "mocha --watch",
     "imposter": "cd test/docker && docker compose up -d imposter",
     "imposter:stop": "cd test/docker && docker compose down",
@@ -84,6 +84,5 @@
     "strip-ansi": "^6.0.1",
     "string-width": "^4.2.2",
     "wrap-ansi": "^7.0.0"
-  },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  }
 }
