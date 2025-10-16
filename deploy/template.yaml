@@ -51,7 +51,7 @@ Conditions:
     - !Equals [!Ref Environment, production]
     - !Equals [!Ref Environment, integration]
 
-  IsNotProductionOrIntegration: !Not [!Condition IsProductionOrIntegration]
+  IsNotProduction: !Not [!Condition IsProduction]
   EnableSpotArmInstance: !Equals [!Ref Environment, dev]
 
   UsePermissionsBoundary: !Not
@@ -254,7 +254,7 @@ Resources:
         - Key: FMSRegionalPolicy
           Value: false
         - !If
-          - IsNotProductionOrIntegration
+          - IsNotProduction
           - Key: CustomPolicy
             Value: "true"
           - !Ref AWS::NoValue
@@ -673,7 +673,7 @@ Resources:
       Tags:
         FMSRegionalPolicy: false
         CustomPolicy: !If
-          - IsNotProductionOrIntegration
+          - IsNotProduction
           - "true"
           - !Ref AWS::NoValue
 
@@ -723,7 +723,7 @@ Resources:
       Tags:
         FMSRegionalPolicy: false
         CustomPolicy: !If
-          - IsNotProductionOrIntegration
+          - IsNotProduction
           - "true"
           - !Ref AWS::NoValue
 
