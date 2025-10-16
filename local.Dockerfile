@@ -6,17 +6,16 @@ WORKDIR /app
 
 RUN apk add --no-cache curl
 
-COPY .yarn ./.yarn
-COPY package.json yarn.lock .yarnrc.yml ./
-RUN yarn install
+COPY package.json package-lock.json ./
+RUN npm ci
 
 COPY . ./
 
-RUN yarn build
+RUN npm run build
 
 HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:$PORT/healthcheck || exit 1
 
-CMD yarn run dev
+CMD npm run dev
 
 EXPOSE $PORT
