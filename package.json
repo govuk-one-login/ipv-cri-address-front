@@ -25,10 +25,10 @@
     "test:watch": "mocha --watch",
     "imposter": "cd test/docker && docker compose up -d imposter",
     "imposter:stop": "cd test/docker && docker compose down",
-    "test:browser": "cd test/docker && trap 'docker compose down' EXIT && docker compose run --rm cucumber npx cucumber-js --tags \"not @skip\"",
-    "test:browser:ci": "cd test/docker && trap 'docker compose down' EXIT && docker compose run --rm cucumber",
-    "test:browser:only": "cd test/docker && trap 'docker compose down' EXIT && docker compose run --rm cucumber npx cucumber-js --tags \"@only and not @skip\"",
-    "test:browser:ci:only": "cd test/docker && trap 'docker compose down' EXIT && docker compose run --rm cucumber npx cucumber-js --tags \"@only and not @skip\"",
+    "test:browser": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm cucumber npx cucumber-js --tags \"not @skip\"",
+    "test:browser:ci": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm cucumber",
+    "test:browser:only": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm cucumber npx cucumber-js --tags \"@only and not @skip\"",
+    "test:browser:ci:only": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm cucumber npx cucumber-js --tags \"@only and not @skip\"",
     "check-translation": "node node_modules/@govuk-one-login/di-ipv-cri-common-express/scripts/checkTranslations.js '../../../../src/locales'"
   },
   "dependencies": {
