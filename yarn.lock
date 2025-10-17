@@ -1210,7 +1210,14 @@
     overload-protection "1.2.3"
     redis "^4.7.0"
 
-"@govuk-one-login/frontend-analytics@4.0.3", "@govuk-one-login/frontend-analytics@^4.0.3":
+"@govuk-one-login/frontend-analytics@4.0.5", "@govuk-one-login/frontend-analytics@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@govuk-one-login/frontend-analytics/-/frontend-analytics-4.0.5.tgz#6f4bbd3e8a7ecd45936fb8cdd64decc5419b1d88"
+  integrity sha512-6JU8TQIXByxYQqV2b2sEy9eqM59Fwin3GqFXXSemtE7knxQ76YBJsVOgSTBrgCsjQ3DAbcZAUNLLopD9qBioYg==
+  dependencies:
+    loglevel "^1.9.2"
+
+"@govuk-one-login/frontend-analytics@^4.0.3":
   version "4.0.3"
   resolved "https://registry.npmjs.org/@govuk-one-login/frontend-analytics/-/frontend-analytics-4.0.3.tgz"
   integrity sha512-r/16f7Q5Vf4cjqoLS0V791M2H5+jBEkI7NdMJjUsqlUEwzM/jx+l75jcQkRuoCQnTC2WQ9M6HzOWpNkdOrI7Hg==
@@ -1235,7 +1242,18 @@
     forwarded-parse "^2.1.2"
     pino "^8.20.0"
 
-"@govuk-one-login/frontend-ui@2.0.0", "@govuk-one-login/frontend-ui@^2.0.0":
+"@govuk-one-login/frontend-ui@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@govuk-one-login/frontend-ui/-/frontend-ui-4.0.1.tgz#77d88848fcf69d314453427af254a5dc7daf9561"
+  integrity sha512-yMhIoQqDLx6UiwHLtPfcD+9ZjnVNM94ko74Og5/sQXMsbs/nEZUxqZPA6SHppA6K7tAKH7HDuxd+zrOwemZJuA==
+  dependencies:
+    js-yaml "^4.1.0"
+    pino "8.20.0"
+  optionalDependencies:
+    "@govuk-one-login/frontend-analytics" "^4.0.5"
+    hmpo-components "^7.1.0"
+
+"@govuk-one-login/frontend-ui@^2.0.0":
   version "2.0.0"
   resolved "https://registry.npmjs.org/@govuk-one-login/frontend-ui/-/frontend-ui-2.0.0.tgz"
   integrity sha512-WPLqJo/sjKoa5tPMXJcOqR7SIq0RUAm6Msrv5DunXwELk4PMkh/ovzGiLnEz9p4FD3qZ2fNE0ZuB5lKVnNCTrA==
