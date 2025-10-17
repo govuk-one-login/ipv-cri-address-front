@@ -12,7 +12,7 @@ This is the home for the front end user interface for a credential issuer as a p
 Clone this repository and then run
 
 ```bash
-yarn install
+npm install
 ```
 
 ## Precommit Hooks
@@ -53,7 +53,7 @@ These configuration files are stored as JSON files in the [./test/mocks/mappings
 
 This can be run by using:
 
-`yarn run mocks`
+`npm run mocks`
 
 The frontend can be configured to use this server through changing two environment variables:
 
@@ -107,7 +107,7 @@ These should be able to be run using cucumber-js as below:
 
 ## Running browser tests in isolation
 
-You can run browser tests in isolation by decorating the scenario with a `@only` tag and then running `yarn run test:browser:ci:only`.
+You can run browser tests in isolation by decorating the scenario with a `@only` tag and then running `npm run test:browser:ci:only`.
 
 eg:
 

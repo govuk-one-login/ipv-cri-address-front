@@ -28,8 +28,8 @@ jobs:
         uses: govuk-one-login/github-actions/node/run-script@c8eefadf581d2087ce2af48b7060c1329cfa5251
         with:
           node-version: 20.x
-          package-manager: yarn
-          script: yarn run test:coverage
+          package-manager: npm
+          script: npm run test:coverage
 
       - name: Archive coverage results
         if: ${{ inputs.coverage-report }}

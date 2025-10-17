@@ -12,4 +12,4 @@ export MOCK_API=false
 
 cd /test/browser || exit 1
 
-yarn test --tags "@post-merge and not @live" --fail-fast
+npm test -- --tags "@post-merge and not @live" --fail-fast
