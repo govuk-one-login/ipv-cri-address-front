@@ -11,8 +11,8 @@ RUN apt-get update -y && \
 
 WORKDIR /test/browser
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json package-lock.json ./
+RUN npm ci
 
 COPY ./run-post-merge.sh /run-tests.sh
 RUN chmod +x /run-tests.sh
