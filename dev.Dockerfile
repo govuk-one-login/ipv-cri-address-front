@@ -42,4 +42,4 @@ HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
 
 ENTRYPOINT ["tini", "--"]
 
-CMD ["npm", "start"]
+CMD ["node", "app.js"]
