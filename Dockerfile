@@ -35,4 +35,4 @@ HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
 
 ENTRYPOINT ["tini", "--"]
 
-CMD ["sh", "-c", "DT_HOST_ID=ADDRESS-CRI-FRONT-$RANDOM npm start"]
+CMD ["sh", "-c", "DT_HOST_ID=ADDRESS-CRI-FRONT-$RANDOM node src/app.js"]
