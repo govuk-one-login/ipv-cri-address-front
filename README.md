@@ -31,6 +31,7 @@ Run `git config --unset-all core.hooksPath` to reset your git hook settings.
 
 ## Environment Variables
 
+- `API_BASE_URL` - Base URL for the Address CRI API backend. Defaults to `http://localhost:5007`
 - `BASE_URL`: Externally accessible base url of the webserver. Used to generate the callback url as part of credential issuer oauth flows
 - `PORT` - Default port to run webserver on. (Default to `5010`)
 - `GA4_ENABLED` - Feature flag to disable GA4, defaulted to `false`
@@ -78,7 +79,7 @@ These tests are written using [Cucumber](https://cucumber.io/docs/installation/j
 They can be run using:
 
 ```sh
-./test/brower $ cucumber-js
+./test/browser $ cucumber-js
 ```
 
 ## Using mocked scenario data
@@ -116,6 +117,80 @@ eg:
   Scenario: Address error
   ...
 ```
+
+## Running address frontend with a deployed stack
+
+You can run the address frontend with a deployed Address CRI stack in AWS. This is useful for backend API testing.
+
+### Prerequisites
+
+1. The required repositories need to be cloned into the same parent directory, this is a one-time setup:
+   - This repository (`ipv-cri-address-front`)
+   - [ipv-stubs](https://github.com/govuk-one-login/ipv-stubs)
+   - [ipv-config](https://github.com/govuk-one-login/ipv-config)
+
+   The `npm run ipv-core-stub` command uses relative paths in the [docker-compose](test/docker/compose.yml) file to locate the needed `.env` and `config` files from these repositories.
+
+2. Follow the instructions for [Deploying the Address CRI stack into the AWS Development account](https://github.com/govuk-one-login/ipv-cri-address-api/blob/main/README.md#deploy-to-dev-account)
+3. Once deployed, note the stack outputs containing the `public-api` and `private-api` IDs
+
+### Configuration
+
+1. Create a `.env` file if you don't already have in the project root and add the `private-api` ID as the `API_BASE_URL`:
+
+```bash
+API_BASE_URL=https://xxxxx.execute-api.eu-west-2.amazonaws.com/localdev
+```
+
+Replace `xxxxx` with your actual private API ID.
+
+**Example:** If your private API ID is `75dre0xy11`, the URL would be:
+
+```bash
+API_BASE_URL=https://75dre0xy11.execute-api.eu-west-2.amazonaws.com/localdev
+```
+
+2. Update the [config file](test/browser/di-ipv-config.yaml) with your deployed stack's public API ID:
+
+```yaml
+credentialIssuerConfigs:
+  - id: address-cri-dev
+    name: Address Local
+    jwksEndpoint: https://api.review-a.dev.account.gov.uk/.well-known/jwks.json
+    useKeyRotation: true
+    authorizeUrl: http://localhost:5010/oauth2/authorize
+    tokenUrl: https://xxxxx.execute-api.eu-west-2.amazonaws.com/localdev/token
+    credentialUrl: https://xxxxx.execute-api.eu-west-2.amazonaws.com/localdev/credential/issue
+    audience: https://review-a.dev.account.gov.uk
+    publicEncryptionJwkBase64: "..."
+    publicVCSigningVerificationJwkBase64: ".."
+    apiKeyEnvVar: API_KEY_CRI_DEV
+```
+
+3. Replace `xxxxx` with your actual public API ID in both `tokenUrl` and `credentialUrl`
+
+   **Example:** If your public API ID is `c5zgqkhoo3`, update the URLs to:
+
+   ```yaml
+   tokenUrl: https://c5zgqkhoo3.execute-api.eu-west-2.amazonaws.com/localdev/token
+   credentialUrl: https://c5zgqkhoo3.execute-api.eu-west-2.amazonaws.com/localdev/credential/issue
+   ```
+
+### Running the services
+
+1. Start the IPV core stub:
+
+   ```bash
+   npm run ipv-core-stub
+   ```
+
+2. In a new terminal, build and start the address front-end:
+
+   ```bash
+   npm run build && npm run dev
+   ```
+
+3. Access the core stub at: http://localhost:8085
 
 ### Code Owners
 
