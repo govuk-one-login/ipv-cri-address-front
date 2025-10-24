@@ -1,5 +1,4 @@
-const { PACKAGE_NAME } = require("../lib/config");
-const logger = require("hmpo-logger").get(PACKAGE_NAME);
+const { logger } = require("../lib/logger");
 
 module.exports = {
   missingRedirectErrorHandler: async (err, req, res, next) => {
