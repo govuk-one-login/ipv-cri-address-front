@@ -1,6 +1,6 @@
-const { API, PACKAGE_NAME } = require("../../../../lib/config");
+const { API } = require("../../../../lib/config");
 const BaseController = require("hmpo-form-wizard").Controller;
-const logger = require("hmpo-logger").get(PACKAGE_NAME);
+const { logger } = require("../../../../lib/logger");
 const {
   createPersonalDataHeaders,
 } = require("@govuk-one-login/frontend-passthrough-headers");
