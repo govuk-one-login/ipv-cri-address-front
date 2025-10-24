@@ -15,7 +15,6 @@ services:
     build:
       context: ../..
       dockerfile: local.Dockerfile
-    platform: linux/amd64
     environment:
       REDIS_SESSION_URL: redis://redis:6379
       API_BASE_URL: ${API_BASE_URL:-http://imposter:8080}
@@ -40,7 +39,6 @@ services:
     build:
       context: ../browser
       dockerfile: pre-merge.Dockerfile
-    platform: linux/amd64
     environment:
       MOCK_API: ${MOCK_API:-true}
       WEBSITE_HOST: ${WEBSITE_HOST:-http://localhost:5010}
@@ -64,13 +62,15 @@ services:
     build:
       context: ../browser
       dockerfile: pre-merge.Dockerfile
-    platform: linux/amd64
+      no_cache: true
     environment:
       MOCK_API: false
       ENVIRONMENT: ${ENVIRONMENT:-dev}
       WEBSITE_HOST: ${WEBSITE_HOST:-https://review-a.dev.account.gov.uk}
-      RELYING_PARTY_URL: ${RELYING_PARTY_URL:-https://test-resources.review-a.dev.account.gov.uk}
+      RELYING_PARTY_URL: ${RELYING_PARTY_URL:-https://olakunle-test-resources.review-a.dev.account.gov.uk}
       AWS_PROFILE: ${AWS_PROFILE:-}
+      TOKEN_ENDPOINT: ${TOKEN_ENDPOINT:-}
+      CREDENTIAL_ENDPOINT: ${CREDENTIAL_ENDPOINT:-}
       GITHUB_ACTIONS: true
     volumes:
       - ~/.aws:/root/.aws:ro
@@ -81,7 +81,7 @@ services:
     build:
       context: ../..
       dockerfile: local.Dockerfile
-    platform: linux/amd64
+      no_cache: true
     env_file:
       - ../../.env
     environment:
@@ -104,17 +104,20 @@ services:
     build:
       context: ../browser
       dockerfile: pre-merge.Dockerfile
+      no_cache: true
     platform: linux/amd64
     environment:
       MOCK_API: false
       ENVIRONMENT: ${ENVIRONMENT:-dev}
       WEBSITE_HOST: ${WEBSITE_HOST:-http://localhost:5011}
-      RELYING_PARTY_URL: ${RELYING_PARTY_URL:-https://test-resources.review-a.dev.account.gov.uk}
       AWS_PROFILE: ${AWS_PROFILE:-}
-      CRI_ENCRYPTION_JWKS_ENDPOINT: ${CRI_ENCRYPTION_JWKS_ENDPOINT:-http://localhost:5011/jwks}
-      GITHUB_ACTIONS: true
+      RELYING_PARTY_URL: ${RELYING_PARTY_URL:-https://olakunle-test-resources.review-a.dev.account.gov.uk}
+      TOKEN_ENDPOINT: ${TOKEN_ENDPOINT:-}
+      CREDENTIAL_ENDPOINT: ${CREDENTIAL_ENDPOINT:-}
+      CRI_ENCRYPTION_JWKS_ENDPOINT: ${CRI_ENCRYPTION_JWKS_ENDPOINT:-}
     volumes:
       - ~/.aws:/root/.aws:ro
+      - ./reports:/reports
     depends_on:
       frontend-dev:
         condition: service_healthy
