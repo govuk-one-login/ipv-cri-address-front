@@ -25,6 +25,8 @@ services:
       DEVICE_INTELLIGENCE_DOMAIN: localhost
     ports:
       - "5010:5010"
+    volumes:
+      - ../..:/app
     depends_on:
       - redis
       - imposter
@@ -50,6 +52,7 @@ services:
     stdin_open: true
     volumes:
       - ./reports:/reports
+      - ../browser:/app
     depends_on:
       frontend:
         condition: service_healthy
@@ -60,20 +63,18 @@ services:
   url-generator:
     profiles: ["aws-api"]
     build:
-      context: ../browser
-      dockerfile: pre-merge.Dockerfile
-      no_cache: true
+      context: ../..
+      dockerfile: local.Dockerfile
     environment:
       MOCK_API: false
       ENVIRONMENT: ${ENVIRONMENT:-dev}
       WEBSITE_HOST: ${WEBSITE_HOST:-https://review-a.dev.account.gov.uk}
-      RELYING_PARTY_URL: ${RELYING_PARTY_URL:-https://olakunle-test-resources.review-a.dev.account.gov.uk}
+      RELYING_PARTY_URL: ${RELYING_PARTY_URL:-https://test-resources.review-a.dev.account.gov.uk}
       AWS_PROFILE: ${AWS_PROFILE:-}
-      TOKEN_ENDPOINT: ${TOKEN_ENDPOINT:-}
-      CREDENTIAL_ENDPOINT: ${CREDENTIAL_ENDPOINT:-}
-      GITHUB_ACTIONS: true
     volumes:
       - ~/.aws:/root/.aws:ro
+      - ../browser:/app/test/browser
+    working_dir: /app/test/browser
     command: ["node", "scripts/generate-oauth-url.js"]
 
   frontend-dev:
@@ -81,7 +82,6 @@ services:
     build:
       context: ../..
       dockerfile: local.Dockerfile
-      no_cache: true
     env_file:
       - ../../.env
     environment:
@@ -90,6 +90,8 @@ services:
       PORT: 5011
     ports:
       - "5011:5011"
+    volumes:
+      - ../..:/app
     depends_on:
       - redis
     healthcheck:
@@ -102,27 +104,25 @@ services:
   url-generator-dev:
     profiles: ["local-dev"]
     build:
-      context: ../browser
-      dockerfile: pre-merge.Dockerfile
-      no_cache: true
-    platform: linux/amd64
+      context: ../..
+      dockerfile: local.Dockerfile
+    env_file:
+      - ../../.env
     environment:
       MOCK_API: false
       ENVIRONMENT: ${ENVIRONMENT:-dev}
       WEBSITE_HOST: ${WEBSITE_HOST:-http://localhost:5011}
-      AWS_PROFILE: ${AWS_PROFILE:-}
       RELYING_PARTY_URL: ${RELYING_PARTY_URL:-https://olakunle-test-resources.review-a.dev.account.gov.uk}
-      TOKEN_ENDPOINT: ${TOKEN_ENDPOINT:-}
-      CREDENTIAL_ENDPOINT: ${CREDENTIAL_ENDPOINT:-}
-      CRI_ENCRYPTION_JWKS_ENDPOINT: ${CRI_ENCRYPTION_JWKS_ENDPOINT:-}
     volumes:
       - ~/.aws:/root/.aws:ro
       - ./reports:/reports
+      - ../browser:/app/test/browser
+    working_dir: /app/test/browser
     depends_on:
       frontend-dev:
         condition: service_healthy
     network_mode: host
-    command: ["node", "scripts/generate-oauth-url.js"]
+    command: ["node", "scripts/generate-stub-oauth-url.js"]
 
   ipv-core-stub:
     build:
