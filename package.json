@@ -33,7 +33,7 @@
     "ipv-core-stub": "cd test/docker && trap 'docker compose --profile core-stub down' EXIT && COMPOSE_BAKE=true docker compose --profile core-stub up --build ipv-core-stub"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.609.0",
+    "@aws-sdk/client-dynamodb": "3.918.0",
     "@govuk-one-login/di-ipv-cri-common-express": "12.0.0",
     "@govuk-one-login/frontend-device-intelligence": "1.1.0",
     "@govuk-one-login/frontend-language-toggle": "1.1.0",
