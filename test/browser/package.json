@@ -14,7 +14,7 @@
     "axios": "1.12.2",
     "chai": "4.4.1",
     "dotenv": "16.4.5",
-    "playwright": "1.32.0",
+    "playwright": "1.55.1",
     "wait-on": "8.0.5"
   },
   "devDependencies": {
