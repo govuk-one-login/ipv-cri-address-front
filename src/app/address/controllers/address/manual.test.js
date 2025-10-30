@@ -389,5 +389,62 @@ describe("address controller", () => {
 
       expect(savedAddresses.uprn).to.be.undefined;
     });
+
+    it("should trim field if it is whitespace only", async () => {
+      const addressToSave = {
+        addressHouseNumber: "   ",
+        addressFlatNumber: "   ",
+        addressHouseName: "   ",
+        addressStreetName: "   ",
+        addressLocality: "   ",
+        addressYearFrom: "2022",
+      };
+
+      req.body = addressToSave;
+
+      await address.saveValues(req, res, next);
+
+      const savedAddress = req.sessionModel.get("address");
+      expect(next).to.have.been.calledOnce;
+      expect(savedAddress.subBuildingName).to.equal("");
+      expect(savedAddress.buildingNumber).to.equal("");
+      expect(savedAddress.streetName).to.equal("");
+      expect(savedAddress.addressLocality).to.equal("");
+      expect(savedAddress.buildingName).to.equal("");
+      expect(savedAddress.addressCountry).to.equal("GB");
+      expect(addressToSave.addressCountry).to.be.undefined;
+    });
+
+    it("should not trim field if it is has chars", async () => {
+      const addressToSave = {
+        addressFlatNumber: " a  ",
+        addressHouseName: " b  ",
+        addressStreetName: " c  ",
+        addressLocality: " d  ",
+        addressYearFrom: "2022",
+      };
+
+      req.body = addressToSave;
+
+      await address.saveValues(req, res, next);
+
+      const savedAddress = req.sessionModel.get("address");
+      expect(next).to.have.been.calledOnce;
+      expect(savedAddress.buildingName).to.equal(
+        addressToSave.addressHouseName
+      );
+      expect(savedAddress.subBuildingName).to.equal(
+        addressToSave.addressFlatNumber
+      );
+      expect(savedAddress.buildingNumber).to.equal(
+        addressToSave.addressHouseNumber
+      );
+      expect(savedAddress.addressLocality).to.equal(
+        addressToSave.addressLocality
+      );
+      expect(savedAddress.addressStreetName).to.equal(addressToSave.streetName);
+      expect(savedAddress.addressCountry).to.equal("GB");
+      expect(addressToSave.addressCountry).to.be.undefined;
+    });
   });
 });

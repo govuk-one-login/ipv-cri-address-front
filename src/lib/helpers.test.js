@@ -1,5 +1,9 @@
 describe("helpers", () => {
-  const { yearFrom, getCountry } = require("./helpers");
+  const {
+    yearFrom,
+    getCountry,
+    trimOnlyWhitespaceStrings,
+  } = require("./helpers");
 
   context("yearFrom", () => {
     it("returns ISO string for a valid year", () => {
@@ -37,6 +41,43 @@ describe("helpers", () => {
 
     it("returns undefined for an empty string country code", () => {
       expect(getCountry("")).to.be.undefined;
+    });
+  });
+
+  context("trimOnlyWhitespaceStrings", () => {
+    it("replaces whitespace only strings with empty strings", () => {
+      const input = { a: "   ", b: "\n\t " };
+      const result = trimOnlyWhitespaceStrings(input);
+      expect(result).to.deep.equal({ a: "", b: "" });
+    });
+
+    it("leaves non-whitespace only strings unchanged", () => {
+      const input = { a: " hello ", b: "world" };
+      const result = trimOnlyWhitespaceStrings(input);
+      expect(result).to.deep.equal(input);
+    });
+
+    it("leaves none string values unchanged", () => {
+      const input = {
+        a: 42,
+        b: null,
+        c: undefined,
+        d: true,
+        e: { nested: " " },
+      };
+      const result = trimOnlyWhitespaceStrings(input);
+      expect(result).to.deep.equal(input);
+    });
+
+    it("keeps empty strings as empty strings", () => {
+      const input = { a: "" };
+      const result = trimOnlyWhitespaceStrings(input);
+      expect(result).to.deep.equal({ a: "" });
+    });
+
+    it("handles empty object", function () {
+      const result = trimOnlyWhitespaceStrings({});
+      expect(result).to.deep.equal({});
     });
   });
 });
