@@ -2,7 +2,11 @@ const BaseController = require("hmpo-form-wizard").Controller;
 const {
   buildingAddressEmptyValidator,
 } = require("../../validators/nonUKAddressValidator");
-const { yearFrom, getCountry } = require("../../../../lib/helpers");
+const {
+  yearFrom,
+  getCountry,
+  trimOnlyWhitespaceStrings,
+} = require("../../../../lib/helpers");
 const {
   buildingAddressComponent,
 } = require("../../components/buildingAddress");
@@ -64,7 +68,10 @@ class NonUKAddressController extends BaseController {
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
       const addressCountry = req.sessionModel.get("country");
-      const address = this.buildAddress(req.body, addressCountry);
+      const address = this.buildAddress(
+        trimOnlyWhitespaceStrings(req.body),
+        addressCountry
+      );
       req.sessionModel.set("address", address);
 
       callback();

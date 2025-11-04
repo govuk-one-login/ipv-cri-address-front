@@ -232,6 +232,43 @@ describe("NonUKAddressController", () => {
       });
       expect(callback).to.have.been.calledOnce;
     });
+
+    it("saves address and trims whitespace only fields", async () => {
+      const addressData = {
+        nonUKAddressApartmentNumber: "    ",
+        nonUKAddressBuildingNumber: "    ",
+        nonUKAddressBuildingName: "    ",
+        nonUKAddressStreetName: "    ",
+        nonUKAddressLocality: "    ",
+        nonUKAddressPostalCode: "    ",
+        nonUKAddressRegion: "    ",
+        nonUKAddressYearFrom: "2020",
+      };
+      const addressCountry = "FR";
+
+      const trimmedAddress = {
+        addressRegion: "",
+        addressLocality: "",
+        streetName: "",
+        postalCode: "",
+        buildingNumber: "",
+        buildingName: "",
+        subBuildingName: "",
+        validFrom: "2020-01-01",
+      };
+
+      req.body = addressData;
+      req.sessionModel.get.withArgs("country").returns(addressCountry);
+
+      const callback = sandbox.stub();
+      await address.saveValues(req, res, callback);
+
+      expect(req.sessionModel.set).to.have.been.calledWith("address", {
+        ...trimmedAddress,
+        addressCountry,
+      });
+      expect(callback).to.have.been.calledOnce;
+    });
   });
 
   describe("buildAddress", () => {

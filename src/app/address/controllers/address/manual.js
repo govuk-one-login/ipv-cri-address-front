@@ -1,5 +1,8 @@
 const BaseController = require("hmpo-form-wizard").Controller;
-const { yearFrom } = require("../../../../lib/helpers");
+const {
+  yearFrom,
+  trimOnlyWhitespaceStrings,
+} = require("../../../../lib/helpers");
 
 const {
   buildingAddressComponent,
@@ -72,8 +75,10 @@ class AddressController extends BaseController {
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
       const chosenAddress = req.sessionModel.get("address") || {}; // empty object if no address chosen on
-
-      const address = this.buildAddress(req.body, chosenAddress);
+      const address = this.buildAddress(
+        trimOnlyWhitespaceStrings(req.body),
+        chosenAddress
+      );
 
       // only set postcode when we dont use OS response postcode
       if (!address.postalCode) {
