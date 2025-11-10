@@ -2,11 +2,10 @@ const {
   API: {
     PATHS: { GET_ADDRESSES },
   },
-  PACKAGE_NAME,
 } = require("../../../../lib/config");
 
 const BaseController = require("hmpo-form-wizard").Controller;
-const logger = require("hmpo-logger").get(PACKAGE_NAME);
+const { logger } = require("../../../../lib/logger");
 
 class AddressPrepopulateController extends BaseController {
   async saveValues(req, res, callback) {

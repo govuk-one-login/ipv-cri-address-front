@@ -10,9 +10,7 @@ const {
 const {
   buildingAddressComponent,
 } = require("../../components/buildingAddress");
-const { PACKAGE_NAME } = require("../../../../lib/config");
-
-const logger = require("hmpo-logger").get(PACKAGE_NAME);
+const { logger } = require("../../../../lib/logger");
 
 class NonUKAddressController extends BaseController {
   getValues(req, res, callback) {
