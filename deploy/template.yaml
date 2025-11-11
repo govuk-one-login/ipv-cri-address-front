@@ -632,7 +632,7 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Condition: UseCanaryDeployment
     Properties:
-      TemplateURL: https://template-storage-templatebucket-1upzyw6v9cs42.s3.eu-west-2.amazonaws.com/ecs-canary-deployment/template.yaml?versionId=5RRU1nfKQD_d08FKttr8W7pzrAsqQiUM
+      TemplateURL: https://template-storage-templatebucket-1upzyw6v9cs42.s3.eu-west-2.amazonaws.com/ecs-canary-deployment/template-v2.1.6.yaml
       Parameters:
         VpcId: !Sub ${VpcStackName}-VpcId
         PermissionsBoundary:
