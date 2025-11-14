@@ -15,10 +15,9 @@ services:
     build:
       context: ../..
       dockerfile: local.Dockerfile
-    platform: linux/amd64
     environment:
       REDIS_SESSION_URL: redis://redis:6379
-      API_BASE_URL: http://imposter:8080
+      API_BASE_URL: ${API_BASE_URL:-http://imposter:8080}
       PORT: 5010
       NODE_ENV: development
       LANGUAGE_TOGGLE_DISABLED: false
@@ -26,6 +25,8 @@ services:
       DEVICE_INTELLIGENCE_DOMAIN: localhost
     ports:
       - "5010:5010"
+    volumes:
+      - ../..:/app
     depends_on:
       - redis
       - imposter
@@ -40,7 +41,6 @@ services:
     build:
       context: ../browser
       dockerfile: pre-merge.Dockerfile
-    platform: linux/amd64
     environment:
       MOCK_API: ${MOCK_API:-true}
       WEBSITE_HOST: ${WEBSITE_HOST:-http://localhost:5010}
@@ -52,12 +52,77 @@ services:
     stdin_open: true
     volumes:
       - ./reports:/reports
+      - ../browser:/app
     depends_on:
       frontend:
         condition: service_healthy
       imposter:
         condition: service_started
     network_mode: host
+
+  url-generator:
+    profiles: ["aws-api"]
+    build:
+      context: ../..
+      dockerfile: local.Dockerfile
+    environment:
+      MOCK_API: false
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
+      WEBSITE_HOST: ${WEBSITE_HOST:-https://review-a.dev.account.gov.uk}
+      RELYING_PARTY_URL: ${RELYING_PARTY_URL:-https://test-resources.review-a.dev.account.gov.uk}
+      AWS_PROFILE: ${AWS_PROFILE:-}
+    volumes:
+      - ~/.aws:/root/.aws:ro
+      - ../browser:/app/test/browser
+    working_dir: /app/test/browser
+    command: ["node", "scripts/generate-oauth-url.js"]
+
+  frontend-dev:
+    profiles: ["local-dev"]
+    build:
+      context: ../..
+      dockerfile: local.Dockerfile
+    env_file:
+      - ../../.env
+    environment:
+      REDIS_SESSION_URL: redis://redis:6379
+      NODE_ENV: development
+      PORT: 5011
+    ports:
+      - "5011:5011"
+    volumes:
+      - ../..:/app
+    depends_on:
+      - redis
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5011/healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  url-generator-dev:
+    profiles: ["local-dev"]
+    build:
+      context: ../..
+      dockerfile: local.Dockerfile
+    env_file:
+      - ../../.env
+    environment:
+      MOCK_API: false
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
+      WEBSITE_HOST: ${WEBSITE_HOST:-http://localhost:5011}
+      RELYING_PARTY_URL: ${RELYING_PARTY_URL:-https://olakunle-test-resources.review-a.dev.account.gov.uk}
+    volumes:
+      - ~/.aws:/root/.aws:ro
+      - ./reports:/reports
+      - ../browser:/app/test/browser
+    working_dir: /app/test/browser
+    depends_on:
+      frontend-dev:
+        condition: service_healthy
+    network_mode: host
+    command: ["node", "scripts/generate-stub-oauth-url.js"]
 
   ipv-core-stub:
     build:
@@ -77,3 +142,5 @@ services:
       - ../browser/di-ipv-config.yaml:/app/config/di-ipv-config.yaml
     profiles:
       - core-stub
+
+
