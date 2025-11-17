@@ -50,6 +50,11 @@ Conditions:
   IsProductionOrIntegration: !Or
     - !Equals [!Ref Environment, production]
     - !Equals [!Ref Environment, integration]
+  IsBuildEnvironment: !Equals [!Ref Environment, build]
+  IsDevEnvironment: !Equals [!Ref Environment, dev]
+  IsNotDevBuildEnvironment: !Not
+    - !Condition IsDevEnvironment
+    - !Condition IsBuildEnvironment
 
   EnableSpotArmInstance: !Equals [!Ref Environment, dev]
 
@@ -390,7 +395,7 @@ Resources:
 
   ECSAccessLogsGroupSubscriptionFilterCSLS:
     Type: AWS::Logs::SubscriptionFilter
-    Condition: IsNotDevelopment
+    Condition: IsNotDevBuildEnvironment
     Properties:
       DestinationArn: "arn:aws:logs:eu-west-2:885513274347:destination:csls_cw_logs_destination_prodpython"
       FilterPattern: ""
@@ -725,7 +730,7 @@ Resources:
 
   APIGWAccessLogsGroupSubscriptionFilterCSLS:
     Type: AWS::Logs::SubscriptionFilter
-    Condition: IsNotDevelopment
+    Condition: IsNotDevBuildEnvironment
     Properties:
       DestinationArn: "arn:aws:logs:eu-west-2:885513274347:destination:csls_cw_logs_destination_prodpython"
       FilterPattern: ""
