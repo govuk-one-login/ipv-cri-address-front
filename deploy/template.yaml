@@ -50,11 +50,11 @@ Conditions:
   IsProductionOrIntegration: !Or
     - !Equals [!Ref Environment, production]
     - !Equals [!Ref Environment, integration]
-  IsBuildEnvironment: !Equals [!Ref Environment, build]
-  IsDevEnvironment: !Equals [!Ref Environment, dev]
+  IsDevBuildEnvironment: !Or
+    - !Equals [!Ref Environment, dev]
+    - !Equals [!Ref Environment, build]
   IsNotDevBuildEnvironment: !Not
-    - !Condition IsDevEnvironment
-    - !Condition IsBuildEnvironment
+    - !Condition IsDevBuildEnvironment
 
   EnableSpotArmInstance: !Equals [!Ref Environment, dev]
 
