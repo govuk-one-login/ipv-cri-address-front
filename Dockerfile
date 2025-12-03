@@ -4,7 +4,7 @@ FROM node:20.11.1-alpine3.19@${NODE_SHA} AS builder
 WORKDIR /app
 
 COPY src/ ./src
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .npmrc ./
 
 RUN <<COMMANDS
   npm ci --ignore-scripts

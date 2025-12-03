@@ -6,7 +6,7 @@ WORKDIR /app
 
 RUN apk add --no-cache curl
 
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .npmrc ./
 RUN npm ci
 
 COPY . ./

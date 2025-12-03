@@ -3,7 +3,7 @@ FROM --platform="linux/arm64" arm64v8/node@sha256:56e8282f4392fb96c877babc93b382
 WORKDIR /app
 
 COPY /src ./src
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .npmrc ./
 
 RUN npm ci
 RUN npm run build
