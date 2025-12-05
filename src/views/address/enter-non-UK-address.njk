@@ -44,7 +44,7 @@
   {% include "../components/non-UK-address-input-fields.njk" %}
   {{ yearFromField(ctx, { name: "nonUKAddressYearFrom", title: title, label: label }) }}
 
-  {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
+  {{ hmpoSubmit(ctx, id: "continue", text: translate("buttons.next")) }}
 
   {% endcall %}
 
