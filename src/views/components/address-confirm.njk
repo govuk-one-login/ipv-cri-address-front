@@ -10,7 +10,9 @@
 {% set isPageDataSensitive = false %}
 {% set statusCode = '200' %}
 {% set pageTitleKey = "pages.address-confirm.title" %}
-{% set contentID = "9ce5b0a2-5e6d-4e05-8757-7463aba2dc0a" %}
+{% if contentID is not defined %}
+    {% set contentID = "9ce5b0a2-5e6d-4e05-8757-7463aba2dc0a" %}
+{% endif %}
 {% set taxLevel2 = 'address' %}
 {% set isPageDynamic = false %}
 {% set loggedInStatus = true %}
