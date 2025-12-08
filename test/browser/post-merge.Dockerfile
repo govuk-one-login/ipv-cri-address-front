@@ -11,7 +11,7 @@ RUN apt-get update -y && \
 
 WORKDIR /test/browser
 
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json .npmrc ./
 RUN npm ci
 
 COPY ./run-post-merge.sh /run-tests.sh
