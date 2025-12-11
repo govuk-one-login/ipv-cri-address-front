@@ -1,7 +1,10 @@
 const { PACKAGE_NAME } = require("../../../../lib/config");
 
 const BaseController = require("hmpo-form-wizard").Controller;
-const logger = require("hmpo-logger").get(PACKAGE_NAME);
+const logger =
+  require("@govuk-one-login/di-ipv-cri-common-express/src/bootstrap/lib/logger").get(
+    PACKAGE_NAME
+  );
 const {
   generateHTMLofAddress,
 } = require("../../../../presenters/addressPresenter");
