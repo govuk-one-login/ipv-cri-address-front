@@ -1,4 +1,4 @@
-FROM --platform="linux/arm64" arm64v8/node@sha256:56e8282f4392fb96c877babc93b3829e46b79c6fbcd48c92de578febffc80587 AS builder
+FROM --platform="linux/arm64" arm64v8/node@sha256:7686ef44e14c8012b2f3b7a9458aecf72c3ba60fb99ae1d43c975da2a68ba6c7 AS builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN npm run build
 RUN [ "rm", "-rf", "node_modules" ]
 RUN npm ci --omit=dev --ignore-scripts
 
-FROM --platform="linux/arm64" arm64v8/node@sha256:56e8282f4392fb96c877babc93b3829e46b79c6fbcd48c92de578febffc80587 AS final
+FROM --platform="linux/arm64" arm64v8/node@sha256:7686ef44e14c8012b2f3b7a9458aecf72c3ba60fb99ae1d43c975da2a68ba6c7 AS final
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends curl tini \
