@@ -33,7 +33,7 @@
     "ipv-core-stub": "cd test/docker && trap 'docker compose --profile core-stub down' EXIT && COMPOSE_BAKE=true docker compose --profile core-stub up --build ipv-core-stub"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.609.0",
+    "@aws-sdk/client-dynamodb": "3.726.1",
     "@govuk-one-login/di-ipv-cri-common-express": "12.0.1",
     "@govuk-one-login/frontend-analytics": "4.0.5",
     "@govuk-one-login/frontend-device-intelligence": "1.1.0",
@@ -43,7 +43,7 @@
     "@govuk-one-login/frontend-vital-signs": "0.1.3",
     "accessible-autocomplete": "3.0.1",
     "axios": "1.12.0",
-    "cfenv": "1.2.4",
+    "cfenv": "1.2.5",
     "connect-dynamodb": "^3.0.3",
     "copyfiles": "2.4.1",
     "dotenv": "16.4.5",
@@ -76,7 +76,7 @@
     "prettier": "3.2.4",
     "proxyquire": "2.1.3",
     "sass": "1.77.6",
-    "sinon": "19.0.2",
+    "sinon": "21.0.1",
     "sinon-chai": "3.7.0",
     "uglify-js": "3.19.3",
     "wait-on": "8.0.5"
@@ -85,8 +85,5 @@
     "strip-ansi": "^6.0.1",
     "string-width": "^4.2.2",
     "wrap-ansi": "^7.0.0"
-  },
-  "overrides": {
-    "js-yaml": "4.1.1"
   }
 }
