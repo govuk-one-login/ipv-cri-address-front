@@ -18,7 +18,7 @@
     "wait-on": "8.0.5"
   },
   "devDependencies": {
-    "@aws-sdk/credential-providers": "3.782.0",
+    "@aws-sdk/credential-providers": "3.990.0",
     "aws4-axios": "3.4.0"
   }
 }
