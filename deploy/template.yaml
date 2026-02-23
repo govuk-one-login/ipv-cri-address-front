@@ -313,7 +313,7 @@ Resources:
     Properties:
       ClusterSettings:
         - Name: containerInsights
-          Value: enabled
+          Value: enhanced
       CapacityProviders:
         - !If [EnableSpotArmInstance, "FARGATE_SPOT", "FARGATE"]
       Tags:
