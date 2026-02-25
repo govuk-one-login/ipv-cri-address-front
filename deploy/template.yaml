@@ -867,15 +867,15 @@ Resources:
         Cooldown: 60
         MinAdjustmentMagnitude: 5
         StepAdjustments:
-          - MetricIntervalUpperBound: 20
+          - MetricIntervalUpperBound: 10
             ScalingAdjustment: 100
-          - MetricIntervalLowerBound: 20
-            MetricIntervalUpperBound: 30
+          - MetricIntervalLowerBound: 10
+            MetricIntervalUpperBound: 15
             ScalingAdjustment: 200
-          - MetricIntervalLowerBound: 30
-            MetricIntervalUpperBound: 35
+          - MetricIntervalLowerBound: 15
+            MetricIntervalUpperBound: 20
             ScalingAdjustment: 300
-          - MetricIntervalLowerBound: 35
+          - MetricIntervalLowerBound: 20
             ScalingAdjustment: 500
 
   StepScaleOutAlarm:
@@ -885,7 +885,7 @@ Resources:
       ActionsEnabled: true
       AlarmActions:
         - !Ref StepScaleOutPolicy
-      AlarmDescription: "AddressFrontClusterOver60PercentCPU"
+      AlarmDescription: "AddressFrontClusterOver30PercentCPU"
       ComparisonOperator: "GreaterThanThreshold"
       DatapointsToAlarm: "2"
       Dimensions:
@@ -899,7 +899,7 @@ Resources:
       Namespace: "AWS/ECS"
       Statistic: "Average"
       Period: "60"
-      Threshold: "60"
+      Threshold: "30"
 
   StepScaleInAlarm:
     DependsOn: ECSAutoScalingTarget
