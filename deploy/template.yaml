@@ -743,9 +743,9 @@ Resources:
         - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
-        - !ImportValue - !If [IsProdEnvironment, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
+        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
       OKActions:
-        - !ImportValue - !If [IsProdEnvironment, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
+        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
       InsufficientDataActions: []
       EvaluationPeriods: 5
       DatapointsToAlarm: 2
@@ -956,9 +956,9 @@ Resources:
         - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
-        - !ImportValue - !If [IsProdEnvironment, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
+        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
       OKActions:
-        - !ImportValue - !If [IsProdEnvironment, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
+        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
       InsufficientDataActions: []
       MetricName: TaskCount
       Namespace: ECS/ContainerInsights
@@ -982,9 +982,9 @@ Resources:
         - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
-        - !ImportValue - !If [IsProdEnvironment, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
+        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
       OKActions:
-        - !ImportValue - !If [IsProdEnvironment, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
+        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
       InsufficientDataActions: []
       MetricName: TaskCount
       Namespace: ECS/ContainerInsights
@@ -1007,9 +1007,9 @@ Resources:
         - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
-        - !ImportValue - !If [IsProdEnvironment, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
+        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
       OKActions:
-        - !ImportValue - !If [IsProdEnvironment, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
+        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !ImportValue slack-notifications-CriticalAlertsTopicArn]
       InsufficientDataActions: []
       MetricName: HTTPCode_Target_5XX_Count
       Namespace: AWS/ApplicationELB
