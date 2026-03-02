@@ -48,6 +48,7 @@ services:
       RELYING_PARTY_URL: ${RELYING_PARTY_URL:-http://localhost:8080}
       GITHUB_ACTIONS: ${GITHUB_ACTIONS:-true}
       ENVIRONMENT: ${ENVIRONMENT:-dev}
+      BROWSER: ${BROWSER:-chromium}
     tty: true
     stdin_open: true
     volumes:

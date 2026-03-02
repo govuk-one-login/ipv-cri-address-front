@@ -5,20 +5,34 @@ const {
   After,
   setDefaultTimeout,
 } = require("@cucumber/cucumber");
-const { chromium } = require("playwright");
+const { chromium, firefox, webkit } = require("playwright");
 
 // FIXME This is large due to cold starts
 setDefaultTimeout(30 * 1000);
 
+const browserTypes = {
+  chromium,
+  firefox,
+  webkit,
+  //local only
+  edge: {
+    launch: (options) => chromium.launch({ ...options, channel: "msedge" }),
+  },
+};
+
 BeforeAll(async function () {
   // Browsers are expensive in Playwright so only create 1
-  global.browser = process.env.GITHUB_ACTIONS
-    ? await chromium.launch()
-    : await chromium.launch({
-        headless: false,
-        // Slow so we can see things happening
-        slowMo: 500,
-      });
+  const browserName = process.env.BROWSER || "chromium";
+  const browserType = browserTypes[browserName];
+
+  if (!browserType) throw new Error(`Unsupported browser: ${browserName}`);
+
+  // eslint-disable-next-line no-console
+  console.log(`Running scenarios in browser type: ${browserName}`);
+  global.browser = await browserType.launch({
+    headless: false,
+    slowMo: process.env.GITHUB_ACTIONS ? 0 : 500,
+  });
 });
 
 AfterAll(async function () {
@@ -45,7 +59,18 @@ Before(async function ({ pickle } = {}) {
 
 // Create a new test context and page per scenario
 Before(async function () {
-  this.context = await global.browser.newContext({});
+  this.context = await global.browser.newContext({
+    ignoreHTTPSErrors: true,
+  });
+  this.context.on("response", async (response) => {
+    const headers = response.headers();
+    if (headers["set-cookie"]) {
+      const cookies = await this.context.cookies();
+      await this.context.addCookies(
+        cookies.map((cookie) => ({ ...cookie, secure: false }))
+      );
+    }
+  });
   this.page = await this.context.newPage();
 });
 
