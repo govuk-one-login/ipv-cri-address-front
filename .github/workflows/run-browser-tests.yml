@@ -12,9 +12,16 @@ jobs:
   run-tests:
     name: Browser
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox]
     steps:
-      - name: Run browser tests
+      - name: Run browser tests (${{ matrix.browser }})
         uses: govuk-one-login/github-actions/node/run-script@c8eefadf581d2087ce2af48b7060c1329cfa5251
+        env:
+          BROWSERS: chromium,firefox
+          BROWSER: ${{ matrix.browser }}
         with:
           node-version: 20.x
           package-manager: npm
