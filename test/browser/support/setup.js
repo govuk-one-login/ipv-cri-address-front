@@ -29,7 +29,7 @@ BeforeAll(async function () {
   // eslint-disable-next-line no-console
   console.log(`Running scenarios in browser type: ${browserName}`);
   global.browser = await browserType.launch({
-    headless: false,
+    headless: true,
     slowMo: process.env.GITHUB_ACTIONS ? 0 : 500,
   });
 });
