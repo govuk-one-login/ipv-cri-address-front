@@ -14,7 +14,6 @@ const browserTypes = {
   chromium,
   firefox,
   webkit,
-  //local only
   edge: {
     launch: (options) => chromium.launch({ ...options, channel: "msedge" }),
   },
@@ -59,18 +58,7 @@ Before(async function ({ pickle } = {}) {
 
 // Create a new test context and page per scenario
 Before(async function () {
-  this.context = await global.browser.newContext({
-    ignoreHTTPSErrors: true,
-  });
-  this.context.on("response", async (response) => {
-    const headers = response.headers();
-    if (headers["set-cookie"]) {
-      const cookies = await this.context.cookies();
-      await this.context.addCookies(
-        cookies.map((cookie) => ({ ...cookie, secure: false }))
-      );
-    }
-  });
+  this.context = await global.browser.newContext({});
   this.page = await this.context.newPage();
 });
 
