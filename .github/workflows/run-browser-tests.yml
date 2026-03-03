@@ -20,7 +20,6 @@ jobs:
       - name: Run browser tests (${{ matrix.browser }})
         uses: govuk-one-login/github-actions/node/run-script@c8eefadf581d2087ce2af48b7060c1329cfa5251
         env:
-          BROWSERS: chromium,firefox
           BROWSER: ${{ matrix.browser }}
         with:
           node-version: 20.x
