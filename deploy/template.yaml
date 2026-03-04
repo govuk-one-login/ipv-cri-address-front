@@ -744,10 +744,18 @@ Resources:
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue slack-notifications-CriticalAlertsTopicArn
-        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !Ref "AWS::NoValue"]
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       OKActions:
         - !ImportValue slack-notifications-CriticalAlertsTopicArn
-        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !Ref "AWS::NoValue"]
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       InsufficientDataActions: []
       EvaluationPeriods: 5
       DatapointsToAlarm: 2
@@ -959,10 +967,18 @@ Resources:
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue slack-notifications-CriticalAlertsTopicArn
-        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !Ref "AWS::NoValue"]
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       OKActions:
         - !ImportValue slack-notifications-CriticalAlertsTopicArn
-        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !Ref "AWS::NoValue"]
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       InsufficientDataActions: []
       MetricName: TaskCount
       Namespace: ECS/ContainerInsights
@@ -987,10 +1003,18 @@ Resources:
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue slack-notifications-CriticalAlertsTopicArn
-        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !Ref "AWS::NoValue"]
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       OKActions:
         - !ImportValue slack-notifications-CriticalAlertsTopicArn
-        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !Ref "AWS::NoValue"]
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       InsufficientDataActions: []
       MetricName: TaskCount
       Namespace: ECS/ContainerInsights
@@ -1014,10 +1038,18 @@ Resources:
       ActionsEnabled: true
       AlarmActions:
         - !ImportValue slack-notifications-CriticalAlertsTopicArn
-        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !Ref "AWS::NoValue"]
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       OKActions:
         - !ImportValue slack-notifications-CriticalAlertsTopicArn
-        - !If [IsProduction, !ImportValue slack-notifications-PagerDutySNSTopicArn, !Ref "AWS::NoValue"]
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       InsufficientDataActions: []
       MetricName: HTTPCode_Target_5XX_Count
       Namespace: AWS/ApplicationELB
