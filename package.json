@@ -51,7 +51,7 @@
     "express-async-errors": "3.1.1",
     "express-session": "1.18.2",
     "govuk-frontend": "4.10.1",
-    "hmpo-components": "7.1.0",
+    "hmpo-components": "8.0.6",
     "hmpo-config": "4.0.0",
     "hmpo-form-wizard": "13.0.2",
     "hmpo-i18n": "7.0.1",
