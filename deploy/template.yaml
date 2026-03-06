@@ -423,8 +423,6 @@ Resources:
               Value: !If [IsProduction, "GTM-K4PBJH3", "GTM-KD86CMZ"]
             - Name: GA4_ENABLED
               Value: true
-            - Name: ANALYTICS_DATA_SENSITIVE
-              Value: false
             - Name: UA_ENABLED
               Value: false
             - Name: FRONTEND_DOMAIN
