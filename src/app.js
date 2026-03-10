@@ -6,23 +6,25 @@ const session = require("express-session");
 const { DynamoDB } = require("@aws-sdk/client-dynamodb");
 const DynamoDBStore = require("connect-dynamodb")(session);
 
-const commonExpress = require("@govuk-one-login/di-ipv-cri-common-express");
 const frontendUi = require("@govuk-one-login/frontend-ui");
+const addLanguageParam = require("@govuk-one-login/frontend-language-toggle/build/cjs/language-param-setter.cjs");
+const {
+  frontendVitalSignsInitFromApp,
+} = require("@govuk-one-login/frontend-vital-signs");
 
+const commonExpress = require("@govuk-one-login/di-ipv-cri-common-express");
+const { setup } = commonExpress.bootstrap;
 const setHeaders = commonExpress.lib.headers;
 const setScenarioHeaders = commonExpress.lib.scenarioHeaders;
 const setAxiosDefaults = commonExpress.lib.axios;
-
-const { setAPIConfig, setOAuthPaths } = require("./lib/settings");
 const { setGTM, setLanguageToggle, setDeviceIntelligence } =
   commonExpress.lib.settings;
 const { getGTM, getLanguageToggle, getDeviceIntelligence } =
   commonExpress.lib.locals;
-const {
-  setI18n,
-} = require("@govuk-one-login/di-ipv-cri-common-express/src/lib/i18next");
+const { setI18n } = commonExpress.lib.i18n;
+const helmetConfig = commonExpress.lib.helmet;
 
-const addLanguageParam = require("@govuk-one-login/frontend-language-toggle/build/cjs/language-param-setter.cjs");
+const { setAPIConfig, setOAuthPaths } = require("./lib/settings");
 
 const {
   API,
@@ -34,9 +36,6 @@ const {
   SESSION_TTL,
   OVERLOAD_PROTECTION,
 } = require("./lib/config");
-
-const { setup } =
-  require("@govuk-one-login/di-ipv-cri-common-express").bootstrap;
 
 const loggerConfig = {
   console: true,
@@ -62,11 +61,6 @@ const sessionConfig = {
   ...(SESSION_TABLE_NAME && { sessionStore: dynamoDBSessionStore }),
 };
 
-const helmetConfig = require("@govuk-one-login/di-ipv-cri-common-express/src/lib/helmet");
-
-const {
-  frontendVitalSignsInitFromApp,
-} = require("@govuk-one-login/frontend-vital-signs");
 const {
   missingRedirectErrorHandler,
 } = require("./middleware/missingRedirectErrorHandler");
