@@ -51,7 +51,7 @@
     "express-session": "1.18.2",
     "govuk-frontend": "5.10.2",
     "hmpo-components": "8.0.5",
-    "hmpo-form-wizard": "13.0.2"
+    "hmpo-form-wizard": "15.0.5"
   },
   "devDependencies": {
     "@cucumber/cucumber": "11.3.0",
