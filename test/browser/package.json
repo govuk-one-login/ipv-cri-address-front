@@ -14,8 +14,7 @@
     "axios": "1.13.5",
     "chai": "4.4.1",
     "dotenv": "16.4.5",
-    "playwright": "1.55.1",
-    "wait-on": "8.0.5"
+    "playwright": "1.55.1"
   },
   "devDependencies": {
     "@aws-sdk/credential-providers": "3.990.0",
