@@ -80,7 +80,7 @@ Mappings:
       logLevel: "info"
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
-      minECSCount: 2
+      minECSCount: 6
       maxECSCount: 60
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
@@ -450,6 +450,8 @@ Resources:
                   !Ref Environment,
                   may2025RebrandEnabled,
                 ]
+            - Name: NODE_OPTIONS
+              Value: "--max-old-space-size=1792"
             - Name: NODE_ENV
               Value: "production"
             - Name: LOG_LEVEL
@@ -504,9 +506,9 @@ Resources:
             Timeout: 2
             Retries: 10 # This ensures that just one healthcheck failure won't cause the container to be drained and replaced.
             StartPeriod: 0
-      Cpu: "2048"
+      Cpu: "1024"
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
-      Memory: "4096"
+      Memory: "2048"
       NetworkMode: awsvpc
       RequiresCompatibilities:
         - FARGATE
@@ -857,11 +859,11 @@ Resources:
         AdjustmentType: PercentChangeInCapacity
         Cooldown: 300
         StepAdjustments:
-          - MetricIntervalUpperBound: -20
-            MetricIntervalLowerBound: -40
+          - MetricIntervalUpperBound: 0
+            MetricIntervalLowerBound: -20
             ScalingAdjustment: -10
-          - MetricIntervalUpperBound: -40
-            ScalingAdjustment: -50
+          - MetricIntervalUpperBound: -20
+            ScalingAdjustment: -20
 
   StepScaleOutPolicy:
     DependsOn: ECSAutoScalingTarget
@@ -877,15 +879,16 @@ Resources:
         Cooldown: 60
         MinAdjustmentMagnitude: 5
         StepAdjustments:
-          - MetricIntervalUpperBound: 10
+          - MetricIntervalLowerBound: 0
+            MetricIntervalUpperBound: 10
             ScalingAdjustment: 100
           - MetricIntervalLowerBound: 10
-            MetricIntervalUpperBound: 15
-            ScalingAdjustment: 200
-          - MetricIntervalLowerBound: 15
             MetricIntervalUpperBound: 20
-            ScalingAdjustment: 300
+            ScalingAdjustment: 200
           - MetricIntervalLowerBound: 20
+            MetricIntervalUpperBound: 30
+            ScalingAdjustment: 300
+          - MetricIntervalLowerBound: 30
             ScalingAdjustment: 500
 
   StepScaleOutAlarm:
@@ -897,14 +900,14 @@ Resources:
         - !Ref StepScaleOutPolicy
       AlarmDescription: "AddressFrontClusterOver30PercentCPU"
       ComparisonOperator: "GreaterThanThreshold"
-      DatapointsToAlarm: "2"
+      DatapointsToAlarm: "1"
       Dimensions:
         - Name: ClusterName
           Value: !Ref AddressFrontEcsCluster
         - Name: ServiceName
           Value: !GetAtt AddressFrontEcsService.Name
       Unit: "Percent"
-      EvaluationPeriods: "2"
+      EvaluationPeriods: "1"
       MetricName: "CPUUtilization"
       Namespace: "AWS/ECS"
       Statistic: "Average"
@@ -932,7 +935,7 @@ Resources:
       Namespace: "AWS/ECS"
       Statistic: "Average"
       Period: "60"
-      Threshold: "60"
+      Threshold: "30"
 
   AddressFrontSessionsTable:
     Type: AWS::DynamoDB::Table
