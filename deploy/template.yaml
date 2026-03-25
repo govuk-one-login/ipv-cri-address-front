@@ -80,7 +80,7 @@ Mappings:
       logLevel: "info"
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
-      minECSCount: 2
+      minECSCount: 6
       maxECSCount: 60
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
@@ -822,7 +822,7 @@ Resources:
       TargetTrackingScalingPolicyConfiguration:
         PredefinedMetricSpecification:
           PredefinedMetricType: ECSServiceAverageCPUUtilization
-        TargetValue: 60
+        TargetValue: 30
         ScaleInCooldown: 420
         ScaleOutCooldown: 60
 
@@ -857,11 +857,11 @@ Resources:
         AdjustmentType: PercentChangeInCapacity
         Cooldown: 300
         StepAdjustments:
-          - MetricIntervalUpperBound: -20
-            MetricIntervalLowerBound: -40
+          - MetricIntervalUpperBound: 0
+            MetricIntervalLowerBound: -20
             ScalingAdjustment: -10
-          - MetricIntervalUpperBound: -40
-            ScalingAdjustment: -50
+          - MetricIntervalUpperBound: -20
+            ScalingAdjustment: -20
 
   StepScaleOutPolicy:
     DependsOn: ECSAutoScalingTarget
@@ -897,14 +897,14 @@ Resources:
         - !Ref StepScaleOutPolicy
       AlarmDescription: "AddressFrontClusterOver30PercentCPU"
       ComparisonOperator: "GreaterThanThreshold"
-      DatapointsToAlarm: "2"
+      DatapointsToAlarm: "1"
       Dimensions:
         - Name: ClusterName
           Value: !Ref AddressFrontEcsCluster
         - Name: ServiceName
           Value: !GetAtt AddressFrontEcsService.Name
       Unit: "Percent"
-      EvaluationPeriods: "2"
+      EvaluationPeriods: "1"
       MetricName: "CPUUtilization"
       Namespace: "AWS/ECS"
       Statistic: "Average"
@@ -932,7 +932,7 @@ Resources:
       Namespace: "AWS/ECS"
       Statistic: "Average"
       Period: "60"
-      Threshold: "60"
+      Threshold: "30"
 
   AddressFrontSessionsTable:
     Type: AWS::DynamoDB::Table
