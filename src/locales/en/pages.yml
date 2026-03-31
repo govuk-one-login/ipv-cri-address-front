@@ -6,6 +6,8 @@ index:
 error:
   unrecoverable:
     title: Sorry, there is a problem with the service
+  pageNotFound:
+    title: Page not found
 
 address:
   title: Address
