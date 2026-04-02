@@ -1,7 +1,7 @@
 const countryList = require("../app/address/data/countries.json");
 
 const yearFrom = (year) =>
-  year && !isNaN(new Date(year))
+  year && !Number.isNaN(new Date(year).getTime())
     ? new Date(year).toISOString().split("T")[0]
     : null;
 
