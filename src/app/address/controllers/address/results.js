@@ -60,14 +60,13 @@ class AddressResultsController extends BaseController {
   }
 
   getAddress(selectedAddress, searchResults) {
-    const chosenAddress = Object.assign(
-      {},
-      searchResults.find(
+    const chosenAddress = {
+      ...searchResults.find(
         (address) =>
           presenters.addressPresenter.generateSearchResultString(address) ===
           selectedAddress
-      )
-    );
+      ),
+    };
 
     return chosenAddress;
   }

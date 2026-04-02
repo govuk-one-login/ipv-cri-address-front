@@ -6,6 +6,6 @@ module.exports = {
     ) {
       return true;
     }
-    return !(addressOne.uprn === addressTwo.uprn);
+    return addressOne.uprn !== addressTwo.uprn;
   },
 };

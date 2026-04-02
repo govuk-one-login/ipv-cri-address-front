@@ -8,7 +8,7 @@ module.exports = {
   missingAlphaOrNumeric: function (val) {
     if (val.match(/^[A-Za-z]+$/)) {
       return false; // missing numbers
-    } else if (val.match(/^[0-9]+$/)) {
+    } else if (val.match(/^\d+$/)) {
       return false; // missing alphas
     } else {
       return true;
@@ -21,7 +21,7 @@ module.exports = {
     // 1 or 2 letters followed by a number
     // optionally a letter or number
     // A optional space followed by a number and two letters
-    const ukPostcodeRegex = /^[A-Z]{1,2}[0-9][A-Z0-9]? ?[0-9][A-Z]{2}$/i;
-    return val.match(ukPostcodeRegex) ? true : false;
+    const ukPostcodeRegex = /^[A-Z]{1,2}\d[A-Z0-9]? ?\d[A-Z]{2}$/i;
+    return !!val.match(ukPostcodeRegex);
   },
 };
