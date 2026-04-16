@@ -78,6 +78,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "info"
+      pinoLoggerEnabled: "true"
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 6
@@ -85,6 +86,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "info"
+      pinoLoggerEnabled: "true"
     staging:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
@@ -92,6 +94,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "warn"
+      pinoLoggerEnabled: "false"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
@@ -99,6 +102,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "warn"
+      pinoLoggerEnabled: "false"
     production:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables
       minECSCount: 6
@@ -106,6 +110,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "warn"
+      pinoLoggerEnabled: "false"
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
     eu-west-2:
@@ -458,6 +463,13 @@ Resources:
                   EnvironmentConfiguration,
                   !Ref Environment,
                   logLevel,
+                ]
+            - Name: USE_PINO_LOGGER
+              Value:
+                !FindInMap [
+                  EnvironmentConfiguration,
+                  !Ref Environment,
+                  pinoLoggerEnabled,
                 ]
           Secrets:
             - Name: DT_TENANT
