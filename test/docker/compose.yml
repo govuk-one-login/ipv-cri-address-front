@@ -38,8 +38,8 @@ services:
 
   cucumber:
     build:
-      context: ../browser
-      dockerfile: pre-merge.Dockerfile
+      context: ../..
+      dockerfile: test/browser/pre-merge.Dockerfile
     platform: linux/amd64
     environment:
       MOCK_API: ${MOCK_API:-true}

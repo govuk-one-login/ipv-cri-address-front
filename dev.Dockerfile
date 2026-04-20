@@ -1,4 +1,6 @@
-FROM --platform="linux/arm64" arm64v8/node@sha256:25dc6ce030ed92d46cbdb51eee094f486f1e3fb9c0d686c5ea80b6b1d444dc83 AS builder
+# https://hub.docker.com/layers/arm64v8/node/22-bookworm/images/sha256-1d625ee0a8aba3fcbabe2ce39330b4d2a53a80f38979f200d6ef11e899bde1df
+ARG NODE_SHA=sha256:47eaa0cad48cd06a6da0d2a0a3f3dbbcb3b311513ae1e23b7aa3a822d490486a
+FROM --platform="linux/arm64" arm64v8/node:22-bookworm@${NODE_SHA} AS builder
 
 WORKDIR /app
 
@@ -13,7 +15,7 @@ RUN npm run build
 RUN [ "rm", "-rf", "node_modules" ]
 RUN npm ci --omit=dev --ignore-scripts
 
-FROM --platform="linux/arm64" arm64v8/node@sha256:25dc6ce030ed92d46cbdb51eee094f486f1e3fb9c0d686c5ea80b6b1d444dc83 AS final
+FROM --platform="linux/arm64" arm64v8/node:22-bookworm@${NODE_SHA} AS final
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends curl tini \
