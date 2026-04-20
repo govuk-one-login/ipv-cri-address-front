@@ -10,6 +10,6 @@ export ENVIRONMENT
 export GITHUB_ACTIONS=true
 export MOCK_API=false
 
-cd /test/browser || exit 1
+cd /app/test/browser || exit 1
 
 npm test -- --tags "@post-merge and not @live" --fail-fast
