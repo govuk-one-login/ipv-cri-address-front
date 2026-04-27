@@ -92,7 +92,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "warn"
-      pinoLoggerEnabled: "false"
+      pinoLoggerEnabled: "true"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
