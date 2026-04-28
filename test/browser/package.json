@@ -11,7 +11,7 @@
   "license": "MIT",
   "devDependencies": {
     "@aws-sdk/credential-providers": "3.1005.0",
-    "@cucumber/cucumber": "12.6.0",
+    "@cucumber/cucumber": "12.8.2",
     "aws4-axios": "3.4.0",
     "axios": "1.15.0",
     "chai": "4.4.1",
