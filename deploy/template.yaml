@@ -49,6 +49,7 @@ Parameters:
     Default: "address-cri-api-v1-PrivateAddressApiGatewayId"
 
   ContainerImageName:
+    Description: "A custom Image name for the ECS TaskDefinition - used for localdev"
     Type: String
     Default: ""
 
