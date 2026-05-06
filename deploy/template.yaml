@@ -50,9 +50,11 @@ Parameters:
 
   ContainerImageName:
     Type: String
-    Default: "CONTAINER-IMAGE-PLACEHOLDER"
+    Default: ""
 
 Conditions:
+  UseContainerImageNameOverride: !Not [ !Equals [ !Ref ContainerImageName, "" ] ]
+
   IsNotDevelopment: !Not
     - !Equals [!Ref Environment, dev]
   IsProduction: !Equals [!Ref Environment, production]
@@ -415,7 +417,10 @@ Resources:
     Properties:
       ContainerDefinitions:
         - Essential: true
-          Image: !Ref ContainerImageName
+          Image: !If
+            - UseContainerImageNameOverride
+            - !Ref ContainerImageName
+            - CONTAINER-IMAGE-PLACEHOLDER
           Name: app
           ReadonlyRootFilesystem: true
           Environment:
