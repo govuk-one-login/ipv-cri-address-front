@@ -43,7 +43,19 @@ Parameters:
     Description: "Set to the string value `true` to deploy alarms in a DEV environment"
     Type: String
     Default: false
+
+  PrivateApiGatewayId:
+    Type: String
+    Default: "address-cri-api-v1-PrivateAddressApiGatewayId"
+
+  ContainerImageName:
+    Description: "A custom Image name for the ECS TaskDefinition - used for localdev"
+    Type: String
+    Default: ""
+
 Conditions:
+  UseContainerImageNameOverride: !Not [!Equals [!Ref ContainerImageName, ""]]
+
   IsNotDevelopment: !Not
     - !Equals [!Ref Environment, dev]
   IsProduction: !Equals [!Ref Environment, production]
@@ -406,7 +418,10 @@ Resources:
     Properties:
       ContainerDefinitions:
         - Essential: true
-          Image: CONTAINER-IMAGE-PLACEHOLDER
+          Image: !If
+            - UseContainerImageNameOverride
+            - !Ref ContainerImageName
+            - CONTAINER-IMAGE-PLACEHOLDER
           Name: app
           ReadonlyRootFilesystem: true
           Environment:
@@ -414,7 +429,7 @@ Resources:
               Value: !Sub
                 - "https://${APIGatewayId}.execute-api.eu-west-2.amazonaws.com/${Environment}"
                 - APIGatewayId:
-                    Fn::ImportValue: address-cri-api-v1-PrivateAddressApiGatewayId
+                    Fn::ImportValue: !Ref PrivateApiGatewayId
                   Environment: !Ref Environment
             - Name: EXTERNAL_WEBSITE_HOST
               Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
