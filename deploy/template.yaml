@@ -54,7 +54,8 @@ Parameters:
     Default: ""
 
 Conditions:
-  UseContainerImageNameOverride: !Not [!Equals [!Ref ContainerImageNameOverride, ""]]
+  UseContainerImageNameOverride:
+    !Not [!Equals [!Ref ContainerImageNameOverride, ""]]
 
   IsNotDevelopment: !Not
     - !Equals [!Ref Environment, dev]
