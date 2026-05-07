@@ -22,6 +22,15 @@ error:
     contactMeLink: Contact the GOV.UK One Login team (opens in a new tab)
     buttonText: Go to the GOV.UK homepage
     buttonLink: https://www.gov.uk/
+  pageNotFound:
+    title: Page not found
+    serviceNameRequired: false
+    content:
+      - If you typed the web address, check it’s correct.
+      - If you pasted the web address, check you copied the entire address.
+      - You can also go back to the service you were trying to use and start again. You can look for the service using your search engine or find it from the GOV.UK homepage.
+      - <a href="https://www.gov.uk/" class="govuk-button" data-module="govuk-button">Go to the GOV.UK homepage</a>
+      - <a href="https://home.account.gov.uk/contact-gov-uk-one-login" class="govuk-link" target="_blank">Contact the GOV.UK One Login team (opens in a new tab)</a>
 
 links:
   changeAddress: <a href="/address/edit?edit=true" id="change-address" data-id="changeAddress" class="govuk-link">Change<span class="govuk-visually-hidden"> your current address</span></a>

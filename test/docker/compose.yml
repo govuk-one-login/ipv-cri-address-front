@@ -38,8 +38,8 @@ services:
 
   cucumber:
     build:
-      context: ../browser
-      dockerfile: pre-merge.Dockerfile
+      context: ../..
+      dockerfile: test/browser/pre-merge.Dockerfile
     platform: linux/amd64
     environment:
       MOCK_API: ${MOCK_API:-true}
@@ -48,6 +48,7 @@ services:
       RELYING_PARTY_URL: ${RELYING_PARTY_URL:-http://localhost:8080}
       GITHUB_ACTIONS: ${GITHUB_ACTIONS:-true}
       ENVIRONMENT: ${ENVIRONMENT:-dev}
+      BROWSER: ${BROWSER:-firefox}
     tty: true
     stdin_open: true
     volumes:

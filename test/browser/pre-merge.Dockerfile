@@ -1,10 +1,17 @@
 FROM mcr.microsoft.com/playwright:v1.55.1-jammy
 
-WORKDIR /test/browser
+WORKDIR /app
 
 COPY package.json package-lock.json .npmrc ./
-RUN npm ci
 
-COPY . .
+RUN mkdir -p test/browser
 
-CMD ["npm", "test"]
+COPY test/browser/package.json ./test/browser
+
+RUN npm ci --workspace test/browser
+
+WORKDIR /app/test/browser
+
+COPY ./test/browser ./
+
+CMD [ "npm", "run", "test" ]

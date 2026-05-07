@@ -13,6 +13,7 @@ Browser tests for the Address Credential Issuer frontend using Cucumber.js and P
 | `MOCK_API_URL`      | `http://localhost:8080` | URL of the mock API for Address CRI  |
 | `RELYING_PARTY_URL` | `http://localhost:8080` | URL for OAuth redirects              |
 | `GITHUB_ACTIONS`    | `true`                  | Run browser in headless mode         |
+| `BROWSER`           | `firefox`               | Run browser test via firefox         |
 
 ### Running in Docker (Recommended)
 
@@ -47,6 +48,24 @@ docker-compose up -d web mocks redis
 cd ../browser
 MOCK_API=true WEBSITE_HOST=http://localhost:5010 MOCK_API_URL=http://localhost:8080 npm test
 ```
+
+### Running locally on different browser types
+
+```bash
+# Start services
+cd test/docker
+docker-compose up
+
+# Run tests from browser directory
+cd ../browser
+MOCK_API=true WEBSITE_HOST=http://localhost:5010 MOCK_API_URL=http://localhost:8080 BROWSER=<browserType> npm test
+```
+
+This will show the following in the terminal `Running scenarios in browser type: <browerType>`.
+
+The following browserType are: `firefox`, `chromium` and `edge`
+
+If you would like to see the web pages, change `headless: true` to `headless: false` in the setup.js file.
 
 ## Test Tags
 

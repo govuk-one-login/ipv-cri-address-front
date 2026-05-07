@@ -76,7 +76,7 @@ class AddressSearchController extends BaseController {
           key !== "postalCode" &&
           key !== "addressCountry"
         ) {
-          tempAddress[key] = address[key].replace(
+          tempAddress[key] = address[key].replaceAll(
             /\w\S*/g,
             (text) =>
               text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()

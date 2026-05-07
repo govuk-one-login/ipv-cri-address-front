@@ -13,7 +13,7 @@ module.exports = {
   },
   ukBuildingAddressEmptyValidator: function (houseNumber, houseName) {
     const trimOrDefaultToEmpty = (value) =>
-      value != null ? String(value).trim() : "";
+      value == null ? "" : String(value).trim();
 
     return trimOrDefaultToEmpty(houseNumber) || trimOrDefaultToEmpty(houseName);
   },

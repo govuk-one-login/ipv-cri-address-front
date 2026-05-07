@@ -2,6 +2,9 @@
   "name": "di-ipv-cri-address-front",
   "description": "User interface for the Identity Proofing and Verification (IPV) system within the GDS digital identity platform, GOV.UK Sign In.",
   "license": "MIT",
+  "workspaces": [
+    "test/browser"
+  ],
   "scripts": {
     "start": "node src/app.js",
     "start:ci": "npm run build && NODE_ENV=development API_BASE_URL=http://127.0.0.1:8080/ DEVICE_INTELLIGENCE_ENABLED=true DEVICE_INTELLIGENCE_DOMAIN=localhost npm start",
@@ -9,12 +12,12 @@
     "dev": "nodemon src/app.js",
     "build": "npm run build-sass && npm run build-js && npm run copy-assets && npm run copy-js",
     "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/assets/scss/application.scss dist/public/stylesheets/application.css --style compressed",
-    "copy-assets": "mkdir -p dist && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts && copyfiles -u 3 src/assets/images/** dist/public/images",
+    "copy-assets": "mkdir -p dist/public/govuk && copyfiles -u 1 src/**/*.njk dist/ src/locales/**/** dist/ && copyfiles -u 3 src/assets/javascript/*.js dist/public/scripts && copyfiles -u 3 src/assets/images/** dist/public/images && cp node_modules/govuk-frontend/dist/govuk/govuk-frontend.min.js dist/public/govuk/govuk-frontend.min.js",
     "build-js": "npm run build-js:analytics && npm run build-js:device-intelligence && npm run build-js:all",
     "copy-js": "copyfiles -u 3 node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js node_modules/accessible-autocomplete/dist/accessible-autocomplete.min.js.map dist/public/javascripts",
     "build-js:analytics": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/frontend-analytics/lib/analytics.js node_modules/@govuk-one-login/di-ipv-cri-common-express/src/assets/javascript/analytics/ua/init.js --beautify -o dist/public/javascripts/analytics.js",
     "build-js:device-intelligence": "mkdir -p dist/public/javascripts; uglifyjs node_modules/@govuk-one-login/frontend-device-intelligence/build/esm/index.js -o dist/public/javascripts/deviceIntelligence.js",
-    "build-js:all": "mkdir -p dist/public/javascripts; uglifyjs node_modules/govuk-frontend/govuk/all.js node_modules/hmpo-components/all.js --beautify -o dist/public/javascripts/all.js",
+    "build-js:all": "mkdir -p dist/public/javascripts; uglifyjs node_modules/govuk-frontend/dist/govuk-prototype-kit/init.js node_modules/hmpo-components/all.js --beautify -o dist/public/javascripts/all.js",
     "minfiy-build-js": "uglifyjs src/assets/javascript/application.js -o src/assets/javascript/application.js -c -m && uglifyjs src/assets/javascript/cookies.js -o src/assets/javascript/cookies.js -c -m",
     "lint:eslint": "eslint .",
     "lint:prettier": "prettier --check .",
@@ -33,40 +36,33 @@
     "ipv-core-stub": "cd test/docker && trap 'docker compose --profile core-stub down' EXIT && COMPOSE_BAKE=true docker compose --profile core-stub up --build ipv-core-stub"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.726.1",
-    "@govuk-one-login/di-ipv-cri-common-express": "12.0.1",
+    "@aws-sdk/client-dynamodb": "3.1005.0",
+    "@govuk-one-login/di-ipv-cri-common-express": "14.0.0",
     "@govuk-one-login/frontend-analytics": "4.0.5",
     "@govuk-one-login/frontend-device-intelligence": "1.1.0",
     "@govuk-one-login/frontend-language-toggle": "1.1.0",
     "@govuk-one-login/frontend-passthrough-headers": "1.0.0",
-    "@govuk-one-login/frontend-ui": "4.0.1",
+    "@govuk-one-login/frontend-ui": "5.0.0",
     "@govuk-one-login/frontend-vital-signs": "0.1.3",
     "accessible-autocomplete": "3.0.1",
-    "axios": "1.12.0",
-    "cfenv": "1.2.5",
+    "axios": "1.16.0",
     "connect-dynamodb": "^3.0.3",
     "copyfiles": "2.4.1",
     "dotenv": "16.4.5",
     "express": "4.22.1",
     "express-async-errors": "3.1.1",
     "express-session": "1.18.2",
-    "govuk-frontend": "4.10.1",
-    "hmpo-components": "7.1.0",
-    "hmpo-config": "4.0.0",
-    "hmpo-form-wizard": "13.0.2",
-    "hmpo-i18n": "7.0.1",
-    "hmpo-logger": "8.0.3",
-    "nunjucks": "3.2.4"
+    "govuk-frontend": "5.10.2",
+    "hmpo-components": "8.0.5",
+    "hmpo-form-wizard": "15.0.5"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "11.3.0",
     "chai": "4.4.1",
     "chai-as-promised": "7.1.1",
-    "eslint": "8.56.0",
+    "eslint": "9.39.4",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-mocha": "10.2.0",
     "eslint-plugin-prettier": "5.1.3",
-    "lint-staged": "13.1.2",
     "mocha": "10.7.3",
     "mocha-multi-reporters": "1.5.1",
     "nodemon": "3.1.7",
@@ -74,16 +70,9 @@
     "nyc": "17.1.0",
     "playwright": "1.55.1",
     "prettier": "3.2.4",
-    "proxyquire": "2.1.3",
     "sass": "1.77.6",
     "sinon": "21.0.1",
     "sinon-chai": "3.7.0",
-    "uglify-js": "3.19.3",
-    "wait-on": "8.0.5"
-  },
-  "resolutions": {
-    "strip-ansi": "^6.0.1",
-    "string-width": "^4.2.2",
-    "wrap-ansi": "^7.0.0"
+    "uglify-js": "3.19.3"
   }
 }

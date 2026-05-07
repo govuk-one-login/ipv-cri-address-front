@@ -5,7 +5,7 @@ module.exports = {
     buildingName
   ) {
     const trimOrDefaultToEmpty = (value) =>
-      value != null ? String(value).trim() : "";
+      value == null ? "" : String(value).trim();
 
     return (
       trimOrDefaultToEmpty(apartmentNumber) ||

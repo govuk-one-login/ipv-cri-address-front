@@ -9,14 +9,22 @@ RUN apt-get update -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /test/browser
+WORKDIR /app
 
 COPY package.json package-lock.json .npmrc ./
-RUN npm ci
 
-COPY ./run-post-merge.sh /run-tests.sh
-RUN chmod +x /run-tests.sh
+RUN mkdir -p test/browser
 
-COPY . .
+COPY test/browser/package.json ./test/browser
+
+RUN npm ci --workspace test/browser
+
+WORKDIR /app/test/browser
+
+COPY test/browser ./
+
+# sam-deploy-pipeline expects to be able to execute a file called run-tests.sh at the root of the filesystem
+# https://github.com/govuk-one-login/devplatform-deploy/blob/main/sam-deploy-pipeline/template.yaml
+RUN cp run-post-merge.sh /run-tests.sh
 
 CMD ["/run-tests.sh"]

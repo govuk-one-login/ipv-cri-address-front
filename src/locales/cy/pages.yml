@@ -6,6 +6,8 @@ index:
 error:
   unrecoverable:
     title: "Mae'n ddrwg gennym, mae problem"
+  pageNotFound:
+    title: "Tudalen heb ei darganfod"
 
 address:
   title: "Cyfeiriad"

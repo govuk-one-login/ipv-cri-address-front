@@ -43,7 +43,20 @@ Parameters:
     Description: "Set to the string value `true` to deploy alarms in a DEV environment"
     Type: String
     Default: false
+
+  PrivateApiGatewayId:
+    Type: String
+    Default: "address-cri-api-v1-PrivateAddressApiGatewayId"
+
+  ContainerImageNameOverride:
+    Description: "A custom Image name for the ECS TaskDefinition - used for localdev"
+    Type: String
+    Default: ""
+
 Conditions:
+  UseContainerImageNameOverride:
+    !Not [!Equals [!Ref ContainerImageNameOverride, ""]]
+
   IsNotDevelopment: !Not
     - !Equals [!Ref Environment, dev]
   IsProduction: !Equals [!Ref Environment, production]
@@ -52,8 +65,6 @@ Conditions:
     - !Equals [!Ref Environment, build]
   IsNotDevBuildEnvironment: !Not
     - !Condition IsDevBuildEnvironment
-
-  EnableSpotArmInstance: !Equals [!Ref Environment, dev]
 
   UsePermissionsBoundary: !Not
     - !Equals [!Ref PermissionsBoundary, "none"]
@@ -78,6 +89,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "info"
+      pinoLoggerEnabled: "true"
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 3
@@ -85,6 +97,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "info"
+      pinoLoggerEnabled: "true"
     staging:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
@@ -92,6 +105,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "warn"
+      pinoLoggerEnabled: "true"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
@@ -99,6 +113,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "warn"
+      pinoLoggerEnabled: "false"
     production:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables
       minECSCount: 6
@@ -106,6 +121,7 @@ Mappings:
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
       logLevel: "warn"
+      pinoLoggerEnabled: "false"
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
     eu-west-2:
@@ -313,9 +329,9 @@ Resources:
     Properties:
       ClusterSettings:
         - Name: containerInsights
-          Value: enabled
+          Value: enhanced
       CapacityProviders:
-        - !If [EnableSpotArmInstance, "FARGATE_SPOT", "FARGATE"]
+        - "FARGATE"
       Tags:
         - Key: Name
           Value: !Sub "${AWS::StackName}-ECSCluster"
@@ -341,8 +357,8 @@ Resources:
         - MaximumPercent: 200
           MinimumHealthyPercent: 50
           DeploymentCircuitBreaker:
-            Enable: !If [EnableSpotArmInstance, FALSE, TRUE]
-            Rollback: !If [EnableSpotArmInstance, FALSE, TRUE]
+            Enable: TRUE
+            Rollback: TRUE
       DeploymentController:
         Type: !If
           - UseCanaryDeployment
@@ -403,7 +419,10 @@ Resources:
     Properties:
       ContainerDefinitions:
         - Essential: true
-          Image: CONTAINER-IMAGE-PLACEHOLDER
+          Image: !If
+            - UseContainerImageNameOverride
+            - !Ref ContainerImageNameOverride
+            - CONTAINER-IMAGE-PLACEHOLDER
           Name: app
           ReadonlyRootFilesystem: true
           Environment:
@@ -411,7 +430,7 @@ Resources:
               Value: !Sub
                 - "https://${APIGatewayId}.execute-api.eu-west-2.amazonaws.com/${Environment}"
                 - APIGatewayId:
-                    Fn::ImportValue: address-cri-api-v1-PrivateAddressApiGatewayId
+                    Fn::ImportValue: !Ref PrivateApiGatewayId
                   Environment: !Ref Environment
             - Name: EXTERNAL_WEBSITE_HOST
               Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
@@ -458,6 +477,13 @@ Resources:
                   EnvironmentConfiguration,
                   !Ref Environment,
                   logLevel,
+                ]
+            - Name: USE_PINO_LOGGER
+              Value:
+                !FindInMap [
+                  EnvironmentConfiguration,
+                  !Ref Environment,
+                  pinoLoggerEnabled,
                 ]
           Secrets:
             - Name: DT_TENANT
@@ -511,7 +537,7 @@ Resources:
       RequiresCompatibilities:
         - FARGATE
       RuntimePlatform:
-        CpuArchitecture: !If [EnableSpotArmInstance, "ARM64", "X86_64"]
+        CpuArchitecture: "X86_64"
       TaskRoleArn: !GetAtt ECSTaskRole.Arn
       Tags:
         - Key: Name
@@ -743,11 +769,19 @@ Resources:
         - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
-        - !ImportValue core-infrastructure-AlarmTopic
-        - !ImportValue platform-alarm-critical-alert-topic
+        - !ImportValue slack-notifications-CriticalAlertsTopicArn
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       OKActions:
-        - !ImportValue core-infrastructure-AlarmTopic
-        - !ImportValue platform-alarm-critical-alert-topic
+        - !ImportValue slack-notifications-CriticalAlertsTopicArn
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       InsufficientDataActions: []
       EvaluationPeriods: 5
       DatapointsToAlarm: 2
@@ -814,7 +848,7 @@ Resources:
       TargetTrackingScalingPolicyConfiguration:
         PredefinedMetricSpecification:
           PredefinedMetricType: ECSServiceAverageCPUUtilization
-        TargetValue: 60
+        TargetValue: 30
         ScaleInCooldown: 420
         ScaleOutCooldown: 60
 
@@ -886,14 +920,14 @@ Resources:
         - !Ref StepScaleOutPolicy
       AlarmDescription: "AddressFrontClusterOver30PercentCPU"
       ComparisonOperator: "GreaterThanThreshold"
-      DatapointsToAlarm: "2"
+      DatapointsToAlarm: "1"
       Dimensions:
         - Name: ClusterName
           Value: !Ref AddressFrontEcsCluster
         - Name: ServiceName
           Value: !GetAtt AddressFrontEcsService.Name
       Unit: "Percent"
-      EvaluationPeriods: "2"
+      EvaluationPeriods: "1"
       MetricName: "CPUUtilization"
       Namespace: "AWS/ECS"
       Statistic: "Average"
@@ -955,11 +989,19 @@ Resources:
         - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
-        - !ImportValue core-infrastructure-AlarmTopic
-        - !ImportValue platform-alarm-critical-alert-topic
+        - !ImportValue slack-notifications-CriticalAlertsTopicArn
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       OKActions:
-        - !ImportValue core-infrastructure-AlarmTopic
-        - !ImportValue platform-alarm-critical-alert-topic
+        - !ImportValue slack-notifications-CriticalAlertsTopicArn
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       InsufficientDataActions: []
       MetricName: TaskCount
       Namespace: ECS/ContainerInsights
@@ -983,11 +1025,19 @@ Resources:
         - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
-        - !ImportValue core-infrastructure-AlarmTopic
-        - !ImportValue platform-alarm-critical-alert-topic
+        - !ImportValue slack-notifications-CriticalAlertsTopicArn
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       OKActions:
-        - !ImportValue core-infrastructure-AlarmTopic
-        - !ImportValue platform-alarm-critical-alert-topic
+        - !ImportValue slack-notifications-CriticalAlertsTopicArn
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       InsufficientDataActions: []
       MetricName: TaskCount
       Namespace: ECS/ContainerInsights
@@ -1010,11 +1060,19 @@ Resources:
         - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
       ActionsEnabled: true
       AlarmActions:
-        - !ImportValue core-infrastructure-AlarmTopic
-        - !ImportValue platform-alarm-critical-alert-topic
+        - !ImportValue slack-notifications-CriticalAlertsTopicArn
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       OKActions:
-        - !ImportValue core-infrastructure-AlarmTopic
-        - !ImportValue platform-alarm-critical-alert-topic
+        - !ImportValue slack-notifications-CriticalAlertsTopicArn
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
       InsufficientDataActions: []
       MetricName: HTTPCode_Target_5XX_Count
       Namespace: AWS/ApplicationELB
@@ -1040,9 +1098,9 @@ Resources:
         The number of HTTP 5XX server error codes that originate from the
         target group is greater than 5% of all traffic.
       AlarmActions:
-        - !ImportValue platform-alarm-warning-alert-topic
+        - !ImportValue slack-notifications-WarningAlertsTopicArn
       OKActions:
-        - !ImportValue platform-alarm-warning-alert-topic
+        - !ImportValue slack-notifications-WarningAlertsTopicArn
       EvaluationPeriods: 2
       DatapointsToAlarm: 2
       Threshold: 5
