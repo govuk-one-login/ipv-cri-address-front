@@ -1,4 +1,4 @@
-const { expect } = require("chai");
+import { describe, it, beforeEach, expect, vi, afterEach } from "vitest";
 const presenter = require("./addressesToSelectItems");
 
 const addressPresenter = require("./addressPresenter");
@@ -7,15 +7,15 @@ describe("Addresses to SelectItems Presenter", () => {
   let translate;
 
   beforeEach(() => {
-    translate = sinon.stub();
+    translate = vi.fn();
 
-    sinon
-      .stub(addressPresenter, "generateSearchResultString")
-      .returns("SEARCH_RESULT");
+    vi.spyOn(addressPresenter, "generateSearchResultString").mockReturnValue(
+      "SEARCH_RESULT"
+    );
   });
 
   afterEach(() => {
-    addressPresenter.generateSearchResultString.restore();
+    addressPresenter.generateSearchResultString.mockRestore();
   });
 
   it("should use a default message for 0 items", () => {
@@ -57,7 +57,7 @@ describe("Addresses to SelectItems Presenter", () => {
       },
     ];
 
-    translate.returns("addressSelect.addressFoundWithCount");
+    translate.mockReturnValue("addressSelect.addressFoundWithCount");
 
     const items = presenter({ addresses, translate });
 

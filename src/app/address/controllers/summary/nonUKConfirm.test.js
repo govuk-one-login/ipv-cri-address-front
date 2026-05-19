@@ -1,7 +1,8 @@
+import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
 const BaseController = require("hmpo-form-wizard").Controller;
 const NonUKAddressConfirmController = require("./nonUKConfirm");
 const addressFactory = require("../../../../../test/utils/addressFactory");
-const { expect } = require("chai");
 const testData = require("../../../../../test/data/testData");
 const {
   API: {
@@ -12,23 +13,21 @@ const {
 let req;
 let res;
 let next;
-let sandbox;
 let addresses = [];
 let addressConfirm;
 const sessionId = "session-id-123";
 
 describe("Non UK Address confirmation controller", () => {
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    const setup = setupDefaultMocks();
+    const setup = createDefaultReqResNext();
 
     req = setup.req;
     res = setup.res;
     next = setup.next;
     req.session.tokenId = sessionId;
     req.session.authParams = {};
-    req.translate = sinon.stub();
-    req.translate.returns("United Kingdom");
+    req.translate = vi.fn();
+    req.translate.mockReturnValue("United Kingdom");
 
     addresses = addressFactory(1);
     req.journeyModel.set("currentAddress", addresses[0]);
@@ -36,7 +35,7 @@ describe("Non UK Address confirmation controller", () => {
   });
 
   afterEach(() => {
-    sandbox.restore();
+    vi.resetAllMocks();
   });
 
   it("should be an instance of BaseController", () => {
@@ -62,16 +61,16 @@ describe("Non UK Address confirmation controller", () => {
       addressConfirm.locals(req, res, next);
 
       const errMessage = "No address found";
-      const callbackError = next.firstArg;
-      expect(next).to.have.been.calledOnce;
-      expect(callbackError).to.be.instanceOf(Error);
-      expect(callbackError.message).to.equal(errMessage);
+      const callbackError = next.mock.calls[0][0];
+      expect(next).toHaveBeenCalledTimes(1);
+      expect(callbackError).toBeInstanceOf(Error);
+      expect(callbackError.message).toBe(errMessage);
     });
   });
 
   describe("saveValues", () => {
     it("Should put address to address api and redirect back to callback", async () => {
-      req.axios.put = sinon.fake.resolves(testData.addressApiResponse);
+      req.axios.put = vi.fn().mockResolvedValue(testData.addressApiResponse);
 
       const headers = {
         "session-id": sessionId,
@@ -94,24 +93,22 @@ describe("Non UK Address confirmation controller", () => {
       await addressConfirm.saveValues(req, res, next);
 
       const errMessage = "No address found";
-      const callbackError = next.firstArg;
-      expect(next).to.have.been.calledOnce;
-      expect(callbackError).to.be.instanceOf(Error);
-      expect(callbackError.message).to.equal(errMessage);
-      expect(next).to.have.been.calledWith();
+      const callbackError = next.mock.calls[0][0];
+      expect(next).toHaveBeenCalledTimes(1);
+      expect(callbackError).toBeInstanceOf(Error);
+      expect(callbackError.message).toBe(errMessage);
     });
   });
 
   it("Should handle put address throwing an error and redirect back to callback", async () => {
-    req.axios.put = sinon.fake.throws(new Error("Some error"));
+    req.axios.put = vi.fn().mockThrow(new Error("Some error"));
 
     await addressConfirm.saveValues(req, res, next);
 
     const errMessage = "Some error";
-    const callbackError = next.firstArg;
-    expect(next).to.have.been.calledOnce;
-    expect(callbackError).to.be.instanceOf(Error);
-    expect(callbackError.message).to.equal(errMessage);
-    expect(next).to.have.been.calledWith();
+    const callbackError = next.mock.calls[0][0];
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(callbackError).toBeInstanceOf(Error);
+    expect(callbackError.message).toBe(errMessage);
   });
 });

@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 describe("helpers", () => {
   const {
     yearFrom,
@@ -5,7 +6,7 @@ describe("helpers", () => {
     trimOnlyWhitespaceStrings,
   } = require("./helpers");
 
-  context("yearFrom", () => {
+  describe("yearFrom", () => {
     it("returns ISO string for a valid year", () => {
       expect(yearFrom("2024")).to.equal("2024-01-01");
     });
@@ -23,7 +24,7 @@ describe("helpers", () => {
     });
   });
 
-  context("getCountry", () => {
+  describe("getCountry", () => {
     it("returns the correct country object for a valid country code", () => {
       expect(getCountry("US")).to.deep.equal({
         value: "US",
@@ -44,7 +45,7 @@ describe("helpers", () => {
     });
   });
 
-  context("trimOnlyWhitespaceStrings", () => {
+  describe("trimOnlyWhitespaceStrings", () => {
     it("replaces whitespace only strings with empty strings", () => {
       const input = { a: "   ", b: "\n\t " };
       const result = trimOnlyWhitespaceStrings(input);

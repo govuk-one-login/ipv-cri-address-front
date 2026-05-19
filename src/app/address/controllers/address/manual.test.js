@@ -1,5 +1,6 @@
+import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
 const BaseController = require("hmpo-form-wizard").Controller;
-const { expect } = require("chai");
 const addressFactory = require("../../../../../test/utils/addressFactory");
 const {
   buildingAddressComponent,
@@ -15,18 +16,16 @@ describe("address controller", () => {
   let req;
   let res;
   let next;
-  let sandbox;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    const setup = setupDefaultMocks();
+    const setup = createDefaultReqResNext();
     req = setup.req;
-    req.translate = sandbox.stub();
+    req.translate = vi.fn();
     res = setup.res;
     next = setup.next;
   });
 
-  afterEach(() => sandbox.restore());
+  afterEach(() => vi.resetAllMocks());
 
   it("should be an instance of BaseController", () => {
     expect(address).to.be.an.instanceOf(BaseController);
@@ -56,7 +55,7 @@ describe("address controller", () => {
       expect(next).to.have.been.calledOnce;
       expect(next).to.have.been.calledWith(
         null,
-        sinon.match({
+        expect.objectContaining({
           addressPostcode: generatedAddress[0].postalCode,
           addressHouseNumber: generatedAddress[0].buildingNumber,
           addressStreetName: generatedAddress[0].streetName,
@@ -126,7 +125,7 @@ describe("address controller", () => {
       });
     });
 
-    context("viewing /address", () => {
+    describe("viewing /address", () => {
       it("should populate addressFormTitle with pages.address-form.title", () => {
         address.getValues(req, res, next);
 
@@ -146,7 +145,7 @@ describe("address controller", () => {
       });
     });
 
-    context("viewing /previous/address", () => {
+    describe("viewing /previous/address", () => {
       it("should populate addressFormTitle with pages.address-form-previous.title", () => {
         req.originalUrl = "/previous/address";
 
@@ -160,7 +159,7 @@ describe("address controller", () => {
       });
     });
 
-    context("viewing /address/edit?edit=true", () => {
+    describe("viewing /address/edit?edit=true", () => {
       it("should populate addressFormTitle with pages.address-form.check-details.title", () => {
         req.originalUrl = "/address/edit?edit=true";
 
@@ -174,7 +173,7 @@ describe("address controller", () => {
       });
     });
 
-    context("viewing /previous/address/edit?edit=true", () => {
+    describe("viewing /previous/address/edit?edit=true", () => {
       it("should populate addressFormTitle with pages.address-form-previous.check-details.title", () => {
         req.originalUrl = "/previous/address/edit?edit=true";
 
@@ -191,11 +190,11 @@ describe("address controller", () => {
 
   describe("validateFields", () => {
     it("defaults validation to the first field when all building address fields are empty", () => {
-      let validateBuildingAddressEmptySpy = sinon.spy(
+      let validateBuildingAddressEmptySpy = vi.spyOn(
         buildingAddressComponent,
         "validateBuildingAddressEmpty"
       );
-      let defaultToFirstFieldSpy = sinon.spy(
+      let defaultToFirstFieldSpy = vi.spyOn(
         buildingAddressComponent,
         "defaultToFirstField"
       );
@@ -209,9 +208,10 @@ describe("address controller", () => {
         addressHouseNumber: { validate: [] },
       };
 
-      req.translate
-        .withArgs("validation.houseNameOrHouseNumber")
-        .returns("Enter a house number or house name.");
+      req.translate.mockImplementation((key) => {
+        if (key === "validation.houseNameOrHouseNumber")
+          return "Enter a house number or house name.";
+      });
 
       const buildingAddress = {
         addressHouseNumber: "",
@@ -228,16 +228,16 @@ describe("address controller", () => {
       expect(defaultToFirstFieldSpy).to.have.been.calledOnce;
       expect(next).to.have.been.calledOnce;
 
-      validateBuildingAddressEmptySpy.restore();
-      defaultToFirstFieldSpy.restore();
+      validateBuildingAddressEmptySpy.mockRestore();
+      defaultToFirstFieldSpy.mockRestore();
     });
 
     it("does not default to the first field when at least one building address field is provided", () => {
-      let validateBuildingAddressEmptySpy = sinon.spy(
+      let validateBuildingAddressEmptySpy = vi.spyOn(
         buildingAddressComponent,
         "validateBuildingAddressEmpty"
       );
-      let defaultToFirstFieldSpy = sinon.spy(
+      let defaultToFirstFieldSpy = vi.spyOn(
         buildingAddressComponent,
         "defaultToFirstField"
       );
@@ -266,8 +266,8 @@ describe("address controller", () => {
       expect(defaultToFirstFieldSpy).not.to.have.been.calledOnce;
       expect(next).to.have.been.calledOnce;
 
-      validateBuildingAddressEmptySpy.restore();
-      defaultToFirstFieldSpy.restore();
+      validateBuildingAddressEmptySpy.mockRestore();
+      defaultToFirstFieldSpy.mockRestore();
     });
   });
 

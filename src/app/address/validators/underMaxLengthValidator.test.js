@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 const { underMaxLength } = require("./underMaxLengthValidator");
 
 describe("underMaxLengthValidator", () => {

@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 const { buildingAddressEmptyValidator } = require("./nonUKAddressValidator");
 
 describe("buildingAddressEmptyValidator", function () {

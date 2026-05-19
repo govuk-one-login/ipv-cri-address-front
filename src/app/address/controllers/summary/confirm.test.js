@@ -1,7 +1,8 @@
+import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
 const BaseController = require("hmpo-form-wizard").Controller;
 const AddressConfirmController = require("./confirm");
 const addressFactory = require("../../../../../test/utils/addressFactory");
-const { expect } = require("chai");
 
 const testData = require("../../../../../test/data/testData");
 const {
@@ -13,15 +14,13 @@ const {
 let req;
 let res;
 let next;
-let sandbox;
 let addresses = [];
 let addressConfirm;
 const sessionId = "session-id-123";
 
 describe("Address confirmation controller", () => {
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    const setup = setupDefaultMocks();
+    const setup = createDefaultReqResNext();
 
     req = setup.req;
     res = setup.res;
@@ -36,7 +35,7 @@ describe("Address confirmation controller", () => {
   });
 
   afterEach(() => {
-    sandbox.restore();
+    vi.resetAllMocks();
   });
 
   it("should be an instance of BaseController", () => {
@@ -63,16 +62,16 @@ describe("Address confirmation controller", () => {
       addressConfirm.locals(req, res, next);
 
       const errMessage = "No address found";
-      const callbackError = next.firstArg;
-      expect(next).to.have.been.calledOnce;
-      expect(callbackError).to.be.instanceOf(Error);
-      expect(callbackError.message).to.equal(errMessage);
+      const callbackError = next.mock.calls[0][0];
+      expect(next).toHaveBeenCalledTimes(1);
+      expect(callbackError).toBeInstanceOf(Error);
+      expect(callbackError.message).toBe(errMessage);
     });
   });
 
   describe("saveValues", () => {
     it("Should put address to address api and redirect back to callback", async () => {
-      req.axios.put = sinon.fake.resolves(testData.addressApiResponse);
+      req.axios.put = vi.fn().mockResolvedValue(testData.addressApiResponse);
 
       const headers = {
         "session-id": sessionId,
@@ -82,17 +81,17 @@ describe("Address confirmation controller", () => {
       };
 
       await addressConfirm.saveValues(req, res, next);
-      expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
+      expect(req.axios.put).toHaveBeenCalledWith(SAVE_ADDRESS, addresses, {
         headers,
       });
 
-      expect(next).to.have.been.calledWith();
+      expect(next).toHaveBeenCalled();
     });
 
     it("Should reset journey wide variables and enter previous journey when user has previous UK address within 3 months", async () => {
       req.form.values.hasPreviousUKAddressWithinThreeMonths = "yes";
       await addressConfirm.saveValues(req, res, next);
-      expect(req.session.test.addPreviousAddresses).to.equal(true);
+      expect(req.session.test.addPreviousAddresses).toBe(true);
     });
 
     it("should return an error when no addresses are found", async () => {
@@ -102,11 +101,11 @@ describe("Address confirmation controller", () => {
       await addressConfirm.saveValues(req, res, next);
 
       const errMessage = "No address found";
-      const callbackError = next.firstArg;
-      expect(next).to.have.been.calledOnce;
-      expect(callbackError).to.be.instanceOf(Error);
-      expect(callbackError.message).to.equal(errMessage);
-      expect(next).to.have.been.calledWith();
+      const callbackError = next.mock.calls[0][0];
+      expect(next).toHaveBeenCalledTimes(1);
+      expect(callbackError).toBeInstanceOf(Error);
+      expect(callbackError.message).toBe(errMessage);
+      expect(next).toHaveBeenCalled();
     });
   });
 

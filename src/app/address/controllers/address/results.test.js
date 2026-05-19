@@ -1,3 +1,5 @@
+import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
 const BaseController = require("hmpo-form-wizard").Controller;
 const AddressResultController = require("./results");
 
@@ -8,30 +10,27 @@ const testData = require("../../../../../test/data/testData");
 let req;
 let res;
 let next;
-let sandbox;
 
 describe("Address result controller", () => {
   let addressResult;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    const setup = setupDefaultMocks();
+    const setup = createDefaultReqResNext();
     req = setup.req;
     req.i18n = {
-      t: sinon.stub(),
+      t: vi.fn(),
     };
 
     res = setup.res;
     next = setup.next;
 
-    sinon.stub(presenters, "addressesToSelectItems");
+    vi.spyOn(presenters, "addressesToSelectItems").mockImplementation(() => {});
 
     addressResult = new AddressResultController({ route: "/test" });
   });
 
   afterEach(() => {
-    sandbox.restore();
-    presenters.addressesToSelectItems.restore();
+    vi.resetAllMocks();
   });
 
   it("should be an instance of BaseController", () => {
@@ -42,8 +41,7 @@ describe("Address result controller", () => {
     let prototypeSpy;
 
     beforeEach(() => {
-      prototypeSpy = sinon.stub(BaseController.prototype, "locals");
-      BaseController.prototype.locals.callThrough();
+      prototypeSpy = vi.spyOn(BaseController.prototype, "locals");
 
       req.sessionModel.set("addressPostcode", "E1 8QS");
       req.sessionModel.set("searchResults", [
@@ -51,19 +49,21 @@ describe("Address result controller", () => {
         { postcode: "Q2 2AB" },
       ]);
 
-      presenters.addressesToSelectItems.returns([
+      vi.spyOn(presenters, "addressesToSelectItems").mockReturnValue([
         { text: "nn addresses found", value: "" },
       ]);
     });
 
     afterEach(() => {
-      prototypeSpy.restore();
+      vi.resetAllMocks();
     });
 
     it("should call locals first with a callback", () => {
       addressResult.locals(req, res, next);
-
-      expect(prototypeSpy).to.have.been.calledBefore(next);
+      expect(
+        prototypeSpy.mock.invocationCallOrder[0] <
+          next.mock.invocationCallOrder[0]
+      ).toBe(true);
     });
 
     it("should add postcode from session into locals", () => {
@@ -71,12 +71,12 @@ describe("Address result controller", () => {
 
       expect(next).to.have.been.calledWith(
         null,
-        sinon.match({ addressPostcode: "E1 8QS" })
+        expect.objectContaining({ addressPostcode: "E1 8QS" })
       );
     });
 
     it("should add addres as select items data into locals", () => {
-      presenters.addressesToSelectItems.returns([
+      vi.spyOn(presenters, "addressesToSelectItems").mockReturnValue([
         { text: "nn addresses found", value: "" },
       ]);
 
@@ -84,10 +84,12 @@ describe("Address result controller", () => {
 
       expect(next).to.have.been.calledWith(
         null,
-        sinon.match({ addresses: [{ text: "nn addresses found", value: "" }] })
+        expect.objectContaining({
+          addresses: [{ text: "nn addresses found", value: "" }],
+        })
       );
     });
-    context("with error on callback", () => {
+    describe("with error on callback", () => {
       let error;
       let locals;
       let superLocals;
@@ -102,13 +104,18 @@ describe("Address result controller", () => {
           key: "value",
         };
         res.locals = locals;
-        BaseController.prototype.locals.yields(error, superLocals);
+
+        vi.spyOn(BaseController.prototype, "locals").mockImplementation(
+          (res, req, next) => {
+            next(error, superLocals);
+          }
+        );
 
         await addressResult.locals(req, res, next);
       });
 
       it("should call callback with error and existing locals", () => {
-        expect(next).to.have.been.calledWith(error, superLocals);
+        expect(next).toHaveBeenCalledWith(error, superLocals);
       });
     });
   });
