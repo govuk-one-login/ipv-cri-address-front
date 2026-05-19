@@ -23,9 +23,9 @@
     "lint:prettier": "prettier --check .",
     "lint": "npm run lint:eslint && npm run lint:prettier",
     "lint:fix": "npm run lint:eslint -- --fix && npm run lint:prettier -- --write",
-    "test": "mocha",
-    "test:coverage": "nyc --reporter=lcov --reporter=text-summary npm test",
-    "test:watch": "mocha --watch",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage --coverage.reporter=lcov --coverage.reporter=text",
+    "test:watch": "vitest",
     "imposter": "cd test/docker && docker compose up -d imposter",
     "imposter:stop": "cd test/docker && docker compose down",
     "test:browser": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm cucumber npx cucumber-js --tags \"not @skip\"",
@@ -57,22 +57,17 @@
     "hmpo-form-wizard": "15.0.5"
   },
   "devDependencies": {
-    "chai": "4.4.1",
-    "chai-as-promised": "7.1.1",
     "eslint": "9.39.4",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-mocha": "10.2.0",
     "eslint-plugin-prettier": "5.1.3",
-    "mocha": "10.7.3",
-    "mocha-multi-reporters": "1.5.1",
     "nodemon": "3.1.7",
     "npm-run-all": "4.1.5",
     "nyc": "17.1.0",
     "playwright": "1.55.1",
     "prettier": "3.2.4",
     "sass": "1.77.6",
-    "sinon": "21.0.1",
-    "sinon-chai": "3.7.0",
-    "uglify-js": "3.19.3"
+    "uglify-js": "3.19.3",
+    "vitest": "^4.1.6"
   }
 }
