@@ -1,6 +1,6 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
 const { SearchPage } = require("../pages");
-const { expect } = require("chai");
+const assert = require("node:assert");
 
 Given("They start with {string}", async function (lang) {
   await setLanguageCookie(lang, this.page.url(), this.context);
@@ -17,7 +17,7 @@ Then(/^the page's language property should be "(.*)"$/, async function (lang) {
   const hasLanguageCorrectCode = await this.page
     .locator(`html[lang="${code}"]`)
     .count();
-  expect(hasLanguageCorrectCode).to.equal(1);
+  assert.strictEqual(hasLanguageCorrectCode, 1);
 });
 
 When(

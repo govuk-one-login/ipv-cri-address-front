@@ -1,10 +1,10 @@
 const { When } = require("@cucumber/cucumber");
 const { ProblemPage } = require("../pages");
-const { expect } = require("chai");
+const assert = require("node:assert");
 
 When(/they see the problem page$/, async function () {
   const problemPage = new ProblemPage(this.page);
-  expect(problemPage.isCurrentPage()).to.be.true;
+  assert.strictEqual(problemPage.isCurrentPage(), true);
 });
 
 When(/they choose manual entry/, async function () {
