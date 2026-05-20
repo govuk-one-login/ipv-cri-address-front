@@ -14,7 +14,6 @@
     "@cucumber/cucumber": "12.8.2",
     "aws4-axios": "3.4.0",
     "axios": "1.16.0",
-    "chai": "4.4.1",
     "dotenv": "16.4.5",
     "playwright": "1.55.1"
   }

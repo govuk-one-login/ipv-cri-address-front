@@ -49,9 +49,6 @@ Run `git config --unset-all core.hooksPath` to reset your git hook settings.
 
 ## Mock Data
 
-[Wiremock](https://wiremock.org) has been used to create a [stateful mock](https://wiremock.org/docs/stateful-behaviour/) of the API, through the use of scenarios.
-These configuration files are stored as JSON files in the [./test/mocks/mappings](./test/mocks/mappings) directory.
-
 This can be run by using:
 
 `npm run mocks`

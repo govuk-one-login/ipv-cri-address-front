@@ -1,22 +1,22 @@
 const { When, Then } = require("@cucumber/cucumber");
 const { ResultsPage } = require("../pages");
-const { expect } = require("chai");
+const assert = require("node:assert");
 
 Then(/they should see the results page$/, async function () {
   const resultsPage = new ResultsPage(this.page);
-  expect(resultsPage.isCurrentPage()).to.be.true;
+  assert.strictEqual(resultsPage.isCurrentPage(), true);
 });
 
 Then(/they should see the previous results page$/, async function () {
   const resultsPage = new ResultsPage(this.page);
-  expect(resultsPage.isCurrentPage()).to.be.true;
-  expect(await resultsPage.getPageTitle()).to.contain("previous");
+  assert.strictEqual(resultsPage.isCurrentPage(), true);
+  assert.ok(await resultsPage.getPageTitle().includes("previous"));
 });
 
 Then("they should see the result postcode {string}", async function (value) {
   const resultPage = new ResultsPage(this.page);
   const input = await resultPage.getPostcode();
-  expect(input).to.equal(value);
+  assert.strictEqual(input, value);
 });
 
 When("they have selected an address {string}", async function (value) {
@@ -52,6 +52,6 @@ Then(
   async function (value) {
     const resultsPage = new ResultsPage(this.page);
     const text = await resultsPage.getErrorSummary();
-    expect(text).to.include(value);
+    assert.ok(text.includes(value));
   }
 );

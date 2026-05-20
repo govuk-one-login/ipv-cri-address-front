@@ -1,4 +1,4 @@
-const { expect } = require("chai");
+import { describe, it, beforeEach, expect, vi, afterEach } from "vitest";
 const {
   generateSearchResultString,
   generateHTMLofAddress,
@@ -105,18 +105,16 @@ describe("Generate HTML of address", () => {
 
 describe("Generate HTML of non UK address", () => {
   let translate;
-  let sandbox;
   let modifiedNonUKAddress;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    translate = sinon.stub();
-    translate.returns("France");
+    translate = vi.fn();
+    translate.mockReturnValue("France");
     modifiedNonUKAddress = { ...nonUKAddress };
   });
 
   afterEach(() => {
-    sandbox.restore();
+    vi.resetAllMocks();
   });
 
   it("Full address", () => {

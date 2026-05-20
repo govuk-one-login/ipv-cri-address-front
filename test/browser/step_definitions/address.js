@@ -1,24 +1,20 @@
 const { Given, Then, When } = require("@cucumber/cucumber");
 const { AddressPage } = require("../pages");
-const { expect } = require("chai");
+const assert = require("node:assert");
 
-Given(/^they (?:have )?start(?:ed)? the address journey$/, async function () {
-  // const ipvCorePage = new IPVCorePage(this.page);
-  // await ipvCorePage.chooseCredentialIssuer();
-  //
-  // const searchPage = new SearchPage(this.page);
-  // expect(searchPage.isCurrentPage()).to.be.true;
-  // expect(await searchPage.getPageTitle()).to.not.be.empty;
-});
+Given(
+  /^they (?:have )?start(?:ed)? the address journey$/,
+  async function () {}
+);
 
 Given("they are on the address page", async function () {
   const addressPage = new AddressPage(this.page);
-  expect(addressPage.isCurrentPage()).to.be.true;
+  assert.strictEqual(addressPage.isCurrentPage(), true);
 });
 
 Then(/they should see the address page$/, async function () {
   const addressPage = new AddressPage(this.page);
-  expect(addressPage.isCurrentPage()).to.be.true;
+  assert.strictEqual(addressPage.isCurrentPage(), true);
 });
 
 Then("they should continue to the confirm page", async function () {
@@ -31,7 +27,7 @@ Then(
   async function (value) {
     const addressPage = new AddressPage(this.page);
     const input = await addressPage.getPostcode();
-    expect(input).to.equal(value);
+    assert.strictEqual(input, value);
   }
 );
 
@@ -40,7 +36,7 @@ Then(
   async function (value) {
     const addressPage = new AddressPage(this.page);
     const input = await addressPage.getFlatNumber();
-    expect(input).to.equal(value);
+    assert.strictEqual(input, value);
   }
 );
 
@@ -49,7 +45,7 @@ Then(
   async function (value) {
     const addressPage = new AddressPage(this.page);
     const input = await addressPage.getHouseNumber();
-    expect(input).to.equal(value);
+    assert.strictEqual(input, value);
   }
 );
 
@@ -58,14 +54,14 @@ Then(
   async function (value) {
     const addressPage = new AddressPage(this.page);
     const input = await addressPage.getHouseName();
-    expect(input).to.equal(value);
+    assert.strictEqual(input, value);
   }
 );
 
 Then("they should see street prefilled with {string}", async function (value) {
   const addressPage = new AddressPage(this.page);
   const input = await addressPage.getStreet();
-  expect(input).to.equal(value);
+  assert.strictEqual(input, value);
 });
 
 Then(
@@ -73,7 +69,7 @@ Then(
   async function (value) {
     const addressPage = new AddressPage(this.page);
     const input = await addressPage.getTownOrCity();
-    expect(input).to.equal(value);
+    assert.strictEqual(input, value);
   }
 );
 
@@ -120,6 +116,6 @@ Then(
   async function (value) {
     const addressPage = new AddressPage(this.page);
     const error = await addressPage.getErrorSummary();
-    expect(error).to.contain(value);
+    assert.ok(error.includes(value));
   }
 );

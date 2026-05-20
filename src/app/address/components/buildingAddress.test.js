@@ -1,3 +1,5 @@
+import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
+import { createDefaultReqResNext } from "../../../../test/utils/helpers";
 const { buildingAddressComponent } = require("./buildingAddress");
 const {
   ukBuildingAddressEmptyValidator,
@@ -5,16 +7,14 @@ const {
 
 describe("building address component", () => {
   let req;
-  let sandbox;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    const setup = setupDefaultMocks();
+    const setup = createDefaultReqResNext();
     req = setup.req;
-    req.translate = sandbox.stub();
+    req.translate = vi.fn();
   });
 
-  afterEach(() => sandbox.restore());
+  afterEach(() => vi.resetAllMocks());
 
   describe("getIndividualFieldErrorMessages", () => {
     it("should only return individual error message", () => {

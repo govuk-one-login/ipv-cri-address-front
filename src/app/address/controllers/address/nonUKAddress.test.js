@@ -1,4 +1,4 @@
-const { expect } = require("chai");
+import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
 const BaseController = require("hmpo-form-wizard").Controller;
 const NonUKAddressController = require("./nonUKAddress");
 const {
@@ -10,21 +10,19 @@ const {
 const address = new NonUKAddressController({ route: "/test" });
 
 describe("NonUKAddressController", () => {
-  let req, res, next, sandbox;
+  let req, res, next;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-
-    sandbox
-      .stub(BaseController.prototype, "getValues")
-      .callsFake((_, __, callback) => callback(null, {}));
+    vi.spyOn(BaseController.prototype, "getValues").mockImplementation(
+      (_, __, callback) => callback(null, {})
+    );
 
     req = {
       sessionModel: {
-        get: sandbox.stub(),
-        set: sandbox.stub(),
-        unset: sandbox.stub(),
-        toJSON: sandbox.stub(),
+        get: vi.fn(),
+        set: vi.fn(),
+        unset: vi.fn(),
+        toJSON: vi.fn(),
       },
       form: {
         options: {
@@ -33,27 +31,31 @@ describe("NonUKAddressController", () => {
         errors: {},
       },
       body: {},
-      translate: sandbox.stub(),
+      translate: vi.fn(),
     };
     res = {};
-    next = sandbox.stub();
+    next = vi.fn();
   });
 
-  afterEach(() => sandbox.restore());
+  afterEach(() => vi.resetAllMocks());
 
   it("should be an instance of BaseController", () => {
     expect(address).to.be.an.instanceOf(BaseController);
   });
 
   describe("getValues", () => {
-    it("includes addressCountryName in values when country is set", (done) => {
-      BaseController.prototype.getValues.callsFake((_, __, callback) => {
-        callback(null, {});
-      });
+    it("includes addressCountryName in values when country is set", () => {
+      BaseController.prototype.getValues = vi
+        .fn()
+        .mockImplementation((_, __, callback) => {
+          callback(null, {});
+        });
 
       req.form.errors = null;
 
-      req.sessionModel.get.withArgs("country").returns("FR");
+      req.sessionModel.get.mockImplementation((key) => {
+        if (key === "country") return "FR";
+      });
 
       address.getValues(req, res, (err, values) => {
         expect(err).to.be.null;
@@ -61,11 +63,10 @@ describe("NonUKAddressController", () => {
           addressCountryName: "countries.FR",
         });
         expect(BaseController.prototype.getValues).to.have.been.calledOnce;
-        done();
       });
     });
 
-    it("includes error messages in values when form errors are present", (done) => {
+    it("includes error messages in values when form errors are present", () => {
       req.form.errors = {
         nonUKAddressApartmentNumber: {
           key: "nonUKAddressApartmentNumber",
@@ -73,9 +74,10 @@ describe("NonUKAddressController", () => {
         },
       };
 
-      req.translate
-        .withArgs("nonUKAddressApartmentNumber.validation.required")
-        .returns("Apartment number is required");
+      req.translate.mockImplementation((key) => {
+        if (key === "nonUKAddressApartmentNumber.validation.required")
+          return "Apartment number is required";
+      });
 
       address.getValues(req, res, (err, values) => {
         expect(err).to.be.null;
@@ -87,11 +89,10 @@ describe("NonUKAddressController", () => {
             },
           },
         });
-        done();
       });
     });
 
-    it("includes buildingAddressEmptyErrorMessage in errors", (done) => {
+    it("includes buildingAddressEmptyErrorMessage in errors", () => {
       req.form.errors = {
         nonUKAddressApartmentNumber: {
           key: "nonUKAddressApartmentNumber",
@@ -99,9 +100,10 @@ describe("NonUKAddressController", () => {
         },
       };
 
-      req.translate
-        .withArgs("validation.buildingAddressEmptyValidator")
-        .returns("Apartment number is required");
+      req.translate.mockImplementation((key) => {
+        if (key === "validation.buildingAddressEmptyValidator")
+          return "Apartment number is required";
+      });
 
       address.getValues(req, res, (err, values) => {
         expect(err).to.be.null;
@@ -113,18 +115,17 @@ describe("NonUKAddressController", () => {
             },
           },
         });
-        done();
       });
     });
   });
 
   describe("validateFields", () => {
     it("defaults validation to the first field when all building address fields are empty", () => {
-      let validateBuildingAddressEmptySpy = sinon.spy(
+      let validateBuildingAddressEmptySpy = vi.spyOn(
         buildingAddressComponent,
         "validateBuildingAddressEmpty"
       );
-      let defaultToFirstFieldSpy = sinon.spy(
+      let defaultToFirstFieldSpy = vi.spyOn(
         buildingAddressComponent,
         "defaultToFirstField"
       );
@@ -156,16 +157,16 @@ describe("NonUKAddressController", () => {
       expect(next).to.have.been.calledOnce;
       expect(next).to.have.been.calledOnce;
 
-      validateBuildingAddressEmptySpy.restore();
-      defaultToFirstFieldSpy.restore();
+      validateBuildingAddressEmptySpy.mockRestore();
+      defaultToFirstFieldSpy.mockRestore();
     });
 
     it("does not default to the first field when at least one building address field is provided", () => {
-      let validateBuildingAddressEmptySpy = sinon.spy(
+      let validateBuildingAddressEmptySpy = vi.spyOn(
         buildingAddressComponent,
         "validateBuildingAddressEmpty"
       );
-      let defaultToFirstFieldSpy = sinon.spy(
+      let defaultToFirstFieldSpy = vi.spyOn(
         buildingAddressComponent,
         "defaultToFirstField"
       );
@@ -196,8 +197,8 @@ describe("NonUKAddressController", () => {
       expect(defaultToFirstFieldSpy).not.to.have.been.calledOnce;
       expect(next).to.have.been.calledOnce;
 
-      validateBuildingAddressEmptySpy.restore();
-      defaultToFirstFieldSpy.restore();
+      validateBuildingAddressEmptySpy.mockRestore();
+      defaultToFirstFieldSpy.mockRestore();
     });
   });
 
@@ -216,14 +217,17 @@ describe("NonUKAddressController", () => {
       const addressCountry = "FR";
 
       req.body = addressData;
-      req.sessionModel.get.withArgs("country").returns(addressCountry);
 
-      sandbox.stub(address, "buildAddress").returns({
+      req.translate.mockImplementation((key) => {
+        if (key === "country") return addressCountry;
+      });
+
+      vi.spyOn(address, "buildAddress").mockReturnValue({
         ...addressData,
         addressCountry,
       });
 
-      const callback = sandbox.stub();
+      const callback = vi.fn();
       await address.saveValues(req, res, callback);
 
       expect(req.sessionModel.set).to.have.been.calledWith("address", {
@@ -258,9 +262,11 @@ describe("NonUKAddressController", () => {
       };
 
       req.body = addressData;
-      req.sessionModel.get.withArgs("country").returns(addressCountry);
+      req.sessionModel.get.mockImplementation((key) => {
+        if (key === "country") return addressCountry;
+      });
 
-      const callback = sandbox.stub();
+      const callback = vi.fn();
       await address.saveValues(req, res, callback);
 
       expect(req.sessionModel.set).to.have.been.calledWith("address", {

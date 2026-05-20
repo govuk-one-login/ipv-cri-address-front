@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 const { confirmationValidation } = require("./confirmationValidator");
 
 describe("Address confrimation validator", () => {

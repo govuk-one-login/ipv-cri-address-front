@@ -1,11 +1,11 @@
 const { Then, When } = require("@cucumber/cucumber");
 const { NonUKConfirmPage } = require("../pages");
 const { AddressPage } = require("../pages");
-const { expect } = require("chai");
+const assert = require("node:assert");
 
 Then("they should see the non UK confirm page", function () {
   const nonUKConfirmPage = new NonUKConfirmPage(this.page);
-  expect(nonUKConfirmPage.isCurrentPage()).to.be.true;
+  assert.strictEqual(nonUKConfirmPage.isCurrentPage(), true);
 });
 
 Then(
@@ -13,7 +13,7 @@ Then(
   async function (value) {
     const nonUKConfirmPage = new NonUKConfirmPage(this.page);
     const text = await nonUKConfirmPage.returnCurrentAddress();
-    expect(text.trim()).equal(value);
+    assert.strictEqual(text.trim(), value);
   }
 );
 
@@ -22,7 +22,7 @@ Then("they should see the non UK year value {string}", async function (value) {
   const text = await nonUKConfirmPage.returnYearFromValue();
   const addressPage = new AddressPage(this.page);
   const year = await addressPage.getYear(value);
-  expect(text).to.include(year);
+  assert.ok(text.includes(year));
 });
 
 Then(
@@ -30,14 +30,14 @@ Then(
   async function () {
     const nonUKConfirmPage = new NonUKConfirmPage(this.page);
     const presence = await nonUKConfirmPage.isAddressRadioButtonPresent();
-    expect(presence).equal(false);
+    assert.strictEqual(presence, false);
   }
 );
 
 Then("they should not see the previous address row", async function () {
   const nonUKConfirmPage = new NonUKConfirmPage(this.page);
   const presence = await nonUKConfirmPage.isPreviousAddressRowPresent();
-  expect(presence).equal(false);
+  assert.strictEqual(presence, false);
 });
 
 When("they click change non UK address", async function () {

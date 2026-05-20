@@ -1,3 +1,4 @@
+import { describe, it, beforeEach, expect, vi } from "vitest";
 const { setAPIConfig, setOAuthPaths } = require("./settings");
 
 describe("settings", () => {
@@ -5,7 +6,7 @@ describe("settings", () => {
 
   beforeEach(() => {
     app = {
-      set: sinon.stub(),
+      set: vi.fn(),
     };
   });
 

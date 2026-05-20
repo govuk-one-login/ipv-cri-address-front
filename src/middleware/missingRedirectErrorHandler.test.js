@@ -1,3 +1,5 @@
+import { describe, it, beforeEach, expect } from "vitest";
+import { createDefaultReqResNext } from "../../test/utils/helpers";
 const {
   missingRedirectErrorHandler,
 } = require("./missingRedirectErrorHandler");
@@ -6,7 +8,7 @@ describe("Missing Redirect Error Handler Middleware", () => {
   let err, req, res, next;
 
   beforeEach(() => {
-    const setup = setupDefaultMocks();
+    const setup = createDefaultReqResNext();
     err = setup.err;
     req = setup.req;
     res = setup.res;
@@ -14,8 +16,8 @@ describe("Missing Redirect Error Handler Middleware", () => {
   });
 
   it("exports a function with length 4 - express identifies error handling middleware by its arguments length", async () => {
-    missingRedirectErrorHandler.should.be.a("function");
-    missingRedirectErrorHandler.length.should.equal(4);
+    expect(missingRedirectErrorHandler).toBeInstanceOf(Function);
+    expect(missingRedirectErrorHandler.length).toEqual(4);
   });
 
   it("should return 400 and render error page if error has the message Missing redirect_uri", async () => {

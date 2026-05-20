@@ -1,3 +1,5 @@
+import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
 const BaseController = require("hmpo-form-wizard").Controller;
 const AddressSearchController = require("./search");
 
@@ -12,15 +14,13 @@ const {
 let req;
 let res;
 let next;
-let sandbox;
 let addressSearch;
 const sessionId = "session-id-123";
 
 describe("Address Search controller", function () {
   beforeEach(() => {
     addressSearch = new AddressSearchController({ route: "/test" });
-    sandbox = sinon.createSandbox();
-    const setup = setupDefaultMocks();
+    const setup = createDefaultReqResNext();
 
     req = setup.req;
     res = setup.res;
@@ -29,11 +29,11 @@ describe("Address Search controller", function () {
   });
 
   afterEach(() => {
-    sandbox.restore();
+    vi.resetAllMocks();
   });
 
   it("should be an instance of BaseController", () => {
-    expect(addressSearch).to.be.an.instanceOf(BaseController);
+    expect(addressSearch).toBeInstanceOf(BaseController);
   });
 
   describe("saveValues", () => {
@@ -64,14 +64,12 @@ describe("Address Search controller", function () {
     });
 
     describe("on api success", () => {
-      let prototypeSpy;
       let testPostcode;
 
       beforeEach(async () => {
-        prototypeSpy = sinon.stub(BaseController.prototype, "saveValues");
-        BaseController.prototype.saveValues.callThrough();
+        vi.fn().mockImplementation(BaseController.prototype.saveValues);
 
-        req.axios.post = sinon.fake.returns(testData.apiResponse);
+        req.axios.post = vi.fn().mockReturnValue(testData.apiResponse);
 
         testPostcode = "myPostcode";
         req.body["addressSearch"] = testPostcode;
@@ -80,11 +78,11 @@ describe("Address Search controller", function () {
       });
 
       afterEach(() => {
-        prototypeSpy.restore();
+        vi.resetAllMocks();
       });
 
       it("should set requestIsSuccessful to be true", () => {
-        expect(req.sessionModel.get("requestIsSuccessful")).to.be.true;
+        expect(req.sessionModel.get("requestIsSuccessful")).toBe(true);
       });
       it("should set searchResults", () => {
         expect(req.sessionModel.get("searchResults")).to.deep.equal(
@@ -102,7 +100,7 @@ describe("Address Search controller", function () {
 
     describe("on api error", () => {
       beforeEach(async () => {
-        req.axios.post = sinon.fake.rejects(new Error("Error!"));
+        req.axios.post = vi.fn().mockRejectedValue(new Error("Error!"));
 
         testPostcode = "myPostcode";
         req.body["addressSearch"] = testPostcode;
@@ -122,7 +120,7 @@ describe("Address Search controller", function () {
         expect(req.sessionModel.get("addressPostcode")).to.equal(testPostcode);
       });
       it("should call callback without an error", () => {
-        expect(next).to.have.been.calledOnceWithExactly();
+        expect(next).toHaveBeenCalled();
       });
     });
   });

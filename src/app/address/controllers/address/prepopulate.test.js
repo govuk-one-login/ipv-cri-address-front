@@ -1,3 +1,5 @@
+import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
 const BaseController = require("hmpo-form-wizard").Controller;
 const PrepopulateController = require("./prepopulate");
 
@@ -10,7 +12,6 @@ const {
 let req;
 let res;
 let next;
-let sandbox;
 const sessionId = "session-id-123";
 
 describe("Prepopulate controller", () => {
@@ -18,8 +19,7 @@ describe("Prepopulate controller", () => {
 
   beforeEach(() => {
     prepopulateController = new PrepopulateController({ route: "/test" });
-    sandbox = sinon.createSandbox();
-    const setup = setupDefaultMocks();
+    const setup = createDefaultReqResNext();
 
     req = setup.req;
     res = setup.res;
@@ -28,7 +28,7 @@ describe("Prepopulate controller", () => {
   });
 
   afterEach(() => {
-    sandbox.restore();
+    vi.resetAllMocks();
   });
 
   it("should be an instance of BaseController", () => {
@@ -56,21 +56,22 @@ describe("Prepopulate controller", () => {
       expect(req.axios.get).to.have.callCount(0);
     });
 
-    context("on success", () => {
-      let prototypeSpy;
-
+    describe("on success", () => {
       beforeEach(() => {
-        prototypeSpy = sinon.stub(BaseController.prototype, "saveValues");
-        BaseController.prototype.saveValues.callThrough();
+        vi.spyOn(BaseController.prototype, "saveValues").mockImplementation(
+          () => {
+            BaseController.prototype.saveValues();
+          }
+        );
       });
 
       afterEach(() => {
-        prototypeSpy.restore();
+        vi.resetAllMocks();
       });
 
       describe("with empty addresses", () => {
         beforeEach(async () => {
-          req.axios.get = sinon.fake.resolves([]);
+          req.axios.get = vi.fn().mockResolvedValue([]);
 
           await prepopulateController.saveValues(req, res, next);
         });
@@ -91,7 +92,7 @@ describe("Prepopulate controller", () => {
 
     describe("with addresses", () => {
       beforeEach(async () => {
-        req.axios.get = sinon.fake.resolves({
+        req.axios.get = vi.fn().mockResolvedValue({
           data: { addresses: [{ postalCode: "Q1 1AB" }] },
         });
 
@@ -114,7 +115,7 @@ describe("Prepopulate controller", () => {
 
     describe("with context", () => {
       beforeEach(async () => {
-        req.axios.get = sinon.fake.resolves({
+        req.axios.get = vi.fn().mockResolvedValue({
           data: {
             addresses: [{ postalCode: "Q1 1AB" }],
             context: "international_user",
@@ -133,9 +134,9 @@ describe("Prepopulate controller", () => {
       });
     });
 
-    context("on error", () => {
+    describe("on error", () => {
       beforeEach(async () => {
-        req.axios.get = sinon.fake.throws(new Error("Error"));
+        req.axios.get = vi.fn().mockThrow(new Error("Error"));
 
         await prepopulateController.saveValues(req, res, next);
       });

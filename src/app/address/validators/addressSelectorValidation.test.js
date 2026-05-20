@@ -1,4 +1,4 @@
-const { expect } = require("chai");
+import { describe, it, expect } from "vitest";
 const { addressSelectorValidator } = require("./addressSelectorValidation");
 
 describe("addressSelectorValidator", () => {

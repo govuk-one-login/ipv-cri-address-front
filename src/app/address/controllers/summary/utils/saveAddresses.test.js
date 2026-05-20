@@ -1,3 +1,4 @@
+import { describe, it, beforeEach, expect, vi, afterEach } from "vitest";
 const testData = require("../../../../../../test/data/testData");
 
 const {
@@ -8,29 +9,28 @@ const {
 
 const addressFactory = require("../../../../../../test/utils/addressFactory");
 const saveAddressess = require("./saveAddresses");
+import { createDefaultReqResNext } from "../../../../../../test/utils/helpers";
 
 describe("saveAddresses", () => {
-  let sandbox;
   let req;
   let addresses;
   let sessionId;
 
   beforeEach(() => {
-    sandbox = sinon.createSandbox();
-    const setup = setupDefaultMocks();
+    const setup = createDefaultReqResNext();
     sessionId = "session-id-123";
     req = setup.req;
     addresses = addressFactory(1);
   });
 
   afterEach(() => {
-    sandbox.restore();
+    vi.resetAllMocks();
   });
 
   it("Should put address to address api and redirect back to callback", async () => {
     addresses = addressFactory(1);
 
-    req.axios.put = sinon.fake.resolves(testData.addressApiResponse);
+    req.axios.put = vi.fn().mockResolvedValue(testData.addressApiResponse);
     req.session.tokenId = sessionId;
 
     const headers = {
@@ -51,7 +51,7 @@ describe("saveAddresses", () => {
   it("Should put multiple addresses to address api and redirect back to callback", async () => {
     addresses = addressFactory(2);
 
-    req.axios.put = sinon.fake.resolves(testData.addressApiResponse);
+    req.axios.put = vi.fn().mockResolvedValue(testData.addressApiResponse);
     req.session.tokenId = sessionId;
 
     const headers = {
@@ -70,7 +70,7 @@ describe("saveAddresses", () => {
   });
 
   it("Should put address", async () => {
-    req.axios.put = sinon.fake.resolves(testData.addressApiResponse);
+    req.axios.put = vi.fn().mockResolvedValue(testData.addressApiResponse);
 
     const headers = {
       "txma-audit-encoded": "dummy-txma-header",

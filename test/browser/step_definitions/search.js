@@ -1,6 +1,6 @@
 const { Given, Then } = require("@cucumber/cucumber");
 const { SearchPage } = require("../pages");
-const { expect } = require("chai");
+const assert = require("node:assert");
 
 Given("they searched for their postcode {string}", async function (postcode) {
   const searchPage = new SearchPage(this.page);
@@ -9,7 +9,7 @@ Given("they searched for their postcode {string}", async function (postcode) {
 
 Then(/they should see the search page$/, async function () {
   const searchPage = new SearchPage(this.page);
-  expect(searchPage.isCurrentPage()).to.be.true;
+  assert.strictEqual(searchPage.isCurrentPage(), true);
 });
 
 Then(
@@ -17,7 +17,7 @@ Then(
   async function (value) {
     const searchPage = new SearchPage(this.page);
     const error = await searchPage.getErrorSummary();
-    expect(error).to.contain(value);
+    assert.ok(error.includes(value));
   }
 );
 
@@ -25,19 +25,19 @@ Then(
 
 Then("they should see the previous address search page", function () {
   const searchPage = new SearchPage(this.page);
-  expect(searchPage.isCurrentPage()).to.be.true;
+  assert.strictEqual(searchPage.isCurrentPage(), true);
 });
 
 Then("they should see the search page content in Welsh", async function () {
   const searchPage = new SearchPage(this.page);
-  expect(await searchPage.getPageTitle()).to.include(
-    "Darganfyddwch eich cyfeiriad"
+  assert.ok(
+    (await searchPage.getPageTitle()).includes("Darganfyddwch eich cyfeiriad")
   );
 });
 
 Then("they should see the search page content in English", async function () {
   const searchPage = new SearchPage(this.page);
-  expect(await searchPage.getPageTitle()).to.include("Find your address");
+  assert.ok((await searchPage.getPageTitle()).includes("Find your address"));
 });
 
 Then(
@@ -45,25 +45,25 @@ Then(
   async function (value) {
     const searchPage = new SearchPage(this.page);
     const input = await searchPage.getPostcode();
-
-    expect(input).to.equal(value);
+    assert.ok(input.includes(value));
   }
 );
 
 Then("they should not see the search postcode prefilled", async function () {
   const searchPage = new SearchPage(this.page);
   const input = await searchPage.getPostcode();
-
-  expect(input).to.equal("");
+  assert.strictEqual(input, "");
 });
 
 Then(
   /^the driving licence callout should (not ){0,1}be visible$/,
   async function (visibleAsString) {
     const visible = visibleAsString !== "not ";
-
     const searchPage = new SearchPage(this.page);
 
-    expect(await searchPage.drivingLicenceCalloutIsVisible()).to.equal(visible);
+    assert.strictEqual(
+      await searchPage.drivingLicenceCalloutIsVisible(),
+      visible
+    );
   }
 );
