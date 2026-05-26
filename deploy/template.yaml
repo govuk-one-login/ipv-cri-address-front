@@ -116,7 +116,7 @@ Mappings:
       pinoLoggerEnabled: "false"
     production:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables
-      minECSCount: 6
+      minECSCount: 3
       maxECSCount: 60
       deviceIntelligenceEnabled: true
       may2025RebrandEnabled: true
