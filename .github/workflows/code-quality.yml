@@ -19,7 +19,7 @@ jobs:
       - name: Run pre-commit
         uses: govuk-one-login/github-actions/code-quality/run-pre-commit@0c5c351ec34f813b37ecb5c3413e49ccab534c58
         with:
-          node-version: 20
+          node-version: 22
           install-dependencies: true
           package-manager: npm
           all-files: true
@@ -31,6 +31,6 @@ jobs:
       - name: Translation checks
         uses: govuk-one-login/github-actions/node/run-script@c8eefadf581d2087ce2af48b7060c1329cfa5251
         with:
-          node-version: 20.x
+          node-version: 22
           package-manager: npm
           script: npm run check-translation
