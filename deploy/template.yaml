@@ -15,6 +15,13 @@ Description: >-
   should have a route in the provided private subnets' route table.
 
 Parameters:
+  PreMerge:
+    Type: String
+    Description: Specifies if this is a pre-merge stack
+    Default: "false"
+    AllowedValues:
+      - "true"
+      - "false"
   Environment:
     Description: The name of the environment to deploy to.
     Type: String
@@ -54,6 +61,8 @@ Parameters:
     Default: ""
 
 Conditions:
+  IsNotPreMergeStack: !Equals [!Ref PreMerge, "false"]
+
   UseContainerImageNameOverride:
     !Not [!Equals [!Ref ContainerImageNameOverride, ""]]
 
@@ -234,6 +243,7 @@ Resources:
 
   CloudFrontWAFv2ACLAssociation:
     Type: AWS::WAFv2::WebACLAssociation
+    Condition: IsNotPreMergeStack
     Properties:
       ResourceArn: !Ref LoadBalancer
       WebACLArn: !ImportValue cfront-origin-distrib-CloakingOriginWebACLArn
