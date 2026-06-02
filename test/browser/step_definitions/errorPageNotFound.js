@@ -1,6 +1,6 @@
-const { When, Then } = require("@cucumber/cucumber");
-const assert = require("node:assert");
-const { ErrorPage } = require("../pages");
+import { When, Then } from "@cucumber/cucumber";
+import assert from "node:assert";
+import { ErrorPage } from "../pages/index.js";
 
 When("they go to an unknown page", async function () {
   const errorPage = new ErrorPage(this.page);

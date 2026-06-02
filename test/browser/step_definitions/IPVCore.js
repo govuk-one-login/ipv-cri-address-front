@@ -1,6 +1,6 @@
-const { Then } = require("@cucumber/cucumber");
-const { IPVCorePage } = require("../pages");
-const assert = require("node:assert");
+import { Then } from "@cucumber/cucumber";
+import assert from "node:assert";
+import { IPVCorePage } from "../pages/index.js";
 
 Then("they should redirected back to core", async function () {
   // will probably change

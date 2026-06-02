@@ -1,15 +1,15 @@
-const address = require("../../controllers/address/manual");
-const search = require("../../controllers/address/search");
-const results = require("../../controllers/address/results");
+import { AddressController } from "../../controllers/address/manual.js";
+import { AddressSearchController } from "../../controllers/address/search.js";
+import { AddressResultsController } from "../../controllers/address/results.js";
 
-module.exports = {
+export const steps = {
   "/": {
     entryPoint: true,
     skip: true,
     next: "search",
   },
   "/search": {
-    controller: search,
+    controller: AddressSearchController,
     fields: ["addressSearch"],
     entryPoint: true,
     next: [
@@ -34,12 +34,12 @@ module.exports = {
     ],
   },
   "/results": {
-    controller: results,
+    controller: AddressResultsController,
     fields: ["addressResults"],
     next: "/previous/address",
   },
   "/address": {
-    controller: address,
+    controller: AddressController,
     editable: true,
     continueOnEdit: true,
     prereqs: ["/search"],

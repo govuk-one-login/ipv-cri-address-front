@@ -1,5 +1,6 @@
 {
   "name": "di-ipv-cri-address-front",
+  "type": "module",
   "description": "User interface for the Identity Proofing and Verification (IPV) system within the GDS digital identity platform, GOV.UK Sign In.",
   "license": "MIT",
   "workspaces": [

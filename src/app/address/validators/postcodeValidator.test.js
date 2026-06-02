@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-const {
+import {
   postcodeLength,
   alphaNumeric,
   missingAlphaOrNumeric,
   isUkPostcode,
-} = require("./postcodeValidator");
+} from "./postcodeValidator.js";
 
 const validPostcodes = ["E18QS", "PA296YP", "SW1A2AA", "AA11AA"];
 const invalidPostcodeLength = ["1", "88888888", "4444", ""];

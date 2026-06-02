@@ -1,12 +1,12 @@
-const {
-  addressSelectorValidator,
-} = require("../../validators/addressSelectorValidation");
+import FormWizard from "hmpo-form-wizard";
+import { addressSelectorValidator } from "../../validators/addressSelectorValidation.js";
 
-const presenters = require("../../../../presenters");
+import {
+  addressesToSelectItems,
+  addressPresenter,
+} from "../../../../presenters/index.js";
 
-const BaseController = require("hmpo-form-wizard").Controller;
-
-class AddressResultsController extends BaseController {
+export class AddressResultsController extends FormWizard.Controller {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
       if (err) {
@@ -14,7 +14,7 @@ class AddressResultsController extends BaseController {
       }
 
       locals.addressPostcode = req.sessionModel.get("addressPostcode");
-      locals.addresses = presenters.addressesToSelectItems({
+      locals.addresses = addressesToSelectItems({
         addresses: req.sessionModel.get("searchResults"),
         translate: req.translate,
       });
@@ -63,7 +63,7 @@ class AddressResultsController extends BaseController {
     const chosenAddress = {
       ...searchResults.find(
         (address) =>
-          presenters.addressPresenter.generateSearchResultString(address) ===
+          addressPresenter.generateSearchResultString(address) ===
           selectedAddress
       ),
     };
@@ -71,5 +71,3 @@ class AddressResultsController extends BaseController {
     return chosenAddress;
   }
 }
-
-module.exports = AddressResultsController;

@@ -1,6 +1,6 @@
-const { Given, Then, When } = require("@cucumber/cucumber");
-const { AddressPage } = require("../pages");
-const assert = require("node:assert");
+import { Given, Then, When } from "@cucumber/cucumber";
+import assert from "node:assert";
+import { AddressPage } from "../pages/index.js";
 
 Given(
   /^they (?:have )?start(?:ed)? the address journey$/,

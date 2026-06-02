@@ -1,9 +1,9 @@
 import { describe, it, beforeEach, expect, vi, afterEach } from "vitest";
-const {
+import {
   generateSearchResultString,
   generateHTMLofAddress,
   generateHTMLofNonUKAddress,
-} = require("./addressPresenter");
+} from "./addressPresenter.js";
 
 const address = {
   organisationName: "Company",

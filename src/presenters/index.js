@@ -1,7 +1,2 @@
-const addressesToSelectItems = require("./addressesToSelectItems");
-const addressPresenter = require("./addressPresenter");
-
-module.exports = {
-  addressPresenter,
-  addressesToSelectItems,
-};
+export { addressesToSelectItems } from "./addressesToSelectItems.js";
+export * as addressPresenter from "./addressPresenter.js";

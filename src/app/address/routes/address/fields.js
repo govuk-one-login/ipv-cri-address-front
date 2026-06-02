@@ -1,6 +1,6 @@
-const countryList = require("../../data/countries.json");
+import { countryList } from "../../data/countries.js";
 
-module.exports = {
+export const fields = {
   address: {
     journeyKey: "currentAddress",
   },

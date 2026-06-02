@@ -1,23 +1,15 @@
-const { PACKAGE_NAME } = require("../../../../lib/config");
+import FormWizard from "hmpo-form-wizard";
+import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
 
-const BaseController = require("hmpo-form-wizard").Controller;
-const logger =
-  require("@govuk-one-login/di-ipv-cri-common-express/src/bootstrap/lib/logger").get(
-    PACKAGE_NAME
-  );
-const {
-  generateHTMLofAddress,
-} = require("../../../../presenters/addressPresenter");
+import { generateHTMLofAddress } from "../../../../presenters/addressPresenter.js";
+import { confirmationValidation } from "../../validators/confirmationValidator.js";
+import { config } from "../../../../lib/config.js";
+import { saveAddresses } from "./utils/saveAddresses.js";
 
-const {
-  confirmationValidation,
-} = require("../../validators/confirmationValidator");
-
-const saveAddressess = require("./utils/saveAddresses");
-
+const logger = commonExpress.bootstrap.logger.get(config.PACKAGE_NAME);
 const CHANGE_CURRENT_HREF = "/address/edit?edit=true";
 
-class AddressConfirmController extends BaseController {
+export class AddressConfirmController extends FormWizard.Controller {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
       if (err) {
@@ -95,7 +87,7 @@ class AddressConfirmController extends BaseController {
           addresses.push(previousAddress);
         }
 
-        await saveAddressess(req, addresses);
+        await saveAddresses(req, addresses);
 
         super.saveValues(req, res, () => {
           // if we're into save values we're finished with gathering addresses
@@ -132,5 +124,3 @@ class AddressConfirmController extends BaseController {
     return threeMonthsAgo.getFullYear() <= yearFrom;
   }
 }
-
-module.exports = AddressConfirmController;

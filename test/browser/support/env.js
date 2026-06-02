@@ -1,6 +1,6 @@
-const { setWorldConstructor } = require("@cucumber/cucumber");
+import { setWorldConstructor } from "@cucumber/cucumber";
 
-require("playwright");
+import "playwright";
 
 const users = {
   "Erroring Ethem": {

@@ -1,5 +1,6 @@
 {
   "name": "di-ipv-cri-address-front-tests",
+  "type": "module",
   "version": "1.0.0",
   "description": "Browser tests for the frontend of the Address Credential Issuer",
   "scripts": {

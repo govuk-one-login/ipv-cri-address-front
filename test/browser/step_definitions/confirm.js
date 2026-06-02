@@ -1,7 +1,6 @@
-const { Then, When } = require("@cucumber/cucumber");
-const { ConfirmPage } = require("../pages");
-const { AddressPage } = require("../pages");
-const assert = require("node:assert");
+import { Then, When } from "@cucumber/cucumber";
+import assert from "node:assert";
+import { ConfirmPage, AddressPage } from "../pages/index.js";
 
 Then(/they should be able to confirm the address$/, async function () {
   const confirmPage = new ConfirmPage(this.page);

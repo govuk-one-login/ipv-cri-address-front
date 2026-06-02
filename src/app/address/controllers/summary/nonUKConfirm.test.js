@@ -1,15 +1,13 @@
 import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
-import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
-const BaseController = require("hmpo-form-wizard").Controller;
-const NonUKAddressConfirmController = require("./nonUKConfirm");
-const addressFactory = require("../../../../../test/utils/addressFactory");
-const testData = require("../../../../../test/data/testData");
-const {
-  API: {
-    PATHS: { SAVE_ADDRESS },
-  },
-} = require("../../../../lib/config");
+import FormWizard from "hmpo-form-wizard";
 
+import { NonUKAddressConfirmController } from "./nonUKConfirm.js";
+import { config } from "../../../../lib/config.js";
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers.js";
+import { addressFactory } from "../../../../../test/utils/addressFactory.js";
+import { addressApiResponse } from "../../../../../test/data/testData.js";
+
+const saveAddressPath = config.API.PATHS.SAVE_ADDRESS;
 let req;
 let res;
 let next;
@@ -39,7 +37,7 @@ describe("Non UK Address confirmation controller", () => {
   });
 
   it("should be an instance of BaseController", () => {
-    expect(addressConfirm).to.be.an.instanceOf(BaseController);
+    expect(addressConfirm).to.be.an.instanceOf(FormWizard.Controller);
   });
 
   describe("locals", () => {
@@ -70,7 +68,7 @@ describe("Non UK Address confirmation controller", () => {
 
   describe("saveValues", () => {
     it("Should put address to address api and redirect back to callback", async () => {
-      req.axios.put = vi.fn().mockResolvedValue(testData.addressApiResponse);
+      req.axios.put = vi.fn().mockResolvedValue(addressApiResponse);
 
       const headers = {
         "session-id": sessionId,
@@ -80,9 +78,13 @@ describe("Non UK Address confirmation controller", () => {
       };
 
       await addressConfirm.saveValues(req, res, next);
-      expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
-        headers,
-      });
+      expect(req.axios.put).to.have.been.calledWith(
+        saveAddressPath,
+        addresses,
+        {
+          headers,
+        }
+      );
 
       expect(next).to.have.been.calledWith();
     });

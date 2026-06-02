@@ -1,11 +1,11 @@
-const {
+import {
   Before,
   BeforeAll,
-  AfterAll,
   After,
+  AfterAll,
   setDefaultTimeout,
-} = require("@cucumber/cucumber");
-const { chromium, firefox, webkit } = require("playwright");
+} from "@cucumber/cucumber";
+import { chromium, firefox, webkit } from "playwright";
 
 // FIXME This is large due to cold starts
 setDefaultTimeout(30 * 1000);

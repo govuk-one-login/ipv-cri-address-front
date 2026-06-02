@@ -1,4 +1,4 @@
-function addressFactory(quantity) {
+export function addressFactory(quantity) {
   const addresses = [
     {
       subBuildingName: "flat 1",
@@ -19,5 +19,3 @@ function addressFactory(quantity) {
 
   return addresses.slice(0, quantity);
 }
-
-module.exports = addressFactory;

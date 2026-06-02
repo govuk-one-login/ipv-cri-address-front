@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-const { underMaxLength } = require("./underMaxLengthValidator");
+import { underMaxLength } from "./underMaxLengthValidator.js";
 
 describe("underMaxLengthValidator", () => {
   it("should return true when under max length", () => {

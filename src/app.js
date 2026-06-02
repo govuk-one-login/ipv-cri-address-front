@@ -1,18 +1,26 @@
-require("express");
-require("express-async-errors");
+import path from "path";
+import { fileURLToPath } from "url";
+import session from "express-session";
+import { DynamoDB } from "@aws-sdk/client-dynamodb";
+import DynamoDBStoreFactory from "connect-dynamodb";
 
-const path = require("path");
-const session = require("express-session");
-const { DynamoDB } = require("@aws-sdk/client-dynamodb");
-const DynamoDBStore = require("connect-dynamodb")(session);
+import { frontendUiMiddlewareIdentityBypass } from "@govuk-one-login/frontend-ui";
+import addLanguageParam from "@govuk-one-login/frontend-language-toggle";
+import { frontendVitalSignsInitFromApp } from "@govuk-one-login/frontend-vital-signs";
 
-const frontendUi = require("@govuk-one-login/frontend-ui");
-const addLanguageParam = require("@govuk-one-login/frontend-language-toggle/build/cjs/language-param-setter.cjs");
-const {
-  frontendVitalSignsInitFromApp,
-} = require("@govuk-one-login/frontend-vital-signs");
+import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
 
-const commonExpress = require("@govuk-one-login/di-ipv-cri-common-express");
+import { previousRouter } from "./app/address/routes/previous/index.js";
+import { addressRouter } from "./app/address/routes/address/index.js";
+import { summaryRouter } from "./app/address/routes/summary/index.js";
+
+import { missingRedirectErrorHandler } from "./middleware/missingRedirectErrorHandler.js";
+
+import { setAPIConfig, setOAuthPaths } from "./lib/settings.js";
+import { config } from "./lib/config.js";
+
+const DynamoDBStore = DynamoDBStoreFactory(session);
+
 const { setup } = commonExpress.bootstrap;
 const setHeaders = commonExpress.lib.headers;
 const setScenarioHeaders = commonExpress.lib.scenarioHeaders;
@@ -24,24 +32,11 @@ const { getGTM, getLanguageToggle, getDeviceIntelligence } =
 const { setI18n } = commonExpress.lib.i18n;
 const helmetConfig = commonExpress.lib.helmet;
 
-const { setAPIConfig, setOAuthPaths } = require("./lib/settings");
-
-const {
-  API,
-  APP,
-  LOG_LEVEL,
-  PORT,
-  SESSION_SECRET,
-  SESSION_TABLE_NAME,
-  SESSION_TTL,
-  OVERLOAD_PROTECTION,
-} = require("./lib/config");
-
 const loggerConfig = {
   console: true,
   consoleJSON: true,
-  consoleLevel: LOG_LEVEL,
-  appLevel: LOG_LEVEL,
+  consoleLevel: config.LOG_LEVEL,
+  appLevel: config.LOG_LEVEL,
   app: false,
 };
 
@@ -51,26 +46,22 @@ const dynamodb = new DynamoDB({
 
 const dynamoDBSessionStore = new DynamoDBStore({
   client: dynamodb,
-  table: SESSION_TABLE_NAME,
+  table: config.SESSION_TABLE_NAME,
 });
 
 const sessionConfig = {
   cookieName: "service_session",
-  cookieOptions: { maxAge: SESSION_TTL },
-  secret: SESSION_SECRET,
-  ...(SESSION_TABLE_NAME && { sessionStore: dynamoDBSessionStore }),
+  cookieOptions: { maxAge: config.SESSION_TTL },
+  secret: config.SESSION_SECRET,
+  ...(config.SESSION_TABLE_NAME && { sessionStore: dynamoDBSessionStore }),
 };
 
-const {
-  missingRedirectErrorHandler,
-} = require("./middleware/missingRedirectErrorHandler");
-
 const { app, router } = setup({
-  config: { APP_ROOT: __dirname },
+  config: { APP_ROOT: import.meta.dirname },
   port: false, /// Disabling the bootstrap starting the server.
   logs: loggerConfig,
   session: sessionConfig,
-  redis: SESSION_TABLE_NAME ? false : commonExpress.lib.redis(),
+  redis: config.SESSION_TABLE_NAME ? false : commonExpress.lib.redis(),
   helmet: helmetConfig,
   urls: {
     public: "/public",
@@ -83,7 +74,9 @@ const { app, router } = setup({
   views: [
     path.resolve(
       path.dirname(
-        require.resolve("@govuk-one-login/di-ipv-cri-common-express")
+        fileURLToPath(
+          import.meta.resolve("@govuk-one-login/di-ipv-cri-common-express")
+        )
       ),
       "components"
     ),
@@ -116,7 +109,7 @@ const { app, router } = setup({
       next();
     });
   },
-  overloadProtection: OVERLOAD_PROTECTION,
+  overloadProtection: config.OVERLOAD_PROTECTION,
   dev: true,
 });
 
@@ -126,38 +119,39 @@ setI18n({
   router,
   config: {
     secure: true,
-    cookieDomain: APP.FRONTEND_DOMAIN,
+    cookieDomain: config.APP.FRONTEND_DOMAIN,
   },
 });
 
 // Common express relies on 0/1 strings
-const showLanguageToggle = APP.LANGUAGE_TOGGLE_DISABLED === "true" ? "0" : "1";
+const showLanguageToggle =
+  config.APP.LANGUAGE_TOGGLE_DISABLED === "true" ? "0" : "1";
 setLanguageToggle({ app, showLanguageToggle });
 app.get("nunjucks").addGlobal("addLanguageParam", addLanguageParam);
 
 setDeviceIntelligence({
   app,
-  deviceIntelligenceEnabled: APP.DEVICE_INTELLIGENCE_ENABLED,
-  deviceIntelligenceDomain: APP.DEVICE_INTELLIGENCE_DOMAIN,
+  deviceIntelligenceEnabled: config.APP.DEVICE_INTELLIGENCE_ENABLED,
+  deviceIntelligenceDomain: config.APP.DEVICE_INTELLIGENCE_DOMAIN,
 });
 
 setAPIConfig({
   app,
-  baseUrl: API.BASE_URL,
-  sessionPath: API.PATHS.SESSION,
-  authorizationPath: API.PATHS.AUTHORIZATION,
+  baseUrl: config.API.BASE_URL,
+  sessionPath: config.API.PATHS.SESSION,
+  authorizationPath: config.API.PATHS.AUTHORIZATION,
 });
 
-setOAuthPaths({ app, entryPointPath: APP.PATHS.ADDRESS });
+setOAuthPaths({ app, entryPointPath: config.APP.PATHS.ADDRESS });
 
 setGTM({
   app,
-  analyticsCookieDomain: APP.FRONTEND_DOMAIN,
-  uaEnabled: APP.GTM.UA_ENABLED,
-  uaContainerId: APP.GTM.UA_CONTAINER_ID,
-  ga4Enabled: APP.GTM.GA4_ENABLED,
-  ga4ContainerId: APP.GTM.GA4_CONTAINER_ID,
-  analyticsDataSensitive: APP.GTM.ANALYTICS_DATA_SENSITIVE,
+  analyticsCookieDomain: config.APP.FRONTEND_DOMAIN,
+  uaEnabled: config.APP.GTM.UA_ENABLED,
+  uaContainerId: config.APP.GTM.UA_CONTAINER_ID,
+  ga4Enabled: config.APP.GTM.GA4_ENABLED,
+  ga4ContainerId: config.APP.GTM.GA4_CONTAINER_ID,
+  analyticsDataSensitive: config.APP.GTM.ANALYTICS_DATA_SENSITIVE,
   ga4PageViewEnabled: true,
   ga4FormResponseEnabled: true,
   ga4FormErrorEnabled: true,
@@ -168,7 +162,7 @@ setGTM({
 
 router.use(getGTM);
 router.use(getLanguageToggle);
-router.use(frontendUi.frontendUiMiddlewareIdentityBypass);
+router.use(frontendUiMiddlewareIdentityBypass);
 router.use(getDeviceIntelligence);
 
 router.use(setScenarioHeaders);
@@ -176,9 +170,9 @@ router.use(setAxiosDefaults);
 
 router.use("/oauth2", commonExpress.routes.oauth2);
 
-router.use("/previous", require("./app/address/routes/previous"));
-router.use("/", require("./app/address/routes/address"));
-router.use("/summary", require("./app/address/routes/summary"));
+router.use("/previous", previousRouter);
+router.use("/", addressRouter);
+router.use("/summary", summaryRouter);
 
 router.use("^/$", (req, res) => {
   res.render("index");
@@ -188,7 +182,7 @@ router.use(commonExpress.lib.errorHandling.redirectAsErrorToCallback);
 router.use(missingRedirectErrorHandler);
 
 /* Server configuration */
-const server = app.listen(PORT);
+const server = app.listen(config.PORT);
 
 // AWS recommends the keep-alive duration of the target is longer than the idle timeout value of the load balancer (default 60s)
 // to prevent possible 502 errors where the target connection has already been closed

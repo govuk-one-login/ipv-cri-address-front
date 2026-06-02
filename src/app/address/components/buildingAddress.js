@@ -1,4 +1,4 @@
-const buildingAddressComponent = {
+export const buildingAddressComponent = {
   getIndividualFieldErrorMessages(errors, validatorToSkip, translate) {
     return Object.entries(errors)?.reduce(
       (errorValues, [fieldName, { type, key }]) => {
@@ -36,5 +36,3 @@ const buildingAddressComponent = {
 };
 
 const fieldIsEmpty = (field) => field.trim() === null || field.trim() === "";
-
-module.exports = { buildingAddressComponent };

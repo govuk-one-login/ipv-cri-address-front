@@ -1,14 +1,10 @@
 import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
-import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
-const BaseController = require("hmpo-form-wizard").Controller;
-const addressFactory = require("../../../../../test/utils/addressFactory");
-const {
-  buildingAddressComponent,
-} = require("../../components/buildingAddress");
-const {
-  ukBuildingAddressEmptyValidator,
-} = require("../../validators/addressValidator");
-const AddressController = require("./manual");
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers.js";
+import FormWizard from "hmpo-form-wizard";
+import { addressFactory } from "../../../../../test/utils/addressFactory.js";
+import { buildingAddressComponent } from "../../components/buildingAddress.js";
+import { ukBuildingAddressEmptyValidator } from "../../validators/addressValidator.js";
+import { AddressController } from "./manual.js";
 
 describe("address controller", () => {
   const address = new AddressController({ route: "/test" });
@@ -28,7 +24,7 @@ describe("address controller", () => {
   afterEach(() => vi.resetAllMocks());
 
   it("should be an instance of BaseController", () => {
-    expect(address).to.be.an.instanceOf(BaseController);
+    expect(address).to.be.an.instanceOf(FormWizard.Controller);
   });
 
   describe("getValues", () => {

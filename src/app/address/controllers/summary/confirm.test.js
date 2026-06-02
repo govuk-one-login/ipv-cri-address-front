@@ -1,15 +1,13 @@
 import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
-import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
-const BaseController = require("hmpo-form-wizard").Controller;
-const AddressConfirmController = require("./confirm");
-const addressFactory = require("../../../../../test/utils/addressFactory");
+import FormWizard from "hmpo-form-wizard";
 
-const testData = require("../../../../../test/data/testData");
-const {
-  API: {
-    PATHS: { SAVE_ADDRESS },
-  },
-} = require("../../../../lib/config");
+import { AddressConfirmController } from "./confirm.js";
+import { config } from "../../../../lib/config.js";
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers.js";
+import { addressFactory } from "../../../../../test/utils/addressFactory.js";
+import { addressApiResponse } from "../../../../../test/data/testData.js";
+
+const saveAddressPath = config.API.PATHS.SAVE_ADDRESS;
 
 let req;
 let res;
@@ -39,7 +37,7 @@ describe("Address confirmation controller", () => {
   });
 
   it("should be an instance of BaseController", () => {
-    expect(addressConfirm).to.be.an.instanceOf(BaseController);
+    expect(addressConfirm).to.be.an.instanceOf(FormWizard.Controller);
   });
 
   describe("locals", () => {
@@ -71,7 +69,7 @@ describe("Address confirmation controller", () => {
 
   describe("saveValues", () => {
     it("Should put address to address api and redirect back to callback", async () => {
-      req.axios.put = vi.fn().mockResolvedValue(testData.addressApiResponse);
+      req.axios.put = vi.fn().mockResolvedValue(addressApiResponse);
 
       const headers = {
         "session-id": sessionId,
@@ -81,7 +79,7 @@ describe("Address confirmation controller", () => {
       };
 
       await addressConfirm.saveValues(req, res, next);
-      expect(req.axios.put).toHaveBeenCalledWith(SAVE_ADDRESS, addresses, {
+      expect(req.axios.put).toHaveBeenCalledWith(saveAddressPath, addresses, {
         headers,
       });
 

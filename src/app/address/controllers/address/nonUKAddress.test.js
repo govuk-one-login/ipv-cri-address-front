@@ -1,19 +1,16 @@
 import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
-const BaseController = require("hmpo-form-wizard").Controller;
-const NonUKAddressController = require("./nonUKAddress");
-const {
-  buildingAddressComponent,
-} = require("../../components/buildingAddress");
-const {
-  buildingAddressEmptyValidator,
-} = require("../../validators/nonUKAddressValidator");
+import FormWizard from "hmpo-form-wizard";
+import { NonUKAddressController } from "./nonUKAddress.js";
+import { buildingAddressComponent } from "../../components/buildingAddress.js";
+import { buildingAddressEmptyValidator } from "../../validators/nonUKAddressValidator.js";
+
 const address = new NonUKAddressController({ route: "/test" });
 
 describe("NonUKAddressController", () => {
   let req, res, next;
 
   beforeEach(() => {
-    vi.spyOn(BaseController.prototype, "getValues").mockImplementation(
+    vi.spyOn(FormWizard.Controller.prototype, "getValues").mockImplementation(
       (_, __, callback) => callback(null, {})
     );
 
@@ -40,12 +37,12 @@ describe("NonUKAddressController", () => {
   afterEach(() => vi.resetAllMocks());
 
   it("should be an instance of BaseController", () => {
-    expect(address).to.be.an.instanceOf(BaseController);
+    expect(address).to.be.an.instanceOf(FormWizard.Controller);
   });
 
   describe("getValues", () => {
     it("includes addressCountryName in values when country is set", () => {
-      BaseController.prototype.getValues = vi
+      FormWizard.Controller.prototype.getValues = vi
         .fn()
         .mockImplementation((_, __, callback) => {
           callback(null, {});
@@ -62,7 +59,8 @@ describe("NonUKAddressController", () => {
         expect(values).to.deep.include({
           addressCountryName: "countries.FR",
         });
-        expect(BaseController.prototype.getValues).to.have.been.calledOnce;
+        expect(FormWizard.Controller.prototype.getValues).to.have.been
+          .calledOnce;
       });
     });
 

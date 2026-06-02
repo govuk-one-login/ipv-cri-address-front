@@ -1,7 +1,7 @@
 import { vi } from "vitest";
 
-const JourneyModel = require("hmpo-form-wizard/lib/journey-model");
-const WizardModel = require("hmpo-form-wizard/lib/wizard-model.js");
+import JourneyModel from "hmpo-form-wizard/lib/journey-model";
+import WizardModel from "hmpo-form-wizard/lib/wizard-model.js";
 
 const mockRequest = (overrides = {}) => ({
   body: {},

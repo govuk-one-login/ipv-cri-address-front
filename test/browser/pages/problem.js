@@ -1,4 +1,4 @@
-module.exports = class PlaywrightDevPage {
+export class ProblemPage {
   /**
    * @param {import('@playwright/test').Page} page
    */
@@ -23,4 +23,4 @@ module.exports = class PlaywrightDevPage {
   async continue() {
     await this.page.click("#continue");
   }
-};
+}

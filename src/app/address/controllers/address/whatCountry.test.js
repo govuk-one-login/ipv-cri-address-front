@@ -1,6 +1,6 @@
 import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
-const BaseController = require("hmpo-form-wizard").Controller;
-const WhatCountryController = require("./whatCountry");
+import FormWizard from "hmpo-form-wizard";
+import { WhatCountryController } from "./whatCountry.js";
 
 const address = new WhatCountryController({ route: "/test" });
 
@@ -20,7 +20,7 @@ describe("whatCountryController", () => {
   afterEach(() => vi.resetAllMocks());
 
   it("should set country to empty string", () => {
-    BaseController.prototype.getValues = vi
+    FormWizard.Controller.prototype.getValues = vi
       .fn()
       .mockImplementation((_, __, callback) => {
         callback(null, {});
@@ -33,7 +33,7 @@ describe("whatCountryController", () => {
   });
 
   it("should call callback with error if there is one present", () => {
-    BaseController.prototype.getValues = vi
+    FormWizard.Controller.prototype.getValues = vi
       .fn()
       .mockImplementation((_, __, callback) => {
         callback(error, {});
@@ -49,7 +49,7 @@ describe("whatCountryController", () => {
   });
 
   it("should call callback without error if there is none present", () => {
-    BaseController.prototype.getValues = vi
+    FormWizard.Controller.prototype.getValues = vi
       .fn()
       .mockImplementation((_, __, callback) => {
         callback(null, {});

@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-const {
+import {
   alphaNumericWithSpecialChars,
   isPreviousYear,
   isLessThanOneHundredYearsAgo,
   ukBuildingAddressEmptyValidator,
-} = require("./addressValidator");
+} from "./addressValidator.js";
 
 const today = new Date();
 const nextYear = String(today.getFullYear() + 1);

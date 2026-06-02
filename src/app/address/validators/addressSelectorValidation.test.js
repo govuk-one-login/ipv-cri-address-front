@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-const { addressSelectorValidator } = require("./addressSelectorValidation");
+import { addressSelectorValidator } from "./addressSelectorValidation.js";
 
 describe("addressSelectorValidator", () => {
   it("should fail when UPRNs are the same", () => {

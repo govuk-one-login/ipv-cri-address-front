@@ -1,12 +1,10 @@
-const { PACKAGE_NAME } = require("../../../../lib/config");
-const BaseController = require("hmpo-form-wizard").Controller;
+import FormWizard from "hmpo-form-wizard";
+import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
+import { config } from "../../../../lib/config.js";
 
-const logger =
-  require("@govuk-one-login/di-ipv-cri-common-express/src/bootstrap/lib/logger").get(
-    PACKAGE_NAME
-  );
+const logger = commonExpress.bootstrap.logger.get(config.PACKAGE_NAME);
 
-class WhatCountryController extends BaseController {
+export class WhatCountryController extends FormWizard.Controller {
   getValues(req, res, callback) {
     super.getValues(req, res, (err, values) => {
       values.country = "";
@@ -19,5 +17,3 @@ class WhatCountryController extends BaseController {
     });
   }
 }
-
-module.exports = WhatCountryController;

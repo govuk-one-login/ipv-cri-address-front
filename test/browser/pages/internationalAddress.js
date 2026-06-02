@@ -1,4 +1,4 @@
-module.exports = class PlaywrightDevPage {
+export class InternationalAddressPage {
   /**
    * @param {import('@playwright/test').Page} page
    */
@@ -140,4 +140,4 @@ module.exports = class PlaywrightDevPage {
       errorInputCount: await errorInputs.count(),
     };
   }
-};
+}

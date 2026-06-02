@@ -1,9 +1,9 @@
-const confirm = require("../../controllers/summary/confirm");
-const nonUKConfirm = require("../../controllers/summary/nonUKConfirm");
+import { AddressConfirmController } from "../../controllers/summary/confirm.js";
+import { NonUKAddressConfirmController } from "../../controllers/summary/nonUKConfirm.js";
 
-module.exports = {
+export const steps = {
   "/confirm": {
-    controller: confirm,
+    controller: AddressConfirmController,
     entryPoint: true,
     fields: [
       "addPrevious",
@@ -22,7 +22,7 @@ module.exports = {
     ],
   },
   "/non-UK-confirm": {
-    controller: nonUKConfirm,
+    controller: NonUKAddressConfirmController,
     fields: ["currentAddress"],
     next: "/oauth2/callback",
   },

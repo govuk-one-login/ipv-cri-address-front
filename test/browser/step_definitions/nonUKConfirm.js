@@ -1,7 +1,6 @@
-const { Then, When } = require("@cucumber/cucumber");
-const { NonUKConfirmPage } = require("../pages");
-const { AddressPage } = require("../pages");
-const assert = require("node:assert");
+import { Then, When } from "@cucumber/cucumber";
+import assert from "node:assert";
+import { NonUKConfirmPage, AddressPage } from "../pages/index.js";
 
 Then("they should see the non UK confirm page", function () {
   const nonUKConfirmPage = new NonUKConfirmPage(this.page);
