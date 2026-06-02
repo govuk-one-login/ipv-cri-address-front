@@ -197,16 +197,13 @@ server.keepAliveTimeout = 65000;
 
 // Handles graceful shutdown of the NODE service, so that if the container is killed by a SIGTERM, it finishes processing existing connections before the server shuts down.
 process.on("SIGTERM", () => {
-  // eslint-disable-next-line no-console
   console.log("SIGTERM signal received: closing HTTP server");
   server.close((err) => {
     if (err) {
-      // eslint-disable-next-line no-console
       console.log(
         `Error while calling server.close() occurred: ${err.message}`
       );
     } else {
-      // eslint-disable-next-line no-console
       console.log("HTTP server closed");
     }
 

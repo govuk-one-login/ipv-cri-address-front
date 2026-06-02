@@ -26,7 +26,6 @@ BeforeAll(async function () {
 
   if (!browserType) throw new Error(`Unsupported browser: ${browserName}`);
 
-  // eslint-disable-next-line no-console
   console.log(`Running scenarios in browser type: ${browserName}`);
   global.browser = await browserType.launch({
     headless: true,

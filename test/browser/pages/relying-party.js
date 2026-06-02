@@ -69,7 +69,6 @@ module.exports = class PlaywrightDevPage {
 
       return new URL(this.oauthPath, this.baseURL);
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(error);
     }
   }

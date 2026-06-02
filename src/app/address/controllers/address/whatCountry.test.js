@@ -5,7 +5,8 @@ const WhatCountryController = require("./whatCountry");
 const address = new WhatCountryController({ route: "/test" });
 
 describe("whatCountryController", () => {
-  let req, res;
+  let req,
+    res = null;
 
   beforeEach(() => {
     req = {
