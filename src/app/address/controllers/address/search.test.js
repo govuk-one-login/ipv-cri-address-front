@@ -1,15 +1,15 @@
 import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
-import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
-const BaseController = require("hmpo-form-wizard").Controller;
-const AddressSearchController = require("./search");
+import FormWizard from "hmpo-form-wizard";
 
-const testData = require("../../../../../test/data/testData");
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers.js";
+import { AddressSearchController } from "./search.js";
+import {
+  apiResponse,
+  titleCasedAddresses,
+} from "../../../../../test/data/testData.js";
+import { config } from "../../../../lib/config.js";
 
-const {
-  API: {
-    PATHS: { POSTCODE_LOOKUP },
-  },
-} = require("../../../../lib/config");
+const postcodeLookupPath = config.API.PATHS.POSTCODE_LOOKUP;
 
 let req;
 let res;
@@ -33,7 +33,7 @@ describe("Address Search controller", function () {
   });
 
   it("should be an instance of BaseController", () => {
-    expect(addressSearch).toBeInstanceOf(BaseController);
+    expect(addressSearch).toBeInstanceOf(FormWizard.Controller);
   });
 
   describe("saveValues", () => {
@@ -53,7 +53,7 @@ describe("Address Search controller", function () {
         "x-forwarded-for": "127.0.0.1",
       };
       expect(req.axios.post).to.have.been.calledWith(
-        `${POSTCODE_LOOKUP}`,
+        `${postcodeLookupPath}`,
         {
           postcode: "myPostcode",
         },
@@ -67,9 +67,9 @@ describe("Address Search controller", function () {
       let testPostcode;
 
       beforeEach(async () => {
-        vi.fn().mockImplementation(BaseController.prototype.saveValues);
+        vi.fn().mockImplementation(FormWizard.Controller.prototype.saveValues);
 
-        req.axios.post = vi.fn().mockReturnValue(testData.apiResponse);
+        req.axios.post = vi.fn().mockReturnValue(apiResponse);
 
         testPostcode = "myPostcode";
         req.body["addressSearch"] = testPostcode;
@@ -86,7 +86,7 @@ describe("Address Search controller", function () {
       });
       it("should set searchResults", () => {
         expect(req.sessionModel.get("searchResults")).to.deep.equal(
-          testData.titleCasedAddresses
+          titleCasedAddresses
         );
       });
       it("should set addressPostcode", () => {
@@ -128,9 +128,9 @@ describe("Address Search controller", function () {
   describe("titleCaseAddresses", () => {
     it("should title case addresses", () => {
       const returnedAddresses = addressSearch.titleCaseAddresses(
-        testData.apiResponse.data
+        apiResponse.data
       );
-      expect(returnedAddresses).to.deep.equal(testData.titleCasedAddresses);
+      expect(returnedAddresses).to.deep.equal(titleCasedAddresses);
     });
 
     it("should not title case postalCode fields", () => {

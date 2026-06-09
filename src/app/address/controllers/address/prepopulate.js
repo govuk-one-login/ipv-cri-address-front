@@ -1,17 +1,13 @@
-const {
-  API: {
-    PATHS: { GET_ADDRESSES },
-  },
-  PACKAGE_NAME,
-} = require("../../../../lib/config");
+import FormWizard from "hmpo-form-wizard";
+import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
 
-const BaseController = require("hmpo-form-wizard").Controller;
-const logger =
-  require("@govuk-one-login/di-ipv-cri-common-express/src/bootstrap/lib/logger").get(
-    PACKAGE_NAME
-  );
+import { config } from "../../../../lib/config.js";
 
-class AddressPrepopulateController extends BaseController {
+const logger = commonExpress.bootstrap.logger.get(config.PACKAGE_NAME);
+
+const getAddressesPath = config.API.PATHS.GET_ADDRESSES;
+
+export class AddressPrepopulateController extends FormWizard.Controller {
   async saveValues(req, res, callback) {
     req.session.prepopulatedPostcode = false;
 
@@ -21,7 +17,7 @@ class AddressPrepopulateController extends BaseController {
         return callback();
       }
 
-      const { data } = await req.axios.get(`${GET_ADDRESSES}`, {
+      const { data } = await req.axios.get(`${getAddressesPath}`, {
         headers: {
           session_id: req.session.tokenId,
         },
@@ -45,5 +41,3 @@ class AddressPrepopulateController extends BaseController {
     }
   }
 }
-
-module.exports = AddressPrepopulateController;

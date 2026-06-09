@@ -1,4 +1,4 @@
-module.exports = class PlaywrightDevPage {
+export class SearchPage {
   /**
    * @param {import('@playwright/test').Page} page
    */
@@ -43,4 +43,4 @@ module.exports = class PlaywrightDevPage {
       `[data-journey-click="link - click:lang-select:${code}"]`
     );
   }
-};
+}

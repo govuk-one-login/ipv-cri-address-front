@@ -1,6 +1,6 @@
-const { When } = require("@cucumber/cucumber");
-const { ProblemPage } = require("../pages");
-const assert = require("node:assert");
+import { When } from "@cucumber/cucumber";
+import assert from "node:assert";
+import { ProblemPage } from "../pages/index.js";
 
 When(/they see the problem page$/, async function () {
   const problemPage = new ProblemPage(this.page);

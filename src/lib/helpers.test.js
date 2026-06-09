@@ -1,11 +1,7 @@
 import { describe, it, expect } from "vitest";
-describe("helpers", () => {
-  const {
-    yearFrom,
-    getCountry,
-    trimOnlyWhitespaceStrings,
-  } = require("./helpers");
+import { yearFrom, getCountry, trimOnlyWhitespaceStrings } from "./helpers.js";
 
+describe("helpers", () => {
   describe("yearFrom", () => {
     it("returns ISO string for a valid year", () => {
       expect(yearFrom("2024")).to.equal("2024-01-01");

@@ -1,26 +1,25 @@
-const express = require("express");
-const steps = require("./steps");
-const sharedFields = require("../sharedFields");
-const fields = require("./fields");
+import { Router } from "express";
+import hmpoFormWizard from "hmpo-form-wizard";
+import { steps } from "./steps.js";
+import { fields } from "./fields.js";
+import { sharedFields } from "../sharedFields.js";
 
-const router = express.Router();
+export const previousRouter = Router();
 
 const allFields = {
   ...fields,
   ...sharedFields,
 };
 
-router.use((req, res, next) => {
+previousRouter.use((req, res, next) => {
   res.locals.query = req.query; // Makes ?edit=true available as query.edit
   next();
 });
 
-router.use(
-  require("hmpo-form-wizard")(steps, allFields, {
+previousRouter.use(
+  hmpoFormWizard(steps, allFields, {
     name: "previous",
     journeyName: "addressCRI",
     templatePath: "previous",
   })
 );
-
-module.exports = router;

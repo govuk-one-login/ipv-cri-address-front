@@ -1,77 +1,75 @@
-module.exports = {
-  generateSearchResultString: function (address) {
-    const { buildingNames, streetNames, localityNames } =
-      extractAddressFields(address);
-    const fullBuildingName = buildingNames.join(" ");
-    let fullStreetName;
-    if (streetNames) {
-      fullStreetName = streetNames.join(" ");
-    }
+import { countryList } from "../app/address/data/countries.js";
 
-    const fullLocality = localityNames.join(" ");
-    if (fullStreetName) {
-      return `${fullBuildingName} ${fullStreetName}, ${fullLocality}, ${address.postalCode}`.trim();
-    } else {
-      return `${fullBuildingName}, ${fullLocality}, ${address.postalCode}`.trim();
-    }
-  },
-  generateHTMLofAddress: function (address) {
-    const { buildingNames, streetNames, localityNames } =
-      extractAddressFields(address);
+export function generateSearchResultString(address) {
+  const { buildingNames, streetNames, localityNames } =
+    extractAddressFields(address);
+  const fullBuildingName = buildingNames.join(" ");
+  let fullStreetName;
+  if (streetNames) {
+    fullStreetName = streetNames.join(" ");
+  }
 
-    const fullBuildingName = buildingNames.join(" ");
-    let fullStreetName;
-    if (streetNames) {
-      fullStreetName = streetNames.join(" ");
-    }
+  const fullLocality = localityNames.join(" ");
+  if (fullStreetName) {
+    return `${fullBuildingName} ${fullStreetName}, ${fullLocality}, ${address.postalCode}`.trim();
+  } else {
+    return `${fullBuildingName}, ${fullLocality}, ${address.postalCode}`.trim();
+  }
+}
 
-    const fullLocality = localityNames.join(" ");
+export function generateHTMLofAddress(address) {
+  const { buildingNames, streetNames, localityNames } =
+    extractAddressFields(address);
 
-    let addressConfirm = [];
+  const fullBuildingName = buildingNames.join(" ");
+  let fullStreetName;
+  if (streetNames) {
+    fullStreetName = streetNames.join(" ");
+  }
 
-    if (fullBuildingName) {
-      addressConfirm.push(fullBuildingName);
-    }
+  const fullLocality = localityNames.join(" ");
 
-    if (fullStreetName) {
-      addressConfirm.push(fullStreetName);
-    }
+  let addressConfirm = [];
 
-    if (fullLocality) {
-      addressConfirm.push(fullLocality);
-    }
+  if (fullBuildingName) {
+    addressConfirm.push(fullBuildingName);
+  }
 
-    if (address.postalCode) {
-      addressConfirm.push(address.postalCode);
-    }
+  if (fullStreetName) {
+    addressConfirm.push(fullStreetName);
+  }
 
-    return addressConfirm.join("<br>");
-  },
-  generateHTMLofNonUKAddress: function (translate, address) {
-    const countryList = require("../app/address/data/countries.json");
+  if (fullLocality) {
+    addressConfirm.push(fullLocality);
+  }
 
-    let addressHTML = [];
+  if (address.postalCode) {
+    addressConfirm.push(address.postalCode);
+  }
 
-    address.subBuildingName?.trim() &&
-      addressHTML.push(address.subBuildingName);
-    address.buildingNumber?.trim() && addressHTML.push(address.buildingNumber);
-    address.buildingName?.trim() && addressHTML.push(address.buildingName);
-    address.streetName?.trim() && addressHTML.push(address.streetName);
-    address.addressLocality?.trim() &&
-      addressHTML.push(address.addressLocality);
-    address.postalCode?.trim() && addressHTML.push(address.postalCode);
-    address.addressRegion?.trim() && addressHTML.push(address.addressRegion);
-    if (address.addressCountry?.trim()) {
-      const countryName = translate(
-        countryList.find((country) => country.value === address.addressCountry)
-          .key
-      );
-      addressHTML.push(countryName);
-    }
+  return addressConfirm.join("<br>");
+}
 
-    return addressHTML.join("<br>");
-  },
-};
+export function generateHTMLofNonUKAddress(translate, address) {
+  let addressHTML = [];
+
+  address.subBuildingName?.trim() && addressHTML.push(address.subBuildingName);
+  address.buildingNumber?.trim() && addressHTML.push(address.buildingNumber);
+  address.buildingName?.trim() && addressHTML.push(address.buildingName);
+  address.streetName?.trim() && addressHTML.push(address.streetName);
+  address.addressLocality?.trim() && addressHTML.push(address.addressLocality);
+  address.postalCode?.trim() && addressHTML.push(address.postalCode);
+  address.addressRegion?.trim() && addressHTML.push(address.addressRegion);
+  if (address.addressCountry?.trim()) {
+    const countryName = translate(
+      countryList.find((country) => country.value === address.addressCountry)
+        .key
+    );
+    addressHTML.push(countryName);
+  }
+
+  return addressHTML.join("<br>");
+}
 
 function extractAddressFields(address) {
   let buildingNames = [];

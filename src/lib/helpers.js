@@ -1,14 +1,16 @@
-const countryList = require("../app/address/data/countries.json");
+import { countryList } from "../app/address/data/countries.js";
 
-const yearFrom = (year) =>
-  year && !Number.isNaN(new Date(year).getTime())
+export function yearFrom(year) {
+  return year && !Number.isNaN(new Date(year).getTime())
     ? new Date(year).toISOString().split("T")[0]
     : null;
+}
 
-const getCountry = (countryCode) =>
-  countryList.find((country) => country.value === countryCode);
+export function getCountry(countryCode) {
+  return countryList.find((country) => country.value === countryCode);
+}
 
-function trimOnlyWhitespaceStrings(obj) {
+export function trimOnlyWhitespaceStrings(obj) {
   return Object.fromEntries(
     Object.entries(obj).map(([k, v]) => {
       if (typeof v === "string" && v.trim() === "") {
@@ -18,9 +20,3 @@ function trimOnlyWhitespaceStrings(obj) {
     })
   );
 }
-
-module.exports = {
-  yearFrom,
-  getCountry,
-  trimOnlyWhitespaceStrings,
-};

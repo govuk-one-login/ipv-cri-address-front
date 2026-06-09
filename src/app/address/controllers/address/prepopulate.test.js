@@ -1,13 +1,11 @@
 import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
-import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
-const BaseController = require("hmpo-form-wizard").Controller;
-const PrepopulateController = require("./prepopulate");
+import FormWizard from "hmpo-form-wizard";
 
-const {
-  API: {
-    PATHS: { GET_ADDRESSES },
-  },
-} = require("../../../../lib/config");
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers.js";
+import { AddressPrepopulateController } from "./prepopulate.js";
+import { config } from "../../../../lib/config.js";
+
+const getAddressesPath = config.API.PATHS.GET_ADDRESSES;
 
 let req;
 let res;
@@ -15,10 +13,12 @@ let next;
 const sessionId = "session-id-123";
 
 describe("Prepopulate controller", () => {
-  let prepopulateController;
+  let addressPrepopulateController;
 
   beforeEach(() => {
-    prepopulateController = new PrepopulateController({ route: "/test" });
+    addressPrepopulateController = new AddressPrepopulateController({
+      route: "/test",
+    });
     const setup = createDefaultReqResNext();
 
     req = setup.req;
@@ -32,14 +32,16 @@ describe("Prepopulate controller", () => {
   });
 
   it("should be an instance of BaseController", () => {
-    expect(prepopulateController).to.be.an.instanceOf(BaseController);
+    expect(addressPrepopulateController).to.be.an.instanceOf(
+      FormWizard.Controller
+    );
   });
 
   describe("#saveValues", () => {
     it("should retrieve addresses", async () => {
-      await prepopulateController.saveValues(req, res, next);
+      await addressPrepopulateController.saveValues(req, res, next);
 
-      expect(req.axios.get).to.have.been.calledWith(GET_ADDRESSES, {
+      expect(req.axios.get).to.have.been.calledWith(getAddressesPath, {
         headers: {
           session_id: sessionId,
         },
@@ -47,7 +49,7 @@ describe("Prepopulate controller", () => {
     });
 
     it("should not retrieve addresses if there is no session", async () => {
-      await prepopulateController.saveValues(
+      await addressPrepopulateController.saveValues(
         { ...req, session: {} },
         res,
         next
@@ -58,11 +60,12 @@ describe("Prepopulate controller", () => {
 
     describe("on success", () => {
       beforeEach(() => {
-        vi.spyOn(BaseController.prototype, "saveValues").mockImplementation(
-          () => {
-            BaseController.prototype.saveValues();
-          }
-        );
+        vi.spyOn(
+          FormWizard.Controller.prototype,
+          "saveValues"
+        ).mockImplementation(() => {
+          FormWizard.Controller.prototype.saveValues();
+        });
       });
 
       afterEach(() => {
@@ -73,7 +76,7 @@ describe("Prepopulate controller", () => {
         beforeEach(async () => {
           req.axios.get = vi.fn().mockResolvedValue([]);
 
-          await prepopulateController.saveValues(req, res, next);
+          await addressPrepopulateController.saveValues(req, res, next);
         });
 
         it("should set not addressPostcode", () => {
@@ -96,7 +99,7 @@ describe("Prepopulate controller", () => {
           data: { addresses: [{ postalCode: "Q1 1AB" }] },
         });
 
-        await prepopulateController.saveValues(req, res, next);
+        await addressPrepopulateController.saveValues(req, res, next);
       });
 
       it("should set prepopulatedPostcode to be true", () => {
@@ -122,7 +125,7 @@ describe("Prepopulate controller", () => {
           },
         });
 
-        await prepopulateController.saveValues(req, res, next);
+        await addressPrepopulateController.saveValues(req, res, next);
       });
 
       it("should set context", () => {
@@ -138,7 +141,7 @@ describe("Prepopulate controller", () => {
       beforeEach(async () => {
         req.axios.get = vi.fn().mockThrow(new Error("Error"));
 
-        await prepopulateController.saveValues(req, res, next);
+        await addressPrepopulateController.saveValues(req, res, next);
       });
 
       it("should call callback", () => {

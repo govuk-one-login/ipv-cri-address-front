@@ -1,10 +1,10 @@
-const { Given, Then, When } = require("@cucumber/cucumber");
-const {
+import { Given, Then, When } from "@cucumber/cucumber";
+import assert from "node:assert";
+import {
   CountryPage,
   InternationalAddressPage,
   SearchPage,
-} = require("../pages");
-const assert = require("node:assert");
+} from "../pages/index.js";
 
 Then("they should see the country selector page", async function () {
   const countryPage = new CountryPage(this.page);

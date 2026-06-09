@@ -1,11 +1,11 @@
-const {
+import {
   Before,
   BeforeAll,
-  AfterAll,
   After,
+  AfterAll,
   setDefaultTimeout,
-} = require("@cucumber/cucumber");
-const { chromium, firefox, webkit } = require("playwright");
+} from "@cucumber/cucumber";
+import { chromium, firefox, webkit } from "playwright";
 
 // FIXME This is large due to cold starts
 setDefaultTimeout(30 * 1000);
@@ -26,7 +26,6 @@ BeforeAll(async function () {
 
   if (!browserType) throw new Error(`Unsupported browser: ${browserName}`);
 
-  // eslint-disable-next-line no-console
   console.log(`Running scenarios in browser type: ${browserName}`);
   global.browser = await browserType.launch({
     headless: true,

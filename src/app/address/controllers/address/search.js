@@ -1,14 +1,12 @@
-const { API, PACKAGE_NAME } = require("../../../../lib/config");
-const BaseController = require("hmpo-form-wizard").Controller;
-const logger =
-  require("@govuk-one-login/di-ipv-cri-common-express/src/bootstrap/lib/logger").get(
-    PACKAGE_NAME
-  );
-const {
-  createPersonalDataHeaders,
-} = require("@govuk-one-login/frontend-passthrough-headers");
+import FormWizard from "hmpo-form-wizard";
+import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
+import { createPersonalDataHeaders } from "@govuk-one-login/frontend-passthrough-headers";
 
-class AddressSearchController extends BaseController {
+import { config } from "../../../../lib/config.js";
+
+const logger = commonExpress.bootstrap.logger.get(config.PACKAGE_NAME);
+
+export class AddressSearchController extends FormWizard.Controller {
   locals(req, res) {
     res.locals.prepopulatedPostcode = req.session.prepopulatedPostcode;
 
@@ -47,17 +45,17 @@ class AddressSearchController extends BaseController {
           session_id: req.session.tokenId,
           "session-id": req.session.tokenId,
           ...createPersonalDataHeaders(
-            `${API.BASE_URL}${API.PATHS.POSTCODE_LOOKUP}`,
+            `${config.API.BASE_URL}${config.API.PATHS.POSTCODE_LOOKUP}`,
             req
           ),
         }
       : createPersonalDataHeaders(
-          `${API.BASE_URL}${API.PATHS.POSTCODE_LOOKUP}`,
+          `${config.API.BASE_URL}${config.API.PATHS.POSTCODE_LOOKUP}`,
           req
         ); // set the header to null should fail the req but pass the browser tests for now.
 
     const addressResults = await req.axios.post(
-      `${API.PATHS.POSTCODE_LOOKUP}`,
+      `${config.API.PATHS.POSTCODE_LOOKUP}`,
       { postcode },
       {
         headers,
@@ -90,5 +88,3 @@ class AddressSearchController extends BaseController {
     return titleCasedAddresses;
   }
 }
-
-module.exports = AddressSearchController;

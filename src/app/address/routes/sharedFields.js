@@ -1,19 +1,17 @@
-const {
+import {
   postcodeLength,
   alphaNumeric,
   missingAlphaOrNumeric,
   isUkPostcode,
-} = require("../validators/postcodeValidator");
-
-const {
+} from "../validators/postcodeValidator.js";
+import {
   alphaNumericWithSpecialChars,
   isPreviousYear,
   isLessThanOneHundredYearsAgo,
-} = require("../validators/addressValidator");
+} from "../validators/addressValidator.js";
+import { underMaxLength } from "../validators/underMaxLengthValidator.js";
 
-const { underMaxLength } = require("../validators/underMaxLengthValidator");
-
-module.exports = {
+export const sharedFields = {
   addressSearch: {
     type: "text",
     autocomplete: "postal-code",

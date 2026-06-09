@@ -1,18 +1,15 @@
-const BaseController = require("hmpo-form-wizard").Controller;
-const {
+import FormWizard from "hmpo-form-wizard";
+
+import {
   yearFrom,
   trimOnlyWhitespaceStrings,
-} = require("../../../../lib/helpers");
+} from "../../../../lib/helpers.js";
 
-const {
-  buildingAddressComponent,
-} = require("../../components/buildingAddress");
+import { buildingAddressComponent } from "../../components/buildingAddress.js";
 
-const {
-  ukBuildingAddressEmptyValidator,
-} = require("../../validators/addressValidator");
+import { ukBuildingAddressEmptyValidator } from "../../validators/addressValidator.js";
 
-class AddressController extends BaseController {
+export class AddressController extends FormWizard.Controller {
   getValues(req, res, callback) {
     super.getValues(req, res, (err, values) => {
       const address = req.sessionModel.get("address");
@@ -163,4 +160,3 @@ class AddressController extends BaseController {
     return "pages.address-form.title";
   }
 }
-module.exports = AddressController;

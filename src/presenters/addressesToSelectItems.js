@@ -1,6 +1,6 @@
-const { generateSearchResultString } = require("./addressPresenter");
+import { generateSearchResultString } from "./addressPresenter.js";
 
-module.exports = function addressesToSelectItems({ addresses, translate }) {
+export function addressesToSelectItems({ addresses, translate }) {
   const defaultMessage = {
     text: translate("addressSelect.addressFoundWithCount", {
       count: addresses.length,
@@ -19,4 +19,4 @@ module.exports = function addressesToSelectItems({ addresses, translate }) {
   });
 
   return [defaultMessage, ...addressesAsItems];
-};
+}

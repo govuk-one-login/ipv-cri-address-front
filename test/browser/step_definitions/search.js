@@ -1,6 +1,6 @@
-const { Given, Then } = require("@cucumber/cucumber");
-const { SearchPage } = require("../pages");
-const assert = require("node:assert");
+import { Given, Then } from "@cucumber/cucumber";
+import assert from "node:assert";
+import { SearchPage } from "../pages/index.js";
 
 Given("they searched for their postcode {string}", async function (postcode) {
   const searchPage = new SearchPage(this.page);

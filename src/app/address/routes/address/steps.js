@@ -1,11 +1,11 @@
-const address = require("../../controllers/address/manual");
-const prepopulate = require("../../controllers/address/prepopulate");
-const search = require("../../controllers/address/search");
-const results = require("../../controllers/address/results");
-const nonUKAddressController = require("../../controllers/address/nonUKAddress");
-const whatCountryController = require("../../controllers/address/whatCountry");
+import { AddressController } from "../../controllers/address/manual.js";
+import { AddressPrepopulateController } from "../../controllers/address/prepopulate.js";
+import { AddressSearchController } from "../../controllers/address/search.js";
+import { AddressResultsController } from "../../controllers/address/results.js";
+import { NonUKAddressController } from "../../controllers/address/nonUKAddress.js";
+import { WhatCountryController } from "../../controllers/address/whatCountry.js";
 
-module.exports = {
+export const steps = {
   "/": {
     resetJourney: true,
     entryPoint: true,
@@ -13,7 +13,7 @@ module.exports = {
     next: "prepopulate",
   },
   "/prepopulate": {
-    controller: prepopulate,
+    controller: AddressPrepopulateController,
     skip: true,
     next: [
       {
@@ -25,7 +25,7 @@ module.exports = {
     ],
   },
   "/what-country": {
-    controller: whatCountryController,
+    controller: WhatCountryController,
     fields: ["country"],
     next: [
       ...["GB", "GG", "JE", "IM"].map((countryCode) => ({
@@ -37,7 +37,7 @@ module.exports = {
     ],
   },
   "/search": {
-    controller: search,
+    controller: AddressSearchController,
     fields: ["addressSearch"],
     next: [
       {
@@ -61,12 +61,12 @@ module.exports = {
     ],
   },
   "/results": {
-    controller: results,
+    controller: AddressResultsController,
     fields: ["addressResults"],
     next: "address",
   },
   "/address": {
-    controller: address,
+    controller: AddressController,
     editable: true,
     continueOnEdit: true,
     prereqs: ["/search"],
@@ -81,7 +81,7 @@ module.exports = {
     next: "/summary/confirm",
   },
   "/enter-non-UK-address": {
-    controller: nonUKAddressController,
+    controller: NonUKAddressController,
     editable: true,
     continueOnEdit: true,
     prereqs: ["/what-country"],

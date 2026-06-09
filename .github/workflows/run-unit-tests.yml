@@ -27,7 +27,7 @@ jobs:
       - name: Run tests
         uses: govuk-one-login/github-actions/node/run-script@c8eefadf581d2087ce2af48b7060c1329cfa5251
         with:
-          node-version: 20.x
+          node-version: 22
           package-manager: npm
           script: npm run test:coverage
 

@@ -1,27 +1,17 @@
-import { describe, it, beforeEach, expect, vi, afterEach } from "vitest";
-const presenter = require("./addressesToSelectItems");
-
-const addressPresenter = require("./addressPresenter");
+import { describe, it, beforeEach, expect, vi } from "vitest";
+import { addressesToSelectItems } from "./addressesToSelectItems.js";
 
 describe("Addresses to SelectItems Presenter", () => {
   let translate;
 
   beforeEach(() => {
     translate = vi.fn();
-
-    vi.spyOn(addressPresenter, "generateSearchResultString").mockReturnValue(
-      "SEARCH_RESULT"
-    );
-  });
-
-  afterEach(() => {
-    addressPresenter.generateSearchResultString.mockRestore();
   });
 
   it("should use a default message for 0 items", () => {
     const addresses = [];
 
-    presenter({ addresses, translate });
+    addressesToSelectItems({ addresses, translate });
 
     expect(translate).to.have.been.calledWith(
       "addressSelect.addressFoundWithCount",
@@ -32,7 +22,7 @@ describe("Addresses to SelectItems Presenter", () => {
   it("should use a addressesFound message for 1 item", () => {
     const addresses = [{}];
 
-    presenter({ addresses, translate });
+    addressesToSelectItems({ addresses, translate });
 
     expect(translate).to.have.been.calledWith(
       "addressSelect.addressFoundWithCount",
@@ -59,7 +49,7 @@ describe("Addresses to SelectItems Presenter", () => {
 
     translate.mockReturnValue("addressSelect.addressFoundWithCount");
 
-    const items = presenter({ addresses, translate });
+    const items = addressesToSelectItems({ addresses, translate });
 
     expect(items).to.deep.equal([
       { text: "addressSelect.addressFoundWithCount", value: "" },

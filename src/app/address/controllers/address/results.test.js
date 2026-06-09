@@ -1,11 +1,11 @@
 import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
-import { createDefaultReqResNext } from "../../../../../test/utils/helpers";
-const BaseController = require("hmpo-form-wizard").Controller;
-const AddressResultController = require("./results");
+import FormWizard from "hmpo-form-wizard";
+import { createDefaultReqResNext } from "../../../../../test/utils/helpers.js";
+import { AddressResultsController } from "./results.js";
 
-const presenters = require("../../../../presenters");
+import * as presenters from "../../../../presenters/index.js";
 
-const testData = require("../../../../../test/data/testData");
+import { formattedAddresses } from "../../../../../test/data/testData.js";
 
 let req;
 let res;
@@ -26,7 +26,7 @@ describe("Address result controller", () => {
 
     vi.spyOn(presenters, "addressesToSelectItems").mockImplementation(() => {});
 
-    addressResult = new AddressResultController({ route: "/test" });
+    addressResult = new AddressResultsController({ route: "/test" });
   });
 
   afterEach(() => {
@@ -34,14 +34,14 @@ describe("Address result controller", () => {
   });
 
   it("should be an instance of BaseController", () => {
-    expect(addressResult).to.be.an.instanceOf(BaseController);
+    expect(addressResult).to.be.an.instanceOf(FormWizard.Controller);
   });
 
   describe("#locals", () => {
     let prototypeSpy;
 
     beforeEach(() => {
-      prototypeSpy = vi.spyOn(BaseController.prototype, "locals");
+      prototypeSpy = vi.spyOn(FormWizard.Controller.prototype, "locals");
 
       req.sessionModel.set("addressPostcode", "E1 8QS");
       req.sessionModel.set("searchResults", [
@@ -105,7 +105,7 @@ describe("Address result controller", () => {
         };
         res.locals = locals;
 
-        vi.spyOn(BaseController.prototype, "locals").mockImplementation(
+        vi.spyOn(FormWizard.Controller.prototype, "locals").mockImplementation(
           (res, req, next) => {
             next(error, superLocals);
           }
@@ -122,11 +122,11 @@ describe("Address result controller", () => {
 
   describe("#saveValues", () => {
     it("Should set the chosen address in the session", async () => {
-      const expectedResponse = testData.formattedAddressed[1];
+      const expectedResponse = formattedAddresses[1];
 
       req.form.values.addressResults = expectedResponse.value;
 
-      req.sessionModel.set("searchResults", testData.formattedAddressed);
+      req.sessionModel.set("searchResults", formattedAddresses);
 
       await addressResult.saveValues(req, res, next);
 

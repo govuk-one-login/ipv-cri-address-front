@@ -1,15 +1,12 @@
 import { describe, it, beforeEach, expect, vi, afterEach } from "vitest";
-const testData = require("../../../../../../test/data/testData");
 
-const {
-  API: {
-    PATHS: { SAVE_ADDRESS },
-  },
-} = require("../../../../../lib/config");
+import { saveAddresses } from "./saveAddresses.js";
+import { config } from "../../../../../lib/config.js";
+import { addressApiResponse } from "../../../../../../test/data/testData.js";
+import { addressFactory } from "../../../../../../test/utils/addressFactory.js";
+import { createDefaultReqResNext } from "../../../../../../test/utils/helpers.js";
 
-const addressFactory = require("../../../../../../test/utils/addressFactory");
-const saveAddressess = require("./saveAddresses");
-import { createDefaultReqResNext } from "../../../../../../test/utils/helpers";
+const saveAddressPath = config.API.PATHS.SAVE_ADDRESS;
 
 describe("saveAddresses", () => {
   let req;
@@ -30,7 +27,7 @@ describe("saveAddresses", () => {
   it("Should put address to address api and redirect back to callback", async () => {
     addresses = addressFactory(1);
 
-    req.axios.put = vi.fn().mockResolvedValue(testData.addressApiResponse);
+    req.axios.put = vi.fn().mockResolvedValue(addressApiResponse);
     req.session.tokenId = sessionId;
 
     const headers = {
@@ -40,18 +37,18 @@ describe("saveAddresses", () => {
       "x-forwarded-for": "127.0.0.1",
     };
 
-    const response = await saveAddressess(req, [addresses[0]]);
-    expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
+    const response = await saveAddresses(req, [addresses[0]]);
+    expect(req.axios.put).to.have.been.calledWith(saveAddressPath, addresses, {
       headers,
     });
 
-    expect(response).to.equal(testData.addressApiResponse.data);
+    expect(response).to.equal(addressApiResponse.data);
   });
 
   it("Should put multiple addresses to address api and redirect back to callback", async () => {
     addresses = addressFactory(2);
 
-    req.axios.put = vi.fn().mockResolvedValue(testData.addressApiResponse);
+    req.axios.put = vi.fn().mockResolvedValue(addressApiResponse);
     req.session.tokenId = sessionId;
 
     const headers = {
@@ -61,27 +58,27 @@ describe("saveAddresses", () => {
       "x-forwarded-for": "127.0.0.1",
     };
 
-    const response = await saveAddressess(req, addresses);
-    expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
+    const response = await saveAddresses(req, addresses);
+    expect(req.axios.put).to.have.been.calledWith(saveAddressPath, addresses, {
       headers,
     });
 
-    expect(response).to.equal(testData.addressApiResponse.data);
+    expect(response).to.equal(addressApiResponse.data);
   });
 
   it("Should put address", async () => {
-    req.axios.put = vi.fn().mockResolvedValue(testData.addressApiResponse);
+    req.axios.put = vi.fn().mockResolvedValue(addressApiResponse);
 
     const headers = {
       "txma-audit-encoded": "dummy-txma-header",
       "x-forwarded-for": "127.0.0.1",
     };
 
-    const response = await saveAddressess(req, [addresses[0]]);
-    expect(req.axios.put).to.have.been.calledWith(SAVE_ADDRESS, addresses, {
+    const response = await saveAddresses(req, [addresses[0]]);
+    expect(req.axios.put).to.have.been.calledWith(saveAddressPath, addresses, {
       headers,
     });
 
-    expect(response).to.equal(testData.addressApiResponse.data);
+    expect(response).to.equal(addressApiResponse.data);
   });
 });

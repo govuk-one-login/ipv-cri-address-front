@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-const { buildingAddressEmptyValidator } = require("./nonUKAddressValidator");
+import { buildingAddressEmptyValidator } from "./nonUKAddressValidator.js";
 
 describe("buildingAddressEmptyValidator", function () {
   it("returns true if apartmentNumber is non-empty", () => {

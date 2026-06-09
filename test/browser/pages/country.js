@@ -1,4 +1,4 @@
-module.exports = class PlaywrightDevPage {
+export class CountryPage {
   /**
    * @param {import('@playwright/test').Page} page
    */
@@ -38,4 +38,4 @@ module.exports = class PlaywrightDevPage {
   getErrorSummary() {
     return this.page.textContent(".govuk-error-summary");
   }
-};
+}

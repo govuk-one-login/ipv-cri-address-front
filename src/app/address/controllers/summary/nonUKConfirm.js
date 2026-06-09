@@ -1,19 +1,15 @@
-const { PACKAGE_NAME } = require("../../../../lib/config");
-const BaseController = require("hmpo-form-wizard").Controller;
-const logger =
-  require("@govuk-one-login/di-ipv-cri-common-express/src/bootstrap/lib/logger").get(
-    PACKAGE_NAME
-  );
+import FormWizard from "hmpo-form-wizard";
+import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
 
-const {
-  generateHTMLofNonUKAddress,
-} = require("../../../../presenters/addressPresenter");
+import { config } from "../../../../lib/config.js";
+import { generateHTMLofNonUKAddress } from "../../../../presenters/addressPresenter.js";
+import { saveAddresses } from "./utils/saveAddresses.js";
 
-const saveAddressess = require("./utils/saveAddresses");
+const logger = commonExpress.bootstrap.logger.get(config.PACKAGE_NAME);
 
 const CHANGE_CURRENT_HREF = "/enter-non-UK-address?edit=true";
 
-class NonUKAddressConfirmController extends BaseController {
+export class NonUKAddressConfirmController extends FormWizard.Controller {
   locals(req, res, callback) {
     super.locals(req, res, (err, locals) => {
       if (err) {
@@ -44,7 +40,7 @@ class NonUKAddressConfirmController extends BaseController {
         return callback(new Error("No address found"));
       }
 
-      await saveAddressess(req, [currentAddress]);
+      await saveAddresses(req, [currentAddress]);
 
       super.saveValues(req, res, callback);
     } catch (error) {
@@ -53,5 +49,3 @@ class NonUKAddressConfirmController extends BaseController {
     }
   }
 }
-
-module.exports = NonUKAddressConfirmController;

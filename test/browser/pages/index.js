@@ -1,14 +1,12 @@
-module.exports = {
-  AddressPage: require("./address.js"),
-  CountryPage: require("./country.js"),
-  InternationalAddressPage: require("./internationalAddress.js"),
-  ConfirmPage: require("./confirm.js"),
-  NonUKConfirmPage: require("./nonUKConfirm.js"),
-  DonePage: require("./done.js"),
-  ErrorPage: require("./error.js"),
-  ResultsPage: require("./result.js"),
-  SearchPage: require("./search.js"),
-  IPVCorePage: require("./ipv-core"),
-  RelyingPartyPage: require("./relying-party"),
-  ProblemPage: require("./problem"),
-};
+export { AddressPage } from "./address.js";
+export { CountryPage } from "./country.js";
+export { InternationalAddressPage } from "./internationalAddress.js";
+export { ConfirmPage } from "./confirm.js";
+export { NonUKConfirmPage } from "./nonUKConfirm.js";
+export { DonePage } from "./done.js";
+export { ErrorPage } from "./error.js";
+export { ResultsPage } from "./result.js";
+export { SearchPage } from "./search.js";
+export { IPVCorePage } from "./ipv-core.js";
+export { RelyingPartyPage } from "./relying-party.js";
+export { ProblemPage } from "./problem.js";

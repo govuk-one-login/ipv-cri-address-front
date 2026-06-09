@@ -1,9 +1,7 @@
 import { describe, it, beforeEach, afterEach, expect, vi } from "vitest";
-import { createDefaultReqResNext } from "../../../../test/utils/helpers";
-const { buildingAddressComponent } = require("./buildingAddress");
-const {
-  ukBuildingAddressEmptyValidator,
-} = require("../validators/addressValidator");
+import { createDefaultReqResNext } from "../../../../test/utils/helpers.js";
+import { buildingAddressComponent } from "./buildingAddress.js";
+import { ukBuildingAddressEmptyValidator } from "../validators/addressValidator.js";
 
 describe("building address component", () => {
   let req;

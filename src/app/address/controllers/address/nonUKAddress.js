@@ -1,23 +1,18 @@
-const BaseController = require("hmpo-form-wizard").Controller;
-const {
-  buildingAddressEmptyValidator,
-} = require("../../validators/nonUKAddressValidator");
-const {
+import FormWizard from "hmpo-form-wizard";
+import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
+
+import { buildingAddressComponent } from "../../components/buildingAddress.js";
+import { buildingAddressEmptyValidator } from "../../validators/nonUKAddressValidator.js";
+import {
   yearFrom,
   getCountry,
   trimOnlyWhitespaceStrings,
-} = require("../../../../lib/helpers");
-const {
-  buildingAddressComponent,
-} = require("../../components/buildingAddress");
-const { PACKAGE_NAME } = require("../../../../lib/config");
+} from "../../../../lib/helpers.js";
+import { config } from "../../../../lib/config.js";
 
-const logger =
-  require("@govuk-one-login/di-ipv-cri-common-express/src/bootstrap/lib/logger").get(
-    PACKAGE_NAME
-  );
+const logger = commonExpress.bootstrap.logger.get(config.PACKAGE_NAME);
 
-class NonUKAddressController extends BaseController {
+export class NonUKAddressController extends FormWizard.Controller {
   getValues(req, res, callback) {
     super.getValues(req, res, (err, values) => {
       values.addressCountryName = getCountry(
@@ -107,5 +102,3 @@ class NonUKAddressController extends BaseController {
     };
   }
 }
-
-module.exports = NonUKAddressController;

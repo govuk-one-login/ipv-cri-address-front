@@ -1,6 +1,8 @@
-require("dotenv").config();
+import { config as readDotEnv } from "dotenv";
 
-module.exports = {
+readDotEnv();
+
+export const config = {
   PACKAGE_NAME: "di-ipv-cri-address-front",
   API: {
     BASE_URL: process.env.API_BASE_URL || "http://localhost:5007",

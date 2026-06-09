@@ -1,4 +1,4 @@
-module.exports = class PlaywrightDevPage {
+export class IPVCorePage {
   /**
    * @param {import('@playwright/test').Page} page
    */
@@ -25,4 +25,4 @@ module.exports = class PlaywrightDevPage {
       .locator(`input[value='${process.env.CREDENTIAL_ISSUER_LABEL}']`)
       .click();
   }
-};
+}

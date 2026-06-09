@@ -1,8 +1,6 @@
 import { describe, it, beforeEach, expect } from "vitest";
-import { createDefaultReqResNext } from "../../test/utils/helpers";
-const {
-  missingRedirectErrorHandler,
-} = require("./missingRedirectErrorHandler");
+import { createDefaultReqResNext } from "../../test/utils/helpers.js";
+import { missingRedirectErrorHandler } from "./missingRedirectErrorHandler.js";
 
 describe("Missing Redirect Error Handler Middleware", () => {
   let err, req, res, next;

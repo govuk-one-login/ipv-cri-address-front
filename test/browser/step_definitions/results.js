@@ -1,6 +1,6 @@
-const { When, Then } = require("@cucumber/cucumber");
-const { ResultsPage } = require("../pages");
-const assert = require("node:assert");
+import { When, Then } from "@cucumber/cucumber";
+import assert from "node:assert";
+import { ResultsPage } from "../pages/index.js";
 
 Then(/they should see the results page$/, async function () {
   const resultsPage = new ResultsPage(this.page);

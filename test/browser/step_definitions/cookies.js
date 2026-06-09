@@ -1,5 +1,5 @@
-const { Then } = require("@cucumber/cucumber");
-const assert = require("node:assert");
+import { Then } from "@cucumber/cucumber";
+import assert from "node:assert";
 
 Then("the {word} cookie has been set", async function (cookieName) {
   const cookies = await this.page.context().cookies();

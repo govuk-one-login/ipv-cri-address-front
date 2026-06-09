@@ -1,4 +1,4 @@
-module.exports = class PlaywrightDevPage {
+export class AddressPage {
   /**
    * @param {import('@playwright/test').Page} page
    */
@@ -100,4 +100,4 @@ module.exports = class PlaywrightDevPage {
   getPostcode() {
     return this.page.textContent('[data-id="changePostcodeValue"]');
   }
-};
+}

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-const { confirmationValidation } = require("./confirmationValidator");
+import { confirmationValidation } from "./confirmationValidator.js";
 
 describe("Address confrimation validator", () => {
   describe("confirmationValidation", () => {

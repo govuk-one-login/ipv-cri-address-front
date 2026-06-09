@@ -1,5 +1,3 @@
-module.exports = {
-  confirmationValidation: function (val) {
-    return !!val;
-  },
-};
+export function confirmationValidation(val) {
+  return !!val;
+}
