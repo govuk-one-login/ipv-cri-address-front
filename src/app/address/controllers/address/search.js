@@ -30,7 +30,7 @@ export class AddressSearchController extends FormWizard.Controller {
         callback();
       });
     } catch (error) {
-      logger.warn("Error searching for address", error);
+      logger.warn({ err: error }, "Error searching for address");
 
       req.sessionModel.set("requestIsSuccessful", false);
       req.sessionModel.set("checkDetailsHeader", false);
