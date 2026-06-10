@@ -36,7 +36,7 @@ export class AddressPrepopulateController extends FormWizard.Controller {
         callback();
       });
     } catch (error) {
-      logger.warn("Error pre-populating address", error);
+      logger.warn({ err: error }, "Error pre-populating address");
       callback();
     }
   }

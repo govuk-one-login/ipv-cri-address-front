@@ -24,6 +24,7 @@ services:
       LANGUAGE_TOGGLE_DISABLED: false
       DEVICE_INTELLIGENCE_ENABLED: true
       DEVICE_INTELLIGENCE_DOMAIN: localhost
+      USE_PINO_LOGGER: true
     ports:
       - "5010:5010"
     depends_on:
