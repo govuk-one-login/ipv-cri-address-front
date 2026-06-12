@@ -21,8 +21,7 @@ services:
       API_BASE_URL: http://imposter:8080
       PORT: 5010
       NODE_ENV: development
-      LANGUAGE_TOGGLE_DISABLED: false
-      DEVICE_INTELLIGENCE_ENABLED: true
+      MAY_2025_REBRAND_ENABLED: true
       DEVICE_INTELLIGENCE_DOMAIN: localhost
       USE_PINO_LOGGER: true
     ports:

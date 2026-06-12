@@ -124,14 +124,12 @@ setI18n({
 });
 
 // Common express relies on 0/1 strings
-const showLanguageToggle =
-  config.APP.LANGUAGE_TOGGLE_DISABLED === "true" ? "0" : "1";
-setLanguageToggle({ app, showLanguageToggle });
+setLanguageToggle({ app, showLanguageToggle: "1" });
 app.get("nunjucks").addGlobal("addLanguageParam", addLanguageParam);
 
 setDeviceIntelligence({
   app,
-  deviceIntelligenceEnabled: config.APP.DEVICE_INTELLIGENCE_ENABLED,
+  deviceIntelligenceEnabled: "true",
   deviceIntelligenceDomain: config.APP.DEVICE_INTELLIGENCE_DOMAIN,
 });
 
@@ -147,11 +145,11 @@ setOAuthPaths({ app, entryPointPath: config.APP.PATHS.ADDRESS });
 setGTM({
   app,
   analyticsCookieDomain: config.APP.FRONTEND_DOMAIN,
-  uaEnabled: config.APP.GTM.UA_ENABLED,
-  uaContainerId: config.APP.GTM.UA_CONTAINER_ID,
-  ga4Enabled: config.APP.GTM.GA4_ENABLED,
+  uaEnabled: false,
+  uaContainerId: "",
+  ga4Enabled: true,
   ga4ContainerId: config.APP.GTM.GA4_CONTAINER_ID,
-  analyticsDataSensitive: config.APP.GTM.ANALYTICS_DATA_SENSITIVE,
+  analyticsDataSensitive: false,
   ga4PageViewEnabled: true,
   ga4FormResponseEnabled: true,
   ga4FormErrorEnabled: true,

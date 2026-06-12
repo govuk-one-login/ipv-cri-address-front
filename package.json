@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "start": "node src/app.js",
-    "start:ci": "npm run build && NODE_ENV=development API_BASE_URL=http://127.0.0.1:8080/ DEVICE_INTELLIGENCE_ENABLED=true DEVICE_INTELLIGENCE_DOMAIN=localhost npm start",
+    "start:ci": "npm run build && NODE_ENV=development API_BASE_URL=http://127.0.0.1:8080/ DEVICE_INTELLIGENCE_DOMAIN=localhost npm start",
     "start:local:all": "NODE_ENV=development API_BASE_URL=http://localhost:8080/ npm-run-all -p -r imposter dev",
     "dev": "nodemon src/app.js",
     "build": "npm run build-sass && npm run build-js && npm run copy-assets && npm run copy-js",
