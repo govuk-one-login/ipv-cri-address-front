@@ -95,36 +95,26 @@ Mappings:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 1
       maxECSCount: 4
-      deviceIntelligenceEnabled: true
-      may2025RebrandEnabled: true
       logLevel: "info"
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 3
       maxECSCount: 60
-      deviceIntelligenceEnabled: true
-      may2025RebrandEnabled: true
       logLevel: "info"
     staging:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
       maxECSCount: 4
-      deviceIntelligenceEnabled: true
-      may2025RebrandEnabled: true
       logLevel: "warn"
     integration:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
       maxECSCount: 4
-      deviceIntelligenceEnabled: true
-      may2025RebrandEnabled: true
       logLevel: "warn"
     production:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceProductionVariables
       minECSCount: 6
       maxECSCount: 60
-      deviceIntelligenceEnabled: true
-      may2025RebrandEnabled: true
       logLevel: "warn"
   # see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html
   ElasticLoadBalancerAccountIds:
@@ -441,16 +431,8 @@ Resources:
               Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
             - Name: SESSION_TABLE_NAME
               Value: !Ref AddressFrontSessionsTable
-            - Name: UA_CONTAINER_ID
-              Value: !If [IsProduction, "GTM-TT5HDKV", "GTM-TK92W68"]
             - Name: GA4_CONTAINER_ID
               Value: !If [IsProduction, "GTM-K4PBJH3", "GTM-KD86CMZ"]
-            - Name: GA4_ENABLED
-              Value: true
-            - Name: ANALYTICS_DATA_SENSITIVE
-              Value: false
-            - Name: UA_ENABLED
-              Value: false
             - Name: FRONTEND_DOMAIN
               Value:
                 !If [
@@ -458,22 +440,8 @@ Resources:
                   "account.gov.uk",
                   !Sub "${Environment}.account.gov.uk",
                 ]
-            - Name: LANGUAGE_TOGGLE_DISABLED
-              Value: false
-            - Name: DEVICE_INTELLIGENCE_ENABLED
-              Value:
-                !FindInMap [
-                  EnvironmentConfiguration,
-                  !Ref Environment,
-                  deviceIntelligenceEnabled,
-                ]
             - Name: MAY_2025_REBRAND_ENABLED
-              Value:
-                !FindInMap [
-                  EnvironmentConfiguration,
-                  !Ref Environment,
-                  may2025RebrandEnabled,
-                ]
+              Value: true
             - Name: NODE_ENV
               Value: "production"
             - Name: LOG_LEVEL
