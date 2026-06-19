@@ -3,7 +3,7 @@
 [![GitHub Action: Scan repository](https://github.com/govuk-one-login/ipv-cri-address-front/actions/workflows/scan-repo.yml/badge.svg?branch=main)](https://github.com/govuk-one-login/ipv-cri-address-front/actions/workflows/scan-repo.yml?query=branch%3Amain)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ipv-cri-address-front&metric=coverage)](https://sonarcloud.io/summary/overall?id=ipv-cri-address-front)
 
-Frontend for the Address Credential Issuer.
+Frontend for the Address Credential Issuer. 
 
 This is the home for the front end user interface for a credential issuer as a part of the Identity Proofing and Verification (IPV) system within the GDS GOV.UK One Login service. Other repositories are used for core services or other credential issuers.
 
