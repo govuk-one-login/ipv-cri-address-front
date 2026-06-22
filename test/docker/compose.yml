@@ -60,6 +60,30 @@ services:
         condition: service_started
     network_mode: host
 
+  visual:
+    build:
+      context: ../..
+      dockerfile: test/browser/pre-merge.Dockerfile
+    platform: linux/amd64
+    environment:
+      MOCK_API: ${MOCK_API:-true}
+      WEBSITE_HOST: ${WEBSITE_HOST:-http://localhost:5010}
+      RELYING_PARTY_URL: ${RELYING_PARTY_URL:-http://localhost:8080}
+      GITHUB_ACTIONS: ${GITHUB_ACTIONS:-true}
+    tty: true
+    stdin_open: true
+    volumes:
+      - ${PWD}/test/docker/visual-snapshots:/app/test/visual/snapshots
+    depends_on:
+      frontend:
+        condition: service_healthy
+      imposter:
+        condition: service_started
+      cucumber:
+        condition: service_completed_successfully
+    network_mode: host
+    command: ["npm", "run", "test:visual"]
+
   ipv-core-stub:
     build:
       context: ../../../ipv-stubs/di-ipv-core-stub/

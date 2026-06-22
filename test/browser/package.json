@@ -7,7 +7,7 @@
     "test": "cucumber-js",
     "test:ci": "cucumber-js --format json:reports/cucumber-report.json",
     "test:only": "cucumber-js --tags @only --format json:reports/cucumber-report.json",
-    "test:visual": "MOCK_API=true playwright test --config=../visual/playwright.config.js"
+    "test:visual": "playwright test --config=../visual/playwright.config.js"
   },
   "author": "",
   "license": "MIT",
