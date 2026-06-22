@@ -28,13 +28,12 @@ async function getStartingURLForStub(sharedClaims) {
     const startUrl = new URL("start", process.env.RELYING_PARTY_URL);
     const response = await axios.post(startUrl, {
       aud: process.env.WEBSITE_HOST,
-      ...(sharedClaims && {shared_claims: sharedClaims}),
+      ...(sharedClaims && { shared_claims: sharedClaims }),
     });
     const oauthPath = getOauthPath(
       response.data.request,
       response.data.client_id
     );
-
 
     return new URL(oauthPath, baseUrl);
   } catch (error) {
@@ -48,6 +47,9 @@ export async function getStartingURL(clientId = "standalone", sharedClaims) {
   if (process.env.MOCK_API === "false") {
     return await getStartingURLForStub(sharedClaims);
   } else {
-    return new URL(`/oauth2/authorize?request=lorem&client_id=${clientId}`, baseURL);
+    return new URL(
+      `/oauth2/authorize?request=lorem&client_id=${clientId}`,
+      baseURL
+    );
   }
 }

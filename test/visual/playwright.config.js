@@ -10,5 +10,5 @@ export default defineConfig({
     ...baseConfig.use,
     baseUrl: process.env.EXTERNAL_WEBSITE_HOST || "http://localhost:5010",
     headless: false,
-  }
-})
+  },
+});
