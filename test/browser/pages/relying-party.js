@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getStartingURL, getOauthPath } from "../support/journey-setup.js";
 import { fromNodeProviderChain } from "@aws-sdk/credential-providers";
 import { aws4Interceptor } from "aws4-axios";
 
@@ -33,44 +34,14 @@ export class RelyingPartyPage {
     this.env = process.env.ENVIRONMENT || "dev";
 
     if (process.env.MOCK_API !== "false") {
-      this.oauthPath = this.getOauthPath("lorem", clientId);
+      this.oauthPath = getOauthPath("lorem", clientId);
       this.startingURL = new URL(this.oauthPath, this.baseURL);
     }
   }
 
   async goto(clientId = "standalone", sharedClaims) {
-    if (process.env.MOCK_API === "false") {
-      this.startingURL = await this.getStartingURLForStub(sharedClaims);
-    } else {
-      const baseUrl = process.env.WEBSITE_HOST || "http://localhost:5010";
-      this.startingUrl = `${baseUrl}/oauth2/authorize?request=lorem&client_id=${clientId}`;
-      this.startingURL = new URL(this.startingUrl);
-    }
-
+    this.startingURL = await getStartingURL(clientId, sharedClaims);
     await this.page.goto(this.startingURL.toString());
-  }
-
-  getOauthPath(request, clientId) {
-    return `/oauth2/authorize?request=${request}&client_id=${clientId}`;
-  }
-
-  async getStartingURLForStub(sharedClaims) {
-    try {
-      const startUrl = new URL("start", process.env.RELYING_PARTY_URL);
-      const response = await axios.post(startUrl, {
-        aud: process.env.WEBSITE_HOST,
-        ...(sharedClaims && { shared_claims: sharedClaims }),
-      });
-
-      this.oauthPath = this.getOauthPath(
-        response.data.request,
-        response.data.client_id
-      );
-
-      return new URL(this.oauthPath, this.baseURL);
-    } catch (error) {
-      console.error(error);
-    }
   }
 
   async isRedirectPage(clientId = "standalone") {
