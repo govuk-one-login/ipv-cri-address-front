@@ -73,7 +73,7 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - ${PWD}/test/docker/visual-snapshots:/app/test/visual/snapshots
+      - ../../test/docker/visual-snapshots:/app/test/visual/snapshots
     depends_on:
       frontend:
         condition: service_healthy
