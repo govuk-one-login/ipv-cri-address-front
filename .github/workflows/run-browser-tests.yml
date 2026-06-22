@@ -25,3 +25,15 @@ jobs:
           node-version: 22
           package-manager: npm
           script: npm run test:browser:ci
+
+  visual-tests:
+    name: Visual regression tests
+    runs-on: ubuntu-latest
+    needs: run-tests
+    steps:
+      - name: Run visual regression tests
+        uses: govuk-one-login/github-actions/node/run-script@c8eefadf581d2087ce2af48b7060c1329cfa5251
+        with:
+          node-version: 22
+          package-manager: npm
+          script: npm run test:visual:ci

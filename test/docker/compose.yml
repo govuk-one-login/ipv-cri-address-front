@@ -79,8 +79,6 @@ services:
         condition: service_healthy
       imposter:
         condition: service_started
-      cucumber:
-        condition: service_completed_successfully
     network_mode: host
     command: ["npm", "run", "test:visual"]
 
