@@ -67,6 +67,15 @@ The following browserType are: `firefox`, `chromium` and `edge`
 
 If you would like to see the web pages, change `headless: true` to `headless: false` in the setup.js file.
 
+### Running visual regression tests
+
+If you would like to locally run the visual regression so that the snapshots are within the visual folder, cd into `test/browser` and run `npm run test:visual`.
+Ensure that the env variables are correctly set up and that `docker compose up redis imposter frontend` (or `imposter up` and `npm run build && dev`) is running too.
+
+If you would like to run the visual regression via Docker, run the command `docker compose run --rm visual` within the test/docker directory or run `npm run test:visual:ci` within the root.
+
+N.B: If the screenshots aren't already on your local machine the tests will fail initially, when ran again the baseline screenshots will be added to your local machine and will execute the `toMatchSnapshot()` method.
+
 ## Test Tags
 
 Tests use Cucumber tags to control mock API scenarios:

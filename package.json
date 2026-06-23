@@ -33,6 +33,7 @@
     "test:browser:ci": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm cucumber",
     "test:browser:only": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm cucumber npx cucumber-js --tags \"@only and not @skip\"",
     "test:browser:ci:only": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm cucumber npx cucumber-js --tags \"@only and not @skip\"",
+    "test:visual:ci": "cd test/docker && trap 'docker compose down' EXIT && COMPOSE_BAKE=true docker compose run --rm visual",
     "check-translation": "node node_modules/@govuk-one-login/di-ipv-cri-common-express/scripts/checkTranslations.js '../../../../src/locales'",
     "ipv-core-stub": "cd test/docker && trap 'docker compose --profile core-stub down' EXIT && COMPOSE_BAKE=true docker compose --profile core-stub up --build ipv-core-stub"
   },
@@ -65,7 +66,7 @@
     "globals": "^17.6.0",
     "nodemon": "3.1.7",
     "npm-run-all": "4.1.5",
-    "playwright": "1.55.1",
+    "playwright": "^1.61.0",
     "prettier": "3.2.4",
     "sass": "1.77.6",
     "uglify-js": "3.19.3",

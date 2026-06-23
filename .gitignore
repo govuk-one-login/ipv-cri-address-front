@@ -65,7 +65,9 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
-
+# local machine generated snapshots
+test/visual/snapshots/*darwin*.png
+test-results/
 
 # dotenv environment variables file
 .env
