@@ -29,6 +29,11 @@ export class AddressPage {
 
     return this.paths.findIndex((val) => val === pathname) !== -1;
   }
+
+  async clickBackOnPage() {
+    await this.page.click('[id="back"]');
+  }
+
   async addHouseNumber(value = "1A") {
     await this.page.fill("#addressHouseNumber", value);
   }

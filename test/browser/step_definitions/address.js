@@ -17,6 +17,11 @@ Then(/they should see the address page$/, async function () {
   assert.strictEqual(addressPage.isCurrentPage(), true);
 });
 
+Then("they click back from the address page", async function () {
+  const addressPage = new AddressPage(this.page);
+  await addressPage.clickBackOnPage();
+});
+
 Then("they should continue to the confirm page", async function () {
   const addressPage = new AddressPage(this.page);
   await addressPage.continue();

@@ -120,6 +120,41 @@ describe("Address result controller", () => {
     });
   });
 
+  describe("#validateFields", () => {
+    beforeEach(() => {
+      req.form.options.fields.addressResults = {
+        validate: [],
+      };
+    });
+
+    it("Should add the addressSelectorValidator", async () => {
+      req.originalUrl = "/previous/results";
+      req.journeyModel.get = vi.fn().mockReturnValue(formattedAddresses[1]);
+      req.sessionModel.get = vi.fn().mockReturnValue(formattedAddresses);
+
+      addressResult.validateFields(req, res, next);
+
+      expect(req.form.options.fields.addressResults.validate).toHaveLength(1);
+    });
+
+    it("should not add the addressSelectorValidator when not previous flow", async () => {
+      req.originalUrl = "/results";
+      req.journeyModel.get = vi.fn().mockReturnValue(formattedAddresses[1]);
+
+      addressResult.validateFields(req, res, next);
+
+      expect(req.form.options.fields.addressResults.validate).toHaveLength(0);
+    });
+
+    it("Should not add the addressSelectorValidator when no current address", async () => {
+      req.originalUrl = "/previous/results";
+
+      addressResult.validateFields(req, res, next);
+
+      expect(req.form.options.fields.addressResults.validate).toHaveLength(0);
+    });
+  });
+
   describe("#saveValues", () => {
     it("Should set the chosen address in the session", async () => {
       const expectedResponse = formattedAddresses[1];
