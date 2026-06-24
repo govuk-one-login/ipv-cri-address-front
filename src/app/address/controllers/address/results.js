@@ -26,7 +26,7 @@ export class AddressResultsController extends FormWizard.Controller {
   validateFields(req, res, callback) {
     const checkAddress = req.journeyModel.get("currentAddress");
     // only need to validate the address when there is another address already.
-    if (checkAddress) {
+    if (checkAddress && req.originalUrl.startsWith("/previous")) {
       const formFields = req.form.options.fields;
       const selectedAddress = req.form.values.addressResults;
       const searchResults = req.sessionModel.get("searchResults");
