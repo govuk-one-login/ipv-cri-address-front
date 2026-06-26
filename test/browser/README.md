@@ -69,10 +69,10 @@ If you would like to see the web pages, change `headless: true` to `headless: fa
 
 ### Running visual regression tests
 
-If you would like to locally run the visual regression so that the snapshots are within the visual folder, cd into `test/browser` and run `npm run test:visual`.
-Ensure that the env variables are correctly set up and that `docker compose up redis imposter frontend` (or `imposter up` and `npm run build && dev`) is running too.
+To run the visual regression via Docker, run the command `docker compose run --rm visual` within the test/docker directory or run `npm run test:visual:ci` within the root. This will spin up the screenshots with the `-linux` suffix which runs in the workflow.
 
-If you would like to run the visual regression via Docker, run the command `docker compose run --rm visual` within the test/docker directory or run `npm run test:visual:ci` within the root.
+If you would like to locally run the visual regression so that the snapshots are within the visual folder, cd into `test/browser` and run `npm run test:visual`.
+Ensure that the env variables are correctly set up and that `docker compose up redis imposter frontend` (or `imposter up` and `npm run build && dev`) is running too. This will produce locally generated screenshots with the `-darwin` suffix which is ignored from git.
 
 N.B: If the screenshots aren't already on your local machine the tests will fail initially, when ran again the baseline screenshots will be added to your local machine and will execute the `toMatchSnapshot()` method.
 

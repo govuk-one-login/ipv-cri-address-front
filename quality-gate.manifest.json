@@ -39,6 +39,16 @@
           "provider": "GitHub"
         },
         {
+          "check-types": ["visual regression"],
+          "config": {
+            "file": ".github/workflows/check-pr.yml",
+            "name": "Run tests",
+            "path": "jobs.visual-tests"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
           "check-types": [
             "code style and linting",
             "unit test coverage",
