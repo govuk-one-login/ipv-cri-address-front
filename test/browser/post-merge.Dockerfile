@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.55.1-jammy
+FROM mcr.microsoft.com/playwright:v1.61.0-noble
 
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends unzip curl && \
