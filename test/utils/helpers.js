@@ -36,11 +36,9 @@ export const createDefaultReqResNext = () => {
       },
       values: {},
     },
-    axios: {
-      get: vi.fn(),
-      post: vi.fn(),
-      put: vi.fn(),
-    },
+    customFetch: vi
+      .fn()
+      .mockImplementation(async () => new Response(null, { status: 204 })),
     session: {
       "hmpo-wizard-previous": {},
     },

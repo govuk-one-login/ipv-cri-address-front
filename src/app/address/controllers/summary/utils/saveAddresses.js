@@ -13,9 +13,11 @@ export async function saveAddresses(req, addresses) {
         ...createPersonalDataHeaders(`${baseUrl}${saveAddressPath}`, req),
       }
     : createPersonalDataHeaders(`${baseUrl}${saveAddressPath}`, req);
-  const resp = await req.axios.put(`${saveAddressPath}`, addresses, {
+  const resp = await req.customFetch(saveAddressPath, {
+    method: "PUT",
+    jsonBody: addresses,
     headers,
   });
 
-  return resp.data;
+  return await resp.json();
 }

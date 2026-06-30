@@ -41,7 +41,8 @@ describe("Prepopulate controller", () => {
     it("should retrieve addresses", async () => {
       await addressPrepopulateController.saveValues(req, res, next);
 
-      expect(req.axios.get).to.have.been.calledWith(getAddressesPath, {
+      expect(req.customFetch).to.have.been.calledWith(getAddressesPath, {
+        method: "GET",
         headers: {
           session_id: sessionId,
         },
@@ -55,7 +56,7 @@ describe("Prepopulate controller", () => {
         next
       );
 
-      expect(req.axios.get).to.have.callCount(0);
+      expect(req.customFetch).to.have.callCount(0);
     });
 
     describe("on success", () => {
@@ -74,7 +75,9 @@ describe("Prepopulate controller", () => {
 
       describe("with empty addresses", () => {
         beforeEach(async () => {
-          req.axios.get = vi.fn().mockResolvedValue([]);
+          req.customFetch = vi
+            .fn()
+            .mockResolvedValue(new Response(JSON.stringify([])));
 
           await addressPrepopulateController.saveValues(req, res, next);
         });
@@ -95,9 +98,13 @@ describe("Prepopulate controller", () => {
 
     describe("with addresses", () => {
       beforeEach(async () => {
-        req.axios.get = vi.fn().mockResolvedValue({
-          data: { addresses: [{ postalCode: "Q1 1AB" }] },
-        });
+        req.customFetch = vi
+          .fn()
+          .mockResolvedValue(
+            new Response(
+              JSON.stringify({ addresses: [{ postalCode: "Q1 1AB" }] })
+            )
+          );
 
         await addressPrepopulateController.saveValues(req, res, next);
       });
@@ -118,12 +125,14 @@ describe("Prepopulate controller", () => {
 
     describe("with context", () => {
       beforeEach(async () => {
-        req.axios.get = vi.fn().mockResolvedValue({
-          data: {
-            addresses: [{ postalCode: "Q1 1AB" }],
-            context: "international_user",
-          },
-        });
+        req.customFetch = vi.fn().mockResolvedValue(
+          new Response(
+            JSON.stringify({
+              addresses: [{ postalCode: "Q1 1AB" }],
+              context: "international_user",
+            })
+          )
+        );
 
         await addressPrepopulateController.saveValues(req, res, next);
       });
@@ -139,7 +148,7 @@ describe("Prepopulate controller", () => {
 
     describe("on error", () => {
       beforeEach(async () => {
-        req.axios.get = vi.fn().mockThrow(new Error("Error"));
+        req.customFetch = vi.fn().mockRejectedValue(new Error("Error"));
 
         await addressPrepopulateController.saveValues(req, res, next);
       });

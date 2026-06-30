@@ -27,7 +27,9 @@ describe("saveAddresses", () => {
   it("Should put address to address api and redirect back to callback", async () => {
     addresses = addressFactory(1);
 
-    req.axios.put = vi.fn().mockResolvedValue(addressApiResponse);
+    req.customFetch = vi
+      .fn()
+      .mockResolvedValue(new Response(JSON.stringify(addressApiResponse.data)));
     req.session.tokenId = sessionId;
 
     const headers = {
@@ -38,17 +40,21 @@ describe("saveAddresses", () => {
     };
 
     const response = await saveAddresses(req, [addresses[0]]);
-    expect(req.axios.put).to.have.been.calledWith(saveAddressPath, addresses, {
+    expect(req.customFetch).to.have.been.calledWith(saveAddressPath, {
+      method: "PUT",
+      jsonBody: addresses,
       headers,
     });
 
-    expect(response).to.equal(addressApiResponse.data);
+    expect(response).to.deep.equal(addressApiResponse.data);
   });
 
   it("Should put multiple addresses to address api and redirect back to callback", async () => {
     addresses = addressFactory(2);
 
-    req.axios.put = vi.fn().mockResolvedValue(addressApiResponse);
+    req.customFetch = vi
+      .fn()
+      .mockResolvedValue(new Response(JSON.stringify(addressApiResponse.data)));
     req.session.tokenId = sessionId;
 
     const headers = {
@@ -59,15 +65,19 @@ describe("saveAddresses", () => {
     };
 
     const response = await saveAddresses(req, addresses);
-    expect(req.axios.put).to.have.been.calledWith(saveAddressPath, addresses, {
+    expect(req.customFetch).to.have.been.calledWith(saveAddressPath, {
+      method: "PUT",
+      jsonBody: addresses,
       headers,
     });
 
-    expect(response).to.equal(addressApiResponse.data);
+    expect(response).to.deep.equal(addressApiResponse.data);
   });
 
   it("Should put address", async () => {
-    req.axios.put = vi.fn().mockResolvedValue(addressApiResponse);
+    req.customFetch = vi
+      .fn()
+      .mockResolvedValue(new Response(JSON.stringify(addressApiResponse.data)));
 
     const headers = {
       "txma-audit-encoded": "dummy-txma-header",
@@ -75,10 +85,12 @@ describe("saveAddresses", () => {
     };
 
     const response = await saveAddresses(req, [addresses[0]]);
-    expect(req.axios.put).to.have.been.calledWith(saveAddressPath, addresses, {
+    expect(req.customFetch).to.have.been.calledWith(saveAddressPath, {
+      method: "PUT",
+      jsonBody: addresses,
       headers,
     });
 
-    expect(response).to.equal(addressApiResponse.data);
+    expect(response).to.deep.equal(addressApiResponse.data);
   });
 });

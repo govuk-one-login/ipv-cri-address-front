@@ -1,23 +1,4 @@
-import axios from "axios";
 import { getStartingURL, getOauthPath } from "../support/journey-setup.js";
-import { fromNodeProviderChain } from "@aws-sdk/credential-providers";
-import { aws4Interceptor } from "aws4-axios";
-
-const customCredentialsProvider = {
-  getCredentials: fromNodeProviderChain({
-    timeout: 1000,
-    maxRetries: 0,
-  }),
-};
-const interceptor = aws4Interceptor({
-  options: {
-    region: "eu-west-2",
-    service: "execute-api",
-  },
-  credentials: customCredentialsProvider,
-});
-
-axios.interceptors.request.use(interceptor);
 
 export class RelyingPartyPage {
   /**
