@@ -39,14 +39,12 @@ describe("saveAddresses", () => {
       "x-forwarded-for": "127.0.0.1",
     };
 
-    const response = await saveAddresses(req, [addresses[0]]);
+    await saveAddresses(req, [addresses[0]]);
     expect(req.customFetch).to.have.been.calledWith(saveAddressPath, {
       method: "PUT",
       jsonBody: addresses,
       headers,
     });
-
-    expect(response).to.deep.equal(addressApiResponse.data);
   });
 
   it("Should put multiple addresses to address api and redirect back to callback", async () => {
@@ -64,14 +62,12 @@ describe("saveAddresses", () => {
       "x-forwarded-for": "127.0.0.1",
     };
 
-    const response = await saveAddresses(req, addresses);
+    await saveAddresses(req, addresses);
     expect(req.customFetch).to.have.been.calledWith(saveAddressPath, {
       method: "PUT",
       jsonBody: addresses,
       headers,
     });
-
-    expect(response).to.deep.equal(addressApiResponse.data);
   });
 
   it("Should put address", async () => {
@@ -84,13 +80,17 @@ describe("saveAddresses", () => {
       "x-forwarded-for": "127.0.0.1",
     };
 
-    const response = await saveAddresses(req, [addresses[0]]);
+    await saveAddresses(req, [addresses[0]]);
     expect(req.customFetch).to.have.been.calledWith(saveAddressPath, {
       method: "PUT",
       jsonBody: addresses,
       headers,
     });
+  });
 
-    expect(response).to.deep.equal(addressApiResponse.data);
+  it("Should not read or parse the body when the api returns an empty body", async () => {
+    req.customFetch = vi.fn().mockResolvedValue(new Response(""));
+
+    await expect(saveAddresses(req, [addresses[0]])).resolves.not.toThrow();
   });
 });
