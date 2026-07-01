@@ -13,11 +13,10 @@ export async function saveAddresses(req, addresses) {
         ...createPersonalDataHeaders(`${baseUrl}${saveAddressPath}`, req),
       }
     : createPersonalDataHeaders(`${baseUrl}${saveAddressPath}`, req);
-  const resp = await req.customFetch(saveAddressPath, {
+
+  await req.customFetch(saveAddressPath, {
     method: "PUT",
     jsonBody: addresses,
     headers,
   });
-
-  return await resp.json();
 }
