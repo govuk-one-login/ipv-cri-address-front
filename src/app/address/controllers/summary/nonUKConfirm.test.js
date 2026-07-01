@@ -68,7 +68,11 @@ describe("Non UK Address confirmation controller", () => {
 
   describe("saveValues", () => {
     it("Should put address to address api and redirect back to callback", async () => {
-      req.axios.put = vi.fn().mockResolvedValue(addressApiResponse);
+      req.customFetch = vi
+        .fn()
+        .mockResolvedValue(
+          new Response(JSON.stringify(addressApiResponse.data))
+        );
 
       const headers = {
         "session-id": sessionId,
@@ -78,13 +82,11 @@ describe("Non UK Address confirmation controller", () => {
       };
 
       await addressConfirm.saveValues(req, res, next);
-      expect(req.axios.put).to.have.been.calledWith(
-        saveAddressPath,
-        addresses,
-        {
-          headers,
-        }
-      );
+      expect(req.customFetch).to.have.been.calledWith(saveAddressPath, {
+        method: "PUT",
+        jsonBody: addresses,
+        headers,
+      });
 
       expect(next).to.have.been.calledWith();
     });
@@ -103,7 +105,7 @@ describe("Non UK Address confirmation controller", () => {
   });
 
   it("Should handle put address throwing an error and redirect back to callback", async () => {
-    req.axios.put = vi.fn().mockThrow(new Error("Some error"));
+    req.customFetch = vi.fn().mockRejectedValue(new Error("Some error"));
 
     await addressConfirm.saveValues(req, res, next);
 

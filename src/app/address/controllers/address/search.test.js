@@ -52,15 +52,13 @@ describe("Address Search controller", function () {
         "txma-audit-encoded": "dummy-txma-header",
         "x-forwarded-for": "127.0.0.1",
       };
-      expect(req.axios.post).to.have.been.calledWith(
-        `${postcodeLookupPath}`,
-        {
+      expect(req.customFetch).to.have.been.calledWith(postcodeLookupPath, {
+        method: "POST",
+        jsonBody: {
           postcode: "myPostcode",
         },
-        {
-          headers,
-        }
-      );
+        headers,
+      });
     });
 
     describe("on api success", () => {
@@ -69,7 +67,9 @@ describe("Address Search controller", function () {
       beforeEach(async () => {
         vi.fn().mockImplementation(FormWizard.Controller.prototype.saveValues);
 
-        req.axios.post = vi.fn().mockReturnValue(apiResponse);
+        req.customFetch = vi
+          .fn()
+          .mockResolvedValue(new Response(JSON.stringify(apiResponse.data)));
 
         testPostcode = "myPostcode";
         req.body["addressSearch"] = testPostcode;
@@ -100,7 +100,7 @@ describe("Address Search controller", function () {
 
     describe("on api error", () => {
       beforeEach(async () => {
-        req.axios.post = vi.fn().mockRejectedValue(new Error("Error!"));
+        req.customFetch = vi.fn().mockRejectedValue(new Error("Error!"));
 
         testPostcode = "myPostcode";
         req.body["addressSearch"] = testPostcode;

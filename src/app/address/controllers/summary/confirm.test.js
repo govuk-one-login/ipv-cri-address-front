@@ -69,7 +69,11 @@ describe("Address confirmation controller", () => {
 
   describe("saveValues", () => {
     it("Should put address to address api and redirect back to callback", async () => {
-      req.axios.put = vi.fn().mockResolvedValue(addressApiResponse);
+      req.customFetch = vi
+        .fn()
+        .mockResolvedValue(
+          new Response(JSON.stringify(addressApiResponse.data))
+        );
 
       const headers = {
         "session-id": sessionId,
@@ -79,7 +83,9 @@ describe("Address confirmation controller", () => {
       };
 
       await addressConfirm.saveValues(req, res, next);
-      expect(req.axios.put).toHaveBeenCalledWith(saveAddressPath, addresses, {
+      expect(req.customFetch).toHaveBeenCalledWith(saveAddressPath, {
+        method: "PUT",
+        jsonBody: addresses,
         headers,
       });
 

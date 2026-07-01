@@ -54,14 +54,15 @@ export class AddressSearchController extends FormWizard.Controller {
           req
         ); // set the header to null should fail the req but pass the browser tests for now.
 
-    const addressResults = await req.axios.post(
-      `${config.API.PATHS.POSTCODE_LOOKUP}`,
-      { postcode },
+    const addressResults = await req.customFetch(
+      config.API.PATHS.POSTCODE_LOOKUP,
       {
+        method: "POST",
+        jsonBody: { postcode },
         headers,
       }
     );
-    const addresses = addressResults.data;
+    const addresses = await addressResults.json();
     return this.titleCaseAddresses(addresses);
   }
 

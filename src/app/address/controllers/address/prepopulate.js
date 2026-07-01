@@ -17,11 +17,14 @@ export class AddressPrepopulateController extends FormWizard.Controller {
         return callback();
       }
 
-      const { data } = await req.axios.get(`${getAddressesPath}`, {
+      const apiResponse = await req.customFetch(getAddressesPath, {
+        method: "GET",
         headers: {
           session_id: req.session.tokenId,
         },
       });
+
+      const data = await apiResponse.json();
 
       if (data?.context) {
         req.sessionModel.set("context", data.context);
