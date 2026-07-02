@@ -14,13 +14,16 @@ jobs:
   scan-and-unit-test:
     name: Scan repo
     uses: ./.github/workflows/scan-repo.yml
+    secrets: inherit
 
   deploy-dev:
     name: Package for dev
     needs: scan-and-unit-test
     uses: ./.github/workflows/post-merge-to-dev.yml
+    secrets: inherit
 
   deploy-build:
     name: Package for build
     needs: scan-and-unit-test
     uses: ./.github/workflows/post-merge-to-build.yml
+    secrets: inherit
