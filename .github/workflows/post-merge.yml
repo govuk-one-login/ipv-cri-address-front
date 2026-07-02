@@ -1,0 +1,20 @@
+name: Scan, Test, Build, Package & Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  scan-and-unit-test:
+    name: Scan repo
+    uses: ./.github/workflows/scan-repo.yml
+
+  deploy-dev:
+    name: Package for dev
+    needs: scan-and-unit-test
+    uses: ./.github/workflows/post-merge-to-dev.yml
+
+  deploy-build:
+    name: Package for build
+    needs: scan-and-unit-test
+    uses: ./.github/workflows/post-merge-to-build.yml

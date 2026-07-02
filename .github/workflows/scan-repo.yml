@@ -3,8 +3,7 @@ name: Scan repository
 on:
   workflow_dispatch:
   pull_request:
-  push:
-    branches: [main]
+  workflow_call:
   schedule:
     # Every Monday at 9am
     - cron: "0 9 * * 1"
