@@ -1,9 +1,6 @@
 name: Docker build, ECR push, template copy to S3
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch: # deploy manually
+  workflow_call:
 
 jobs:
   dockerBuildAndPush:
