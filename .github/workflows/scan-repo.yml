@@ -12,7 +12,8 @@ concurrency:
   group: scan-repo-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
 
-permissions: read-all
+permissions:
+  contents: read
 
 jobs:
   coverage:
