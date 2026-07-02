@@ -1,8 +1,14 @@
-name: Scan, Test, Build, Package & Deploy
+name: Post merge
 
 on:
   push:
     branches: [main]
+
+permissions:
+  contents: read
+  deployments: read
+  id-token: write
+  security-events: write
 
 jobs:
   scan-and-unit-test:
