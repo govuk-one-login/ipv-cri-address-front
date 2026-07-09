@@ -84,6 +84,10 @@ const { app, router } = setup({
     "views",
   ],
   middlewareSetupFn: (app) => {
+    // Any request under /public reaching here missed the static-file middleware (the file isn't on disk) so to prevent it
+    // from falling through, we make it 404 otherwise it'll  fall through to getLanguageToggle and 302
+    app.use("/public", (req, res) => res.status(404).end());
+
     frontendVitalSignsInitFromApp(app, {
       interval: 60000,
       logLevel: "info",
