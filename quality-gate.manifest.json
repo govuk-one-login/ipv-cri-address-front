@@ -3,7 +3,7 @@
   "services": [
     {
       "product": "Address-CRI",
-      "component": "Address-CRI Front",
+      "component": "ipv-cri-address-front",
       "promotionType": "securePipelines",
       "checks": [
         {
