@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.14.0/schemas/schema.json",
+  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.15.0/schemas/schema.json",
   "services": [
     {
       "product": "Address-CRI",
@@ -7,101 +7,133 @@
       "promotionType": "securePipelines",
       "automated": [
         {
-          "checkTypes": [
-            "code style and linting",
-            "secret scanning"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/code-quality.yml",
             "path": "$.jobs.pre-commit"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            },
+            {
+              "name": "secret scanning"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "unit"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/check-pr.yml",
             "path": "$.jobs.unit-tests"
-          }
+          },
+          "checks": [
+            {
+              "name": "unit"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "component",
-            "integration",
-            "regression",
-            "new feature"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/check-pr.yml",
             "path": "$.jobs.browser-tests"
-          }
+          },
+          "checks": [
+            {
+              "name": "component"
+            },
+            {
+              "name": "integration"
+            },
+            {
+              "name": "regression"
+            },
+            {
+              "name": "new feature"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "visual regression"
-          ],
           "config": {
             "file": ".github/workflows/check-pr.yml",
             "name": "Run tests",
             "path": "$.jobs.visual-tests"
           },
           "phase": "pre-merge",
-          "provider": "GitHub"
+          "provider": "GitHub",
+          "checks": [
+            {
+              "name": "visual regression"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "code style and linting",
-            "unit test coverage",
-            "vulnerability detection"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/scan-repo.yml",
             "path": "$.jobs.sonarcloud"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            },
+            {
+              "name": "unit test coverage"
+            },
+            {
+              "name": "vulnerability detection"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "vulnerability detection"
-          ],
           "phase": "pre-merge",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/scan-repo.yml",
             "path": "$.jobs.codeql"
-          }
+          },
+          "checks": [
+            {
+              "name": "vulnerability detection"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "code style and linting",
-            "unit test coverage",
-            "vulnerability detection"
-          ],
           "phase": "pre-upload",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/scan-repo.yml",
             "path": "$.jobs.sonarcloud"
-          }
+          },
+          "checks": [
+            {
+              "name": "code style and linting"
+            },
+            {
+              "name": "unit test coverage"
+            },
+            {
+              "name": "vulnerability detection"
+            }
+          ]
         },
         {
-          "checkTypes": [
-            "vulnerability detection"
-          ],
           "phase": "pre-upload",
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/scan-repo.yml",
             "path": "$.jobs.codeql"
-          }
+          },
+          "checks": [
+            {
+              "name": "vulnerability detection"
+            }
+          ]
         }
       ]
     }
