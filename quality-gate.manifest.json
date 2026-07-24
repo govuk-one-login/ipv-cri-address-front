@@ -76,6 +76,30 @@
             "file": ".github/workflows/scan-repo.yml",
             "path": "$.jobs.codeql"
           }
+        },
+        {
+          "checkTypes": [
+            "code style and linting",
+            "unit test coverage",
+            "vulnerability detection"
+          ],
+          "phase": "pre-upload",
+          "provider": "GitHub",
+          "config": {
+            "file": ".github/workflows/scan-repo.yml",
+            "path": "$.jobs.sonarcloud"
+          }
+        },
+        {
+          "checkTypes": [
+            "vulnerability detection"
+          ],
+          "phase": "pre-upload",
+          "provider": "GitHub",
+          "config": {
+            "file": ".github/workflows/scan-repo.yml",
+            "path": "$.jobs.codeql"
+          }
         }
       ]
     }
