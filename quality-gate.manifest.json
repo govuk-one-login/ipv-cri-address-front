@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.16.0/schemas/schema.json",
+  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.17.0/schemas/schema.json",
   "services": [
     {
       "product": "Address-CRI",
@@ -9,10 +9,6 @@
         {
           "phase": "pre-merge",
           "provider": "GitHub",
-          "config": {
-            "file": ".github/workflows/code-quality.yml",
-            "path": "$.jobs.pre-commit"
-          },
           "checks": [
             {
               "name": "code style and linting"
@@ -20,28 +16,24 @@
             {
               "name": "secret scanning"
             }
-          ]
+          ],
+          "file": ".github/workflows/code-quality.yml",
+          "path": "$.jobs.pre-commit"
         },
         {
           "phase": "pre-merge",
           "provider": "GitHub",
-          "config": {
-            "file": ".github/workflows/check-pr.yml",
-            "path": "$.jobs.unit-tests"
-          },
           "checks": [
             {
               "name": "unit"
             }
-          ]
+          ],
+          "file": ".github/workflows/check-pr.yml",
+          "path": "$.jobs.unit-tests"
         },
         {
           "phase": "pre-merge",
           "provider": "GitHub",
-          "config": {
-            "file": ".github/workflows/run-browser-tests.yml",
-            "path": "$.jobs.run-tests"
-          },
           "checks": [
             {
               "name": "integration",
@@ -51,29 +43,24 @@
               ],
               "scope": "component"
             }
-          ]
+          ],
+          "file": ".github/workflows/run-browser-tests.yml",
+          "path": "$.jobs.run-tests"
         },
         {
-          "config": {
-            "file": ".github/workflows/run-browser-tests.yml",
-            "name": "Run tests",
-            "path": "$.jobs.visual-tests"
-          },
           "phase": "pre-merge",
           "provider": "GitHub",
           "checks": [
             {
               "name": "visual regression"
             }
-          ]
+          ],
+          "file": ".github/workflows/run-browser-tests.yml",
+          "path": "$.jobs.visual-tests"
         },
         {
           "phase": "pre-merge",
           "provider": "GitHub",
-          "config": {
-            "file": ".github/workflows/scan-repo.yml",
-            "path": "$.jobs.sonarcloud"
-          },
           "checks": [
             {
               "name": "code style and linting"
@@ -84,28 +71,24 @@
             {
               "name": "vulnerability detection"
             }
-          ]
+          ],
+          "file": ".github/workflows/scan-repo.yml",
+          "path": "$.jobs.sonarcloud"
         },
         {
           "phase": "pre-merge",
           "provider": "GitHub",
-          "config": {
-            "file": ".github/workflows/scan-repo.yml",
-            "path": "$.jobs.codeql"
-          },
           "checks": [
             {
               "name": "vulnerability detection"
             }
-          ]
+          ],
+          "file": ".github/workflows/scan-repo.yml",
+          "path": "$.jobs.codeql"
         },
         {
           "phase": "pre-upload",
           "provider": "GitHub",
-          "config": {
-            "file": ".github/workflows/scan-repo.yml",
-            "path": "$.jobs.sonarcloud"
-          },
           "checks": [
             {
               "name": "code style and linting"
@@ -116,20 +99,20 @@
             {
               "name": "vulnerability detection"
             }
-          ]
+          ],
+          "file": ".github/workflows/scan-repo.yml",
+          "path": "$.jobs.sonarcloud"
         },
         {
           "phase": "pre-upload",
           "provider": "GitHub",
-          "config": {
-            "file": ".github/workflows/scan-repo.yml",
-            "path": "$.jobs.codeql"
-          },
           "checks": [
             {
               "name": "vulnerability detection"
             }
-          ]
+          ],
+          "file": ".github/workflows/scan-repo.yml",
+          "path": "$.jobs.codeql"
         }
       ]
     }
