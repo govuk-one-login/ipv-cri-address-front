@@ -101,8 +101,7 @@ describe("Address confirmation controller", () => {
 
       expect(
         req.form.options.fields.hasPreviousUKAddressWithinThreeMonths.validate
-          .length
-      ).toBe(1);
+      ).toHaveLength(1);
     });
 
     it("should not add confirmation validation when previous address exists", () => {
@@ -116,8 +115,7 @@ describe("Address confirmation controller", () => {
 
       expect(
         req.form.options.fields.hasPreviousUKAddressWithinThreeMonths.validate
-          .length
-      ).toBe(0);
+      ).toHaveLength(0);
     });
   });
 
