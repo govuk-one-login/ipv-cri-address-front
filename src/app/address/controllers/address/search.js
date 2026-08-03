@@ -33,7 +33,7 @@ export class AddressSearchController extends FormWizard.Controller {
       logger.warn(
         {
           component: "AddressSearchController",
-          err: error,
+          message: error.message,
         },
         "Error searching for address"
       );

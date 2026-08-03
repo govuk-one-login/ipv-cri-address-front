@@ -56,7 +56,7 @@ export class NonUKAddressConfirmController extends FormWizard.Controller {
 
       super.saveValues(req, res, callback);
     } catch (error) {
-      logger.error({ err: error }, "Error submitting address");
+      logger.warn({ err: error }, "Error submitting address");
       callback(error);
     }
   }

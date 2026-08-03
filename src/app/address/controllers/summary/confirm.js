@@ -109,7 +109,7 @@ export class AddressConfirmController extends FormWizard.Controller {
         });
       }
     } catch (error) {
-      logger.error({ err: error }, "Error submitting address");
+      logger.warn({ err: error }, "Error submitting address");
 
       callback(error);
     }

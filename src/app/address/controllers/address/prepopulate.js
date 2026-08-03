@@ -54,7 +54,7 @@ export class AddressPrepopulateController extends FormWizard.Controller {
       logger.warn(
         {
           component: "AddressPrepopulateController",
-          err: error,
+          message: error.message,
         },
         "Error pre-populating address"
       );

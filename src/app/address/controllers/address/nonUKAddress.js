@@ -89,7 +89,7 @@ export class NonUKAddressController extends FormWizard.Controller {
         logger.error(
           {
             component: "NonUKAddressController",
-            err,
+            message: err.message,
           },
           "Failed to save non-uk address"
         );

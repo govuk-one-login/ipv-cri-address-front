@@ -5,6 +5,22 @@ import { createDefaultReqResNext } from "../../../../../test/utils/helpers.js";
 import { AddressPrepopulateController } from "./prepopulate.js";
 import { config } from "../../../../lib/config.js";
 
+const { mockLogger } = vi.hoisted(() => ({
+  mockLogger: {
+    warn: vi.fn(),
+    debug: vi.fn(),
+  },
+}));
+
+vi.mock("@govuk-one-login/di-ipv-cri-common-express", () => ({
+  default: {
+    bootstrap: {
+      logger: {
+        get: vi.fn(() => mockLogger),
+      },
+    },
+  },
+}));
 const getAddressesPath = config.API.PATHS.GET_ADDRESSES;
 
 let req;
@@ -151,6 +167,44 @@ describe("Prepopulate controller", () => {
         req.customFetch = vi.fn().mockRejectedValue(new Error("Error"));
 
         await addressPrepopulateController.saveValues(req, res, next);
+      });
+
+      it("should call callback", () => {
+        expect(next).to.have.been.calledOnce;
+      });
+    });
+
+    describe("when JSON parsing fails", () => {
+      beforeEach(async () => {
+        const error = new Error("Failed to parse JSON");
+
+        error.responseBody = JSON.stringify({
+          postalCode: "Q1 1AB",
+          address: "1 Test Street",
+        });
+
+        req.customFetch = vi.fn().mockResolvedValue({
+          json: vi.fn().mockRejectedValue(error),
+        });
+
+        await addressPrepopulateController.saveValues(req, res, next);
+      });
+
+      it("should log the error", () => {
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+          {
+            component: "AddressPrepopulateController",
+            message: "Failed to parse JSON",
+          },
+          "Error pre-populating address"
+        );
+      });
+
+      it("should not log response body data to the logger", () => {
+        const loggedMetadata = mockLogger.warn.mock.calls[0][0];
+
+        expect(JSON.stringify(loggedMetadata)).not.toContain("Q1 1AB");
+        expect(JSON.stringify(loggedMetadata)).not.toContain("1 Test Street");
       });
 
       it("should call callback", () => {

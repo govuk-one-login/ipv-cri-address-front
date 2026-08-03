@@ -121,7 +121,7 @@ export class AddressController extends FormWizard.Controller {
         logger.error(
           {
             component: "AddressController",
-            err,
+            message: err.message,
           },
           "Failed to save address"
         );
