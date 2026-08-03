@@ -21,6 +21,10 @@ export class SearchPage {
     await this.page.click("#continue");
   }
 
+  async clickContinue() {
+    await this.page.click("#continue");
+  }
+
   async goto() {
     await this.page.goto(this.url); // move into a TEST_BASE_URL global const
   }
