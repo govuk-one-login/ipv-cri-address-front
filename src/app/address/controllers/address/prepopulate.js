@@ -42,7 +42,7 @@ export class AddressPrepopulateController extends FormWizard.Controller {
             component: "AddressPrepopulateController",
             prepopulatedPostcode: true,
           },
-          "Adress postcode pre-populated"
+          "Address postcode pre-populated"
         );
         req.sessionModel.set("addressSearch", data.addresses[0].postalCode);
       }

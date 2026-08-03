@@ -20,7 +20,7 @@ export class AddressConfirmController extends FormWizard.Controller {
       const previousAddress = req.journeyModel.get("previousAddress");
 
       if (!currentAddress) {
-        logger.error(
+        logger.warn(
           {
             component: "AddressConfirmController",
           },

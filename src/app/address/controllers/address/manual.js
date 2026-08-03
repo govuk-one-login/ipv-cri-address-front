@@ -43,7 +43,7 @@ export class AddressController extends FormWizard.Controller {
             validationErrorCount: Object.keys(req.form.errors).length,
             validationFields: Object.keys(req.form.errors),
           },
-          "Adress form validation errors present"
+          "Address form validation errors present"
         );
 
         const errorValues =
@@ -103,11 +103,10 @@ export class AddressController extends FormWizard.Controller {
           );
         }
 
-        const addressChanged = this.checkForChanges(address, chosenAddress);
         logger.debug(
           {
             component: "AddressController",
-            addressChanged,
+            addressChanged: this.checkForChanges(address, chosenAddress),
             hasChosenAddress: !!chosenAddress.uprn,
             hasPostcode: !!address.postalCode,
           },
