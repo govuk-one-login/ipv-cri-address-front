@@ -5,10 +5,10 @@ import {
 } from "../browser/pages/index.js";
 import assert from "node:assert";
 import { takeAndCompareScreenshots } from "./helper/screenshot-config.js";
-import {goToAddressStart} from "./helper/function-helper.js";
+import { goToAddressStart } from "./helper/function-helper.js";
 
 test("Error validation - What Country screen", async ({ page }) => {
-  await goToAddressStart(page, "international-address")
+  await goToAddressStart(page, "international-address");
 
   const countryPage = new CountryPage(page);
   assert.strictEqual(countryPage.isCurrentPage(), true);
@@ -18,7 +18,7 @@ test("Error validation - What Country screen", async ({ page }) => {
 });
 
 test("Error validation - Non-UK Address form screen", async ({ page }) => {
-  await goToAddressStart(page, "international-address")
+  await goToAddressStart(page, "international-address");
 
   const countryPage = new CountryPage(page);
   assert.strictEqual(countryPage.isCurrentPage(), true);
@@ -32,9 +32,8 @@ test("Error validation - Non-UK Address form screen", async ({ page }) => {
   await takeAndCompareScreenshots(page, "non-uk-address-validation");
 });
 
-
 test("Welsh Error validation - What Country screen", async ({ page }) => {
-  await goToAddressStart(page, "international-address", "cy")
+  await goToAddressStart(page, "international-address", "cy");
 
   const countryPage = new CountryPage(page);
   assert.strictEqual(countryPage.isCurrentPage(), true);
@@ -43,8 +42,10 @@ test("Welsh Error validation - What Country screen", async ({ page }) => {
   await takeAndCompareScreenshots(page, "what-country-validation-cy");
 });
 
-test("Welsh Error validation - Non-UK Address form screen", async ({ page }) => {
-  await goToAddressStart(page, "international-address", "cy")
+test("Welsh Error validation - Non-UK Address form screen", async ({
+  page,
+}) => {
+  await goToAddressStart(page, "international-address", "cy");
 
   const countryPage = new CountryPage(page);
   assert.strictEqual(countryPage.isCurrentPage(), true);

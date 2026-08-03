@@ -7,10 +7,10 @@ import {
 } from "../browser/pages/index.js";
 import assert from "node:assert";
 import { takeAndCompareScreenshots } from "./helper/screenshot-config.js";
-import {goToAddressStart} from "./helper/function-helper.js";
+import { goToAddressStart } from "./helper/function-helper.js";
 
 test("Error Validation - Search screen", async ({ page }) => {
-  await goToAddressStart(page, "address-success")
+  await goToAddressStart(page, "address-success");
 
   const searchPage = new SearchPage(page);
   assert.strictEqual(searchPage.isCurrentPage(), true);
@@ -19,7 +19,7 @@ test("Error Validation - Search screen", async ({ page }) => {
 });
 
 test("Welsh Error Validation - Search screen", async ({ page }) => {
-  await goToAddressStart(page, "address-success", "cy")
+  await goToAddressStart(page, "address-success", "cy");
 
   const searchPage = new SearchPage(page);
   assert.strictEqual(searchPage.isCurrentPage(), true);
@@ -28,7 +28,7 @@ test("Welsh Error Validation - Search screen", async ({ page }) => {
 });
 
 test("Error Validation - UK Address form screen", async ({ page }) => {
-  await goToAddressStart(page, "address-success")
+  await goToAddressStart(page, "address-success");
 
   const searchPage = new SearchPage(page);
   assert.strictEqual(searchPage.isCurrentPage(), true);
@@ -46,7 +46,7 @@ test("Error Validation - UK Address form screen", async ({ page }) => {
 });
 
 test("Welsh Error Validation - UK Address form screen", async ({ page }) => {
-  await goToAddressStart(page, "address-success", "cy")
+  await goToAddressStart(page, "address-success", "cy");
 
   const searchPage = new SearchPage(page);
   assert.strictEqual(searchPage.isCurrentPage(), true);
@@ -64,7 +64,7 @@ test("Welsh Error Validation - UK Address form screen", async ({ page }) => {
 });
 
 test("Error Validation - Confirm screen", async ({ page }) => {
-  await goToAddressStart(page, "address-success")
+  await goToAddressStart(page, "address-success");
 
   const searchPage = new SearchPage(page);
   assert.strictEqual(searchPage.isCurrentPage(), true);
@@ -88,7 +88,7 @@ test("Error Validation - Confirm screen", async ({ page }) => {
 });
 
 test("Welsh Error Validation - Confirm screen", async ({ page }) => {
-  await goToAddressStart(page, "address-success", "cy")
+  await goToAddressStart(page, "address-success", "cy");
 
   const searchPage = new SearchPage(page);
   assert.strictEqual(searchPage.isCurrentPage(), true);
