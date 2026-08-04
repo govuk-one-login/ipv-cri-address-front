@@ -96,11 +96,13 @@ Mappings:
       minECSCount: 1
       maxECSCount: 4
       logLevel: "info"
+      requestCountTargetPerTarget: 100
     build:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
       maxECSCount: 60
       logLevel: "info"
+      requestCountTargetPerTarget: 100
     staging:
       dynatraceSecretArn: arn:aws:secretsmanager:eu-west-2:216552277552:secret:DynatraceNonProductionVariables
       minECSCount: 2
@@ -817,6 +819,32 @@ Resources:
         PredefinedMetricSpecification:
           PredefinedMetricType: ECSServiceAverageCPUUtilization
         TargetValue: 30
+        ScaleInCooldown: 420
+        ScaleOutCooldown: 60
+
+  ECSRequestCountScalingPolicy:
+    Condition: IsDevBuildEnvironment
+    DependsOn: ECSAutoScalingTarget
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: ECSRequestCountScalingPolicy
+      PolicyType: TargetTrackingScaling
+      ResourceId: !Sub service/${AddressFrontEcsCluster}/${AddressFrontEcsService.Name}
+      ScalableDimension: ecs:service:DesiredCount
+      ServiceNamespace: ecs
+      TargetTrackingScalingPolicyConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ALBRequestCountPerTarget
+          ResourceLabel: !Join
+            - "/"
+            - - !GetAtt LoadBalancer.LoadBalancerFullName
+              - !GetAtt LoadBalancerListenerTargetGroupECS.TargetGroupFullName
+        TargetValue:
+          !FindInMap [
+            EnvironmentConfiguration,
+            !Ref Environment,
+            requestCountTargetPerTarget,
+          ]
         ScaleInCooldown: 420
         ScaleOutCooldown: 60
 
