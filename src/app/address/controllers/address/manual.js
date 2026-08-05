@@ -1,4 +1,7 @@
 import FormWizard from "hmpo-form-wizard";
+import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
+
+import { config } from "../../../../lib/config.js";
 
 import {
   yearFrom,
@@ -8,6 +11,7 @@ import {
 import { buildingAddressComponent } from "../../components/buildingAddress.js";
 
 import { ukBuildingAddressEmptyValidator } from "../../validators/addressValidator.js";
+const logger = commonExpress.bootstrap.logger.get(config.PACKAGE_NAME);
 
 export class AddressController extends FormWizard.Controller {
   getValues(req, res, callback) {
@@ -33,6 +37,15 @@ export class AddressController extends FormWizard.Controller {
       values.addressFormTitle = this.getAddressFormTitle(req.originalUrl || "");
 
       if (req?.form?.errors) {
+        logger.debug(
+          {
+            component: "AddressController",
+            validationErrorCount: Object.keys(req.form.errors).length,
+            validationFields: Object.keys(req.form.errors),
+          },
+          "Adress form validation errors present"
+        );
+
         const errorValues =
           buildingAddressComponent.getIndividualFieldErrorMessages(
             req.form.errors,
@@ -71,20 +84,49 @@ export class AddressController extends FormWizard.Controller {
 
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
-      const chosenAddress = req.sessionModel.get("address") || {}; // empty object if no address chosen on
-      const address = this.buildAddress(
-        trimOnlyWhitespaceStrings(req.body),
-        chosenAddress
-      );
+      try {
+        const chosenAddress = req.sessionModel.get("address") || {}; // empty object if no address chosen on
+        const address = this.buildAddress(
+          trimOnlyWhitespaceStrings(req.body),
+          chosenAddress
+        );
+        // only set postcode when we dont use OS response postcode
+        if (!address.postalCode) {
+          address.postalCode = req.sessionModel.get("addressPostcode");
 
-      // only set postcode when we dont use OS response postcode
-      if (!address.postalCode) {
-        address.postalCode = req.sessionModel.get("addressPostcode");
+          logger.debug(
+            {
+              component: "AddressController",
+              usedSessionPostcode: true,
+            },
+            "Postcode sourced from session"
+          );
+        }
+
+        const addressChanged = this.checkForChanges(address, chosenAddress);
+        logger.debug(
+          {
+            component: "AddressController",
+            addressChanged,
+            hasChosenAddress: !!chosenAddress.uprn,
+            hasPostcode: !!address.postalCode,
+          },
+          "Address ready to save"
+        );
+
+        req.sessionModel.set("address", address); // set for /edit routes
+
+        callback();
+      } catch (err) {
+        logger.error(
+          {
+            component: "AddressController",
+            err,
+          },
+          "Failed to save address"
+        );
+        callback(err);
       }
-
-      req.sessionModel.set("address", address); // set for /edit routes
-
-      callback();
     });
   }
 

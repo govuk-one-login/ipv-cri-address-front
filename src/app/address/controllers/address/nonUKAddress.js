@@ -65,14 +65,36 @@ export class NonUKAddressController extends FormWizard.Controller {
 
   async saveValues(req, res, callback) {
     super.saveValues(req, res, () => {
-      const addressCountry = req.sessionModel.get("country");
-      const address = this.buildAddress(
-        trimOnlyWhitespaceStrings(req.body),
-        addressCountry
-      );
-      req.sessionModel.set("address", address);
+      try {
+        const addressCountry = req.sessionModel.get("country");
+        const address = this.buildAddress(
+          trimOnlyWhitespaceStrings(req.body),
+          addressCountry
+        );
+        logger.debug(
+          {
+            component: "NonUKAddressController",
+            countrySelected: Boolean(addressCountry),
+            hasPostalCode: Boolean(address.postalCode),
+            hasRegion: Boolean(address.addressRegion),
+            hasBuildingNumber: Boolean(address.buildingNumber),
+          },
+          "Non-uk address built"
+        );
 
-      callback();
+        req.sessionModel.set("address", address);
+
+        callback();
+      } catch (err) {
+        logger.error(
+          {
+            component: "NonUKAddressController",
+            err,
+          },
+          "Failed to save non-uk address"
+        );
+        callback(err);
+      }
     });
   }
 

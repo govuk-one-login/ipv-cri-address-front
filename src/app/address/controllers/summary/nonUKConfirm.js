@@ -18,6 +18,12 @@ export class NonUKAddressConfirmController extends FormWizard.Controller {
 
       const currentAddress = req.journeyModel.get("currentAddress");
       if (!currentAddress) {
+        logger.error(
+          {
+            component: "NonUKAddressConfirmController",
+          },
+          "Current address missing during confirmation"
+        );
         return callback(new Error("No address found"), locals);
       }
 
@@ -37,6 +43,12 @@ export class NonUKAddressConfirmController extends FormWizard.Controller {
       const currentAddress = req.journeyModel.get("currentAddress");
 
       if (!currentAddress) {
+        logger.error(
+          {
+            component: "NonUKAddressConfirmController",
+          },
+          "Current address missing during save"
+        );
         return callback(new Error("No address found"));
       }
 
@@ -44,7 +56,7 @@ export class NonUKAddressConfirmController extends FormWizard.Controller {
 
       super.saveValues(req, res, callback);
     } catch (error) {
-      logger.warn({ err: error }, "Error submitting address");
+      logger.error({ err: error }, "Error submitting address");
       callback(error);
     }
   }

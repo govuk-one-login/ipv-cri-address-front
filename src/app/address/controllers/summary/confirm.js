@@ -20,6 +20,12 @@ export class AddressConfirmController extends FormWizard.Controller {
       const previousAddress = req.journeyModel.get("previousAddress");
 
       if (!currentAddress) {
+        logger.error(
+          {
+            component: "AddressConfirmController",
+          },
+          "Current address missing during confirmation"
+        );
         return callback(new Error("No address found"), locals);
       }
 
@@ -78,6 +84,12 @@ export class AddressConfirmController extends FormWizard.Controller {
         const previousAddress = req.journeyModel.get("previousAddress");
 
         if (!currentAddress && !previousAddress) {
+          logger.error(
+            {
+              component: "AddressConfirmController",
+            },
+            "No addresses available when attempting submission"
+          );
           return callback(new Error("No address found"));
         }
 
@@ -97,7 +109,7 @@ export class AddressConfirmController extends FormWizard.Controller {
         });
       }
     } catch (error) {
-      logger.warn({ err: error }, "Error submitting address");
+      logger.error({ err: error }, "Error submitting address");
 
       callback(error);
     }

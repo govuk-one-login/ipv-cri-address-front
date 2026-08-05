@@ -30,7 +30,13 @@ export class AddressSearchController extends FormWizard.Controller {
         callback();
       });
     } catch (error) {
-      logger.warn({ err: error }, "Error searching for address");
+      logger.warn(
+        {
+          component: "AddressSearchController",
+          err: error,
+        },
+        "Error searching for address"
+      );
 
       req.sessionModel.set("requestIsSuccessful", false);
       req.sessionModel.set("checkDetailsHeader", false);
@@ -53,6 +59,14 @@ export class AddressSearchController extends FormWizard.Controller {
           `${config.API.BASE_URL}${config.API.PATHS.POSTCODE_LOOKUP}`,
           req
         ); // set the header to null should fail the req but pass the browser tests for now.
+    if (!req.session.tokenId) {
+      logger.warn(
+        {
+          component: "AddressSearchController",
+        },
+        "Address lookup attempted without session token"
+      );
+    }
 
     const addressResults = await req.customFetch(
       config.API.PATHS.POSTCODE_LOOKUP,
@@ -62,7 +76,31 @@ export class AddressSearchController extends FormWizard.Controller {
         headers,
       }
     );
+    if (!addressResults.ok) {
+      logger.error(
+        {
+          component: "AddressSearchController",
+          statusCode: addressResults.status,
+        },
+        "Address lookup API request failed"
+      );
+    }
     const addresses = await addressResults.json();
+    if (!addresses?.length) {
+      logger.warn(
+        {
+          component: "AddressSearchController",
+        },
+        "Address lookup returned no results"
+      );
+    }
+    logger.debug(
+      {
+        component: "AddressSearchController",
+        resultCount: addresses?.length ?? 0,
+      },
+      "Address lookup completed"
+    );
     return this.titleCaseAddresses(addresses);
   }
 
