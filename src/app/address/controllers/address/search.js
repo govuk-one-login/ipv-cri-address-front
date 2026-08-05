@@ -68,14 +68,26 @@ export class AddressSearchController extends FormWizard.Controller {
       );
     }
 
-    const addressResults = await req.customFetch(
-      config.API.PATHS.POSTCODE_LOOKUP,
-      {
+    let addressResults;
+
+    try {
+      addressResults = await req.customFetch(config.API.PATHS.POSTCODE_LOOKUP, {
         method: "POST",
         jsonBody: { postcode },
         headers,
-      }
-    );
+      });
+    } catch (error) {
+      logger.error(
+        {
+          component: "AddressSearchController",
+          message: error.message,
+        },
+        "Address lookup API request threw an exception"
+      );
+
+      throw error;
+    }
+
     if (!addressResults.ok) {
       logger.error(
         {
