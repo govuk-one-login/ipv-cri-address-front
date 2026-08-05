@@ -60,6 +60,23 @@ describe("Address Search controller", function () {
         headers,
       });
     });
+    it("should remove a previously selected address when searching using a different postcode", async () => {
+      req.sessionModel.set("address", {
+        buildingName: "East Zzz",
+        postalCode: "ZZ1 1ZZ",
+      });
+
+      req.body["addressSearch"] = "E1 8QS";
+
+      req.customFetch = vi
+        .fn()
+        .mockResolvedValue(new Response(JSON.stringify(apiResponse.data)));
+
+      await addressSearch.saveValues(req, res, next);
+
+      expect(req.sessionModel.get("address")).toBeUndefined();
+      expect(req.sessionModel.get("addressPostcode")).toBe("E1 8QS");
+    });
 
     describe("on api success", () => {
       let testPostcode;

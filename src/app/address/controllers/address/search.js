@@ -18,6 +18,7 @@ export class AddressSearchController extends FormWizard.Controller {
 
     const addressPostcode = req.body["addressSearch"];
 
+    req.sessionModel.unset("address");
     req.sessionModel.set("addressSearch", addressPostcode);
 
     try {
