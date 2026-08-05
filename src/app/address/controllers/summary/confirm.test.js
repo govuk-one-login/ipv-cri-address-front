@@ -65,6 +65,60 @@ describe("Address confirmation controller", () => {
       expect(callbackError).toBeInstanceOf(Error);
       expect(callbackError.message).toBe(errMessage);
     });
+
+    it("should return the error when super.locals returns an error", () => {
+      const error = new Error("locals error");
+
+      vi.spyOn(FormWizard.Controller.prototype, "locals").mockImplementation(
+        (req, res, callback) => {
+          callback(error, {});
+        }
+      );
+
+      addressConfirm.locals(req, res, next);
+
+      expect(next).toHaveBeenCalledWith(error, {});
+    });
+  });
+
+  describe("validateFields", () => {
+    it("should add confirmation validation when more info is required and no previous address exists", () => {
+      req.journeyModel.set("previousAddress", null);
+
+      req.form.options.fields = {
+        hasPreviousUKAddressWithinThreeMonths: {
+          validate: [],
+        },
+      };
+
+      const currentYear = new Date().getFullYear();
+
+      req.journeyModel.set("currentAddress", {
+        validFrom: `${currentYear}-01-01`,
+      });
+
+      addressConfirm.validateFields(req, res, next);
+
+      expect(
+        req.form.options.fields.hasPreviousUKAddressWithinThreeMonths.validate
+          .length
+      ).toBe(1);
+    });
+
+    it("should not add confirmation validation when previous address exists", () => {
+      req.form.options.fields = {
+        hasPreviousUKAddressWithinThreeMonths: {
+          validate: [],
+        },
+      };
+
+      addressConfirm.validateFields(req, res, next);
+
+      expect(
+        req.form.options.fields.hasPreviousUKAddressWithinThreeMonths.validate
+          .length
+      ).toBe(0);
+    });
   });
 
   describe("saveValues", () => {

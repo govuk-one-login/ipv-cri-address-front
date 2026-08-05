@@ -181,4 +181,19 @@ describe("Address result controller", () => {
       );
     });
   });
+  it("should call callback with error when getAddress throws", async () => {
+    const error = new Error("Address lookup failed");
+
+    vi.spyOn(addressResult, "getAddress").mockImplementation(() => {
+      throw error;
+    });
+
+    req.form.values.addressResults = "some address";
+    req.sessionModel.set("searchResults", formattedAddresses);
+
+    await addressResult.saveValues(req, res, next);
+
+    expect(next).to.have.been.calledOnce;
+    expect(next).to.have.been.calledWith(error);
+  });
 });

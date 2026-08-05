@@ -90,6 +90,20 @@ describe("NonUKAddressController", () => {
       });
     });
 
+    it("calls callback with error when buildAddress throws", async () => {
+      const error = new Error("Boom");
+
+      vi.spyOn(address, "buildAddress").mockImplementation(() => {
+        throw error;
+      });
+
+      const callback = vi.fn();
+
+      await address.saveValues(req, res, callback);
+
+      expect(callback).to.have.been.calledOnceWith(error);
+    });
+
     it("includes buildingAddressEmptyErrorMessage in errors", () => {
       req.form.errors = {
         nonUKAddressApartmentNumber: {

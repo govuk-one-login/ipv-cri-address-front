@@ -443,4 +443,16 @@ describe("address controller", () => {
       expect(addressToSave.addressCountry).to.be.undefined;
     });
   });
+  it("should call callback with error when buildAddress throws", async () => {
+    const error = new Error("build failed");
+
+    vi.spyOn(address, "buildAddress").mockImplementation(() => {
+      throw error;
+    });
+
+    await address.saveValues(req, res, next);
+
+    expect(next).to.have.been.calledOnce;
+    expect(next).to.have.been.calledWith(error);
+  });
 });

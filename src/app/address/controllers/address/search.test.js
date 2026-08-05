@@ -36,6 +36,64 @@ describe("Address Search controller", function () {
     expect(addressSearch).toBeInstanceOf(FormWizard.Controller);
   });
 
+  describe("locals", () => {
+    it("sets prepopulatedPostcode on res.locals", () => {
+      req.session.prepopulatedPostcode = true;
+      res.locals = {};
+
+      const superLocalsSpy = vi
+        .spyOn(FormWizard.Controller.prototype, "locals")
+        .mockReturnValue({});
+
+      addressSearch.locals(req, res);
+
+      expect(res.locals.prepopulatedPostcode).to.equal(true);
+      expect(superLocalsSpy).to.have.been.calledOnce;
+    });
+  });
+
+  describe("search", () => {
+    it("searches without a session token", async () => {
+      delete req.session.tokenId;
+
+      req.customFetch = vi.fn().mockResolvedValue({
+        ok: true,
+        json: vi.fn().mockResolvedValue([
+          {
+            buildingName: "test",
+          },
+        ]),
+      });
+
+      await addressSearch.search(req, "SW1A1AA");
+
+      expect(req.customFetch).to.have.been.calledOnce;
+    });
+
+    it("handles unsuccessful address lookup responses", async () => {
+      req.customFetch = vi.fn().mockResolvedValue({
+        ok: false,
+        status: 500,
+        json: vi.fn().mockResolvedValue([]),
+      });
+
+      await addressSearch.search(req, "SW1A1AA");
+
+      expect(req.customFetch).to.have.been.calledOnce;
+    });
+
+    it("handles empty address results", async () => {
+      req.customFetch = vi.fn().mockResolvedValue({
+        ok: true,
+        json: vi.fn().mockResolvedValue([]),
+      });
+
+      const results = await addressSearch.search(req, "SW1A1AA");
+
+      expect(results).to.deep.equal([]);
+    });
+  });
+
   describe("saveValues", () => {
     let testPostcode;
 
