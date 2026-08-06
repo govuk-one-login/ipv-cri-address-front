@@ -84,19 +84,9 @@ export class AddressSearchController extends FormWizard.Controller {
         },
         "Address lookup API request threw an exception"
       );
-
       throw error;
     }
 
-    if (!addressResults.ok) {
-      logger.error(
-        {
-          component: "AddressSearchController",
-          statusCode: addressResults.status,
-        },
-        "Address lookup API request failed"
-      );
-    }
     const addresses = await addressResults.json();
     if (!addresses?.length) {
       logger.warn(
