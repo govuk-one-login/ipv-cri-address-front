@@ -77,7 +77,7 @@ export class AddressSearchController extends FormWizard.Controller {
         headers,
       });
     } catch (error) {
-      logger.error(
+      logger.warn(
         {
           component: "AddressSearchController",
           message: error.message,
