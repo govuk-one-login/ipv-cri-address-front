@@ -13,7 +13,12 @@ export class AddressPrepopulateController extends FormWizard.Controller {
 
     try {
       if (!req.session.tokenId) {
-        logger.warn("No session ID, not attempting pre-population");
+        logger.warn(
+          {
+            component: "AddressPrepopulateController",
+          },
+          "No session ID, not attempting pre-population"
+        );
         return callback();
       }
 
@@ -32,6 +37,13 @@ export class AddressPrepopulateController extends FormWizard.Controller {
 
       if (data?.addresses?.length > 0) {
         req.session.prepopulatedPostcode = true;
+        logger.debug(
+          {
+            component: "AddressPrepopulateController",
+            prepopulatedPostcode: true,
+          },
+          "Address postcode pre-populated"
+        );
         req.sessionModel.set("addressSearch", data.addresses[0].postalCode);
       }
 
@@ -39,7 +51,13 @@ export class AddressPrepopulateController extends FormWizard.Controller {
         callback();
       });
     } catch (error) {
-      logger.warn({ err: error }, "Error pre-populating address");
+      logger.warn(
+        {
+          component: "AddressPrepopulateController",
+          message: error.message,
+        },
+        "Error pre-populating address"
+      );
       callback();
     }
   }

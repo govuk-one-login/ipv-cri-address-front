@@ -9,6 +9,24 @@ import {
 } from "../../../../../test/data/testData.js";
 import { config } from "../../../../lib/config.js";
 
+const { mockLogger } = vi.hoisted(() => ({
+  mockLogger: {
+    warn: vi.fn(),
+    debug: vi.fn(),
+    error: vi.fn(),
+  },
+}));
+
+vi.mock("@govuk-one-login/di-ipv-cri-common-express", () => ({
+  default: {
+    bootstrap: {
+      logger: {
+        get: vi.fn(() => mockLogger),
+      },
+    },
+  },
+}));
+
 const postcodeLookupPath = config.API.PATHS.POSTCODE_LOOKUP;
 
 let req;
@@ -34,6 +52,64 @@ describe("Address Search controller", function () {
 
   it("should be an instance of BaseController", () => {
     expect(addressSearch).toBeInstanceOf(FormWizard.Controller);
+  });
+
+  describe("locals", () => {
+    it("sets prepopulatedPostcode on res.locals", () => {
+      req.session.prepopulatedPostcode = true;
+      res.locals = {};
+
+      const superLocalsSpy = vi
+        .spyOn(FormWizard.Controller.prototype, "locals")
+        .mockReturnValue({});
+
+      addressSearch.locals(req, res);
+
+      expect(res.locals.prepopulatedPostcode).to.equal(true);
+      expect(superLocalsSpy).to.have.been.calledOnce;
+    });
+  });
+
+  describe("search", () => {
+    it("searches without a session token", async () => {
+      delete req.session.tokenId;
+
+      req.customFetch = vi.fn().mockResolvedValue({
+        ok: true,
+        json: vi.fn().mockResolvedValue([
+          {
+            buildingName: "test",
+          },
+        ]),
+      });
+
+      await addressSearch.search(req, "SW1A1AA");
+
+      expect(req.customFetch).to.have.been.calledOnce;
+    });
+
+    it("handles unsuccessful address lookup responses", async () => {
+      req.customFetch = vi.fn().mockResolvedValue({
+        ok: false,
+        status: 500,
+        json: vi.fn().mockResolvedValue([]),
+      });
+
+      await addressSearch.search(req, "SW1A1AA");
+
+      expect(req.customFetch).to.have.been.calledOnce;
+    });
+
+    it("handles empty address results", async () => {
+      req.customFetch = vi.fn().mockResolvedValue({
+        ok: true,
+        json: vi.fn().mockResolvedValue([]),
+      });
+
+      const results = await addressSearch.search(req, "SW1A1AA");
+
+      expect(results).to.deep.equal([]);
+    });
   });
 
   describe("saveValues", () => {
@@ -117,7 +193,12 @@ describe("Address Search controller", function () {
 
     describe("on api error", () => {
       beforeEach(async () => {
-        req.customFetch = vi.fn().mockRejectedValue(new Error("Error!"));
+        const error = new Error("Address lookup failed");
+        error.address = {
+          postcode: "SW1A 1AA",
+          buildingName: "Buckingham Palace",
+        };
+        req.customFetch = vi.fn().mockRejectedValue(error);
 
         testPostcode = "myPostcode";
         req.body["addressSearch"] = testPostcode;
@@ -138,6 +219,29 @@ describe("Address Search controller", function () {
       });
       it("should call callback without an error", () => {
         expect(next).toHaveBeenCalled();
+      });
+      it("should only log the error message", () => {
+        expect(mockLogger.warn).toHaveBeenCalledWith(
+          {
+            component: "AddressSearchController",
+            message: "Address lookup failed",
+          },
+          "Error searching for address"
+        );
+      });
+
+      it("should not log PII from the error object", () => {
+        const loggedPayload = mockLogger.warn.mock.calls[0][0];
+
+        expect(loggedPayload).toEqual({
+          component: "AddressSearchController",
+          message: "Address lookup failed",
+        });
+
+        expect(JSON.stringify(loggedPayload)).not.toContain("SW1A 1AA");
+        expect(JSON.stringify(loggedPayload)).not.toContain(
+          "Buckingham Palace"
+        );
       });
     });
   });

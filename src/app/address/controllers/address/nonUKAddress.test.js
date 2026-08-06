@@ -3,6 +3,23 @@ import FormWizard from "hmpo-form-wizard";
 import { NonUKAddressController } from "./nonUKAddress.js";
 import { buildingAddressComponent } from "../../components/buildingAddress.js";
 import { buildingAddressEmptyValidator } from "../../validators/nonUKAddressValidator.js";
+const { mockLogger } = vi.hoisted(() => ({
+  mockLogger: {
+    warn: vi.fn(),
+    debug: vi.fn(),
+    error: vi.fn(),
+  },
+}));
+
+vi.mock("@govuk-one-login/di-ipv-cri-common-express", () => ({
+  default: {
+    bootstrap: {
+      logger: {
+        get: vi.fn(() => mockLogger),
+      },
+    },
+  },
+}));
 
 const address = new NonUKAddressController({ route: "/test" });
 
@@ -88,6 +105,20 @@ describe("NonUKAddressController", () => {
           },
         });
       });
+    });
+
+    it("calls callback with error when buildAddress throws", async () => {
+      const error = new Error("Boom");
+
+      vi.spyOn(address, "buildAddress").mockImplementation(() => {
+        throw error;
+      });
+
+      const callback = vi.fn();
+
+      await address.saveValues(req, res, callback);
+
+      expect(callback).to.have.been.calledOnceWith(error);
     });
 
     it("includes buildingAddressEmptyErrorMessage in errors", () => {
@@ -303,6 +334,47 @@ describe("NonUKAddressController", () => {
         subBuildingName: "Apt 1",
         validFrom: "2020-01-01",
         addressCountry,
+      });
+    });
+    describe("when buildAddress throws", () => {
+      beforeEach(async () => {
+        const error = new Error("build failed");
+
+        error.address = {
+          postalCode: "75008",
+          streetName: "Avenue des Champs-Élysées",
+          buildingNumber: "123",
+        };
+
+        vi.spyOn(address, "buildAddress").mockImplementation(() => {
+          throw error;
+        });
+
+        await address.saveValues(req, res, next);
+      });
+
+      it("should call callback with the error", () => {
+        expect(next).to.have.been.calledOnce;
+      });
+
+      it("should log only the error message", () => {
+        expect(mockLogger.error).toHaveBeenCalledWith(
+          {
+            component: "NonUKAddressController",
+            message: "build failed",
+          },
+          "Failed to save non-uk address"
+        );
+      });
+
+      it("should not log address data", () => {
+        const loggedMetadata = mockLogger.error.mock.calls[0][0];
+
+        expect(JSON.stringify(loggedMetadata)).not.toContain("75008");
+        expect(JSON.stringify(loggedMetadata)).not.toContain(
+          "Avenue des Champs-Élysées"
+        );
+        expect(JSON.stringify(loggedMetadata)).not.toContain("123");
       });
     });
   });

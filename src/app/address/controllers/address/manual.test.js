@@ -6,6 +6,23 @@ import { buildingAddressComponent } from "../../components/buildingAddress.js";
 import { ukBuildingAddressEmptyValidator } from "../../validators/addressValidator.js";
 import { AddressController } from "./manual.js";
 
+const { mockLogger } = vi.hoisted(() => ({
+  mockLogger: {
+    warn: vi.fn(),
+    debug: vi.fn(),
+    error: vi.fn(),
+  },
+}));
+
+vi.mock("@govuk-one-login/di-ipv-cri-common-express", () => ({
+  default: {
+    bootstrap: {
+      logger: {
+        get: vi.fn(() => mockLogger),
+      },
+    },
+  },
+}));
 describe("address controller", () => {
   const address = new AddressController({ route: "/test" });
 
@@ -442,5 +459,47 @@ describe("address controller", () => {
       expect(savedAddress.addressCountry).to.equal("GB");
       expect(addressToSave.addressCountry).to.be.undefined;
     });
+  });
+  it("should call callback with error when buildAddress throws", async () => {
+    const error = new Error("build failed");
+
+    vi.spyOn(address, "buildAddress").mockImplementation(() => {
+      throw error;
+    });
+
+    await address.saveValues(req, res, next);
+
+    expect(next).to.have.been.calledOnce;
+    expect(next).to.have.been.calledWith(error);
+  });
+
+  it("should not log PII when buildAddress throws", async () => {
+    const error = new Error("build failed");
+
+    error.address = {
+      postalCode: "Q1 1AB",
+      streetName: "1 Test Street",
+      buildingNumber: "123",
+    };
+
+    vi.spyOn(address, "buildAddress").mockImplementation(() => {
+      throw error;
+    });
+
+    await address.saveValues(req, res, next);
+
+    expect(mockLogger.error).toHaveBeenCalledWith(
+      {
+        component: "AddressController",
+        message: "build failed",
+      },
+      "Failed to save address"
+    );
+
+    const loggedMetadata = mockLogger.error.mock.calls[0][0];
+
+    expect(JSON.stringify(loggedMetadata)).not.toContain("Q1 1AB");
+    expect(JSON.stringify(loggedMetadata)).not.toContain("1 Test Street");
+    expect(JSON.stringify(loggedMetadata)).not.toContain("123");
   });
 });

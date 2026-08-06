@@ -1,10 +1,15 @@
 import FormWizard from "hmpo-form-wizard";
+import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
+
+import { config } from "../../../../lib/config.js";
 import { addressSelectorValidator } from "../../validators/addressSelectorValidation.js";
 
 import {
   addressesToSelectItems,
   addressPresenter,
 } from "../../../../presenters/index.js";
+
+const logger = commonExpress.bootstrap.logger.get(config.PACKAGE_NAME);
 
 export class AddressResultsController extends FormWizard.Controller {
   locals(req, res, callback) {
@@ -54,6 +59,13 @@ export class AddressResultsController extends FormWizard.Controller {
 
         callback();
       } catch (err) {
+        logger.error(
+          {
+            component: "AddressResultsController",
+            err,
+          },
+          "Failed to save selected address"
+        );
         callback(err);
       }
     });
@@ -67,6 +79,16 @@ export class AddressResultsController extends FormWizard.Controller {
           selectedAddress
       ),
     };
+    if (Object.keys(chosenAddress).length === 0) {
+      logger.warn(
+        {
+          component: "AddressResultsController",
+          searchResultsCount: searchResults?.length || 0,
+          selectedAddressProvided: !!selectedAddress,
+        },
+        "Unable to match selected address to search result"
+      );
+    }
 
     return chosenAddress;
   }
