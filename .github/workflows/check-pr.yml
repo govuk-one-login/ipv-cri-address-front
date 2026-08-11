@@ -1,7 +1,9 @@
 name: Check PR
 
 on: pull_request
-permissions: {}
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   code-quality:
@@ -23,4 +25,13 @@ jobs:
     uses: ./.github/workflows/pre-merge-deploy.yml
     with:
       aws-region: eu-west-2
+    secrets: inherit
+
+  integration-tests:
+    needs: deploy
+    name: Run tests
+    uses: ./.github/workflows/run-integration-tests.yml
+    with:
+      aws-region: ${{ needs.deploy.outputs.aws-region }}
+      stack-outputs: ${{ needs.deploy.outputs.stack-outputs }}
     secrets: inherit
