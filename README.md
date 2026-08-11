@@ -116,7 +116,6 @@ You can run the address frontend with a deployed Address CRI stack in AWS. This 
 ### Prerequisites
 
 1. The required repositories need to be cloned into the same parent directory, this is a one-time setup:
-
    - This repository (`ipv-cri-address-front`)
    - [ipv-stubs](https://github.com/govuk-one-login/ipv-stubs)
    - [ipv-config](https://github.com/govuk-one-login/ipv-config)

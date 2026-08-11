@@ -1,4 +1,4 @@
-@mock-errors @mock-api:address-success
+@mock-errors @mock-api:address-success @deployed-stack-only
 Feature: Error handling
 
   API Errors in middle of journey

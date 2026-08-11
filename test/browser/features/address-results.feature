@@ -1,4 +1,4 @@
-@mock-api:address-success @success
+@mock-api:address-success @success @deployed-stack-only
 Feature: Happy Path - confirming preselected address details and date invalidation
   Confirming address details
 
