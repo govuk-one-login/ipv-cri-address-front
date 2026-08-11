@@ -49,6 +49,11 @@ services:
       GITHUB_ACTIONS: ${GITHUB_ACTIONS:-true}
       ENVIRONMENT: ${ENVIRONMENT:-dev}
       BROWSER: ${BROWSER:-firefox}
+
+      AWS_REGION: ${AWS_REGION:-}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN:-}
     tty: true
     stdin_open: true
     volumes:
