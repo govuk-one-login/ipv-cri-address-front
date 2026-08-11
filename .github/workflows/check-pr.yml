@@ -17,3 +17,10 @@ jobs:
   browser-tests:
     name: Run tests
     uses: ./.github/workflows/run-browser-tests.yml
+
+  deploy:
+    name: Pre-merge deploy
+    uses: ./.github/workflows/pre-merge-deploy.yml
+    with:
+      aws-region: eu-west-2
+    secrets: inherit
