@@ -1,4 +1,4 @@
-@mock-api:international-address @deployed-stack-only
+@mock-api:international-address
 Feature: International address - Enter your address
 
   Background:
@@ -6,6 +6,7 @@ Feature: International address - Enter your address
     And they have started the address journey
     Then they should see the country selector page
 
+  @deployed-stack-only @international
   Scenario: Successfully validate international address with only building apartment number provided
     Given they have selected the country "Kenya"
     When they click the continue button
@@ -45,6 +46,7 @@ Feature: International address - Enter your address
     And they continue to confirm international address
     Then they should see the non UK confirm page
 
+  @deployed-stack-only @international
   Scenario: Successfully validate international address with all building details provided
     Given they have selected the country "Kenya"
     When they click the continue button
@@ -189,6 +191,7 @@ Feature: International address - Enter your address
     And they continue to confirm international address
     Then they see an error summary with failed validation message: "Enter a year less than 100 years ago"
 
+  @deployed-stack-only @international
   Scenario: Change selected international country, selected same country leads to international page
     Given they have selected the country "Kenya"
     When they click the continue button
@@ -200,6 +203,7 @@ Feature: International address - Enter your address
     When they click the continue button
     Then they should see international address form
 
+  @deployed-stack-only @international
   Scenario: Change selected international country, selected different international country leads to international address page
     Given they have selected the country "Kenya"
     When they click the continue button
@@ -213,6 +217,7 @@ Feature: International address - Enter your address
     Then they should see international address form
     And they see the change country link "France"
 
+  @deployed-stack-only @international
   Scenario: Change selected international country, selected uk country leads to uk address page
     Given they have selected the country "Kenya"
     When they click the continue button

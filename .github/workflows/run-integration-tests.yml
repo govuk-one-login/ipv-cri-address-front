@@ -40,7 +40,7 @@ jobs:
           npm run test:deployed
         env:
           MOCK_API: false
-          WEBSITE_HOST: ${{ fromJson(inputs.stack-outputs).FrontUrl }}
+          WEBSITE_HOST: ${{ fromJson(inputs.stack-outputs).AddressFrontUrl }}
           RELYING_PARTY_URL: ${{ vars.RELYING_PARTY_URL }}
 
       - name: Stop Docker

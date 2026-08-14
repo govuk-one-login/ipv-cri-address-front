@@ -1,4 +1,4 @@
-@mock-api:address-success @success @post-merge @deployed-stack-only
+@mock-api:address-success @success @post-merge
 Feature: Happy Path
   Viewing the Address lookup successfully
 
@@ -6,25 +6,28 @@ Feature: Happy Path
     Given Authenticalable Address Amy is using the system
     And they have started the address journey
 
-  @live
+  @live @deployed-stack-only
   Scenario: Searching and successfully returning a postcode and saving a single address
-    Given they searched for their postcode "E1 8QS"
+    Given they searched for their postcode "SW1A 2AA"
     Then they should see the results page
-    And they have selected an address ""
+    And they have selected an address "10 Downing Street, London, SW1A 2AA"
     Then they should see the address page
 
+  @deployed-stack-only
   Scenario: Searching and unsuccessfully finding an address and continuing
     Given they searched for their postcode "X1 1XX"
     And they see the problem page
     When they choose manual entry
     Then they should see the address page
 
+  @deployed-stack-only
   Scenario: Searching and unsuccessfully finding an address and going back to search
     Given they searched for their postcode "X1 1XX"
     And they see the problem page
     When they choose go back to search
     Then they should see the search page
 
+  @deployed-stack-only
   Scenario: Searching and successfully finding an address and then selecting cant find my address
     Given they searched for their postcode "E1 8QS"
     Then they should see the results page
@@ -32,10 +35,11 @@ Feature: Happy Path
     When they have selected Cant find address
     Then they should see the address page
 
+  @deployed-stack-only
   Scenario: Searching and successfully finding an address and then selecting change my postcode
-    Given they searched for their postcode "E1 8QS"
+    Given they searched for their postcode "SW1A 2AA"
     Then they should see the results page
-    And they should see the result postcode "E1 8QS"
+    And they should see the result postcode "SW1A 2AA"
     When they select change postcode
     Then they should see the search page
 
