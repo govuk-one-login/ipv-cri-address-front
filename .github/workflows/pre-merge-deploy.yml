@@ -47,7 +47,7 @@ jobs:
           immutable-tags: false
           aws-role-arn: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN }}
           aws-region: ${{ inputs.aws-region }}
-          repository: address-front-pre-merge
+          repository: address-cri-front-pre-merge
           dockerfile: Dockerfile
           build-args: BASE=plain
           image-version: ${{ github.sha }}
@@ -89,7 +89,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ needs.push-image.outputs.image-tag }}
         run: |
-          echo "uri=562670266496.dkr.ecr.eu-west-2.amazonaws.com/address-front-pre-merge:${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
+          echo "uri=005455562524.dkr.ecr.eu-west-2.amazonaws.com/address-cri-front-pre-merge:${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
 
       - name: Deploy stack
         id: deploy
