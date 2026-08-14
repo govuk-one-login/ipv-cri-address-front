@@ -13,7 +13,7 @@ Feature: Happy Path - confirming preselected address details and date invalidati
     Scenario: Changing address values and successfully passing validation when a previous date is added
       Given they are on the address page
       Then they should see the postcode prefilled with "E1 8QS"
-      Then they should see house number prefilled with "10"
+      Then they should see house number prefilled with "1"
       And they should see street prefilled with "Whitechapel High Street"
       And they should see town or city prefilled with "London"
       When they add their residency date with a "recent" move year

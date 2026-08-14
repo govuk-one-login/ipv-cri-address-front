@@ -6,7 +6,7 @@ Feature: Happy Path - confirming preselected address details and date invalidati
     Given Authenticalable Address Amy is using the system
     And they have started the address journey
     And they searched for their postcode "E1 8QS"
-    Then they have selected an address ""
+    Then they have selected an address "Government Digital Services Suite 6-7 10 Whitechapel High Street, London, E1 8QS"
     When they add their residency date with a "recent" move year
     And they continue to confirm address
     And they select the previous UK address within three months radio button

@@ -8,9 +8,9 @@ Feature: Happy Path
 
   @live @deployed-stack-only
   Scenario: Searching and successfully returning a postcode and saving a single address
-    Given they searched for their postcode "SW1A 2AA"
+    Given they searched for their postcode "E1 8QS"
     Then they should see the results page
-    And they have selected an address "10 Downing Street, London, SW1A 2AA"
+    And they have selected an address "Government Digital Services Suite 6-7 10 Whitechapel High Street, London, E1 8QS"
     Then they should see the address page
 
   @deployed-stack-only
@@ -37,9 +37,9 @@ Feature: Happy Path
 
   @deployed-stack-only
   Scenario: Searching and successfully finding an address and then selecting change my postcode
-    Given they searched for their postcode "SW1A 2AA"
+    Given they searched for their postcode "E1 8QS"
     Then they should see the results page
-    And they should see the result postcode "SW1A 2AA"
+    And they should see the result postcode "E1 8QS"
     When they select change postcode
     Then they should see the search page
 

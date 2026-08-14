@@ -6,9 +6,9 @@ Feature: Error handling
   Background:
     Given Back Button Betty is using the system
     And they have started the address journey
-    And they searched for their postcode "SW1A 2AA"
+    And they searched for their postcode "E1 8QS"
     Then they should see the results page
-    And they have selected an address "10 Downing Street, London, SW1A 2AA"
+    And they have selected an address "Government Digital Services Suite 6-7 10 Whitechapel High Street, London, E1 8QS"
     Then they should see the address page
     Given they are on the address page
     When they add their residency date with a "older" move year
