@@ -62,6 +62,7 @@ Parameters:
 
 Conditions:
   IsNotPreMergeStack: !Equals [!Ref PreMerge, "false"]
+  IsPreMergeStack: !Equals [!Ref PreMerge, "true"]
 
   UseContainerImageNameOverride:
     !Not [!Equals [!Ref ContainerImageNameOverride, ""]]
@@ -232,6 +233,43 @@ Resources:
     Properties:
       ResourceArn: !Ref LoadBalancer
       WebACLArn: !ImportValue cfront-origin-distrib-CloakingOriginWebACLArn
+
+  PreMergeLoadBalancerWebACL:
+    Type: AWS::WAFv2::WebACL
+    Condition: IsPreMergeStack
+    Properties:
+      Name: !Sub "${AWS::StackName}-premerge-acl"
+      Scope: REGIONAL
+      DefaultAction:
+        Allow: {}
+      VisibilityConfig:
+        SampledRequestsEnabled: true
+        CloudWatchMetricsEnabled: true
+        MetricName: !Sub "${AWS::StackName}-premerge-acl"
+      Rules:
+        - Name: AWS-CommonRuleSet
+          Priority: 0
+          OverrideAction:
+            None: {}
+          Statement:
+            ManagedRuleGroupStatement:
+              VendorName: AWS
+              Name: AWSManagedRulesCommonRuleSet
+              RuleActionOverrides:
+                - Name: SizeRestrictions_QUERYSTRING
+                  ActionToUse:
+                    Count: {}
+          VisibilityConfig:
+            SampledRequestsEnabled: true
+            CloudWatchMetricsEnabled: true
+            MetricName: AWS-CommonRuleSet
+
+  PreMergeWAFv2ACLAssociation:
+    Type: AWS::WAFv2::WebACLAssociation
+    Condition: IsPreMergeStack
+    Properties:
+      ResourceArn: !Ref LoadBalancer
+      WebACLArn: !GetAtt PreMergeLoadBalancerWebACL.Arn
 
   # Private Application Load Balancer
   LoadBalancer:
