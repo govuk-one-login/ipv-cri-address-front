@@ -14,9 +14,9 @@ Feature: Happy Path - previous
 
     @deployed-stack-only
     Scenario: Previous address - Searching and successfully returning a postcode and saving a single address
-      Given they searched for their postcode "E1 8QS"
+      Given they searched for their postcode "BA2 5AA"
       Then they should see the results page
-      And they have selected an address "1 Whitechapel High Street, London, E1 8QS"
+      And they have selected an address "6 Hadley Road, Bath, BA2 5AA"
       Then they should see the address page
 
     Scenario: Previous address - Searching and unsuccessfully finding an address and continuing
