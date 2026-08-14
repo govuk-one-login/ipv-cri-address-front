@@ -10,13 +10,15 @@ export async function getOauthPath(request, clientId) {
   return `/oauth2/authorize?request=${request}&client_id=${clientId}`;
 }
 
-async function getStartingURLForStub(sharedClaims) {
+async function getStartingURLForStub(sharedClaims, requestContext) {
   try {
     const baseUrl = process.env.WEBSITE_HOST;
     const startUrl = new URL("start", process.env.RELYING_PARTY_URL);
-    const body = JSON.stringify({
-      ...(sharedClaims && { shared_claims: sharedClaims }),
-    });
+    const body = JSON.stringify(
+      requestContext
+        ? { context: requestContext }
+        : { ...(sharedClaims && { shared_claims: sharedClaims }) }
+    );
 
     const credentials = await resolveCredentials();
     const { headers } = aws4.sign(
@@ -43,7 +45,7 @@ async function getStartingURLForStub(sharedClaims) {
     });
     const data = await response.json();
 
-    const oauthPath = getOauthPath(data.request, data.client_id);
+    const oauthPath = await getOauthPath(data.request, data.client_id);
 
     return new URL(oauthPath, baseUrl);
   } catch (error) {
@@ -51,11 +53,15 @@ async function getStartingURLForStub(sharedClaims) {
   }
 }
 
-export async function getStartingURL(clientId = "standalone", sharedClaims) {
+export async function getStartingURL(
+  clientId = "standalone",
+  sharedClaims,
+  requestContext
+) {
   const baseURL = process.env.WEBSITE_HOST || "http://localhost:5010";
 
   if (process.env.MOCK_API === "false") {
-    return await getStartingURLForStub(sharedClaims);
+    return await getStartingURLForStub(sharedClaims, requestContext);
   } else {
     return new URL(
       `/oauth2/authorize?request=lorem&client_id=${clientId}`,

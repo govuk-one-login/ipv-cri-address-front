@@ -61,6 +61,10 @@ Before(async function () {
   this.page = await this.context.newPage();
 });
 
+Before({ tags: "@deployed-stack-only and @international" }, function () {
+  this.requestContext = "international_user";
+});
+
 // Cleanup after each scenario
 After(async function () {
   await this.page.close();
