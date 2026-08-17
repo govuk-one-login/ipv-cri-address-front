@@ -577,7 +577,7 @@ describe("buildPageTitle", () => {
 });
 
 describe("formFieldsMiddleware", () => {
-  it("populates res.locals.formFields and errorSummary from wizard state", () => {
+  it("populates res.locals.formFields and errorSummary when render is called", () => {
     const translate = createMockTranslate({
       "fields.addressSearch.label": "Enter your postcode",
       "fields.addressSearch.hint": "UK postcode",
@@ -587,33 +587,41 @@ describe("formFieldsMiddleware", () => {
     });
 
     const req = { translate };
+    const originalRender = vi.fn();
     const res = {
-      locals: {
-        translate,
-        options: {
-          fields: {
-            addressSearch: { type: "text", autocomplete: "postal-code" },
-          },
-        },
-        values: { addressSearch: "SW1A 2AA" },
-        errors: {},
-        errorlist: [],
-        "csrf-token": "token123",
-      },
+      render: originalRender,
+      locals: {},
     };
     const next = vi.fn();
 
     formFieldsMiddleware(req, res, next);
+    expect(next).toHaveBeenCalledOnce();
+
+    // Simulate wizard populating locals before render
+    res.locals.translate = translate;
+    res.locals.options = {
+      fields: {
+        addressSearch: { type: "text", autocomplete: "postal-code" },
+      },
+    };
+    res.locals.values = { addressSearch: "SW1A 2AA" };
+    res.locals.errors = {};
+    res.locals.errorlist = [];
+    res.locals["csrf-token"] = "token123";
+
+    // Call res.render (as the wizard would)
+    res.render("address/search");
 
     expect(res.locals.formFields).toBeDefined();
     expect(res.locals.formFields.addressSearch.id).toBe("addressSearch");
     expect(res.locals.formFields.addressSearch.value).toBe("SW1A 2AA");
     expect(res.locals.errorSummary).toBeNull();
     expect(res.locals.csrfToken).toBe("token123");
-    expect(next).toHaveBeenCalledOnce();
+    expect(originalRender).toHaveBeenCalled();
+    expect(originalRender.mock.calls[0][0]).toBe("address/search");
   });
 
-  it("builds errorSummary when errors are present", () => {
+  it("builds errorSummary when errors are present at render time", () => {
     const translate = createMockTranslate({
       "fields.addressSearch.label": "Enter your postcode",
       "fields.addressSearch.validation.required": "Enter your postcode",
@@ -622,23 +630,30 @@ describe("formFieldsMiddleware", () => {
     });
 
     const req = { translate };
+    const originalRender = vi.fn();
     const res = {
-      locals: {
-        translate,
-        options: {
-          fields: { addressSearch: { type: "text" } },
-        },
-        values: {},
-        errors: { addressSearch: { type: "required", key: "addressSearch" } },
-        errorlist: [
-          { type: "required", key: "addressSearch", field: "addressSearch" },
-        ],
-        "csrf-token": "token456",
-      },
+      render: originalRender,
+      locals: {},
     };
     const next = vi.fn();
 
     formFieldsMiddleware(req, res, next);
+
+    // Simulate wizard state with errors
+    res.locals.translate = translate;
+    res.locals.options = {
+      fields: { addressSearch: { type: "text" } },
+    };
+    res.locals.values = {};
+    res.locals.errors = {
+      addressSearch: { type: "required", key: "addressSearch" },
+    };
+    res.locals.errorlist = [
+      { type: "required", key: "addressSearch", field: "addressSearch" },
+    ];
+    res.locals["csrf-token"] = "token456";
+
+    res.render("address/search");
 
     expect(res.locals.errorSummary).toEqual({
       titleText: "There is a problem",
@@ -646,15 +661,23 @@ describe("formFieldsMiddleware", () => {
     });
   });
 
-  it("skips building when options.fields is not present", () => {
+  it("skips building when options.fields is not present at render time", () => {
     const req = {};
-    const res = { locals: {} };
+    const originalRender = vi.fn();
+    const res = {
+      render: originalRender,
+      locals: {},
+    };
     const next = vi.fn();
 
     formFieldsMiddleware(req, res, next);
 
+    // Render without wizard state
+    res.render("some-page");
+
     expect(res.locals.formFields).toBeUndefined();
-    expect(next).toHaveBeenCalledOnce();
+    expect(originalRender).toHaveBeenCalled();
+    expect(originalRender.mock.calls[0][0]).toBe("some-page");
   });
 
   it("uses req.translate as fallback when res.locals.translate is unavailable", () => {
@@ -663,16 +686,21 @@ describe("formFieldsMiddleware", () => {
     });
 
     const req = { translate };
+    const originalRender = vi.fn();
     const res = {
-      locals: {
-        options: { fields: { testField: { type: "text" } } },
-        values: {},
-        errors: {},
-      },
+      render: originalRender,
+      locals: {},
     };
     const next = vi.fn();
 
     formFieldsMiddleware(req, res, next);
+
+    res.locals.options = { fields: { testField: { type: "text" } } };
+    res.locals.values = {};
+    res.locals.errors = {};
+    res.locals.errorlist = [];
+
+    res.render("test-page");
 
     expect(res.locals.formFields.testField.label.text).toBe("Test label");
   });

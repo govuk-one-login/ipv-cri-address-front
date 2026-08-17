@@ -430,38 +430,46 @@ export function buildPageTitle({
 /**
  * Express middleware that builds form field params on res.locals.formFields.
  *
- * Must be mounted AFTER hmpo-form-wizard has populated res.locals
- * (i.e., after the wizard's GET handler has run).
+ * This wraps res.render() to compute formFields just before the template
+ * is rendered, ensuring hmpo-form-wizard has already populated res.locals
+ * with errors, values, and options.fields.
  *
- * Usage:
+ * Must be mounted BEFORE hmpo-form-wizard on the router:
+ *
  *   router.use(formFieldsMiddleware);
- *   // or after wizard:
- *   app.use(formFieldsMiddleware);
+ *   router.use(hmpoFormWizard(steps, fields, options));
+ *
+ * The middleware intercepts res.render() calls to inject formFields at
+ * render time, when all wizard state is available on res.locals.
  */
 export function formFieldsMiddleware(req, res, next) {
-  // Only build if the wizard has populated options (i.e., this is a wizard-controlled route)
-  if (!res.locals.options?.fields) {
-    return next();
-  }
+  const originalRender = res.render.bind(res);
 
-  const translate = res.locals.translate || req.translate || ((key) => key);
+  res.render = function (view, options, callback) {
+    // Only build if the wizard has populated options.fields
+    if (res.locals.options?.fields) {
+      const translate = res.locals.translate || req.translate || ((key) => key);
 
-  res.locals.formFields = buildFormFields({
-    translate,
-    fields: res.locals.options.fields,
-    values: res.locals.values || {},
-    errors: res.locals.errors || {},
-  });
+      res.locals.formFields = buildFormFields({
+        translate,
+        fields: res.locals.options.fields,
+        values: res.locals.values || {},
+        errors: res.locals.errors || {},
+      });
 
-  // Build error summary
-  res.locals.errorSummary = buildErrorSummary({
-    translate,
-    errorlist: res.locals.errorlist || [],
-    fields: res.locals.options.fields,
-  });
+      // Build error summary
+      res.locals.errorSummary = buildErrorSummary({
+        translate,
+        errorlist: res.locals.errorlist || [],
+        fields: res.locals.options.fields,
+      });
 
-  // Expose CSRF token under a cleaner name
-  res.locals.csrfToken = res.locals["csrf-token"];
+      // Expose CSRF token under a cleaner name
+      res.locals.csrfToken = res.locals["csrf-token"];
+    }
+
+    return originalRender(view, options, callback);
+  };
 
   next();
 }
