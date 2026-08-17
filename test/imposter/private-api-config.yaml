@@ -57,6 +57,18 @@ resources:
       statusCode: 200
       file: postcode-lookup-e18qs.json
 
+  # Postcode lookup - BA2 5AA (success scenarios)
+  - method: POST
+    path: /postcode-lookup
+    requestHeaders:
+      session_id: "address-success"
+    requestBody:
+      jsonPath: $.postcode
+      value: "BA2 5AA"
+    response:
+      statusCode: 200
+      file: postcode-lookup-ba25aa.json
+
   # Postcode lookup - E1 8QS (authorization error scenario)
   - method: POST
     path: /postcode-lookup
@@ -90,6 +102,18 @@ resources:
     response:
       statusCode: 200
       file: postcode-lookup-e18qs.json
+
+  # Postcode lookup - BA2 5AA (prepopulated scenario)
+  - method: POST
+    path: /postcode-lookup
+    requestHeaders:
+      session_id: "address-prepopulated"
+    requestBody:
+      jsonPath: $.postcode
+      value: "BA2 5AA"
+    response:
+      statusCode: 200
+      file: postcode-lookup-ba25aa.json
 
   # Postcode lookup - PR3VC0DE (test postcode)
   - method: POST

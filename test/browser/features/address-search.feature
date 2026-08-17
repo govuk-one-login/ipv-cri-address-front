@@ -6,25 +6,28 @@ Feature: Happy Path
     Given Authenticalable Address Amy is using the system
     And they have started the address journey
 
-  @live
+  @live @deployed-stack-only
   Scenario: Searching and successfully returning a postcode and saving a single address
     Given they searched for their postcode "E1 8QS"
     Then they should see the results page
-    And they have selected an address ""
+    And they have selected an address "Government Digital Services Suite 6-7 10 Whitechapel High Street, London, E1 8QS"
     Then they should see the address page
 
+  @deployed-stack-only
   Scenario: Searching and unsuccessfully finding an address and continuing
     Given they searched for their postcode "X1 1XX"
     And they see the problem page
     When they choose manual entry
     Then they should see the address page
 
+  @deployed-stack-only
   Scenario: Searching and unsuccessfully finding an address and going back to search
     Given they searched for their postcode "X1 1XX"
     And they see the problem page
     When they choose go back to search
     Then they should see the search page
 
+  @deployed-stack-only
   Scenario: Searching and successfully finding an address and then selecting cant find my address
     Given they searched for their postcode "E1 8QS"
     Then they should see the results page
@@ -32,6 +35,7 @@ Feature: Happy Path
     When they have selected Cant find address
     Then they should see the address page
 
+  @deployed-stack-only
   Scenario: Searching and successfully finding an address and then selecting change my postcode
     Given they searched for their postcode "E1 8QS"
     Then they should see the results page

@@ -7,6 +7,7 @@
     "test": "cucumber-js",
     "test:ci": "cucumber-js --format json:reports/cucumber-report.json",
     "test:only": "cucumber-js --tags @only --format json:reports/cucumber-report.json",
+    "test:deployed": "cucumber-js --tags \"@deployed-stack-only\"",
     "test:visual": "playwright test --config=../visual/playwright.config.js"
   },
   "author": "",

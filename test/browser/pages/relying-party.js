@@ -20,8 +20,12 @@ export class RelyingPartyPage {
     }
   }
 
-  async goto(clientId = "standalone", sharedClaims) {
-    this.startingURL = await getStartingURL(clientId, sharedClaims);
+  async goto(clientId = "standalone", sharedClaims, requestContext) {
+    this.startingURL = await getStartingURL(
+      clientId,
+      sharedClaims,
+      requestContext
+    );
     await this.page.goto(this.startingURL.toString());
   }
 

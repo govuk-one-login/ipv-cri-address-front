@@ -1,0 +1,116 @@
+name: Pre-merge deploy
+
+on:
+  workflow_call:
+    inputs:
+      aws-region: { required: true, type: string }
+    outputs:
+      aws-region:
+        description: The region in which the stack was deployed
+        value: ${{ inputs.aws-region }}
+      stack-name:
+        description: The deployed stack name
+        value: ${{ jobs.deploy.outputs.stack-name }}
+      stack-outputs:
+        description: The deployed stack outputs
+        value: ${{ jobs.deploy.outputs.stack-outputs }}
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: pre-merge-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  push-image:
+    name: Push pre-merge image
+    runs-on: ubuntu-latest
+    environment: development
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    outputs:
+      image-tag: ${{ steps.tag.outputs.image-tag }}
+    steps:
+      - name: Derive image tag from branch name
+        id: tag
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          tag="$(printf '%s' "$BRANCH_NAME" | tr -c 'A-Za-z0-9_.-' '-')"
+          tag="${tag:0:128}"
+          echo "image-tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - name: Build and push pre-merge image to ECR
+        uses: govuk-one-login/github-actions/aws/ecr/build-docker-image@c8eefadf581d2087ce2af48b7060c1329cfa5251
+        with:
+          immutable-tags: false
+          aws-role-arn: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN }}
+          aws-region: ${{ inputs.aws-region }}
+          repository: address-cri-front-pre-merge
+          dockerfile: Dockerfile
+          build-args: BASE=plain
+          image-version: ${{ github.sha }}
+          image-tags: ${{ steps.tag.outputs.image-tag }}
+
+  build:
+    name: SAM build
+    needs: push-image
+    runs-on: ubuntu-latest
+    environment: development
+    outputs:
+      cache-key: ${{ steps.build.outputs.cache-key }}
+      cache-restore-keys: ${{ steps.build.outputs.cache-restore-keys }}
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v4
+
+      - name: Build SAM application
+        id: build
+        uses: govuk-one-login/github-actions/sam/build-application@e6b6ed890b35904e1be79f7f35ffec983fa4d9db
+        with:
+          template: deploy/template.yaml
+
+  deploy:
+    name: Deploy pre-merge stack
+    needs: [push-image, build]
+    runs-on: ubuntu-latest
+    environment: development
+    outputs:
+      aws-region: ${{ inputs.aws-region }}
+      stack-name: ${{ steps.deploy.outputs.stack-name }}
+      stack-outputs: ${{ steps.deploy.outputs.stack-outputs }}
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v4
+
+      - name: Derive container image override from branch
+        id: image
+        env:
+          IMAGE_TAG: ${{ needs.push-image.outputs.image-tag }}
+        run: |
+          echo "uri=005455562524.dkr.ecr.eu-west-2.amazonaws.com/address-cri-front-pre-merge:${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy stack
+        id: deploy
+        uses: govuk-one-login/github-actions/sam/deploy-stack@e6b6ed890b35904e1be79f7f35ffec983fa4d9db
+        with:
+          template: deploy/template.yaml
+          sam-deployment-bucket: ${{ secrets.DEV_ARTIFACT_BUCKET }}
+          aws-role-arn: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN }}
+          stack-name-prefix: preview-address-front
+          cache-key: ${{ needs.build.outputs.cache-key }}
+          cache-restore-keys: ${{ needs.build.outputs.cache-restore-keys }}
+          s3-prefix: preview
+          pull-repository: false
+          delete-failed-stack: true
+          tags: |
+            cri:component=ipv-cri-address-front
+            cri:stack-type=preview
+            cri:application=Orange
+            cri:deployment-source=github-actions
+          parameters: |
+            Environment=dev
+            PreMerge=true
+            VpcStackName=cri-vpc
+            ContainerImageNameOverride=${{ steps.image.outputs.uri }}

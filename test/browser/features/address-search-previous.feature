@@ -6,16 +6,17 @@ Feature: Happy Path - previous
       Given Authenticalable Address Amy is using the system
       And they have started the address journey
       And they searched for their postcode "E1 8QS"
-      Then they have selected an address "10 Whitechapel High Street, London, E1 8QS"
+      Then they have selected an address "Government Digital Services Suite 6-7 10 Whitechapel High Street, London, E1 8QS"
       When they add their residency date with a "recent" move year
       And they continue to confirm address
       And they select the previous UK address within three months radio button
       And they confirm their details
 
+    @deployed-stack-only
     Scenario: Previous address - Searching and successfully returning a postcode and saving a single address
-      Given they searched for their postcode "E1 8QS"
+      Given they searched for their postcode "BA2 5AA"
       Then they should see the results page
-      And they have selected an address "1 Whitechapel High Street, London, E1 8QS"
+      And they have selected an address "6 Hadley Road, Bath, BA2 5AA"
       Then they should see the address page
 
     Scenario: Previous address - Searching and unsuccessfully finding an address and continuing

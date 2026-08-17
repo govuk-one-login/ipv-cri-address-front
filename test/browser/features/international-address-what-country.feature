@@ -1,4 +1,4 @@
-@mock-api:international-address
+@mock-api:international-address @deployed-stack-only @international
 Feature: International address - What country?
 
   Background:

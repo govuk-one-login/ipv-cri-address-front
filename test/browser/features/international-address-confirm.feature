@@ -9,6 +9,7 @@ Feature: International address - Confirm Screen
     And they add their building address apartment number "A2"
     And they add their town, suburb or city "Nairobi"
 
+  @deployed-stack-only @international
   Scenario: Successfully display the non UK confirm page with a minimal address
     Given they are on the international address form
     And they add the "older" year they started living at this address
@@ -53,6 +54,7 @@ Feature: International address - Confirm Screen
     When they confirm their non UK details
     Then they should be redirected as a success
 
+  @deployed-stack-only @international
 Scenario: Successfully display the non UK confirm page without Previous Address modal with recent year
     Given they are on the international address form
     And they add the "recent" year they started living at this address
@@ -63,6 +65,7 @@ Scenario: Successfully display the non UK confirm page without Previous Address 
     And they should not see the previous address radio button
     And they should not see the previous address row
 
+  @deployed-stack-only @international
 Scenario: Successfully direct back to enter address when change address is clicked
     Given they are on the international address form
     And they add the "older" year they started living at this address
@@ -75,6 +78,7 @@ Scenario: Successfully direct back to enter address when change address is click
     And they see the Region with value ""
     And they see the Year From with value "older"
 
+  @deployed-stack-only @international
 Scenario: Successfully direct back to enter address when change year is clicked
     Given they are on the international address form
     And they add the "older" year they started living at this address

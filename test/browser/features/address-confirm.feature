@@ -7,15 +7,17 @@ Feature: Happy Path - confirming address details
     And they have started the address journey
     And they searched for their postcode "E1 8QS"
     Then they should see the results page
-    And they have selected an address ""
+    And they have selected an address "Government Digital Services Suite 6-7 10 Whitechapel High Street, London, E1 8QS"
     Then they should see the address page
 
+  @deployed-stack-only
     Scenario: Adding an year date that should show the previous address modal
       Given they are on the address page
       When they add their residency date with a "recent" move year
       And they continue to confirm address
       Then they should see the confirm page
 
+  @deployed-stack-only
     Scenario: Adding an year date that should not show the previous address modal
       Given they are on the address page
       When they add their residency date with a "older" move year
@@ -32,6 +34,7 @@ Feature: Happy Path - confirming address details
       When they confirm their details
       Then they should see an error message "Select yes if you’ve lived at another UK address in the past three months."
 
+  @deployed-stack-only
     Scenario: Selecting less than 3 months residence should move the user to the previous address journey
       Given they are on the address page
       When they add their residency date with a "recent" move year
@@ -42,6 +45,7 @@ Feature: Happy Path - confirming address details
       And they confirm their details
       Then they should see the previous address search page
 
+  @deployed-stack-only
     Scenario: Changing an address
       Given they are on the address page
       When they add their residency date with a "recent" move year

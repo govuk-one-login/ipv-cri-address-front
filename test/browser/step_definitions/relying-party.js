@@ -7,7 +7,7 @@ Given(/^([A-Za-z ])+ is using the system$/, async function (name) {
 
   const rpPage = new RelyingPartyPage(this.page);
   const clientId = this.clientId || "standalone";
-  await rpPage.goto(clientId);
+  await rpPage.goto(clientId, undefined, this.requestContext);
 });
 
 Given("they have been redirected as a success", function () {

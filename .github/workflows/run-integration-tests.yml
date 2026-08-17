@@ -1,0 +1,48 @@
+name: Integration tests
+on:
+  workflow_call:
+    inputs:
+      aws-region: { required: true, type: string }
+      stack-outputs: { required: true, type: string }
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: integration-test-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+    working-directory: test/docker
+
+jobs:
+  test:
+    name: Run integration tests against deployed stack
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Assume AWS Role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN }}
+          aws-region: ${{ inputs.aws-region }}
+          role-session-name: GitHubActions-${{ github.run_id }}
+
+      - name: Run tests
+        run: >
+          docker compose run --rm cucumber
+          npm run test:deployed
+        env:
+          MOCK_API: false
+          WEBSITE_HOST: ${{ fromJson(inputs.stack-outputs).AddressFrontUrl }}
+          RELYING_PARTY_URL: ${{ vars.RELYING_PARTY_URL }}
+
+      - name: Stop Docker
+        if: ${{ always() }}
+        run: docker compose down

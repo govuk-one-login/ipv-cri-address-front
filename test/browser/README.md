@@ -49,6 +49,14 @@ cd ../browser
 MOCK_API=true WEBSITE_HOST=http://localhost:5010 MOCK_API_URL=http://localhost:8080 npm test
 ```
 
+To run the browser tests against the imposter stubs.
+
+```
+npm run test:deployed
+```
+
+To run the browser tests against the deployed frontend stack using the main backend stack. Remember to update the .env file to reflect this.
+
 ### Running locally on different browser types
 
 ```bash
