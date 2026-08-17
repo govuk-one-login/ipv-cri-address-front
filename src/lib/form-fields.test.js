@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   buildFormFields,
+  buildErrorSummary,
+  buildPageTitle,
   formFieldsMiddleware,
   resolveErrorMessage,
 } from "./form-fields.js";
@@ -415,11 +417,173 @@ describe("buildFormFields", () => {
   });
 });
 
+describe("buildErrorSummary", () => {
+  const translate = createMockTranslate({
+    "govuk.errorSummaryTitle": "There is a problem",
+    "govuk.error": "Error",
+    "fields.addressSearch.label": "Postcode",
+    "fields.addressSearch.validation.required": "Enter your postcode",
+    "fields.addressResults.label": "Address",
+    "fields.addressResults.validation.required":
+      "Choose an address from the list",
+    "validation.required": "Enter your {{label}}",
+    "validation.default": "You must answer this question",
+  });
+
+  it("returns null when errorlist is empty", () => {
+    const result = buildErrorSummary({
+      translate,
+      errorlist: [],
+      fields: {},
+    });
+    expect(result).toBeNull();
+  });
+
+  it("returns null when errorlist is undefined", () => {
+    const result = buildErrorSummary({
+      translate,
+      errorlist: undefined,
+      fields: {},
+    });
+    expect(result).toBeNull();
+  });
+
+  it("builds error summary with single error", () => {
+    const result = buildErrorSummary({
+      translate,
+      errorlist: [
+        { type: "required", key: "addressSearch", field: "addressSearch" },
+      ],
+      fields: { addressSearch: { type: "text" } },
+    });
+
+    expect(result).toEqual({
+      titleText: "There is a problem",
+      errorList: [{ href: "#addressSearch", text: "Enter your postcode" }],
+    });
+  });
+
+  it("builds error summary with multiple errors", () => {
+    const result = buildErrorSummary({
+      translate,
+      errorlist: [
+        { type: "required", key: "addressSearch", field: "addressSearch" },
+        { type: "required", key: "addressResults", field: "addressResults" },
+      ],
+      fields: {
+        addressSearch: { type: "text" },
+        addressResults: { type: "list" },
+      },
+    });
+
+    expect(result.errorList).toHaveLength(2);
+    expect(result.errorList[0]).toEqual({
+      href: "#addressSearch",
+      text: "Enter your postcode",
+    });
+    expect(result.errorList[1]).toEqual({
+      href: "#addressResults",
+      text: "Choose an address from the list",
+    });
+  });
+
+  it("uses error.field for href when available", () => {
+    const result = buildErrorSummary({
+      translate,
+      errorlist: [
+        { type: "required", key: "addressSearch", field: "addressSearch" },
+      ],
+      fields: { addressSearch: { type: "text" } },
+    });
+
+    expect(result.errorList[0].href).toBe("#addressSearch");
+  });
+
+  it("falls back to error.key for href when field is not set", () => {
+    const result = buildErrorSummary({
+      translate,
+      errorlist: [{ type: "required", key: "addressSearch" }],
+      fields: { addressSearch: { type: "text" } },
+    });
+
+    expect(result.errorList[0].href).toBe("#addressSearch");
+  });
+});
+
+describe("buildPageTitle", () => {
+  const translate = createMockTranslate({
+    "govuk.error": "Error",
+    "govuk.serviceName": " ",
+  });
+
+  it("builds page title without error prefix when no errors", () => {
+    const result = buildPageTitle({
+      translate,
+      errorlist: [],
+      pageTitle: "Find your address",
+    });
+
+    expect(result).toBe("Find your address – GOV.UK One Login");
+  });
+
+  it("builds page title with error prefix when errors present", () => {
+    const result = buildPageTitle({
+      translate,
+      errorlist: [{ type: "required", key: "field1" }],
+      pageTitle: "Find your address",
+    });
+
+    expect(result).toBe("Error: Find your address – GOV.UK One Login");
+  });
+
+  it("includes service name when not blank", () => {
+    const translateWithService = createMockTranslate({
+      "govuk.error": "Error",
+      "govuk.serviceName": "Prove your identity",
+    });
+
+    const result = buildPageTitle({
+      translate: translateWithService,
+      errorlist: [],
+      pageTitle: "Find your address",
+    });
+
+    expect(result).toBe(
+      "Find your address – Prove your identity – GOV.UK One Login"
+    );
+  });
+
+  it("omits service name when it is whitespace-only", () => {
+    const result = buildPageTitle({
+      translate,
+      errorlist: [],
+      pageTitle: "Find your address",
+    });
+
+    // govuk.serviceName is " " (single space) - should be omitted
+    expect(result).toBe("Find your address – GOV.UK One Login");
+  });
+
+  it("uses explicit serviceName param when provided", () => {
+    const result = buildPageTitle({
+      translate,
+      errorlist: [],
+      pageTitle: "Find your address",
+      serviceName: "My Service",
+    });
+
+    expect(result).toBe("Find your address – My Service – GOV.UK One Login");
+  });
+});
+
 describe("formFieldsMiddleware", () => {
-  it("populates res.locals.formFields from wizard state", () => {
+  it("populates res.locals.formFields and errorSummary from wizard state", () => {
     const translate = createMockTranslate({
       "fields.addressSearch.label": "Enter your postcode",
       "fields.addressSearch.hint": "UK postcode",
+      "fields.addressSearch.validation.required": "Enter your postcode",
+      "govuk.errorSummaryTitle": "There is a problem",
+      "govuk.error": "Error",
     });
 
     const req = { translate };
@@ -433,6 +597,7 @@ describe("formFieldsMiddleware", () => {
         },
         values: { addressSearch: "SW1A 2AA" },
         errors: {},
+        errorlist: [],
         "csrf-token": "token123",
       },
     };
@@ -443,8 +608,42 @@ describe("formFieldsMiddleware", () => {
     expect(res.locals.formFields).toBeDefined();
     expect(res.locals.formFields.addressSearch.id).toBe("addressSearch");
     expect(res.locals.formFields.addressSearch.value).toBe("SW1A 2AA");
+    expect(res.locals.errorSummary).toBeNull();
     expect(res.locals.csrfToken).toBe("token123");
     expect(next).toHaveBeenCalledOnce();
+  });
+
+  it("builds errorSummary when errors are present", () => {
+    const translate = createMockTranslate({
+      "fields.addressSearch.label": "Enter your postcode",
+      "fields.addressSearch.validation.required": "Enter your postcode",
+      "govuk.errorSummaryTitle": "There is a problem",
+      "govuk.error": "Error",
+    });
+
+    const req = { translate };
+    const res = {
+      locals: {
+        translate,
+        options: {
+          fields: { addressSearch: { type: "text" } },
+        },
+        values: {},
+        errors: { addressSearch: { type: "required", key: "addressSearch" } },
+        errorlist: [
+          { type: "required", key: "addressSearch", field: "addressSearch" },
+        ],
+        "csrf-token": "token456",
+      },
+    };
+    const next = vi.fn();
+
+    formFieldsMiddleware(req, res, next);
+
+    expect(res.locals.errorSummary).toEqual({
+      titleText: "There is a problem",
+      errorList: [{ href: "#addressSearch", text: "Enter your postcode" }],
+    });
   });
 
   it("skips building when options.fields is not present", () => {

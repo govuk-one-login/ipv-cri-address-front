@@ -360,6 +360,74 @@ export function buildFormFields({ translate, fields, values, errors }) {
 }
 
 /**
+ * Builds the govukErrorSummary params from the wizard's errorlist.
+ *
+ * @param {object} options
+ * @param {Function} options.translate - The translate function
+ * @param {Array} options.errorlist - The filtered error list from hmpo-form-wizard
+ * @param {object} options.fields - The field definitions from options.fields
+ * @returns {object|null} GOV.UK Error Summary params, or null if no errors
+ */
+export function buildErrorSummary({ translate, errorlist, fields }) {
+  if (!errorlist || errorlist.length === 0) {
+    return null;
+  }
+
+  const titleText =
+    translate("govuk.errorSummaryTitle", { self: false }) ||
+    "There is a problem";
+
+  const errorList = errorlist.map((error) => {
+    const fieldId = error.field || error.key;
+    const text = resolveErrorMessage(translate, fieldId, error);
+    return {
+      href: `#${fieldId}`,
+      text,
+    };
+  });
+
+  return {
+    titleText,
+    errorList,
+  };
+}
+
+/**
+ * Builds the page title string following the GOV.UK pattern:
+ *   "Error: Page Title – Service Name – GOV.UK One Login"
+ *
+ * @param {object} options
+ * @param {Function} options.translate - The translate function
+ * @param {Array} options.errorlist - The error list (to determine "Error:" prefix)
+ * @param {string} options.pageTitle - The page title text
+ * @param {string} [options.serviceName] - The service name (defaults to translation)
+ * @returns {string} The full page title string
+ */
+export function buildPageTitle({
+  translate,
+  errorlist,
+  pageTitle,
+  serviceName,
+}) {
+  const errorPrefix =
+    errorlist && errorlist.length > 0
+      ? (translate("govuk.error", { self: false }) || "Error") + ": "
+      : "";
+
+  const resolvedServiceName =
+    serviceName ||
+    translate("govuk.serviceName", { self: false }) ||
+    "";
+
+  const serviceNameSuffix =
+    resolvedServiceName && resolvedServiceName.trim()
+      ? ` – ${resolvedServiceName}`
+      : "";
+
+  return `${errorPrefix}${pageTitle}${serviceNameSuffix} – GOV.UK One Login`;
+}
+
+/**
  * Express middleware that builds form field params on res.locals.formFields.
  *
  * Must be mounted AFTER hmpo-form-wizard has populated res.locals
@@ -383,6 +451,13 @@ export function formFieldsMiddleware(req, res, next) {
     fields: res.locals.options.fields,
     values: res.locals.values || {},
     errors: res.locals.errors || {},
+  });
+
+  // Build error summary
+  res.locals.errorSummary = buildErrorSummary({
+    translate,
+    errorlist: res.locals.errorlist || [],
+    fields: res.locals.options.fields,
   });
 
   // Expose CSRF token under a cleaner name
