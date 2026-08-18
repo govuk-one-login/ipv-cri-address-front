@@ -1,15 +1,41 @@
-<!-- Found in common folder -->
-{% extends "unrecoverable-error.njk" %}
-{% set gtmJourney = "address - unrecoverable" %}
-{% from "components/analytics/onPageLoad/macro.njk" import ga4OnPageLoad %}
+{% extends "cri-base-page.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
-{{ ga4OnPageLoad({
-  nonce: cspNonce,
-  statusCode: '500',
-  englishPageTitle: 'error.title' | translate,
-  taxonomyLevel1: 'web cri',
-  taxonomyLevel2: 'error',
-  contentId: 'undefined',
-  loggedInStatus: true,
-  dynamic: false
-}) }}
+{% set hmpoPageKey = "error.unrecoverable" %}
+{% set gtmJourney = "address - unrecoverable" %}
+
+{% set isPageDataSensitive = false %}
+{% set statusCode = '500' %}
+{% set pageTitleKey = "error.unrecoverable.title" %}
+{% set taxLevel2 = 'error' %}
+{% set isPageDynamic = false %}
+{% set loggedInStatus = false %}
+
+{% block mainContent %}
+  <h1 data-id="error-title">{{ translate("error.unrecoverable.title") }}</h1>
+
+  <p>{{ translate("error.unrecoverable.subTitle") }}</p>
+
+  <h2>{{ translate("error.unrecoverable.subHeading") }}</h2>
+
+  <div class="govuk-text">
+    <p>{{ translate("error.unrecoverable.description") }}</p>
+  </div>
+
+  {{ govukButton({
+    text: translate("error.unrecoverable.buttonText"),
+    href: translate("error.unrecoverable.buttonLink")
+  }) }}
+
+  <div>
+      <p><a href="https://signin.account.gov.uk/contact-us" class="govuk-link" rel="noreferrer noopener" target="_blank">{{ translate("error.unrecoverable.contactMeLink") }}</a></p>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script {% if cspNonce %} nonce="{{ cspNonce }}"{% endif %}>
+    window.DI = window.DI || {};
+    window.DI.httpStatusCode = 500
+  </script>
+  {{ super() }}
+{% endblock %}
