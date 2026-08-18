@@ -30,7 +30,16 @@ const { setGTM, setLanguageToggle, setDeviceIntelligence } =
 const { getGTM, getLanguageToggle, getDeviceIntelligence } =
   commonExpress.lib.locals;
 const { setI18n } = commonExpress.lib.i18n;
+
 const helmetConfig = commonExpress.lib.helmet;
+
+// accessible-autocomplete - iOS hidden screenreader span's inline style
+// https://govukverify.atlassian.net/browse/OJ-2985
+// https://github.com/alphagov/accessible-autocomplete/blob/fb3e243ac15a19f7dd2e7f2d924ca10c67d89aa1/src/autocomplete.js#L574
+helmetConfig.contentSecurityPolicy.directives.styleSrc.push(
+  "'unsafe-hashes'",
+  "'sha256-s7B4Mv2I5ZJWv3wMt+YPqe3nsI+kQb7VMqSRNcvdVGg='"
+);
 
 const loggerConfig = {
   console: true,
