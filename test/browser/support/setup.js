@@ -5,7 +5,7 @@ import {
   AfterAll,
   setDefaultTimeout,
 } from "@cucumber/cucumber";
-import { chromium, firefox, webkit } from "playwright";
+import { chromium, firefox, webkit, devices } from "playwright";
 
 // FIXME This is large due to cold starts
 setDefaultTimeout(30 * 1000);
@@ -55,9 +55,15 @@ Before(async function ({ pickle } = {}) {
   this.clientId = clientId;
 });
 
+Before({ tags: "@ios-user-agent" }, function () {
+  this.userAgent = devices["iPhone 17"].userAgent;
+});
+
 // Create a new test context and page per scenario
 Before(async function () {
-  this.context = await global.browser.newContext({});
+  this.context = await global.browser.newContext({
+    ...(this.userAgent ? { userAgent: this.userAgent } : {}),
+  });
   this.page = await this.context.newPage();
 });
 

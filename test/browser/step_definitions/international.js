@@ -11,6 +11,22 @@ Then("they should see the country selector page", async function () {
   assert.strictEqual(countryPage.isCurrentPage(), true);
 });
 
+Then("{string} should be present in the country list", async function (value) {
+  const countryPage = new CountryPage(this.page);
+  assert.strictEqual(
+    await countryPage.returnCountrySelectItem(value),
+    `${value} 1 of 1`
+  );
+});
+
+Then(
+  "the country select span should be present but invisible",
+  async function () {
+    const countryPage = new CountryPage(this.page);
+    await countryPage.validateCountrySelectSpanInlineStyles();
+  }
+);
+
 When("they have selected the country {string}", async function (value) {
   const countryPage = new CountryPage(this.page);
   await countryPage.selectCountry(value);
