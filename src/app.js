@@ -18,6 +18,10 @@ import { missingRedirectErrorHandler } from "./middleware/missingRedirectErrorHa
 
 import { setAPIConfig, setOAuthPaths } from "./lib/settings.js";
 import { config } from "./lib/config.js";
+import {
+  createTranslateMiddleware,
+  setupNunjucksHelpers,
+} from "./lib/nunjucks-helpers.js";
 
 const DynamoDBStore = DynamoDBStoreFactory(session);
 
@@ -124,6 +128,10 @@ const { app, router } = setup({
 
 app.set("view engine", "njk");
 
+// Register Nunjucks helpers (translate filter) that replace hmpo-components
+const nunjucksEnv = app.get("nunjucks");
+setupNunjucksHelpers(app, nunjucksEnv);
+
 setI18n({
   router,
   config: {
@@ -171,6 +179,9 @@ router.use(getGTM);
 router.use(getLanguageToggle);
 router.use(frontendUiMiddlewareIdentityBypass);
 router.use(getDeviceIntelligence);
+
+// Provide res.locals.translate (with Nunjucks rendering) and res.locals.ctx
+router.use(createTranslateMiddleware(app, nunjucksEnv));
 
 router.use(setScenarioHeaders);
 router.use(customFetchMiddleware);

@@ -1,6 +1,5 @@
-{% extends "base-form.njk" %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% extends "cri-base-form.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set isPageDataSensitive = false %}
 {% set statusCode = '200' %}
@@ -22,14 +21,23 @@
 
   <h1 id="header" class="govuk-heading-l">{{translate(values.addressFormTitle)}}</h1>
 
-  {{hmpoHtml(translate("links.previous.changePostcode"))}}
+  {% set changePostcodeHtml = translate("links.previous.changePostcode") %}
+  {% if changePostcodeHtml is iterable and changePostcodeHtml is not string %}
+    {% for item in changePostcodeHtml %}{{ item | safe }}{% endfor %}
+  {% elif changePostcodeHtml %}
+    {{ changePostcodeHtml | safe }}
+  {% endif %}
 
-  {% call hmpoForm(ctx) %}
+  <form action="{{ action }}" method="POST" novalidate spellcheck="false">
+    <input type="hidden" name="x-csrf-token" value="{{ csrfToken }}">
 
   {% include "../components/address-input-fields.njk" %}
 
-  {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
+  {{ govukButton({
+    text: translate("buttons.next"),
+    attributes: { "id": "continue", "data-nav": "true", "data-link": "/undefined" }
+  }) }}
 
-  {% endcall %}
+  </form>
 
 {% endblock %}

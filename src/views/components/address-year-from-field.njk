@@ -1,16 +1,7 @@
-{% macro yearFromField(ctx, params) %}
-  {% from "hmpo-text/macro.njk" import hmpoText %}
+{% macro yearFromField(params) %}
+  {% from "govuk/components/input/macro.njk" import govukInput %}
 
   <h2 class="govuk-heading-s">{{ params.title }}</h2>
 
-  {{ hmpoText(ctx, {
-    id: params.name,
-    name: params.name,
-    label: { text: params.label },
-    classes: "govuk-input--width-4",
-    hint: "",
-    type: "text",
-    inputmode: "numeric",
-    attributes: { "spellcheck": "false", "autocomplete": "on" }
-  }) }}
+  {{ govukInput(formFields[params.name]) }}
 {% endmacro %}
