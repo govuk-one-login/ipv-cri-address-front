@@ -1,0 +1,148 @@
+{#
+  CRI Base Page Template
+
+  Extends govuk/template.njk directly for non-form pages (error pages, index, etc.)
+  Does NOT include error summary or form-specific elements.
+
+  Provides:
+  - Page title
+  - Cookie banner, header, phase banner, language select, back link, footer
+  - Analytics scripts
+  - Device intelligence
+  - {% block mainContent %} for page views
+#}
+
+{% if MAY_2025_REBRAND_ENABLED %}
+  {% set govukRebrand = true %}
+  {% set assetPath = "/public/rebrand" %}
+{% endif %}
+
+{% if isPageDataSensitive is not defined %}
+  {% set isPageDataSensitive = true %}
+{% endif %}
+{% set taxLevel1 = 'web cri' %}
+
+{# Derive page title from hmpoPageKey if not explicitly set #}
+{% set hmpoTitle = hmpoTitle or translate(hmpoTitleKey or "pages." + hmpoPageKey + ".title") %}
+{% set govukServiceName = translate("govuk.serviceName") %}
+
+{% extends "govuk/template.njk" %}
+
+{% from "frontend-analytics/components/ga4-opl/macro.njk" import ga4OnPageLoad %}
+{% from "frontend-ui/build/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
+{% from "frontend-ui/build/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
+{% from "frontend-ui/build/components/header/macro.njk" import frontendUiHeader %}
+{% from "frontend-ui/build/components/footer/macro.njk" import frontendUiFooter %}
+{% from "frontend-ui/build/components/language-select/macro.njk" import frontendUiLanguageSelect %}
+
+{% block head %}
+  <link rel="stylesheet" href="/public/stylesheets/application.css"/>
+{% endblock %}
+
+{%- block pageTitle %}
+  {{- (translate("govuk.error", { default: "Error" }) + ": ") if errorlist.length }}{{ hmpoTitle | safe }}{{ " – " + govukServiceName | safe if govukServiceName !== " " }} – GOV.UK One Login
+{%- endblock %}
+
+{% block header %}
+  {% block cookieBanner %}
+    {{ frontendUiCookieBanner({
+      translations: translations.cookieBanner
+    }) }}
+  {% endblock %}
+
+  {% block govukHeader %}
+    {{ frontendUiHeader({
+      translations: translations.header,
+      homepageUrl: "https://www.gov.uk"
+    }) }}
+  {% endblock %}
+{% endblock %}
+
+{% block beforeContent %}
+  {{ frontendUiPhaseBanner({
+    translations: translations.phaseBanner,
+    url: currentUrl,
+    contactUrl: 'https://signin.account.gov.uk/contact-us'
+  }) }}
+  {% block backLink %}
+    {{ frontendUiLanguageSelect({
+      translations: translations.languageSelect,
+      url: currentUrl,
+      activeLanguage: htmlLang
+    }) }}
+    {% if backLink %}
+      {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+      <span id="back">{{ govukBackLink({
+        text: translate("govuk.backLink"),
+        href: backLink
+      }) }}</span>
+    {% endif %}
+  {% endblock %}
+{% endblock %}
+
+{% block content %}
+  {% block mainContent %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1 id="header" data-page="{{ hmpoPageKey }}" class="govuk-heading-l">
+          {{ translate("pages." + hmpoPageKey + ".title") | safe }}
+        </h1>
+      </div>
+    </div>
+  {% endblock %}
+{% endblock %}
+
+{% block footer %}
+  {{ frontendUiFooter({
+    translations: translations.footer
+  }) }}
+{% endblock %}
+
+{% block bodyEnd %}
+  {% block scripts %}
+    <script type="module" src="/public/javascripts/all.js"></script>
+    <script type="text/javascript" src="/public/javascripts/analytics.js"></script>
+    <script type="text/javascript" {% if cspNonce %} nonce="{{ cspNonce }}"{% endif %}>
+      window
+        .DI
+        .appInit({
+          ga4ContainerId: "{{ga4ContainerId}}",
+          uaContainerId: "{{uaContainerId}}"
+        }, {
+          enableGa4Tracking: {{ga4Enabled}},
+          enableUaTracking: {{uaEnabled}},
+          enablePageViewTracking: {{ga4PageViewEnabled}},
+          enableFormErrorTracking: {{ga4FormErrorEnabled}},
+          enableFormChangeTracking: {{ga4FormChangeEnabled}},
+          enableFormResponseTracking: {{ga4FormResponseEnabled}},
+          enableNavigationTracking: {{ga4NavigationEnabled}},
+          enableSelectContentTracking: {{ga4SelectContentEnabled}},
+          cookieDomain: "{{analyticsCookieDomain}}",
+          isDataSensitive: {{analyticsDataSensitive}},
+          isPageDataSensitive: {{isPageDataSensitive}}
+        });
+    </script>
+
+    {% if deviceIntelligenceEnabled %}
+      <script type="module" src="/public/javascripts/deviceIntelligence.js"></script>
+      <script type="module" {% if cspNonce %} nonce="{{ cspNonce }}"{% endif %}>
+        import {setFingerprintCookie} from "/public/javascripts/deviceIntelligence.js";
+        setFingerprintCookie("{{deviceIntelligenceDomain}}")
+      </script>
+    {% endif %}
+
+    {{ ga4OnPageLoad({
+      nonce: cspNonce,
+      statusCode: statusCode,
+      dynamic: isPageDynamic,
+      englishPageTitle: pageTitleKey | translate,
+      taxonomyLevel1: taxLevel1,
+      taxonomyLevel2: taxLevel2,
+      taxonomyLevel3: taxLevel3,
+      taxonomyLevel4: taxLevel4,
+      taxonomyLevel5: taxLevel5,
+      contentId: contentID,
+      loggedInStatus: loggedInStatus
+    }) }}
+  {% endblock %}
+{% endblock %}

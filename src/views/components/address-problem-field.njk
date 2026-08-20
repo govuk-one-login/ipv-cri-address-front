@@ -1,26 +1,30 @@
-{% from "hmpo-radios/macro.njk" import hmpoRadios %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 <h1 id="header" class="govuk-heading-l">{{translate("pages.addressProblem.title")}}</h1>
-{% call hmpoForm(ctx) %}
 
-  {{hmpoHtml(translate("pages.addressProblem.content"))}}
+<form action="{{ action }}" method="POST" novalidate spellcheck="false">
+  <input type="hidden" name="x-csrf-token" value="{{ csrfToken }}">
 
-  {{ hmpoRadios(ctx, {
-      id: "addressBreak",
-      name: "addressBreak",
-      value: "addressBreak",
-      legend: {
-        classes: ["govuk-fieldset__legend--s"],
-        text: ""
-      },
-      hint: "",
-      fields: addressBreak.items
-    })
-  }}
+  {% set contentHtml = translate("pages.addressProblem.content") %}
+  {% if contentHtml is iterable and contentHtml is not string %}
+    {% for item in contentHtml %}{{ item | safe }}{% endfor %}
+  {% elif contentHtml %}
+    {{ contentHtml | safe }}
+  {% endif %}
 
-  {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
+  {{ govukRadios(formFields.addressBreak) }}
 
- {{hmpoHtml(translate("links.helpContact"))}}
+  {{ govukButton({
+    text: translate("buttons.next"),
+    attributes: { "id": "continue", "data-nav": "true", "data-link": "/undefined" }
+  }) }}
 
-{% endcall %}
+  {% set helpContactHtml = translate("links.helpContact") %}
+  {% if helpContactHtml is iterable and helpContactHtml is not string %}
+    {% for item in helpContactHtml %}{{ item | safe }}{% endfor %}
+  {% elif helpContactHtml %}
+    {{ helpContactHtml | safe }}
+  {% endif %}
+
+</form>

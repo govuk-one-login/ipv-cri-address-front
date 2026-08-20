@@ -1,7 +1,7 @@
-{% extends "base-form.njk" %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-select/macro.njk" import hmpoSelect %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% extends "cri-base-form.njk" %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
 {% set hmpoPageKey = "address-results" %}
 {% set hmpoPageContent = "address-results" %}
 {% set gtmJourney = "address - middle" %}
@@ -19,21 +19,39 @@
 
   <h1 id="header" class="govuk-heading-l">{{translate("pages.address-results.title")}}</h1>
 
-  {{hmpoHtml(translate("links.changePostcode"))}}
+  {% set changePostcodeHtml = translate("links.changePostcode") %}
+  {% if changePostcodeHtml is iterable and changePostcodeHtml is not string %}
+    {% for item in changePostcodeHtml %}{{ item | safe }}{% endfor %}
+  {% elif changePostcodeHtml %}
+    {{ changePostcodeHtml | safe }}
+  {% endif %}
 
-  {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
+  <form action="{{ action }}" method="POST" autocomplete="on" novalidate spellcheck="false">
+    <input type="hidden" name="x-csrf-token" value="{{ csrfToken }}">
 
-  {{ hmpoSelect(ctx, {
-      id: "addressResults",
-      label: translate("fields.addressResults.label"),
-      hint: "",
-      items: addresses
-    }) }}
+  {{ govukSelect({
+    id: "addressResults",
+    name: "addressResults",
+    value: formFields.addressResults.value if formFields.addressResults else "",
+    label: {
+      text: translate("fields.addressResults.label")
+    },
+    errorMessage: formFields.addressResults.errorMessage if formFields.addressResults else undefined,
+    items: addresses
+  }) }}
 
-  {{ hmpoHtml(translate("links.cantFindAddress")) }}
+  {% set cantFindHtml = translate("links.cantFindAddress") %}
+  {% if cantFindHtml is iterable and cantFindHtml is not string %}
+    {% for item in cantFindHtml %}{{ item | safe }}{% endfor %}
+  {% elif cantFindHtml %}
+    {{ cantFindHtml | safe }}
+  {% endif %}
 
-  {{ hmpoSubmit(ctx, {id: "continue", attributes: {"data-nav": true, "data-link": "/undefined"}, text: translate("buttons.select-address")}) }}
+  {{ govukButton({
+    text: translate("buttons.select-address"),
+    attributes: { "id": "continue", "data-nav": "true", "data-link": "/undefined" }
+  }) }}
 
-  {% endcall %}
+  </form>
 
 {% endblock %}
