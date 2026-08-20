@@ -6,6 +6,11 @@ Feature: International address - What country?
     And they have started the address journey
     Then they should see the country selector page
 
+  @ios-user-agent
+  Scenario: Countries are displayed correctly on iOS
+    Then "United Kingdom" should be present in the country list
+    And the country select span should be present but invisible
+
   Scenario: Selecting a country and continuing
     Given they have selected the country "New Zealand"
     When they click the continue button
