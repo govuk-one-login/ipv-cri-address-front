@@ -1,6 +1,5 @@
 {% extends "base-form.njk" %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "components/address-year-from-field.njk" import yearFromField %}
 
 {% set hmpoPageKey = "address-form" %}
@@ -38,15 +37,16 @@
     </a>
   </p>
 
-  {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf }}">
 
   {% include "../components/building-address/non-UK-building-address-input.njk" %}
   {% include "../components/non-UK-address-input-fields.njk" %}
   {{ yearFromField(ctx, { name: "nonUKAddressYearFrom", title: title, label: label }) }}
 
-  {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
+  {{ govukButton({ id: "continue", text: translate("buttons.next"), preventDoubleClick: true, attributes: { "data-nav": "true" } }) }}
 
-  {% endcall %}
+  </form>
 
 
 {% endblock %}

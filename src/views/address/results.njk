@@ -1,7 +1,6 @@
 {% extends "base-form.njk" %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-select/macro.njk" import hmpoSelect %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% set hmpoPageKey = "address-results" %}
 {% set hmpoPageContent = "address-results" %}
 {% set gtmJourney = "address - middle" %}
@@ -21,19 +20,15 @@
 
   {{hmpoHtml(translate("links.changePostcode"))}}
 
-  {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf }}">
 
-  {{ hmpoSelect(ctx, {
-      id: "addressResults",
-      label: translate("fields.addressResults.label"),
-      hint: "",
-      items: addresses
-    }) }}
+  {{ govukSelect({ id: "addressResults", name: "addressResults", value: fieldValues.addressResults, errorMessage: fieldErrors.addressResults, label: { text: translate("addressResults.label") }, items: fieldItems.addressResults or [] }) }}
 
   {{ hmpoHtml(translate("links.cantFindAddress")) }}
 
-  {{ hmpoSubmit(ctx, {id: "continue", attributes: {"data-nav": true, "data-link": "/undefined"}, text: translate("buttons.select-address")}) }}
+  {{ govukButton({ id: "continue", text: translate("buttons.select-address"), preventDoubleClick: true, attributes: { "data-nav": "true", "data-link": "/undefined" } }) }}
 
-  {% endcall %}
+  </form>
 
 {% endblock %}

@@ -1,3 +1,4 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% extends "base-form.njk" %}
 {% set hmpoPageKey = "country" %}
 {% set hmpoPageContent = "country" %}
@@ -11,22 +12,18 @@
 {% set isPageDynamic = false %}
 {% set loggedInStatus = true %}
 
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-select/macro.njk" import hmpoSelect %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
 
 {% block mainContent %}
 
-  {% call hmpoForm(ctx) %}
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf }}">
 
-  {{ hmpoSelect(ctx, {
-      id: "country",
-      label: translate("pages.country.title"),
-      isPageHeading: true
-    }) }}
+  {{ govukSelect({ id: "country", name: "country", value: fieldValues.country, errorMessage: fieldErrors.country, label: { text: translate("country.label") }, items: fieldItems.country or [] }) }}
 
-  {{ hmpoSubmit(ctx, { id: "continue", text: translate("buttons.next") }) }}
+  {{ govukButton({ id: "continue", text: translate("buttons.next"), preventDoubleClick: true, attributes: { "data-nav": "true" } }) }}
 
-  {% endcall %}
+  </form>
 
 
   <script type="text/javascript" nonce="{{ cspNonce }}" src="/public/javascripts/accessible-autocomplete.min.js"></script>

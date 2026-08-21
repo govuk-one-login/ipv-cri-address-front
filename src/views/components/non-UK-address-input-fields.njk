@@ -1,38 +1,10 @@
 
-{% from "hmpo-text/macro.njk" import hmpoText %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 
-{{ hmpoText(ctx, {
-      id: "nonUKAddressStreetName",
-      name: "nonUKAddressStreetName",
-      label: { text: translate("fields.nonUKAddressStreetName.label") },
-      classes: "govuk-input--width-20",
-      hint: "",
-      autocomplete: "address-line1"
-    }) }}
+{{ govukInput({ id: "nonUKAddressStreetName", name: "nonUKAddressStreetName", value: fieldValues.nonUKAddressStreetName, errorMessage: fieldErrors.nonUKAddressStreetName, label: { text: translate("nonUKAddressStreetName.label") }, hint: { text: translate("nonUKAddressStreetName.hint") } }) }}
 
-{{ hmpoText(ctx, {
-      id: "nonUKAddressLocality",
-      name: "nonUKAddressLocality",
-      label: { text: translate("fields.nonUKAddressLocality.label") },
-      classes: "govuk-input--width-20",
-      hint: "",
-      autocomplete: "address-line2"
-    }) }}
+{{ govukInput({ id: "nonUKAddressLocality", name: "nonUKAddressLocality", value: fieldValues.nonUKAddressLocality, errorMessage: fieldErrors.nonUKAddressLocality, label: { text: translate("nonUKAddressLocality.label") }, hint: { text: translate("nonUKAddressLocality.hint") } }) }}
 
-{{ hmpoText(ctx, {
-      id: "nonUKAddressPostalCode",
-      name: "nonUKAddressPostalCode",
-      label: { text: translate("fields.nonUKAddressPostalCode.label") },
-      classes: "govuk-input--width-10",
-      hint: "",
-      autocomplete: "postal-code"
-    }) }}
+{{ govukInput({ id: "nonUKAddressPostalCode", name: "nonUKAddressPostalCode", value: fieldValues.nonUKAddressPostalCode, errorMessage: fieldErrors.nonUKAddressPostalCode, label: { text: translate("nonUKAddressPostalCode.label") }, hint: { text: translate("nonUKAddressPostalCode.hint") } }) }}
 
-{{ hmpoText(ctx, {
-      id: "nonUKAddressRegion",
-      name: "nonUKAddressRegion",
-      label: { text: translate("fields.nonUKAddressRegion.label") },
-      classes: "govuk-input--width-20",
-      hint: { text: translate("fields.nonUKAddressRegion.hint") },
-      autocomplete: "on"
-    }) }}
+{{ govukInput({ id: "nonUKAddressRegion", name: "nonUKAddressRegion", value: fieldValues.nonUKAddressRegion, errorMessage: fieldErrors.nonUKAddressRegion, label: { text: translate("nonUKAddressRegion.label") }, hint: { text: translate("nonUKAddressRegion.hint") } }) }}

@@ -1,6 +1,5 @@
 {% extends "base-form.njk" %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set isPageDataSensitive = false %}
 {% set statusCode = '200' %}
@@ -24,12 +23,13 @@
 
   {{hmpoHtml(translate("links.previous.changePostcode"))}}
 
-  {% call hmpoForm(ctx) %}
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf }}">
 
   {% include "../components/address-input-fields.njk" %}
 
-  {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
+  {{ govukButton({ id: "continue", text: translate("buttons.next"), preventDoubleClick: true, attributes: { "data-nav": "true", "data-link": "/undefined" } }) }}
 
-  {% endcall %}
+  </form>
 
 {% endblock %}

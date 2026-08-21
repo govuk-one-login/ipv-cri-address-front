@@ -1,31 +1,11 @@
 
-{% from "hmpo-text/macro.njk" import hmpoText %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "./building-address/macro.njk" import inputGroup %}
 
-{{ hmpoText(ctx, {
-  id: "addressFlatNumber",
-  name: "addressFlatNumber",
-  label: { text: translate("fields.addressFlatNumber.label") },
-  classes: "govuk-input--width-5",
-  hint: ""
-}) }}
+{{ govukInput({ id: "addressFlatNumber", name: "addressFlatNumber", value: fieldValues.addressFlatNumber, errorMessage: fieldErrors.addressFlatNumber, label: { text: translate("addressFlatNumber.label") }, hint: { text: translate("addressFlatNumber.hint") } }) }}
 
 {% include "./building-address/UK-building-address-input.njk" %}
 
-{{ hmpoText(ctx,{
-  id: "addressStreetName",
-  name: "addressStreetName",
-  label: { text: translate("fields.addressStreetName.label") },
-  classes: "govuk-input--width-20",
-  hint: "",
-  autocomplete:"address-line1"
-}) }}
+{{ govukInput({ id: "addressStreetName", name: "addressStreetName", value: fieldValues.addressStreetName, errorMessage: fieldErrors.addressStreetName, label: { text: translate("addressStreetName.label") }, hint: { text: translate("addressStreetName.hint") } }) }}
 
-{{ hmpoText(ctx, {
-  id: "addressLocality",
-  name: "addressLocality",
-  label: { text: translate("fields.addressLocality.label") },
-  classes: "govuk-input--width-20",
-  hint: "",
-  autocomplete:"address-line2"
-}) }}
+{{ govukInput({ id: "addressLocality", name: "addressLocality", value: fieldValues.addressLocality, errorMessage: fieldErrors.addressLocality, label: { text: translate("addressLocality.label") }, hint: { text: translate("addressLocality.hint") } }) }}

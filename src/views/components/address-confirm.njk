@@ -1,8 +1,8 @@
 {% extends "base-form.njk" %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "hmpo-radios/macro.njk" import hmpoRadios %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 
 {% set hmpoPageKey = "address-confirm" %}
 {% set gtmJourney = "address - end" %}
@@ -135,39 +135,19 @@
     }) }}
   {% endif %}
 
-  {% call hmpoForm(ctx) %}
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf }}">
 
   {% if isMoreInfoRequired %}
 
-    {{ hmpoRadios(ctx, {
-        id: "hasPreviousUKAddressWithinThreeMonths",
-        name: "hasPreviousUKAddressWithinThreeMonths",
-        value: "hasPreviousUKAddressWithinThreeMonths",
-        inline: true,
-        attributes: {
-          "data-id": "getPreviousAddressRadios"
-        },
-        label: {
-          classes: ["govuk-fieldset__legend--s"]
-        },
-        legend: translate("fields.hasPreviousUKAddressWithinThreeMonths.label"),
-        fields: hasPreviousUKAddressWithinThreeMonths.items
-      }) }}
+    {{ govukRadios({ idPrefix: "hasPreviousUKAddressWithinThreeMonths", name: "hasPreviousUKAddressWithinThreeMonths", errorMessage: fieldErrors.hasPreviousUKAddressWithinThreeMonths, fieldset: { legend: { text: translate("hasPreviousUKAddressWithinThreeMonths.legend"), isPageHeading: true, classes: "govuk-fieldset__legend--l" } }, items: fieldItems.hasPreviousUKAddressWithinThreeMonths or [] }) }}
 
   {% endif %}
 
-  {{ hmpoSubmit(ctx, {
-        text: translate("pages.address-confirm.buttons.next"),
-        id: "continue",
-        attributes: {
-        "data-id": "next",
-        "data-nav": true,
-        "data-link": "/undefined"
-        }
-      }) }}
+  {{ govukButton({ id: "continue", text: translate("pages.address-confirm.buttons.next"), preventDoubleClick: true, attributes: { "data-nav": "true", "data-link": "/undefined" } }) }}
   {%- include "../components/continue-submit-spinner.njk" -%}
 
-  {% endcall %}
+  </form>
 
   <br>
 

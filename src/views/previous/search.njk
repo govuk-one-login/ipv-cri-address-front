@@ -1,3 +1,4 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
 {% extends "base-form.njk" %}
 {% set hmpoPageKey = "address-previous-search" %}
 {% set hmpoPageContent = "address-previous-search" %}
@@ -11,27 +12,20 @@
 {% set isPageDynamic = false %}
 {% set loggedInStatus = true %}
 
-{% from "hmpo-text/macro.njk" import hmpoText %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 
 {% block mainContent %}
 
   <h1 id="header" class="govuk-heading-l">{{translate("pages.address-previous-search.title")}}
   </h1>
 
-  {% call hmpoForm(ctx) %}
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf }}">
 
-  {{ hmpoText(ctx, {
-      id: "addressSearch",
-      label: {
-        text: translate("fields.addressSearch.previous.label"),
-        classes: "govuk-label govuk-label--m"
-      },
-      classes: "govuk-!-width-one-half",
-      hint:  translate("fields.addressSearch.previous.hint")
-    }) }}
+  {{ govukInput({ id: "addressSearch", name: "addressSearch", value: fieldValues.addressSearch, errorMessage: fieldErrors.addressSearch, label: { text: translate("addressSearch.label") }, hint: { text: translate("addressSearch.hint") } }) }}
 
-  {{ hmpoSubmit(ctx, {id:"continue", attributes: {"data-nav": true, "data-link": "/previous-results"}, text: translate("buttons.find-address")}) }}
+  {{ govukButton({ id: "continue", text: translate("buttons.find-address"), preventDoubleClick: true, attributes: { "data-nav": "true", "data-link": "/previous-results" } }) }}
 
-  {% endcall %}
+  </form>
 
 {% endblock %}
