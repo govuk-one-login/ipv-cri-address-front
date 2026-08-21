@@ -5,7 +5,7 @@ export default defineConfig({
   snapshotDir: "./snapshots",
   workers: 1,
   use: {
-    baseUrl: process.env.EXTERNAL_WEBSITE_HOST || "http://localhost:5010",
+    baseUrl: process.env.BASE_URL || "http://localhost:5010",
     headless: true,
     launchOptions: {
       args: ["--no-sandbox"],

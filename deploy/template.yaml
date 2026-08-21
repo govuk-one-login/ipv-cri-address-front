@@ -465,7 +465,7 @@ Resources:
                 - APIGatewayId:
                     Fn::ImportValue: !Ref PrivateApiGatewayId
                   Environment: !Ref Environment
-            - Name: EXTERNAL_WEBSITE_HOST
+            - Name: BASE_URL
               Value: !GetAtt ApiGwHttpEndpoint.ApiEndpoint
             - Name: SESSION_TABLE_NAME
               Value: !Ref AddressFrontSessionsTable
