@@ -1,0 +1,130 @@
+{% extends "govuk/template.njk" %}
+
+{# Import GOV.UK and frontend-ui macros #}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "@govuk-one-login/frontend-ui/components/cookie-banner/macro.njk" import frontendUiCookieBanner %}
+{% from "@govuk-one-login/frontend-ui/components/phase-banner/macro.njk" import frontendUiPhaseBanner %}
+{% from "@govuk-one-login/frontend-ui/components/header/macro.njk" import frontendUiHeader %}
+{% from "@govuk-one-login/frontend-ui/components/footer/macro.njk" import frontendUiFooter %}
+{% from "@govuk-one-login/frontend-ui/components/language-select/macro.njk" import frontendUiLanguageSelect %}
+{% from "components/analytics/ga4-on-page-load/macro.njk" import ga4OnPageLoad %}
+
+{# Page metadata defaults #}
+{% set isPageDataSensitive = isPageDataSensitive if isPageDataSensitive is defined else false %}
+{% set taxLevel1 = "document checking" %}
+
+{# Feature flag for rebrand #}
+{% set isRebranded = MAY_2025_REBRAND_ENABLED | default(false) %}
+
+{# Derive page title from translation #}
+{% set hmpoTitle = translate(hmpoTitleKey if hmpoTitleKey else 'pages.' + hmpoPageKey + '.title') %}
+{% set govukServiceName = translate('govuk.serviceName') %}
+
+{# Page title block #}
+{% block pageTitle %}
+  {%- if errorSummary -%}
+    {{ translate('govuk.errorPrefix') if translate('govuk.errorPrefix') else 'Error' }}: {{ hmpoTitle }}
+  {%- else -%}
+    {{ hmpoTitle }}
+  {%- endif -%}
+  {%- if govukServiceName and govukServiceName | trim -%}
+    {{ ' - ' + govukServiceName | trim }}
+  {%- endif -%}
+  {{ ' - GOV.UK One Login' }}
+{% endblock %}
+
+{# Head block — stylesheets #}
+{% block head %}
+  <link rel="stylesheet" href="/public/stylesheets/application.css">
+{% endblock %}
+
+{# Header — cookie banner + GOV.UK One Login header #}
+{% block header %}
+  {{ frontendUiCookieBanner({
+    cookieBannerRedirect: cookieBannerRedirect
+  }) }}
+  {{ frontendUiHeader({
+    serviceName: govukServiceName if govukServiceName and govukServiceName | trim else undefined,
+    rebrand: isRebranded
+  }) }}
+{% endblock %}
+
+{# Before content — phase banner, language select, back link #}
+{% block beforeContent %}
+  {{ frontendUiPhaseBanner({
+    tag: { text: "beta" },
+    rebrand: isRebranded
+  }) }}
+
+  {% if showLanguageToggle %}
+    {{ frontendUiLanguageSelect({
+      ariaLabel: translate('languageSelect.ariaLabel') if translate('languageSelect.ariaLabel') else 'Choose a language',
+      activeLanguage: htmlLang | default('en'),
+      url: currentUrl
+    }) }}
+  {% endif %}
+
+  {% if backLink %}
+    <a href="{{ backLink }}" class="govuk-back-link">{{ translate('govuk.backLink') }}</a>
+  {% endif %}
+{% endblock %}
+
+{# Main content — error summary + page content #}
+{% block content %}
+  {% if errorSummary %}
+    {{ govukErrorSummary(errorSummary) }}
+  {% endif %}
+
+  {% block mainContent %}
+    <h1 class="govuk-heading-l">{{ hmpoTitle }}</h1>
+  {% endblock %}
+{% endblock %}
+
+{# Footer #}
+{% block footer %}
+  {{ frontendUiFooter({
+    rebrand: isRebranded
+  }) }}
+{% endblock %}
+
+{# Body end — scripts #}
+{% block bodyEnd %}
+  <script src="/public/govuk/govuk-frontend.min.js"></script>
+  <script src="/public/javascripts/all.js"></script>
+  <script src="/public/javascripts/analytics.js"></script>
+
+  <script>
+    window.DI = window.DI || {};
+    window.DI.appInit({
+      ga4ContainerId: "{{ ga4ContainerId }}",
+      uaContainerId: "{{ uaContainerId }}",
+      analyticsCookieDomain: "{{ analyticsCookieDomain }}",
+      isPageDataSensitive: {{ isPageDataSensitive | dump }},
+      ga4PageViewEnabled: {{ ga4PageViewEnabled | default(true) | dump }},
+      ga4FormResponseEnabled: {{ ga4FormResponseEnabled | default(true) | dump }},
+      ga4FormErrorEnabled: {{ ga4FormErrorEnabled | default(true) | dump }},
+      ga4FormChangeEnabled: {{ ga4FormChangeEnabled | default(true) | dump }},
+      ga4NavigationEnabled: {{ ga4NavigationEnabled | default(true) | dump }},
+      ga4SelectContentEnabled: {{ ga4SelectContentEnabled | default(true) | dump }}
+    });
+  </script>
+
+  {% if deviceIntelligenceEnabled %}
+    <script src="/public/javascripts/deviceIntelligence.js"></script>
+    <script>
+      window.DI.deviceIntelligence({
+        domain: "{{ deviceIntelligenceDomain }}"
+      });
+    </script>
+  {% endif %}
+
+  {{ ga4OnPageLoad({
+    statusCode: statusCode | default('200'),
+    englishPageTitle: hmpoTitle,
+    taxonomyLevel1: taxLevel1 | default('document checking'),
+    taxonomyLevel2: taxLevel2 | default(''),
+    contentId: contentID | default(''),
+    loggedInStatus: loggedInStatus | default(false),
+    dynamic: isPageDynamic | default(false)
+  }) }}
+{% endblock %}

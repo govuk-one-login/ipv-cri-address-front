@@ -1,8 +1,8 @@
-{% extends "base-form.njk" %}
+{% extends "cri-base-form.njk" %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "hmpo-radios/macro.njk" import hmpoRadios %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set hmpoPageKey = "address-confirm" %}
 {% set gtmJourney = "address - end" %}
@@ -135,39 +135,55 @@
     }) }}
   {% endif %}
 
-  {% call hmpoForm(ctx) %}
+  <form action="{{ action }}" method="POST" novalidate spellcheck="false">
+    <input type="hidden" name="x-csrf-token" value="{{ csrfToken }}">
 
   {% if isMoreInfoRequired %}
 
-    {{ hmpoRadios(ctx, {
-        id: "hasPreviousUKAddressWithinThreeMonths",
-        name: "hasPreviousUKAddressWithinThreeMonths",
-        value: "hasPreviousUKAddressWithinThreeMonths",
-        inline: true,
-        attributes: {
-          "data-id": "getPreviousAddressRadios"
+    {{ govukRadios({
+      idPrefix: "hasPreviousUKAddressWithinThreeMonths",
+      name: "hasPreviousUKAddressWithinThreeMonths",
+      value: formFields.hasPreviousUKAddressWithinThreeMonths.value if formFields.hasPreviousUKAddressWithinThreeMonths else undefined,
+      classes: "govuk-radios--inline",
+      fieldset: {
+        legend: {
+          text: translate("fields.hasPreviousUKAddressWithinThreeMonths.label"),
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      hint: {
+        text: translate("fields.hasPreviousUKAddressWithinThreeMonths.hint")
+      },
+      errorMessage: formFields.hasPreviousUKAddressWithinThreeMonths.errorMessage if formFields.hasPreviousUKAddressWithinThreeMonths else undefined,
+      items: [
+        {
+          value: "yes",
+          text: translate("fields.hasPreviousUKAddressWithinThreeMonths.items.yes.label")
         },
-        label: {
-          classes: ["govuk-fieldset__legend--s"]
-        },
-        legend: translate("fields.hasPreviousUKAddressWithinThreeMonths.label"),
-        fields: hasPreviousUKAddressWithinThreeMonths.items
-      }) }}
+        {
+          value: "no",
+          text: translate("fields.hasPreviousUKAddressWithinThreeMonths.items.no.label")
+        }
+      ],
+      attributes: {
+        "data-id": "getPreviousAddressRadios"
+      }
+    }) }}
 
   {% endif %}
 
-  {{ hmpoSubmit(ctx, {
-        text: translate("pages.address-confirm.buttons.next"),
-        id: "continue",
-        attributes: {
-        "data-id": "next",
-        "data-nav": true,
-        "data-link": "/undefined"
-        }
-      }) }}
+  {{ govukButton({
+    text: translate("pages.address-confirm.buttons.next"),
+    attributes: {
+      "id": "continue",
+      "data-id": "next",
+      "data-nav": "true",
+      "data-link": "/undefined"
+    }
+  }) }}
   {%- include "../components/continue-submit-spinner.njk" -%}
 
-  {% endcall %}
+  </form>
 
   <br>
 

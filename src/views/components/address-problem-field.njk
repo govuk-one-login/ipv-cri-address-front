@@ -1,26 +1,42 @@
-{% from "hmpo-radios/macro.njk" import hmpoRadios %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 <h1 id="header" class="govuk-heading-l">{{translate("pages.addressProblem.title")}}</h1>
-{% call hmpoForm(ctx) %}
 
-  {{hmpoHtml(translate("pages.addressProblem.content"))}}
+<form action="{{ action }}" method="POST" novalidate spellcheck="false">
+  <input type="hidden" name="x-csrf-token" value="{{ csrfToken }}">
 
-  {{ hmpoRadios(ctx, {
-      id: "addressBreak",
-      name: "addressBreak",
-      value: "addressBreak",
+  {% set problemContent = translate("pages.addressProblem.content") %}
+  {% if problemContent is iterable and problemContent is not string %}
+    {% for item in problemContent %}{{ item | safe }}{% endfor %}
+  {% elif problemContent %}
+    {{ problemContent | safe }}
+  {% endif %}
+
+  {{ govukRadios({
+    idPrefix: "addressBreak",
+    name: "addressBreak",
+    value: formFields.addressBreak.value if formFields.addressBreak else undefined,
+    fieldset: {
       legend: {
-        classes: ["govuk-fieldset__legend--s"],
-        text: ""
-      },
-      hint: "",
-      fields: addressBreak.items
-    })
-  }}
+        text: translate("fields.addressBreak.legend"),
+        classes: "govuk-fieldset__legend--s"
+      }
+    },
+    errorMessage: formFields.addressBreak.errorMessage if formFields.addressBreak else undefined,
+    items: formFields.addressBreak.items if formFields.addressBreak else []
+  }) }}
 
-  {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
+  {{ govukButton({
+    text: translate("buttons.next"),
+    attributes: { "id": "continue", "data-nav": "true", "data-link": "/undefined" }
+  }) }}
 
- {{hmpoHtml(translate("links.helpContact"))}}
+  {% set helpContactHtml = translate("links.helpContact") %}
+  {% if helpContactHtml is iterable and helpContactHtml is not string %}
+    {% for item in helpContactHtml %}{{ item | safe }}{% endfor %}
+  {% elif helpContactHtml %}
+    {{ helpContactHtml | safe }}
+  {% endif %}
 
-{% endcall %}
+</form>
