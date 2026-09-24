@@ -1,9 +1,9 @@
 {% macro yearFromField(ctx, params) %}
-  {% from "hmpo-text/macro.njk" import hmpoText %}
+  {% from "frontend-ui/build/components/text/macro.njk" import text %}
 
   <h2 class="govuk-heading-s">{{ params.title }}</h2>
 
-  {{ hmpoText(ctx, {
+  {{ text(ctx, {
     id: params.name,
     name: params.name,
     label: { text: params.label },

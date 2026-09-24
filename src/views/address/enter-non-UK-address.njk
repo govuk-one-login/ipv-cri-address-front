@@ -1,6 +1,6 @@
 {% extends "base-form.njk" %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "frontend-ui/build/components/form/macro.njk" import form %}
+{% from "frontend-ui/build/components/submit/macro.njk" import submit %}
 {% from "components/address-year-from-field.njk" import yearFromField %}
 
 {% set hmpoPageKey = "address-form" %}
@@ -38,13 +38,13 @@
     </a>
   </p>
 
-  {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
+  {% call form(ctx, {autocomplete: 'on'}) %}
 
   {% include "../components/building-address/non-UK-building-address-input.njk" %}
   {% include "../components/non-UK-address-input-fields.njk" %}
   {{ yearFromField(ctx, { name: "nonUKAddressYearFrom", title: title, label: label }) }}
 
-  {{ hmpoSubmit(ctx, {id: "continue", text: translate("buttons.next")}) }}
+  {{ submit(ctx, {id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
 
