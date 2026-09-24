@@ -3,8 +3,9 @@
 {% set hmpoPageContent = "addressSearch" %}
 {% set gtmJourney = "address - start" %}
 
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-text/macro.njk" import hmpoText %}
+{% from "frontend-ui/build/components/form/macro.njk" import form %}
+{% from "frontend-ui/build/components/text/macro.njk" import text %}
+{% from "frontend-ui/build/components/submit/macro.njk" import submit %}
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
 {% set isPageDataSensitive = false %}
@@ -19,7 +20,7 @@
 
   <h1 id="header" class="govuk-heading-l">{{translate("pages.addressSearch.title")}}
   </h1>
-  {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
+  {% call form(ctx, {autocomplete: 'on'}) %}
 
   {% if prepopulatedPostcode %}
     {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
@@ -29,7 +30,7 @@
 }) }}
   {% endif %}
 
-  {{ hmpoText(ctx, {
+  {{ text(ctx, {
       id: "addressSearch",
       label: {
         key: translate(fields.addressSearch.label),
@@ -40,7 +41,7 @@
       autocomplete: "postal-code"
     }) }}
 
-  {{ hmpoSubmit(ctx, {
+  {{ submit(ctx, {
       id: "continue",
       attributes: { "data-nav": true, "data-link": "/results" },
       text: translate("buttons.find-address")}) }}
