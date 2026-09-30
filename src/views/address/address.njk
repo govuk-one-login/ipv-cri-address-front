@@ -1,6 +1,7 @@
 {% extends "base-form.njk" %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "frontend-ui/build/components/form/macro.njk" import form %}
+{% from "frontend-ui/build/components/submit/macro.njk" import submit %}
+{% from "frontend-ui/build/components/html/macro.njk" import html %}
 {% from "components/address-year-from-field.njk" import yearFromField %}
 
 {% set hmpoPageKey = "address-form" %}
@@ -28,14 +29,14 @@
 
   <h1 id="header" class="govuk-heading-l">{{translate(values.addressFormTitle)}}</h1>
 
-  {{hmpoHtml(translate("links.changePostcode"))}}
+  {{html(translate("links.changePostcode"))}}
 
-  {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
+  {% call form(ctx, {autocomplete: 'on'}) %}
 
   {% include "../components/address-input-fields.njk" %}
   {{ yearFromField(ctx, { name: "addressYearFrom", title: title, label: label }) }}
 
-  {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
+  {{ submit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
 
   {% endcall %}
 

@@ -1,8 +1,8 @@
 
-{% from "hmpo-text/macro.njk" import hmpoText %}
+{% from "frontend-ui/build/components/text/macro.njk" import text %}
 {% from "./building-address/macro.njk" import inputGroup %}
 
-{{ hmpoText(ctx, {
+{{ text(ctx, {
   id: "addressFlatNumber",
   name: "addressFlatNumber",
   label: { text: translate("fields.addressFlatNumber.label") },
@@ -12,7 +12,7 @@
 
 {% include "./building-address/UK-building-address-input.njk" %}
 
-{{ hmpoText(ctx,{
+{{ text(ctx,{
   id: "addressStreetName",
   name: "addressStreetName",
   label: { text: translate("fields.addressStreetName.label") },
@@ -21,7 +21,7 @@
   autocomplete:"address-line1"
 }) }}
 
-{{ hmpoText(ctx, {
+{{ text(ctx, {
   id: "addressLocality",
   name: "addressLocality",
   label: { text: translate("fields.addressLocality.label") },

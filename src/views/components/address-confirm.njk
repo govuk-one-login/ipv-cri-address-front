@@ -1,8 +1,9 @@
 {% extends "base-form.njk" %}
 {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "frontend-ui/build/components/submit/macro.njk" import submit %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from "hmpo-radios/macro.njk" import hmpoRadios %}
+{% from "frontend-ui/build/components/radios/macro.njk" import radios %}
+{% from "frontend-ui/build/components/form/macro.njk" import form %}
 
 {% set hmpoPageKey = "address-confirm" %}
 {% set gtmJourney = "address - end" %}
@@ -135,11 +136,11 @@
     }) }}
   {% endif %}
 
-  {% call hmpoForm(ctx) %}
+  {% call form(ctx) %}
 
   {% if isMoreInfoRequired %}
 
-    {{ hmpoRadios(ctx, {
+    {{ radios(ctx, {
         id: "hasPreviousUKAddressWithinThreeMonths",
         name: "hasPreviousUKAddressWithinThreeMonths",
         value: "hasPreviousUKAddressWithinThreeMonths",
@@ -156,7 +157,7 @@
 
   {% endif %}
 
-  {{ hmpoSubmit(ctx, {
+  {{ submit(ctx, {
         text: translate("pages.address-confirm.buttons.next"),
         id: "continue",
         attributes: {

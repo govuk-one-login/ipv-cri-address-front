@@ -1,7 +1,7 @@
 
-{% from "hmpo-text/macro.njk" import hmpoText %}
+{% from "frontend-ui/build/components/text/macro.njk" import text %}
 
-{{ hmpoText(ctx, {
+{{ text(ctx, {
       id: "nonUKAddressStreetName",
       name: "nonUKAddressStreetName",
       label: { text: translate("fields.nonUKAddressStreetName.label") },
@@ -10,7 +10,7 @@
       autocomplete: "address-line1"
     }) }}
 
-{{ hmpoText(ctx, {
+{{ text(ctx, {
       id: "nonUKAddressLocality",
       name: "nonUKAddressLocality",
       label: { text: translate("fields.nonUKAddressLocality.label") },
@@ -19,7 +19,7 @@
       autocomplete: "address-line2"
     }) }}
 
-{{ hmpoText(ctx, {
+{{ text(ctx, {
       id: "nonUKAddressPostalCode",
       name: "nonUKAddressPostalCode",
       label: { text: translate("fields.nonUKAddressPostalCode.label") },
@@ -28,7 +28,7 @@
       autocomplete: "postal-code"
     }) }}
 
-{{ hmpoText(ctx, {
+{{ text(ctx, {
       id: "nonUKAddressRegion",
       name: "nonUKAddressRegion",
       label: { text: translate("fields.nonUKAddressRegion.label") },

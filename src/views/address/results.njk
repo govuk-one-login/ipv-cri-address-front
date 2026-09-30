@@ -1,7 +1,8 @@
 {% extends "base-form.njk" %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-select/macro.njk" import hmpoSelect %}
-{% from "hmpo-submit/macro.njk" import hmpoSubmit %}
+{% from "frontend-ui/build/components/form/macro.njk" import form %}
+{% from "frontend-ui/build/components/select/macro.njk" import select %}
+{% from "frontend-ui/build/components/submit/macro.njk" import submit %}
+{% from "frontend-ui/build/components/html/macro.njk" import html %}
 {% set hmpoPageKey = "address-results" %}
 {% set hmpoPageContent = "address-results" %}
 {% set gtmJourney = "address - middle" %}
@@ -19,20 +20,20 @@
 
   <h1 id="header" class="govuk-heading-l">{{translate("pages.address-results.title")}}</h1>
 
-  {{hmpoHtml(translate("links.changePostcode"))}}
+  {{html(translate("links.changePostcode"))}}
 
-  {% call hmpoForm(ctx, {autocomplete: 'on'}) %}
+  {% call form(ctx, {autocomplete: 'on'}) %}
 
-  {{ hmpoSelect(ctx, {
+  {{ select(ctx, {
       id: "addressResults",
       label: translate("fields.addressResults.label"),
       hint: "",
       items: addresses
     }) }}
 
-  {{ hmpoHtml(translate("links.cantFindAddress")) }}
+  {{ html(translate("links.cantFindAddress")) }}
 
-  {{ hmpoSubmit(ctx, {id: "continue", attributes: {"data-nav": true, "data-link": "/undefined"}, text: translate("buttons.select-address")}) }}
+  {{ submit(ctx, {id: "continue", attributes: {"data-nav": true, "data-link": "/undefined"}, text: translate("buttons.select-address")}) }}
 
   {% endcall %}
 

@@ -1,12 +1,14 @@
-{% from "hmpo-radios/macro.njk" import hmpoRadios %}
-{% from "hmpo-form/macro.njk" import hmpoForm %}
+{% from "frontend-ui/build/components/radios/macro.njk" import radios %}
+{% from "frontend-ui/build/components/form/macro.njk" import form %}
+{% from "frontend-ui/build/components/submit/macro.njk" import submit %}
+{% from "frontend-ui/build/components/html/macro.njk" import html %}
 
 <h1 id="header" class="govuk-heading-l">{{translate("pages.addressProblem.title")}}</h1>
-{% call hmpoForm(ctx) %}
+{% call form(ctx) %}
 
-  {{hmpoHtml(translate("pages.addressProblem.content"))}}
+  {{html(translate("pages.addressProblem.content"))}}
 
-  {{ hmpoRadios(ctx, {
+  {{ radios(ctx, {
       id: "addressBreak",
       name: "addressBreak",
       value: "addressBreak",
@@ -19,8 +21,8 @@
     })
   }}
 
-  {{ hmpoSubmit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
+  {{ submit(ctx, {attributes: {"data-nav": true, "data-link": "/undefined"}, id: "continue", text: translate("buttons.next")}) }}
 
- {{hmpoHtml(translate("links.helpContact"))}}
+ {{html(translate("links.helpContact"))}}
 
 {% endcall %}

@@ -11,20 +11,21 @@
 {% set isPageDynamic = false %}
 {% set loggedInStatus = true %}
 
-{% from "hmpo-form/macro.njk" import hmpoForm %}
-{% from "hmpo-select/macro.njk" import hmpoSelect %}
+{% from "frontend-ui/build/components/form/macro.njk" import form %}
+{% from "frontend-ui/build/components/select/macro.njk" import select %}
+{% from "frontend-ui/build/components/submit/macro.njk" import submit %}
 
 {% block mainContent %}
 
-  {% call hmpoForm(ctx) %}
+  {% call form(ctx) %}
 
-  {{ hmpoSelect(ctx, {
+  {{ select(ctx, {
       id: "country",
       label: translate("pages.country.title"),
       isPageHeading: true
     }) }}
 
-  {{ hmpoSubmit(ctx, { id: "continue", text: translate("buttons.next") }) }}
+  {{ submit(ctx, { id: "continue", text: translate("buttons.next") }) }}
 
   {% endcall %}
 
