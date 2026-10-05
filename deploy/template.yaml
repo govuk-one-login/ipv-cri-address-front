@@ -690,10 +690,7 @@ Resources:
           - - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdA"
             - Fn::ImportValue: !Sub "${VpcStackName}-PrivateSubnetIdB"
         SecurityGroups: !GetAtt ECSSecurityGroup.GroupId
-        CloudWatchAlarms: !Sub
-          - "${MyAlarmOneVar},${MyAlarmTwoVar}"
-          - MyAlarmOneVar: !Ref Address5XXOnELB
-            MyAlarmTwoVar: !Ref FrontTargetGroup5xxPercentErrors
+        CloudWatchAlarms: !Ref FrontTargetGroupAndELB5xxPercentErrors
 
   ApiGwHttpEndpoint:
     Type: "AWS::ApiGatewayV2::Api"
@@ -1095,18 +1092,14 @@ Resources:
       ComparisonOperator: GreaterThanThreshold
       TreatMissingData: notBreaching
 
-  FrontTargetGroup5xxPercentErrors:
+  FrontTargetGroupAndELB5xxPercentErrors:
     Type: AWS::CloudWatch::Alarm
     Condition: UseCanaryDeployment
     Properties:
-      AlarmName: FrontTargetGroup5xxPercentAlarm
+      AlarmName: FrontTargetGroupAndELB5xxPercentAlarm
       AlarmDescription: >
-        The number of HTTP 5XX server error codes that originate from the
-        target group is greater than 5% of all traffic.
-      AlarmActions:
-        - !ImportValue slack-notifications-WarningAlertsTopicArn
-      OKActions:
-        - !ImportValue slack-notifications-WarningAlertsTopicArn
+        The sum of HTTP 5XX server error codes that originate from the
+        target group and the application load balancer is greater than 5% of all traffic.
       EvaluationPeriods: 2
       DatapointsToAlarm: 2
       Threshold: 5
@@ -1116,7 +1109,7 @@ Resources:
         - Id: e1
           Label: ErrorPercent
           ReturnData: true
-          Expression: (m1/m2)*100
+          Expression: ((m1+m3)/m2)*100
         - Id: m1
           ReturnData: false
           MetricStat:
@@ -1134,6 +1127,17 @@ Resources:
             Metric:
               Namespace: AWS/ApplicationELB
               MetricName: RequestCount
+              Dimensions:
+                - Name: LoadBalancer
+                  Value: !GetAtt LoadBalancer.LoadBalancerFullName
+            Period: 60
+            Stat: Sum
+        - Id: m3
+          ReturnData: false
+          MetricStat:
+            Metric:
+              Namespace: AWS/ApplicationELB
+              MetricName: HTTPCode_ELB_5XX_Count
               Dimensions:
                 - Name: LoadBalancer
                   Value: !GetAtt LoadBalancer.LoadBalancerFullName
