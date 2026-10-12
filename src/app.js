@@ -5,7 +5,6 @@ import { DynamoDB } from "@aws-sdk/client-dynamodb";
 import DynamoDBStoreFactory from "connect-dynamodb";
 
 import { frontendUiMiddlewareIdentityBypass } from "@govuk-one-login/frontend-ui";
-import addLanguageParam from "@govuk-one-login/frontend-language-toggle";
 import { frontendVitalSignsInitFromApp } from "@govuk-one-login/frontend-vital-signs";
 
 import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
@@ -134,7 +133,6 @@ setI18n({
 
 // Common express relies on 0/1 strings
 setLanguageToggle({ app, showLanguageToggle: "1" });
-app.get("nunjucks").addGlobal("addLanguageParam", addLanguageParam);
 
 setDeviceIntelligence({
   app,
