@@ -1092,6 +1092,52 @@ Resources:
       ComparisonOperator: GreaterThanThreshold
       TreatMissingData: notBreaching
 
+  FrontLoadBalancer5xxErrors:
+    Type: AWS::CloudWatch::Alarm
+    Condition: DeployAlarms
+    Properties:
+      AlarmName: !Sub "${AWS::StackName}-${Environment}-FrontLoadBalancer5xxAlarm"
+      AlarmDescription: !Sub
+        - "The Elastic Load Balancer (ELB) in front of Address CRI ${Environment} has returned 10 or more 500 errors in a 5 minute period, for 2 periods in a row. See runbook: ${SupportManualURL}"
+        - SupportManualURL: !FindInMap [StaticVariables, Urls, SupportManualURL]
+      ActionsEnabled: true
+      AlarmActions:
+        - !ImportValue slack-notifications-CriticalAlertsTopicArn
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
+      OKActions:
+        - !ImportValue slack-notifications-CriticalAlertsTopicArn
+        - !If [
+            IsProduction,
+            !ImportValue slack-notifications-PagerDutySNSTopicArn,
+            !Ref "AWS::NoValue",
+          ]
+      InsufficientDataActions: []
+      EvaluationPeriods: 2
+      DatapointsToAlarm: 2
+      Threshold: 10
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      Metrics:
+        - Id: e1
+          Label: Sum-of-5xx-Errors
+          ReturnData: true
+          Expression: SUM(METRICS())
+        - Id: m1
+          ReturnData: false
+          MetricStat:
+            Metric:
+              Namespace: AWS/ApplicationELB
+              MetricName: HTTPCode_ELB_5XX_Count
+              Dimensions:
+                - Name: LoadBalancer
+                  Value: !Ref LoadBalancer
+            Period: 300
+            Stat: Sum
+
   FrontTargetGroupAndELB5xxPercentErrors:
     Type: AWS::CloudWatch::Alarm
     Condition: UseCanaryDeployment
