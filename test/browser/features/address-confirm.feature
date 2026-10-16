@@ -17,13 +17,16 @@ Feature: Happy Path - confirming address details
       And they continue to confirm address
       Then they should see the confirm page
 
-  @deployed-stack-only
+  @deployed-stack-only @post-merge
     Scenario: Adding an year date that should not show the previous address modal
       Given they are on the address page
       When they add their residency date with a "older" move year
       And they continue to confirm address
       Then they should see the confirm page
       And they should not see the previous address modal
+      When they confirm their details
+      And the callback is converted to JSON
+      Then the address data for the user is within the JSON
 
     Scenario: Not selecting a radio button should show a validation message
       Given they are on the address page
@@ -45,7 +48,7 @@ Feature: Happy Path - confirming address details
       And they confirm their details
       Then they should see the previous address search page
 
-  @deployed-stack-only
+  @deployed-stack-only @post-merge
     Scenario: Changing an address
       Given they are on the address page
       When they add their residency date with a "recent" move year
@@ -57,6 +60,10 @@ Feature: Happy Path - confirming address details
       And they continue to confirm address
       Then they should see the confirm page
       And they should see the address value "Park street"
+      When they select no previous UK address within three months radio button
+      And they confirm their details
+      And the callback is converted to JSON
+      Then the address data for the user is within the JSON
 
     Scenario: Changing year from value
       Given they are on the address page

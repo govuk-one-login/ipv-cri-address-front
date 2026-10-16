@@ -1,4 +1,4 @@
-@mock-api:address-success @success @lang
+@mock-api:address-success @success @lang @post-merge
 Feature: Happy Path - changing languages
   Change languages based on cookie or toggle
 

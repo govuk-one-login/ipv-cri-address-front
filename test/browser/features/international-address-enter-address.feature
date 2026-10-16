@@ -46,7 +46,7 @@ Feature: International address - Enter your address
     And they continue to confirm international address
     Then they should see the non UK confirm page
 
-  @deployed-stack-only @international
+  @deployed-stack-only @international @post-merge
   Scenario: Successfully validate international address with all building details provided
     Given they have selected the country "Kenya"
     When they click the continue button
@@ -61,6 +61,10 @@ Feature: International address - Enter your address
     And they add the "older" year they started living at this address
     And they continue to confirm international address
     Then they should see the non UK confirm page
+    When they confirm their details
+    And the callback is converted to JSON
+    Then the address data for the international user is within the JSON
+
 
   Scenario: Successfully validate international address with all required details except optionals
     Given they have selected the country "Kenya"
