@@ -12,4 +12,4 @@ export MOCK_API=false
 
 cd /app/test/browser || exit 1
 
-npm test -- --tags "@post-merge and not @live" --fail-fast
+npm run test:post-merge
