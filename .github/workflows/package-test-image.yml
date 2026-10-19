@@ -54,16 +54,15 @@ jobs:
           username: khw46367
           password: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
 
-      - name: Use post-merge Dockerfile
-        run: cp test/browser/post-merge.Dockerfile Dockerfile
-
       - name: Deploy SAM app to ECR
         uses: govuk-one-login/devplatform-upload-action-ecr@v1.4.0
         with:
+          checkout-repo: false
+          dockerfile: test/browser/post-merge.Dockerfile
+          docker-build-path: .
           artifact-bucket-name: ""
           container-sign-kms-key-arn: ${{ secrets[matrix.CONTAINER_SIGNING_KEY_ARN] }}
           build-and-push-image-only: "true"
-          docker-build-path: .
           role-to-assume-arn: ${{ secrets[matrix.GH_ACTIONS_ROLE_ARN] }}
           ecr-repo-name: ${{ secrets[matrix.ECR_REPOSITORY] }}
           push-latest-tag: true

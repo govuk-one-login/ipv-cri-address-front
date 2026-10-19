@@ -1,4 +1,4 @@
-@mock-api:address-success @success @lang @post-merge
+@mock-api:address-success @success @lang
 Feature: Happy Path - changing languages
   Change languages based on cookie or toggle
 
@@ -12,6 +12,7 @@ Feature: Happy Path - changing languages
     Then they should see the search page content in Welsh
     Then the page's language property should be "Welsh"
 
+  @post-merge
   Scenario: Loading the CRI with English translations enabled
     Given They start with "Welsh"
     And they have started the address journey
@@ -19,6 +20,7 @@ Feature: Happy Path - changing languages
     Then they should see the search page content in English
     Then the page's language property should be "English"
 
+  @post-merge
   Scenario: English to Welsh with the language toggle
     Given They start with "English"
     Then they should see the search page content in English
