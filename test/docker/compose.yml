@@ -1,3 +1,5 @@
+name: address-cri-front
+
 services:
   redis:
     image: redis:7-alpine
@@ -35,6 +37,7 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    pull_policy: build
 
   cucumber:
     build:
@@ -64,6 +67,9 @@ services:
       imposter:
         condition: service_started
     network_mode: host
+    profiles:
+      - browser-tests
+    pull_policy: build
 
   visual:
     build:
@@ -86,6 +92,9 @@ services:
         condition: service_started
     network_mode: host
     command: ["npm", "run", "test:visual"]
+    profiles:
+      - visual-regression-tests
+    pull_policy: build
 
   ipv-core-stub:
     build:
@@ -93,7 +102,6 @@ services:
       dockerfile: Dockerfile-arm64
       target: nodynatrace
       no_cache: true
-    container_name: ipv-core-stub-address
     ports:
       - "8085:8085"
     environment:
@@ -103,5 +111,3 @@ services:
     volumes:
       - ../../../ipv-config/stubs/di-ipv-core-stub:/app/config
       - ../browser/di-ipv-config.yaml:/app/config/di-ipv-config.yaml
-    profiles:
-      - core-stub

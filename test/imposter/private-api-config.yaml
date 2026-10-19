@@ -44,6 +44,19 @@ resources:
     response:
       statusCode: 400
       content: "{}"
+  - method: POST
+    path: /session
+    requestBody:
+      jsonPath: $.client_id
+      operator: Exists
+    capture:
+      cid:
+        jsonPath: $.client_id
+        store: testStore
+    response:
+      statusCode: 201
+      template: true
+      content: '{"session_id": "${stores.testStore.cid}", "state": "sT@t3", "redirect_uri": "${system.server.url}/return"}'
 
   # Postcode lookup - E1 8QS (success scenarios)
   - method: POST
