@@ -18,7 +18,7 @@ jobs:
         browser: [chromium, firefox]
     steps:
       - name: Run browser tests (${{ matrix.browser }})
-        uses: govuk-one-login/github-actions/node/run-script@c8eefadf581d2087ce2af48b7060c1329cfa5251
+        uses: govuk-one-login/github-actions/node/run-script@b5f4f92a0692bf297b08c43745e545e45631f0ee
         env:
           BROWSER: ${{ matrix.browser }}
         with:
@@ -32,7 +32,7 @@ jobs:
     needs: run-tests
     steps:
       - name: Run visual regression tests
-        uses: govuk-one-login/github-actions/node/run-script@c8eefadf581d2087ce2af48b7060c1329cfa5251
+        uses: govuk-one-login/github-actions/node/run-script@b5f4f92a0692bf297b08c43745e545e45631f0ee
         with:
           node-version: 22
           package-manager: npm

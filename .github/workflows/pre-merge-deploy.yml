@@ -42,7 +42,7 @@ jobs:
           echo "image-tag=$tag" >> "$GITHUB_OUTPUT"
 
       - name: Build and push pre-merge image to ECR
-        uses: govuk-one-login/github-actions/aws/ecr/build-docker-image@c8eefadf581d2087ce2af48b7060c1329cfa5251
+        uses: govuk-one-login/github-actions/aws/ecr/build-docker-image@b5f4f92a0692bf297b08c43745e545e45631f0ee
         with:
           immutable-tags: false
           aws-role-arn: ${{ secrets.DEV_GH_ACTIONS_ROLE_ARN }}
@@ -63,7 +63,7 @@ jobs:
       cache-restore-keys: ${{ steps.build.outputs.cache-restore-keys }}
     steps:
       - name: Pull repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Build SAM application
         id: build
@@ -82,7 +82,7 @@ jobs:
       stack-outputs: ${{ steps.deploy.outputs.stack-outputs }}
     steps:
       - name: Pull repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Derive container image override from branch
         id: image
