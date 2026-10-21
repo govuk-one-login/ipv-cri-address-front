@@ -19,12 +19,12 @@ jobs:
       matrix:
         include:
           - ENVIRONMENT: dev
-            ECR_REPOSITORY: DEV_ECR_REPOSITORY
-            GH_ACTIONS_ROLE_ARN: DEV_GH_ACTIONS_ROLE_ARN
+            ECR_REPOSITORY: ACCEPTANCE_IMAGE_ECR_NAME
+            GH_ACTIONS_ROLE_ARN: ACCEPTANCE_ROLE_ARN
             CONTAINER_SIGNING_KEY_ARN: DEV_CONTAINER_SIGN_KMS_KEY
           - ENVIRONMENT: build
-            ECR_REPOSITORY: BUILD_ECR_REPOSITORY
-            GH_ACTIONS_ROLE_ARN: BUILD_GH_ACTIONS_ROLE_ARN
+            ECR_REPOSITORY: ACCEPTANCE_IMAGE_ECR_NAME
+            GH_ACTIONS_ROLE_ARN: ACCEPTANCE_ROLE_ARN
             CONTAINER_SIGNING_KEY_ARN: BUILD_CONTAINER_SIGN_KMS_KEY
 
     env:
@@ -40,7 +40,7 @@ jobs:
       - name: Assume Role
         uses: aws-actions/configure-aws-credentials@v5
         with:
-          role-to-assume: ${{ secrets[matrix.GH_ACTIONS_ROLE_ARN] }}
+          role-to-assume: ${{ vars[matrix.GH_ACTIONS_ROLE_ARN] }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
@@ -54,7 +54,7 @@ jobs:
           username: khw46367
           password: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
 
-      - name: Deploy SAM app to ECR
+      - name: Publish post merge image to acceptance ECR
         uses: govuk-one-login/devplatform-upload-action-ecr@v1.4.0
         with:
           checkout-repo: false
@@ -63,6 +63,6 @@ jobs:
           artifact-bucket-name: ""
           container-sign-kms-key-arn: ${{ secrets[matrix.CONTAINER_SIGNING_KEY_ARN] }}
           build-and-push-image-only: "true"
-          role-to-assume-arn: ${{ secrets[matrix.GH_ACTIONS_ROLE_ARN] }}
-          ecr-repo-name: ${{ secrets[matrix.ECR_REPOSITORY] }}
+          role-to-assume-arn: ${{ vars[matrix.GH_ACTIONS_ROLE_ARN] }}
+          ecr-repo-name: ${{ vars[matrix.ECR_REPOSITORY] }}
           push-latest-tag: true
