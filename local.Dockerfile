@@ -1,5 +1,6 @@
-# https://hub.docker.com/layers/library/node/22-alpine/images/sha256-cb15fca92530d7ac113467696cf1001208dac49c3c64355fd1348c11a88ddf8f
-FROM node:22-alpine@sha256:8ea2348b068a9544dae7317b4f3aafcdc032df1647bb7d768a05a5cad1a7683f
+# 22-alpine amd64 (node version 22.23.4)
+ARG NODE_SHA=sha256:025b8e975a61d94e33abeafaad1255ef44e4898cf1a1b6446860009c72e6d284
+FROM node@${NODE_SHA}
 
 ENV PORT=5010
 
@@ -15,7 +16,10 @@ COPY . ./
 RUN npm run build
 
 HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:$PORT/healthcheck || exit 1
+  CMD curl -f "http://localhost:$PORT/healthcheck" || exit 1
+
+# node
+USER 1000
 
 CMD [ "npm", "run", "dev" ]
 
