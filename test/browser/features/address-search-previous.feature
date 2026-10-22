@@ -12,12 +12,17 @@ Feature: Happy Path - previous
       And they select the previous UK address within three months radio button
       And they confirm their details
 
-    @deployed-stack-only
+    @deployed-stack-only @post-merge
     Scenario: Previous address - Searching and successfully returning a postcode and saving a single address
       Given they searched for their postcode "BA2 5AA"
       Then they should see the results page
       And they have selected an address "6 Hadley Road, Bath, BA2 5AA"
       Then they should see the address page
+      And they continue to confirm address
+      Then they should see the confirm page
+      When they confirm their details
+      And the callback is converted to JSON
+      Then the address data for the user is within the JSON
 
     Scenario: Previous address - Searching and unsuccessfully finding an address and continuing
       Given they searched for their postcode "X1 1XX"

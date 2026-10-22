@@ -9,7 +9,7 @@ Feature: International address - Confirm Screen
     And they add their building address apartment number "A2"
     And they add their town, suburb or city "Nairobi"
 
-  @deployed-stack-only @international
+  @deployed-stack-only @international @post-merge
   Scenario: Successfully display the non UK confirm page with a minimal address
     Given they are on the international address form
     And they add the "older" year they started living at this address
@@ -19,6 +19,9 @@ Feature: International address - Confirm Screen
     And they should see the non UK year value "older"
     And they should not see the previous address radio button
     And they should not see the previous address row
+    When they confirm their details
+    And the callback is converted to JSON
+    Then the address data for the international user is within the JSON
 
   Scenario: Successfully confirm a non UK confirm page with a minimal address
     Given they are on the international address form

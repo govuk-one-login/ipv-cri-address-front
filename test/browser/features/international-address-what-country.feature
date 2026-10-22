@@ -26,6 +26,7 @@ Feature: International address - What country?
     When they click the continue button
     Then they should see the UK address form
 
+  @post-merge
   Scenario:
     Given they have selected the country "Jersey"
     When they click the continue button
@@ -41,6 +42,7 @@ Feature: International address - What country?
     When they click the continue button
     Then they should see the UK address form
 
+  @post-merge
   Scenario:
     Given they have selected the country "India"
     When they click the continue button
