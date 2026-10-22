@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run tests
-        uses: govuk-one-login/github-actions/node/run-script@c8eefadf581d2087ce2af48b7060c1329cfa5251
+        uses: govuk-one-login/github-actions/node/run-script@b5f4f92a0692bf297b08c43745e545e45631f0ee
         with:
           node-version: 22
           package-manager: npm
@@ -33,7 +33,7 @@ jobs:
 
       - name: Archive coverage results
         if: ${{ inputs.coverage-report }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ${{ inputs.coverage-artifact }}
           retention-days: 3
