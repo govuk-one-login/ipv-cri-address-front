@@ -4,10 +4,11 @@
   "version": "1.0.0",
   "description": "Browser tests for the frontend of the Address Credential Issuer",
   "scripts": {
-    "test": "cucumber-js",
+    "test": "cucumber-js --tags \"not @post-merge\"",
     "test:ci": "cucumber-js --format json:reports/cucumber-report.json",
     "test:only": "cucumber-js --tags @only --format json:reports/cucumber-report.json",
     "test:deployed": "cucumber-js --tags \"@deployed-stack-only\"",
+    "test:post-merge": "cucumber-js --tags \"@post-merge and not @live\"",
     "test:visual": "playwright test --config=../visual/playwright.config.js"
   },
   "author": "",
@@ -18,6 +19,7 @@
     "@playwright/test": "^1.61.0",
     "aws4": "1.13.2",
     "dotenv": "16.4.5",
+    "jose": "6.2.12",
     "playwright": "^1.61.0"
   }
 }

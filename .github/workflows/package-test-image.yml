@@ -1,0 +1,68 @@
+name: Publish post merge test image to ECR
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish-test-image:
+    name: Publish post merge test image to ${{ matrix.ENVIRONMENT }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ENVIRONMENT: dev
+            ECR_REPOSITORY: DEV_ACCEPTANCE_IMAGE_ECR_NAME
+            GH_ACTIONS_ROLE_ARN: DEV_ACCEPTANCE_ROLE_ARN
+            CONTAINER_SIGNING_KEY_ARN: DEV_CONTAINER_SIGN_KMS_KEY
+          - ENVIRONMENT: build
+            ECR_REPOSITORY: BUILD_ACCEPTANCE_IMAGE_ECR_NAME
+            GH_ACTIONS_ROLE_ARN: BUILD_ACCEPTANCE_ROLE_ARN
+            CONTAINER_SIGNING_KEY_ARN: BUILD_CONTAINER_SIGN_KMS_KEY
+
+    env:
+      AWS_REGION: eu-west-2
+      ENVIRONMENT: ${{ matrix.ENVIRONMENT }}
+      BUILD_AND_PUSH_IMAGE_ONLY: true
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: "0"
+
+      - name: Assume Role
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ vars[matrix.GH_ACTIONS_ROLE_ARN] }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Login to GDS Dev Dynatrace Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: khw46367.live.dynatrace.com
+          username: khw46367
+          password: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
+
+      - name: Publish post merge image to acceptance ECR
+        uses: govuk-one-login/devplatform-upload-action-ecr@v1.4.0
+        with:
+          checkout-repo: false
+          dockerfile: test/browser/post-merge.Dockerfile
+          docker-build-path: .
+          artifact-bucket-name: ""
+          container-sign-kms-key-arn: ${{ secrets[matrix.CONTAINER_SIGNING_KEY_ARN] }}
+          build-and-push-image-only: "true"
+          role-to-assume-arn: ${{ vars[matrix.GH_ACTIONS_ROLE_ARN] }}
+          ecr-repo-name: ${{ vars[matrix.ECR_REPOSITORY] }}
+          push-latest-tag: true
