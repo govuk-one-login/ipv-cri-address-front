@@ -2,8 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.19.0/schemas/schema.json",
   "services": [
     {
-      "product": "ipv-cri-address",
-      "component": "ipv-cri-address",
+      "product": "Address-CRI",
+      "component": "ipv-cri-address-front",
       "promotionType": "securePipelines",
       "automated": [
         {
@@ -110,6 +110,11 @@
           ],
           "file": ".github/workflows/scan-repo.yml",
           "path": "$.jobs.codeql"
+        }
+      ],
+      "notApplicable": [
+        {
+          "checks": [{ "name": "contract", "details": ["Not a Phase 1 API"] }]
         }
       ]
     }
