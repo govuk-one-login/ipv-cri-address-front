@@ -15,7 +15,7 @@
   "license": "MIT",
   "devDependencies": {
     "@aws-sdk/credential-providers": "3.1005.0",
-    "@cucumber/cucumber": "12.8.2",
+    "@cucumber/cucumber": "13.3.0",
     "@playwright/test": "^1.61.0",
     "aws4": "1.13.2",
     "dotenv": "16.4.5",
