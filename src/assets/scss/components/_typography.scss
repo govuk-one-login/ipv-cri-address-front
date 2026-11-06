@@ -1,0 +1,72 @@
+// Typography and spacing rules vendored from the former `hmpo-components`
+// package (assets/stylesheets/_typeography.scss, _button.scss and _wrap.scss).
+//
+// These were previously pulled in via `@import ".../hmpo-components/all"`.
+// hmpo-components has been removed from this repo, but a subset of its styling
+// is load-bearing: the `@extend` rules below fold bare HTML elements into the
+// GOV.UK Frontend typography classes, which in turn applies GOV.UK Frontend's
+// adjacent-sibling heading spacing (e.g. `main p + h1`, `.govuk-list + h2`) and
+// the button spacing below. Dropping them compresses the vertical rhythm of the
+// pages and changes their appearance. They are reproduced here verbatim to
+// preserve the existing look (verified against the visual regression snapshots).
+//
+// NOTE: must be imported AFTER `govuk-frontend/dist/govuk/all` so the
+// `.govuk-*` placeholder classes being extended are defined.
+
+// --- hmpo-components/_typeography.scss (default $hmpo-text-size: "small") ---
+h1 {
+  @extend .govuk-heading-l;
+}
+h2 {
+  @extend .govuk-heading-m;
+}
+h3 {
+  @extend .govuk-heading-s;
+}
+h4 {
+  @extend .govuk-heading-s;
+}
+
+main p {
+  @extend .govuk-body;
+}
+
+main a {
+  @extend .govuk-link;
+}
+
+main ol,
+main ul {
+  @extend .govuk-list;
+}
+
+// --- hmpo-components/_wrap.scss ---
+main p,
+.word-wrap {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.normal-wrap {
+  white-space: normal;
+  overflow-wrap: normal;
+  word-wrap: normal;
+  word-break: normal;
+}
+
+.no-wrap {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-wrap: normal;
+  word-break: keep-all;
+}
+
+// --- hmpo-components/_button.scss ---
+p + .govuk-button,
+ol + .govuk-button,
+ul + .govuk-button,
+.govuk-button.govuk-button--padded {
+  margin-top: 1em;
+}

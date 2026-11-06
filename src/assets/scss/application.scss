@@ -1,8 +1,7 @@
 $govuk-assets-path: "/public/";
-$hmpo-summary-list: false;
 
 @import "../../../node_modules/govuk-frontend/dist/govuk/all";
-@import "../../../node_modules/hmpo-components/all";
+@import "components/typography";
 @import "../../../node_modules/accessible-autocomplete/dist/accessible-autocomplete.min";
 @import "components/button-spinner";
 @import "components/country-picker";
