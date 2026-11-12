@@ -4,7 +4,10 @@ import session from "express-session";
 import { DynamoDB } from "@aws-sdk/client-dynamodb";
 import DynamoDBStoreFactory from "connect-dynamodb";
 
-import { frontendUiMiddlewareIdentityBypass } from "@govuk-one-login/frontend-ui";
+import {
+  frontendUiMiddlewareIdentityBypass,
+  localsMiddleware as frontendUiLocalsMiddleware,
+} from "@govuk-one-login/frontend-ui";
 import { frontendVitalSignsInitFromApp } from "@govuk-one-login/frontend-vital-signs";
 
 import commonExpress from "@govuk-one-login/di-ipv-cri-common-express";
@@ -112,6 +115,12 @@ const { app, router } = setup({
       ],
     });
     app.use(setHeaders);
+    // hmpo-components previously installed the `ctx` nunjucks render-context
+    // accessor and the recursiveRender translate wrapper on res.locals via its
+    // locals middleware. With hmpo-components removed, frontend-ui provides a
+    // functionally identical replacement that must be wired up explicitly so the
+    // form/text/submit macros (which call ctx(...)) continue to render.
+    app.use(frontendUiLocalsMiddleware(app, app.get("nunjucks")));
     app.use((req, res, next) => {
       res.locals.query = req.query; // Makes ?edit=true available as query.edit
       next();
