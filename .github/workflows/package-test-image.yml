@@ -55,7 +55,7 @@ jobs:
           password: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
 
       - name: Publish post merge image to acceptance ECR
-        uses: govuk-one-login/devplatform-upload-action-ecr@v1.4.0
+        uses: govuk-one-login/devplatform-upload-action-ecr@ff8f2582dca8f03810142612ac7734c66c1b3345 # v1.7.2
         with:
           checkout-repo: false
           dockerfile: test/browser/post-merge.Dockerfile
