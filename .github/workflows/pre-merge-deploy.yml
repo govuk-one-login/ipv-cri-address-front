@@ -84,10 +84,10 @@ jobs:
       - name: Pull repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Derive container image override from branch
+      - name: Derive container image override
         id: image
         env:
-          IMAGE_TAG: ${{ needs.push-image.outputs.image-tag }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
           echo "uri=005455562524.dkr.ecr.eu-west-2.amazonaws.com/address-cri-front-pre-merge:${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
 
